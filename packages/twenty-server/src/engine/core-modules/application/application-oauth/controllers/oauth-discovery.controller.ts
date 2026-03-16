@@ -20,17 +20,19 @@ export class OAuthDiscoveryController {
   @UseGuards(PublicEndpointGuard, NoPermissionGuard)
   async getAuthorizationServerMetadata() {
     const serverUrl = this.twentyConfigService.get('SERVER_URL');
-    const frontendUrl = this.domainServerConfigService.getFrontUrl();
 
     const cliRegistration =
       await this.applicationRegistrationService.findOneByUniversalIdentifier(
         TWENTY_CLI_APPLICATION_REGISTRATION.universalIdentifier,
       );
 
+    const frontUrl = this.domainServerConfigService.getFrontUrl().toString();
+
     return {
       issuer: serverUrl,
-      authorization_endpoint: `${frontendUrl}authorize`,
+      authorization_endpoint: `${frontUrl.replace(/\/$/, '')}/authorize`,
       token_endpoint: `${serverUrl}/oauth/token`,
+      registration_endpoint: `${serverUrl}/oauth/register`,
       revocation_endpoint: `${serverUrl}/oauth/revoke`,
       introspection_endpoint: `${serverUrl}/oauth/introspect`,
       scopes_supported: ALL_OAUTH_SCOPES,
@@ -45,6 +47,20 @@ export class OAuthDiscoveryController {
       revocation_endpoint_auth_methods_supported: ['client_secret_post'],
       introspection_endpoint_auth_methods_supported: ['client_secret_post'],
       cli_client_id: cliRegistration?.oAuthClientId ?? null,
+    };
+  }
+
+  // RFC 9728: OAuth 2.0 Protected Resource Metadata
+  @Get('oauth-protected-resource')
+  @UseGuards(PublicEndpointGuard, NoPermissionGuard)
+  getProtectedResourceMetadata() {
+    const serverUrl = this.twentyConfigService.get('SERVER_URL');
+
+    return {
+      resource: `${serverUrl}/mcp`,
+      authorization_servers: [serverUrl],
+      scopes_supported: ALL_OAUTH_SCOPES,
+      bearer_methods_supported: ['header'],
     };
   }
 }
