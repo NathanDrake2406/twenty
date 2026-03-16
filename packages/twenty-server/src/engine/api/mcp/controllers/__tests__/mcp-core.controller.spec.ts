@@ -164,10 +164,6 @@ describe('McpCoreController', () => {
         id: '123',
         jsonrpc: '2.0',
         result: {
-          ...MCP_SERVER_METADATA,
-          capabilities: {
-            tools: { listChanged: false },
-          },
           tools: [
             {
               name: 'testTool',
