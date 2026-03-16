@@ -1,8 +1,11 @@
-import { MAIN_COLOR_NAMES } from '../../constants/MainColorNames';
+import {
+  MAIN_COLOR_NAMES,
+  type ThemeColorName,
+} from '../../constants/MainColorNames';
 
 export const getDefaultColorForCustomObject = (
   nameSingular: string,
-): string => {
+): ThemeColorName => {
   const customObjectColors = MAIN_COLOR_NAMES.filter(
     (color): color is Exclude<(typeof MAIN_COLOR_NAMES)[number], 'gray'> =>
       color !== 'gray',

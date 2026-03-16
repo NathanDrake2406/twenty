@@ -1,5 +1,5 @@
-import { MAIN_COLORS_LIGHT } from './MainColorsLight';
+import { MAIN_COLOR_NAMES, type ThemeColorName } from 'twenty-shared/constants';
 
-export const MAIN_COLOR_NAMES = Object.keys(MAIN_COLORS_LIGHT) as ThemeColor[];
+export { MAIN_COLOR_NAMES };
 
-export type ThemeColor = keyof typeof MAIN_COLORS_LIGHT;
+export type ThemeColor = ThemeColorName;

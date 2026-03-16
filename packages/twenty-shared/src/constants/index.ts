@@ -29,6 +29,7 @@ export { FILES_FIELD_MAX_NUMBER_OF_VALUES } from './FilesFieldMaxNumberOfValues'
 export { GROUP_BY_DATE_GRANULARITY_THAT_REQUIRE_TIME_ZONE } from './GroupByDateGranularityThatRequireTimeZone';
 export { IANA_TIME_ZONES } from './IanaTimeZones';
 export { LABEL_IDENTIFIER_FIELD_METADATA_TYPES } from './LabelIdentifierFieldMetadataTypes';
+export type { ThemeColorName } from './MainColorNames';
 export { MAIN_COLOR_NAMES } from './MainColorNames';
 export { MULTI_ITEM_FIELD_DEFAULT_MAX_VALUES } from './MultiItemFieldDefaultMaxValues';
 export { MULTI_ITEM_FIELD_MIN_MAX_VALUES } from './MultiItemFieldMinMaxValues';

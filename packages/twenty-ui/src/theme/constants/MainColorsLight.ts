@@ -1,7 +1,8 @@
 import * as RadixColors from '@radix-ui/colors';
+import type { ThemeColorName } from 'twenty-shared/constants';
 import { GRAY_SCALE_LIGHT } from './GrayScaleLight';
 
-export const MAIN_COLORS_LIGHT = {
+export const MAIN_COLORS_LIGHT: Record<ThemeColorName, string> = {
   // Reds
   red: RadixColors.redP3.red9,
   ruby: RadixColors.rubyP3.ruby9,

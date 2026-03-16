@@ -25,3 +25,5 @@ export const MAIN_COLOR_NAMES = [
   'brown',
   'gray',
 ] as const;
+
+export type ThemeColorName = (typeof MAIN_COLOR_NAMES)[number];
