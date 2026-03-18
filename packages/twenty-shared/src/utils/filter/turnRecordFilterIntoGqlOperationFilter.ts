@@ -53,6 +53,7 @@ import {
 } from '@/utils';
 import { arrayOfStringsOrVariablesSchema } from '@/utils/filter/utils/validation-schemas/arrayOfStringsOrVariablesSchema';
 import { arrayOfUuidOrVariableSchema } from '@/utils/filter/utils/validation-schemas/arrayOfUuidsOrVariablesSchema';
+import { getMatchNothingRecordGqlOperationFilter } from '@/utils/filter/utils/getMatchNothingRecordGqlOperationFilter';
 import { jsonRelationFilterValueSchema } from '@/utils/filter/utils/validation-schemas/jsonRelationFilterValueSchema';
 
 type FieldShared = {
@@ -532,7 +533,8 @@ export const turnRecordFilterIntoRecordGqlOperationFilter = ({
           ]
         : selectedRecordIds;
 
-      if (!isDefined(recordIds) || recordIds.length === 0) return;
+      if (!isDefined(recordIds) || recordIds.length === 0)
+        return getMatchNothingRecordGqlOperationFilter();
 
       switch (recordFilter.operand) {
         case RecordFilterOperand.IS:
@@ -542,7 +544,6 @@ export const turnRecordFilterIntoRecordGqlOperationFilter = ({
             } as RelationFilter,
           };
         case RecordFilterOperand.IS_NOT: {
-          if (!isDefined(recordIds) || recordIds.length === 0) return;
           return {
             or: [
               {
@@ -967,7 +968,7 @@ export const turnRecordFilterIntoRecordGqlOperationFilter = ({
     case 'MULTI_SELECT': {
       const options = arrayOfStringsOrVariablesSchema.parse(recordFilter.value);
 
-      if (options.length === 0) return;
+      if (options.length === 0) return getMatchNothingRecordGqlOperationFilter();
 
       const emptyOptions = options.filter((option: string) => option === '');
       const nonEmptyOptions = options.filter((option: string) => option !== '');
@@ -1025,7 +1026,7 @@ export const turnRecordFilterIntoRecordGqlOperationFilter = ({
     case 'SELECT': {
       const options = arrayOfStringsOrVariablesSchema.parse(recordFilter.value);
 
-      if (options.length === 0) return;
+      if (options.length === 0) return getMatchNothingRecordGqlOperationFilter();
 
       const emptyOptions = options.filter((option: string) => option === '');
       const nonEmptyOptions = options.filter((option: string) => option !== '');
@@ -1492,7 +1493,8 @@ export const turnRecordFilterIntoRecordGqlOperationFilter = ({
     case 'UUID': {
       const recordIds = arrayOfUuidOrVariableSchema.parse(recordFilter.value);
 
-      if (!isDefined(recordIds) || recordIds.length === 0) return;
+      if (!isDefined(recordIds) || recordIds.length === 0)
+        return getMatchNothingRecordGqlOperationFilter();
 
       switch (recordFilter.operand) {
         case RecordFilterOperand.IS:
