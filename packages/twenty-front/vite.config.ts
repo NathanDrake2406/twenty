@@ -147,6 +147,11 @@ export default defineConfig(({ mode }) => {
       outDir: 'build',
       sourcemap: VITE_BUILD_SOURCEMAP === 'true',
       chunkSizeWarningLimit: CHUNK_SIZE_WARNING_LIMIT,
+      // Consolidate Linaria-extracted CSS into a single file instead of
+      // one CSS chunk per code-split JS chunk. With HTTP/1.1 and the
+      // browser's 6-connection limit, 37+ small CSS files cause severe
+      // head-of-line blocking on initial pageload.
+      cssCodeSplit: false,
       rollupOptions: {
         //  Don't use manual chunks as it causes many issue
         // including this one we wasted a lot of time on:
