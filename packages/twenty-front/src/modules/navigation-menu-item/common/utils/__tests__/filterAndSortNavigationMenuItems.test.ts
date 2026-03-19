@@ -61,7 +61,7 @@ describe('filterAndSortNavigationMenuItems', () => {
     expect(result).toEqual([]);
   });
 
-  it('should keep record items when targetRecordIdentifier exists', () => {
+  it('should keep record items when targetRecordId and targetObjectMetadataId exist', () => {
     const navigationMenuItem = {
       id: 'item-id',
       type: NavigationMenuItemType.RECORD,
@@ -72,6 +72,25 @@ describe('filterAndSortNavigationMenuItems', () => {
         labelIdentifier: 'John Doe',
       },
       position: 2,
+    } as NavigationMenuItem;
+
+    const result = filterAndSortNavigationMenuItems(
+      [navigationMenuItem],
+      [],
+      [mockObjectMetadataItem],
+    );
+
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe('item-id');
+  });
+
+  it('should keep record items even when targetRecordIdentifier is not defined', () => {
+    const navigationMenuItem = {
+      id: 'item-id',
+      type: NavigationMenuItemType.RECORD,
+      targetRecordId: 'record-id',
+      targetObjectMetadataId: 'metadata-id',
+      position: 1,
     } as NavigationMenuItem;
 
     const result = filterAndSortNavigationMenuItems(

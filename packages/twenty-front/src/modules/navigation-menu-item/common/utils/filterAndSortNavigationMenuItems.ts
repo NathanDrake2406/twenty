@@ -39,7 +39,6 @@ export const filterAndSortNavigationMenuItems = (
         return (
           isDefined(item.targetRecordId) &&
           isDefined(item.targetObjectMetadataId) &&
-          isDefined(item.targetRecordIdentifier) &&
           objectMetadataItems.some(
             (meta) => meta.id === item.targetObjectMetadataId,
           )
