@@ -27,10 +27,11 @@ export const SettingsPermissionGuard = (
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
       const ctx = GqlExecutionContext.create(context);
-      const workspaceId = ctx.getContext().req.workspace.id;
-      const userWorkspaceId = ctx.getContext().req.userWorkspaceId;
+      const request = ctx.getContext().req;
+      const workspaceId = request.workspace.id;
+      const userWorkspaceId = request.userWorkspaceId;
       const workspaceActivationStatus =
-        ctx.getContext().req.workspace.activationStatus;
+        request.workspace.activationStatus;
 
       if (
         [
@@ -41,14 +42,40 @@ export const SettingsPermissionGuard = (
         return true;
       }
 
+      // Cache permission results per request to avoid N+1 DB queries
+      // when GraphQL resolves multiple fields on the same resolver class
+      const cacheKey = `settingsPermission:${requiredPermission}:${userWorkspaceId ?? ''}:${request.apiKey?.id ?? ''}:${request.application?.id ?? ''}`;
+
+      if (!request._settingsPermissionCache) {
+        request._settingsPermissionCache = {};
+      }
+
+      if (cacheKey in request._settingsPermissionCache) {
+        const cachedResult = request._settingsPermissionCache[cacheKey];
+
+        if (cachedResult === true) {
+          return true;
+        }
+
+        throw new PermissionsException(
+          PermissionsExceptionMessage.PERMISSION_DENIED,
+          PermissionsExceptionCode.PERMISSION_DENIED,
+          {
+            userFriendlyMessage: msg`You do not have permission to access this feature. Please contact your workspace administrator for access.`,
+          },
+        );
+      }
+
       const hasPermission =
         await this.permissionsService.userHasWorkspaceSettingPermission({
           userWorkspaceId,
           setting: requiredPermission,
           workspaceId,
-          apiKeyId: ctx.getContext().req.apiKey?.id,
-          applicationId: ctx.getContext().req.application?.id,
+          apiKeyId: request.apiKey?.id,
+          applicationId: request.application?.id,
         });
+
+      request._settingsPermissionCache[cacheKey] = hasPermission;
 
       if (hasPermission === true) {
         return true;
