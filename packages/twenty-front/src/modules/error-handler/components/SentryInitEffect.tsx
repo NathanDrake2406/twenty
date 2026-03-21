@@ -51,6 +51,10 @@ export const SentryInitEffect = () => {
               'localhost:3001',
               REACT_APP_SERVER_BASE_URL,
             ],
+            ignoreErrors: [
+              // reCAPTCHA errors when the domain is not registered in the site key's allowed domains
+              /invalid origin/i,
+            ],
             tracesSampleRate: 1.0,
             replaysSessionSampleRate: 0.1,
             replaysOnErrorSampleRate: 1.0,
