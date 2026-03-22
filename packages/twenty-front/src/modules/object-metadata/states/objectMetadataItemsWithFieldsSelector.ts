@@ -1,8 +1,8 @@
 import { currentUserWorkspaceState } from '@/auth/states/currentUserWorkspaceState';
 import { fieldMetadataItemsSelector } from '@/metadata-store/states/fieldMetadataItemsSelector';
 import { indexMetadataItemsSelector } from '@/metadata-store/states/indexMetadataItemsSelector';
-import { objectMetadataItemsSelector } from '@/metadata-store/states/objectMetadataItemsSelector';
-import { type ObjectMetadataItem } from '@/object-metadata/types/ObjectMetadataItem';
+import { flatObjectMetadataItemsSelector } from '@/object-metadata/states/flatObjectMetadataItemsSelector';
+import { type EnrichedObjectMetadataItem } from '@/object-metadata/types/EnrichedObjectMetadataItem';
 import { getNonReadableFieldMetadataIdsFromObjectPermissions } from '@/object-metadata/utils/getNonReadableFieldMetadataIdsFromObjectPermissions';
 import { getNonUpdatableFieldMetadataIdsFromObjectPermissions } from '@/object-metadata/utils/getNonUpdatableFieldMetadataIdsFromObjectPermissions';
 import { getObjectPermissionsFromMapByObjectMetadataId } from '@/settings/roles/role-permissions/objects-permissions/utils/getObjectPermissionsFromMapByObjectMetadataId';
@@ -11,11 +11,11 @@ import { type ObjectPermissions } from 'twenty-shared/types';
 import { isDefined } from 'twenty-shared/utils';
 
 export const objectMetadataItemsWithFieldsSelector = createAtomSelector<
-  ObjectMetadataItem[]
+  EnrichedObjectMetadataItem[]
 >({
   key: 'objectMetadataItemsWithFieldsSelector',
   get: ({ get }) => {
-    const flatObjects = get(objectMetadataItemsSelector);
+    const flatObjects = get(flatObjectMetadataItemsSelector);
     const allFlatFields = get(fieldMetadataItemsSelector);
     const allFlatIndexes = get(indexMetadataItemsSelector);
     const currentUserWorkspace = get(currentUserWorkspaceState);
@@ -89,7 +89,7 @@ export const objectMetadataItemsWithFieldsSelector = createAtomSelector<
         updatableFields: fields.filter(
           (field) => !nonUpdatableFieldMetadataIds.includes(field.id),
         ),
-      } satisfies ObjectMetadataItem;
+      } satisfies EnrichedObjectMetadataItem;
     });
   },
 });

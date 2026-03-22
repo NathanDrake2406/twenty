@@ -1,36 +1,32 @@
 import { type ReactNode, useEffect, useState } from 'react';
 
 import { useMetadataStore } from '@/metadata-store/hooks/useMetadataStore';
-import { splitObjectMetadataItemWithRelated } from '@/metadata-store/utils/splitObjectMetadataItemWithRelated';
-import { type ObjectMetadataItem } from '@/object-metadata/types/ObjectMetadataItem';
-import { generatedMockObjectMetadataItems } from '~/testing/utils/generatedMockObjectMetadataItems';
+import { splitCompositeObjectMetadataItems } from '@/metadata-store/utils/splitCompositeObjectMetadataItems';
+import { type EnrichedObjectMetadataItem } from '@/object-metadata/types/EnrichedObjectMetadataItem';
+import { getTestEnrichedObjectMetadataItemsMock } from '~/testing/utils/getTestEnrichedObjectMetadataItemsMock';
 
 export const JestObjectMetadataItemSetter = ({
   children,
   objectMetadataItems,
 }: {
   children: ReactNode;
-  objectMetadataItems?: ObjectMetadataItem[];
+  objectMetadataItems?: EnrichedObjectMetadataItem[];
 }) => {
-  const { updateDraft, applyChanges, resetMetadataStore } = useMetadataStore();
+  const { replaceDraft, applyChanges } = useMetadataStore();
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    const items = objectMetadataItems ?? generatedMockObjectMetadataItems;
+    const items =
+      objectMetadataItems ?? getTestEnrichedObjectMetadataItemsMock();
     const { flatObjects, flatFields, flatIndexes } =
-      splitObjectMetadataItemWithRelated(items);
+      splitCompositeObjectMetadataItems(items);
 
-    // Reset first so updateDraft always proceeds and writes to localStorage.
-    // Without this, atomWithStorage's onMount re-reads from empty localStorage
-    // and overwrites in-memory values when the store is reused across tests.
-    resetMetadataStore();
-
-    updateDraft('objectMetadataItems', flatObjects);
-    updateDraft('fieldMetadataItems', flatFields);
-    updateDraft('indexMetadataItems', flatIndexes);
+    replaceDraft('objectMetadataItems', flatObjects);
+    replaceDraft('fieldMetadataItems', flatFields);
+    replaceDraft('indexMetadataItems', flatIndexes);
     applyChanges();
     setIsLoaded(true);
-  }, [objectMetadataItems, updateDraft, applyChanges, resetMetadataStore]);
+  }, [objectMetadataItems, replaceDraft, applyChanges]);
 
   return isLoaded ? <>{children}</> : null;
 };

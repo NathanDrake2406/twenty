@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
 
 import { ApolloCoreClientContext } from '@/object-metadata/contexts/ApolloCoreClientContext';
-import { isAppMetadataReadyState } from '@/metadata-store/states/isAppMetadataReadyState';
+import { isMinimalMetadataReadyState } from '@/metadata-store/states/isMinimalMetadataReadyState';
 import { setTestObjectMetadataItemsInMetadataStore } from '~/testing/utils/setTestObjectMetadataItemsInMetadataStore';
 import { CoreObjectNameSingular } from 'twenty-shared/types';
 import { recordStoreFamilyState } from '@/object-record/record-store/states/recordStoreFamilyState';
@@ -33,7 +33,7 @@ import {
 import { ChipGeneratorsDecorator } from '~/testing/decorators/ChipGeneratorsDecorator';
 import { FileUploadDecorator } from '~/testing/decorators/FileUploadDecorator';
 import { getJestMetadataAndApolloMocksWrapper } from '~/testing/jest/getJestMetadataAndApolloMocksWrapper';
-import { generatedMockObjectMetadataItems } from '~/testing/utils/generatedMockObjectMetadataItems';
+import { getTestEnrichedObjectMetadataItemsMock } from '~/testing/utils/getTestEnrichedObjectMetadataItemsMock';
 import { getMockFieldMetadataItemOrThrow } from '~/testing/utils/getMockFieldMetadataItemOrThrow';
 import { getMockObjectMetadataItemOrThrow } from '~/testing/utils/getMockObjectMetadataItemOrThrow';
 
@@ -358,9 +358,9 @@ export const TextFieldWidget: Story = {
 
     setTestObjectMetadataItemsInMetadataStore(
       jotaiStore,
-      generatedMockObjectMetadataItems,
+      getTestEnrichedObjectMetadataItemsMock(),
     );
-    jotaiStore.set(isAppMetadataReadyState.atom, true);
+    jotaiStore.set(isMinimalMetadataReadyState.atom, true);
     const pageLayoutData = createPageLayoutWithWidget(
       widget,
       companyObjectMetadataItem.id,
@@ -452,9 +452,9 @@ export const AddressFieldWidget: Story = {
 
     setTestObjectMetadataItemsInMetadataStore(
       jotaiStore,
-      generatedMockObjectMetadataItems,
+      getTestEnrichedObjectMetadataItemsMock(),
     );
-    jotaiStore.set(isAppMetadataReadyState.atom, true);
+    jotaiStore.set(isMinimalMetadataReadyState.atom, true);
     const pageLayoutData = createPageLayoutWithWidget(
       widget,
       companyObjectMetadataItem.id,
@@ -549,9 +549,9 @@ export const NumberFieldWidget: Story = {
 
     setTestObjectMetadataItemsInMetadataStore(
       jotaiStore,
-      generatedMockObjectMetadataItems,
+      getTestEnrichedObjectMetadataItemsMock(),
     );
-    jotaiStore.set(isAppMetadataReadyState.atom, true);
+    jotaiStore.set(isMinimalMetadataReadyState.atom, true);
     const pageLayoutData = createPageLayoutWithWidget(
       widget,
       companyObjectMetadataItem.id,
@@ -643,9 +643,9 @@ export const LinkFieldWidget: Story = {
 
     setTestObjectMetadataItemsInMetadataStore(
       jotaiStore,
-      generatedMockObjectMetadataItems,
+      getTestEnrichedObjectMetadataItemsMock(),
     );
-    jotaiStore.set(isAppMetadataReadyState.atom, true);
+    jotaiStore.set(isMinimalMetadataReadyState.atom, true);
     const pageLayoutData = createPageLayoutWithWidget(
       widget,
       companyObjectMetadataItem.id,
@@ -737,9 +737,9 @@ export const ManyToOneRelationFieldWidget: Story = {
 
     setTestObjectMetadataItemsInMetadataStore(
       jotaiStore,
-      generatedMockObjectMetadataItems,
+      getTestEnrichedObjectMetadataItemsMock(),
     );
-    jotaiStore.set(isAppMetadataReadyState.atom, true);
+    jotaiStore.set(isMinimalMetadataReadyState.atom, true);
     const pageLayoutData = createPageLayoutWithWidget(
       widget,
       companyObjectMetadataItem.id,
@@ -841,9 +841,9 @@ export const OneToManyRelationFieldWidget: Story = {
 
     setTestObjectMetadataItemsInMetadataStore(
       jotaiStore,
-      generatedMockObjectMetadataItems,
+      getTestEnrichedObjectMetadataItemsMock(),
     );
-    jotaiStore.set(isAppMetadataReadyState.atom, true);
+    jotaiStore.set(isMinimalMetadataReadyState.atom, true);
     const pageLayoutData = createPageLayoutWithWidget(
       widget,
       companyObjectMetadataItem.id,
@@ -937,9 +937,9 @@ export const BooleanFieldWidget: Story = {
 
     setTestObjectMetadataItemsInMetadataStore(
       jotaiStore,
-      generatedMockObjectMetadataItems,
+      getTestEnrichedObjectMetadataItemsMock(),
     );
-    jotaiStore.set(isAppMetadataReadyState.atom, true);
+    jotaiStore.set(isMinimalMetadataReadyState.atom, true);
     const pageLayoutData = createPageLayoutWithWidget(
       widget,
       companyObjectMetadataItem.id,
@@ -1030,9 +1030,9 @@ export const CurrencyFieldWidget: Story = {
 
     setTestObjectMetadataItemsInMetadataStore(
       jotaiStore,
-      generatedMockObjectMetadataItems,
+      getTestEnrichedObjectMetadataItemsMock(),
     );
-    jotaiStore.set(isAppMetadataReadyState.atom, true);
+    jotaiStore.set(isMinimalMetadataReadyState.atom, true);
     const pageLayoutData = createPageLayoutWithWidget(
       widget,
       companyObjectMetadataItem.id,
@@ -1123,9 +1123,9 @@ export const EmailsFieldWidget: Story = {
 
     setTestObjectMetadataItemsInMetadataStore(
       jotaiStore,
-      generatedMockObjectMetadataItems,
+      getTestEnrichedObjectMetadataItemsMock(),
     );
-    jotaiStore.set(isAppMetadataReadyState.atom, true);
+    jotaiStore.set(isMinimalMetadataReadyState.atom, true);
     const pageLayoutData = createPageLayoutWithWidget(
       widget,
       personObjectMetadataItem.id,
@@ -1217,9 +1217,9 @@ export const PhonesFieldWidget: Story = {
 
     setTestObjectMetadataItemsInMetadataStore(
       jotaiStore,
-      generatedMockObjectMetadataItems,
+      getTestEnrichedObjectMetadataItemsMock(),
     );
-    jotaiStore.set(isAppMetadataReadyState.atom, true);
+    jotaiStore.set(isMinimalMetadataReadyState.atom, true);
     const pageLayoutData = createPageLayoutWithWidget(
       widget,
       personObjectMetadataItem.id,
@@ -1311,9 +1311,9 @@ export const SelectFieldWidget: Story = {
 
     setTestObjectMetadataItemsInMetadataStore(
       jotaiStore,
-      generatedMockObjectMetadataItems,
+      getTestEnrichedObjectMetadataItemsMock(),
     );
-    jotaiStore.set(isAppMetadataReadyState.atom, true);
+    jotaiStore.set(isMinimalMetadataReadyState.atom, true);
     const pageLayoutData = createPageLayoutWithWidget(
       widget,
       opportunityObjectMetadataItem.id,
@@ -1406,9 +1406,9 @@ export const MultiSelectFieldWidget: Story = {
 
     setTestObjectMetadataItemsInMetadataStore(
       jotaiStore,
-      generatedMockObjectMetadataItems,
+      getTestEnrichedObjectMetadataItemsMock(),
     );
-    jotaiStore.set(isAppMetadataReadyState.atom, true);
+    jotaiStore.set(isMinimalMetadataReadyState.atom, true);
     const pageLayoutData = createPageLayoutWithWidget(
       widget,
       companyObjectMetadataItem.id,
@@ -1504,9 +1504,9 @@ export const TimelineActivityRelationFieldWidget: Story = {
 
     setTestObjectMetadataItemsInMetadataStore(
       jotaiStore,
-      generatedMockObjectMetadataItems,
+      getTestEnrichedObjectMetadataItemsMock(),
     );
-    jotaiStore.set(isAppMetadataReadyState.atom, true);
+    jotaiStore.set(isMinimalMetadataReadyState.atom, true);
     const pageLayoutData = createPageLayoutWithWidget(
       widget,
       timelineActivityObjectMetadataItem.id,
@@ -1603,9 +1603,9 @@ export const ManyToOneRelationCardWidget: Story = {
 
     setTestObjectMetadataItemsInMetadataStore(
       jotaiStore,
-      generatedMockObjectMetadataItems,
+      getTestEnrichedObjectMetadataItemsMock(),
     );
-    jotaiStore.set(isAppMetadataReadyState.atom, true);
+    jotaiStore.set(isMinimalMetadataReadyState.atom, true);
     const pageLayoutData = createPageLayoutWithWidget(
       widget,
       companyObjectMetadataItem.id,
@@ -1715,9 +1715,9 @@ export const OneToManyRelationCardWidget: Story = {
 
     setTestObjectMetadataItemsInMetadataStore(
       jotaiStore,
-      generatedMockObjectMetadataItems,
+      getTestEnrichedObjectMetadataItemsMock(),
     );
-    jotaiStore.set(isAppMetadataReadyState.atom, true);
+    jotaiStore.set(isMinimalMetadataReadyState.atom, true);
     const pageLayoutData = createPageLayoutWithWidget(
       widget,
       companyObjectMetadataItem.id,
@@ -1810,9 +1810,9 @@ export const TimelineActivityRelationCardWidget: Story = {
 
     setTestObjectMetadataItemsInMetadataStore(
       jotaiStore,
-      generatedMockObjectMetadataItems,
+      getTestEnrichedObjectMetadataItemsMock(),
     );
-    jotaiStore.set(isAppMetadataReadyState.atom, true);
+    jotaiStore.set(isMinimalMetadataReadyState.atom, true);
     const pageLayoutData = createPageLayoutWithWidget(
       widget,
       timelineActivityObjectMetadataItem.id,
@@ -1971,9 +1971,9 @@ export const OneToManyRelationCardWidgetWithProgressiveLoading: Story = {
 
     setTestObjectMetadataItemsInMetadataStore(
       jotaiStore,
-      generatedMockObjectMetadataItems,
+      getTestEnrichedObjectMetadataItemsMock(),
     );
-    jotaiStore.set(isAppMetadataReadyState.atom, true);
+    jotaiStore.set(isMinimalMetadataReadyState.atom, true);
     const pageLayoutData = createPageLayoutWithWidget(
       widget,
       companyObjectMetadataItem.id,
