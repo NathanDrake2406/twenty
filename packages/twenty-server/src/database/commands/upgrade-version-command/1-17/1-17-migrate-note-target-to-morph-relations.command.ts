@@ -3,7 +3,6 @@ import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import { Command } from 'nest-commander';
 import { STANDARD_OBJECTS } from 'twenty-shared/metadata';
 import {
-  FeatureFlagKey,
   FieldMetadataType,
   type FieldMetadataSettings,
 } from 'twenty-shared/types';
@@ -14,7 +13,6 @@ import { ActiveOrSuspendedWorkspacesMigrationCommandRunner } from 'src/database/
 import { RunOnWorkspaceArgs } from 'src/database/commands/command-runners/workspaces-migration.command-runner';
 import { getFlatFieldsFromFlatObjectMetadata } from 'src/engine/api/graphql/workspace-schema-builder/utils/get-flat-fields-for-flat-object-metadata.util';
 import { type FlatApplicationCacheMaps } from 'src/engine/core-modules/application/types/flat-application-cache-maps.type';
-import { FeatureFlagService } from 'src/engine/core-modules/feature-flag/services/feature-flag.service';
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
 import { DataSourceService } from 'src/engine/metadata-modules/data-source/data-source.service';
 import { computeMorphOrRelationFieldJoinColumnName } from 'src/engine/metadata-modules/field-metadata/utils/compute-morph-or-relation-field-join-column-name.util';
@@ -38,13 +36,12 @@ type RelationFieldMetadataSettings =
 @Command({
   name: 'upgrade:1-17:migrate-note-target-to-morph-relations',
   description:
-    'Migrate noteTarget relations to morph relation fields and set feature flag',
+    'Migrate noteTarget relations to morph relation fields (idempotent)',
 })
 export class MigrateNoteTargetToMorphRelationsCommand extends ActiveOrSuspendedWorkspacesMigrationCommandRunner {
   constructor(
     @InjectRepository(WorkspaceEntity)
     protected readonly workspaceRepository: Repository<WorkspaceEntity>,
-    private readonly featureFlagService: FeatureFlagService,
     @InjectDataSource()
     private readonly coreDataSource: DataSource,
     private readonly twentyORMGlobalManager: GlobalWorkspaceOrmManager,
@@ -60,22 +57,101 @@ export class MigrateNoteTargetToMorphRelationsCommand extends ActiveOrSuspendedW
     workspaceId,
     options,
   }: RunOnWorkspaceArgs): Promise<void> {
-    const isMigrated = await this.featureFlagService.isFeatureEnabled(
-      FeatureFlagKey.IS_NOTE_TARGET_MIGRATED,
-      workspaceId,
-    );
-
     this.logger.log(`Migrating noteTarget for workspace ${workspaceId}`);
-
-    if (isMigrated) {
-      this.logger.log(`NoteTarget migration already completed. Skipping...`);
-
-      return;
-    }
 
     if (options.dryRun) {
       this.logger.log(
         `Would have migrated noteTarget for workspace ${workspaceId}. Skipping...`,
+      );
+
+      return;
+    }
+
+    const schemaName = getWorkspaceSchemaName(workspaceId);
+    const tableName = 'noteTarget';
+
+    const {
+      flatObjectMetadataMaps,
+      flatFieldMetadataMaps,
+      flatApplicationMaps,
+    } = await this.workspaceCacheService.getOrRecompute(workspaceId, [
+      'flatObjectMetadataMaps',
+      'flatFieldMetadataMaps',
+      'flatApplicationMaps',
+    ]);
+
+    const noteTargetFieldUniversalIdentifiers = new Set<string>([
+      STANDARD_OBJECTS.noteTarget.fields.targetPerson.universalIdentifier,
+      STANDARD_OBJECTS.noteTarget.fields.targetCompany.universalIdentifier,
+      STANDARD_OBJECTS.noteTarget.fields.targetOpportunity.universalIdentifier,
+    ]);
+
+    const noteTargetObjectMetadata =
+      findFlatEntityByUniversalIdentifier<FlatObjectMetadata>({
+        flatEntityMaps: flatObjectMetadataMaps,
+        universalIdentifier: STANDARD_OBJECTS.noteTarget.universalIdentifier,
+      });
+
+    if (!noteTargetObjectMetadata) {
+      this.logger.error(
+        `🟥 ${tableName} object metadata not found for workspace ${workspaceId}`,
+      );
+
+      return;
+    }
+
+    const noteTargetFieldMetadatas = getFlatFieldsFromFlatObjectMetadata(
+      noteTargetObjectMetadata,
+      flatFieldMetadataMaps,
+    );
+
+    const noteTargetRelationFields = noteTargetFieldMetadatas
+      .filter(isMorphOrRelationFlatFieldMetadata)
+      .filter((field) => field.type === FieldMetadataType.RELATION)
+      .filter((field) => {
+        const isStandardAppField = this.isTwentyStandardApplicationField({
+          field,
+          flatApplicationMaps,
+          workspaceId,
+        });
+        const isStandardTarget =
+          isStandardAppField &&
+          noteTargetFieldUniversalIdentifiers.has(field.universalIdentifier);
+        const targetObjectMetadata = field.relationTargetObjectMetadataId
+          ? findFlatEntityByIdInFlatEntityMaps({
+              flatEntityMaps: flatObjectMetadataMaps,
+              flatEntityId: field.relationTargetObjectMetadataId,
+            })
+          : undefined;
+        const isCustomTarget =
+          !isStandardAppField && targetObjectMetadata?.isCustom === true;
+
+        return isStandardTarget || isCustomTarget;
+      });
+
+    const fieldMigrations = noteTargetRelationFields.map((field) => {
+      const newFieldName = `target${capitalize(field.name)}`;
+      const newFieldLabel = 'Target';
+      const relationSettings: RelationFieldMetadataSettings = field.settings;
+      const oldJoinColumnName =
+        relationSettings?.joinColumnName ??
+        computeMorphOrRelationFieldJoinColumnName({ name: field.name });
+      const newJoinColumnName = computeMorphOrRelationFieldJoinColumnName({
+        name: newFieldName,
+      });
+
+      return {
+        field,
+        newFieldName,
+        newFieldLabel,
+        oldJoinColumnName,
+        newJoinColumnName,
+      };
+    });
+
+    if (fieldMigrations.length === 0) {
+      this.logger.log(
+        `NoteTarget morph migration already applied or nothing to migrate. Skipping workspace ${workspaceId}...`,
       );
 
       return;
@@ -87,89 +163,6 @@ export class MigrateNoteTargetToMorphRelationsCommand extends ActiveOrSuspendedW
     await queryRunner.startTransaction();
 
     try {
-      const schemaName = getWorkspaceSchemaName(workspaceId);
-      const tableName = 'noteTarget';
-
-      const {
-        flatObjectMetadataMaps,
-        flatFieldMetadataMaps,
-        flatApplicationMaps,
-      } = await this.workspaceCacheService.getOrRecompute(workspaceId, [
-        'flatObjectMetadataMaps',
-        'flatFieldMetadataMaps',
-        'flatApplicationMaps',
-      ]);
-
-      const noteTargetFieldUniversalIdentifiers = new Set<string>([
-        STANDARD_OBJECTS.noteTarget.fields.targetPerson.universalIdentifier,
-        STANDARD_OBJECTS.noteTarget.fields.targetCompany.universalIdentifier,
-        STANDARD_OBJECTS.noteTarget.fields.targetOpportunity
-          .universalIdentifier,
-      ]);
-
-      const noteTargetObjectMetadata =
-        findFlatEntityByUniversalIdentifier<FlatObjectMetadata>({
-          flatEntityMaps: flatObjectMetadataMaps,
-          universalIdentifier: STANDARD_OBJECTS.noteTarget.universalIdentifier,
-        });
-
-      if (!noteTargetObjectMetadata) {
-        this.logger.error(
-          `🟥 ${tableName} object metadata not found for workspace ${workspaceId}`,
-        );
-
-        return;
-      }
-
-      const noteTargetFieldMetadatas = getFlatFieldsFromFlatObjectMetadata(
-        noteTargetObjectMetadata,
-        flatFieldMetadataMaps,
-      );
-
-      const noteTargetRelationFields = noteTargetFieldMetadatas
-        .filter(isMorphOrRelationFlatFieldMetadata)
-        .filter((field) => field.type === FieldMetadataType.RELATION)
-        .filter((field) => {
-          const isStandardAppField = this.isTwentyStandardApplicationField({
-            field,
-            flatApplicationMaps,
-            workspaceId,
-          });
-          const isStandardTarget =
-            isStandardAppField &&
-            noteTargetFieldUniversalIdentifiers.has(field.universalIdentifier);
-          const targetObjectMetadata = field.relationTargetObjectMetadataId
-            ? findFlatEntityByIdInFlatEntityMaps({
-                flatEntityMaps: flatObjectMetadataMaps,
-                flatEntityId: field.relationTargetObjectMetadataId,
-              })
-            : undefined;
-          const isCustomTarget =
-            !isStandardAppField && targetObjectMetadata?.isCustom === true;
-
-          return isStandardTarget || isCustomTarget;
-        });
-
-      const fieldMigrations = noteTargetRelationFields.map((field) => {
-        const newFieldName = `target${capitalize(field.name)}`;
-        const newFieldLabel = 'Target';
-        const relationSettings: RelationFieldMetadataSettings = field.settings;
-        const oldJoinColumnName =
-          relationSettings?.joinColumnName ??
-          computeMorphOrRelationFieldJoinColumnName({ name: field.name });
-        const newJoinColumnName = computeMorphOrRelationFieldJoinColumnName({
-          name: newFieldName,
-        });
-
-        return {
-          field,
-          newFieldName,
-          newFieldLabel,
-          oldJoinColumnName,
-          newJoinColumnName,
-        };
-      });
-
       // Rename columns
       for (const { oldJoinColumnName, newJoinColumnName } of fieldMigrations) {
         if (oldJoinColumnName === newJoinColumnName) {
@@ -250,11 +243,6 @@ export class MigrateNoteTargetToMorphRelationsCommand extends ActiveOrSuspendedW
 
       await queryRunner.commitTransaction();
 
-      await this.featureFlagService.enableFeatureFlags(
-        [FeatureFlagKey.IS_NOTE_TARGET_MIGRATED],
-        workspaceId,
-      );
-
       const relatedMetadataNames =
         getMetadataRelatedMetadataNames('fieldMetadata');
       const relatedCacheKeysToInvalidate: WorkspaceCacheKeyName[] =
@@ -262,7 +250,6 @@ export class MigrateNoteTargetToMorphRelationsCommand extends ActiveOrSuspendedW
       const cacheKeysToInvalidate: WorkspaceCacheKeyName[] = [
         'flatFieldMetadataMaps',
         ...relatedCacheKeysToInvalidate,
-        'featureFlagsMap',
       ];
 
       this.logger.log(
@@ -278,10 +265,6 @@ export class MigrateNoteTargetToMorphRelationsCommand extends ActiveOrSuspendedW
         workspaceId,
       );
       this.logger.log(`Cache flushed`);
-
-      this.logger.log(
-        `Set IS_NOTE_TARGET_MIGRATED feature flag for workspace ${workspaceId}`,
-      );
 
       this.logger.log(`Flush cache for workspace ${workspaceId}`);
       await this.workspaceCacheStorageService.flush(workspaceId);
