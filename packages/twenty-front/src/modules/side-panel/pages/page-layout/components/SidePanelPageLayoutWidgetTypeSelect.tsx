@@ -3,6 +3,7 @@ import { FIND_MANY_FRONT_COMPONENTS } from '@/front-components/graphql/queries/f
 import { useCreatePageLayoutFrontComponentWidget } from '@/page-layout/hooks/useCreatePageLayoutFrontComponentWidget';
 import { useCreatePageLayoutGraphWidget } from '@/page-layout/hooks/useCreatePageLayoutGraphWidget';
 import { useCreatePageLayoutIframeWidget } from '@/page-layout/hooks/useCreatePageLayoutIframeWidget';
+import { useCreatePageLayoutRecordTableWidget } from '@/page-layout/hooks/useCreatePageLayoutRecordTableWidget';
 import { useCreatePageLayoutStandaloneRichTextWidget } from '@/page-layout/hooks/useCreatePageLayoutStandaloneRichTextWidget';
 import { useCreateRecordPageFrontComponentWidget } from '@/page-layout/hooks/useCreateRecordPageFrontComponentWidget';
 import { useOpportunityDefaultChartConfig } from '@/page-layout/hooks/useOpportunityDefaultChartConfig';
@@ -32,6 +33,7 @@ import {
   IconApps,
   IconChartPie,
   IconFrame,
+  IconTable,
 } from 'twenty-ui/display';
 import {
   FeatureFlagKey,
@@ -102,6 +104,9 @@ export const SidePanelPageLayoutWidgetTypeSelect = () => {
 
   const isVerticalList =
     activeTabLayoutMode === PageLayoutTabLayoutMode.VERTICAL_LIST;
+
+  const { createPageLayoutRecordTableWidget } =
+    useCreatePageLayoutRecordTableWidget(pageLayoutId);
 
   const { removePageLayoutWidgetAndPreservePosition } =
     useRemovePageLayoutWidgetAndPreservePosition(pageLayoutId);
@@ -203,6 +208,28 @@ export const SidePanelPageLayoutWidgetTypeSelect = () => {
     closeSidePanelMenu();
   };
 
+  const handleNavigateToRecordTableSettings = () => {
+    if (
+      isExistingWidgetMissingOrDifferentType(
+        existingWidget?.type,
+        WidgetType.RECORD_TABLE,
+      )
+    ) {
+      if (isDefined(pageLayoutEditingWidgetId)) {
+        removePageLayoutWidgetAndPreservePosition(pageLayoutEditingWidgetId);
+      }
+
+      const newRecordTableWidget = createPageLayoutRecordTableWidget();
+
+      setPageLayoutEditingWidgetId(newRecordTableWidget.id);
+    }
+
+    navigatePageLayoutSidePanel({
+      sidePanelPage: SidePanelPages.PageLayoutRecordTableSettings,
+      focusTitleInput: false,
+    });
+  };
+
   const handleCreateFrontComponentWidget = (frontComponent: FrontComponent) => {
     if (
       isExistingWidgetMissingOrDifferentType(
@@ -235,6 +262,7 @@ export const SidePanelPageLayoutWidgetTypeSelect = () => {
 
   const selectableItemIds = [
     'chart',
+    'record-table',
     'iframe',
     'rich-text',
     ...frontComponentsWithSelectItemId.map(({ selectItemId }) => selectItemId),
@@ -252,6 +280,17 @@ export const SidePanelPageLayoutWidgetTypeSelect = () => {
             label={t`Chart`}
             id="chart"
             onClick={handleNavigateToGraphTypeSelect}
+          />
+        </SelectableListItem>
+        <SelectableListItem
+          itemId="record-table"
+          onEnter={handleNavigateToRecordTableSettings}
+        >
+          <CommandMenuItem
+            Icon={IconTable}
+            label={t`Record Table`}
+            id="record-table"
+            onClick={handleNavigateToRecordTableSettings}
           />
         </SelectableListItem>
         <SelectableListItem
