@@ -6,6 +6,7 @@ export const FIND_MANY_FRONT_COMPONENTS = gql`
       id
       name
       applicationId
+      isHeadless
     }
   }
 `;

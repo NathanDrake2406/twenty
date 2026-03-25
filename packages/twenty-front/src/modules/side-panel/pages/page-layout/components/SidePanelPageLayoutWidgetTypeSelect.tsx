@@ -2,12 +2,14 @@ import { CommandMenuItem } from '@/command-menu/components/CommandMenuItem';
 import { FIND_MANY_FRONT_COMPONENTS } from '@/front-components/graphql/queries/findManyFrontComponents';
 import { useCreatePageLayoutFrontComponentWidget } from '@/page-layout/hooks/useCreatePageLayoutFrontComponentWidget';
 import { useCreatePageLayoutGraphWidget } from '@/page-layout/hooks/useCreatePageLayoutGraphWidget';
+import { useCreateRecordPageFrontComponentWidget } from '@/page-layout/hooks/useCreateRecordPageFrontComponentWidget';
 import { useCreatePageLayoutIframeWidget } from '@/page-layout/hooks/useCreatePageLayoutIframeWidget';
 import { useCreatePageLayoutStandaloneRichTextWidget } from '@/page-layout/hooks/useCreatePageLayoutStandaloneRichTextWidget';
 import { useOpportunityDefaultChartConfig } from '@/page-layout/hooks/useOpportunityDefaultChartConfig';
 import { useRemovePageLayoutWidgetAndPreservePosition } from '@/page-layout/hooks/useRemovePageLayoutWidgetAndPreservePosition';
 import { pageLayoutDraftComponentState } from '@/page-layout/states/pageLayoutDraftComponentState';
 import { pageLayoutEditingWidgetIdComponentState } from '@/page-layout/states/pageLayoutEditingWidgetIdComponentState';
+import { getTabLayoutMode } from '@/page-layout/utils/getTabLayoutMode';
 import { getTabListInstanceIdFromPageLayoutAndRecord } from '@/page-layout/utils/getTabListInstanceIdFromPageLayoutAndRecord';
 import { SidePanelGroup } from '@/side-panel/components/SidePanelGroup';
 import { SidePanelList } from '@/side-panel/components/SidePanelList';
@@ -16,6 +18,7 @@ import { useNavigatePageLayoutSidePanel } from '@/side-panel/pages/page-layout/h
 import { usePageLayoutIdFromContextStore } from '@/side-panel/pages/page-layout/hooks/usePageLayoutIdFromContextStore';
 import { getFrontComponentWidgetTypeSelectItemId } from '@/side-panel/pages/page-layout/utils/getFrontComponentWidgetTypeSelectItemId';
 import { isExistingWidgetMissingOrDifferentType } from '@/side-panel/pages/page-layout/utils/isExistingWidgetMissingOrDifferentType';
+import { activeTabIdComponentState } from '@/ui/layout/tab-list/states/activeTabIdComponentState';
 import { SelectableListItem } from '@/ui/layout/selectable-list/components/SelectableListItem';
 import { useAtomComponentState } from '@/ui/utilities/state/jotai/hooks/useAtomComponentState';
 import { useAtomComponentStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateValue';
@@ -33,6 +36,7 @@ import {
 import {
   FeatureFlagKey,
   type FrontComponent,
+  PageLayoutTabLayoutMode,
   WidgetType,
 } from '~/generated-metadata/graphql';
 
@@ -78,6 +82,29 @@ export const SidePanelPageLayoutWidgetTypeSelect = () => {
       tabListInstanceId,
     });
 
+  const { createRecordPageFrontComponentWidget } =
+    useCreateRecordPageFrontComponentWidget({
+      pageLayoutId,
+      tabListInstanceId,
+    });
+
+  const activeTabId = useAtomComponentStateValue(
+    activeTabIdComponentState,
+    tabListInstanceId,
+  );
+
+  const activeTab = pageLayoutDraft.tabs.find(
+    (tab) => tab.id === activeTabId,
+  );
+
+  const activeTabLayoutMode = getTabLayoutMode({
+    tab: activeTab,
+    pageLayoutType: pageLayoutDraft.type,
+  });
+
+  const isVerticalList =
+    activeTabLayoutMode === PageLayoutTabLayoutMode.VERTICAL_LIST;
+
   const { removePageLayoutWidgetAndPreservePosition } =
     useRemovePageLayoutWidgetAndPreservePosition(pageLayoutId);
 
@@ -91,7 +118,9 @@ export const SidePanelPageLayoutWidgetTypeSelect = () => {
     skip: !isApplicationEnabled,
   });
 
-  const frontComponents = frontComponentsData?.frontComponents ?? [];
+  const frontComponents = (frontComponentsData?.frontComponents ?? []).filter(
+    (frontComponent) => !frontComponent.isHeadless,
+  );
 
   const frontComponentsWithSelectItemId = frontComponents.map(
     (frontComponent) => ({
@@ -187,10 +216,19 @@ export const SidePanelPageLayoutWidgetTypeSelect = () => {
         removePageLayoutWidgetAndPreservePosition(pageLayoutEditingWidgetId);
       }
 
-      const newWidget = createPageLayoutFrontComponentWidget(
-        frontComponent.name,
-        frontComponent.id,
-      );
+      const newWidget = isVerticalList
+        ? createRecordPageFrontComponentWidget(
+            frontComponent.name,
+            frontComponent.id,
+          )
+        : createPageLayoutFrontComponentWidget(
+            frontComponent.name,
+            frontComponent.id,
+          );
+
+      if (!isDefined(newWidget)) {
+        return;
+      }
       setPageLayoutEditingWidgetId(newWidget.id);
     }
 

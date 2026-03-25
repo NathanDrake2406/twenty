@@ -3,13 +3,18 @@ import { Suspense, lazy } from 'react';
 
 import { isDefined } from 'twenty-shared/utils';
 
+import { usePageLayoutContentContext } from '@/page-layout/contexts/PageLayoutContentContext';
 import { useIsPageLayoutInEditMode } from '@/page-layout/hooks/useIsPageLayoutInEditMode';
 import { type PageLayoutWidget } from '@/page-layout/types/PageLayoutWidget';
 import { PageLayoutWidgetNoDataDisplay } from '@/page-layout/widgets/components/PageLayoutWidgetNoDataDisplay';
 import { isWidgetConfigurationOfType } from '@/side-panel/pages/page-layout/utils/isWidgetConfigurationOfType';
+import { PageLayoutTabLayoutMode } from '~/generated-metadata/graphql';
 
-const StyledContainer = styled.div<{ isInEditMode: boolean }>`
-  height: 100%;
+const StyledContainer = styled.div<{
+  isInEditMode: boolean;
+  isVerticalList: boolean;
+}>`
+  height: ${({ isVerticalList }) => (isVerticalList ? '300px' : '100%')};
   overflow: auto;
   pointer-events: ${({ isInEditMode }) => (isInEditMode ? 'none' : 'auto')};
   width: 100%;
@@ -29,6 +34,10 @@ export const FrontComponentWidgetRenderer = ({
   widget,
 }: FrontComponentWidgetRendererProps) => {
   const isPageLayoutInEditMode = useIsPageLayoutInEditMode();
+  const { layoutMode } = usePageLayoutContentContext();
+
+  const isVerticalList =
+    layoutMode === PageLayoutTabLayoutMode.VERTICAL_LIST;
 
   const configuration = widget.configuration;
 
@@ -42,7 +51,10 @@ export const FrontComponentWidgetRenderer = ({
   const frontComponentId = configuration.frontComponentId;
 
   return (
-    <StyledContainer isInEditMode={isPageLayoutInEditMode}>
+    <StyledContainer
+      isInEditMode={isPageLayoutInEditMode}
+      isVerticalList={isVerticalList}
+    >
       <Suspense fallback={null}>
         <FrontComponentRenderer frontComponentId={frontComponentId} />
       </Suspense>
