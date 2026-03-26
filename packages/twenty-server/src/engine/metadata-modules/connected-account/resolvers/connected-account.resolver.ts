@@ -16,9 +16,20 @@ import {
 import { NoPermissionGuard } from 'src/engine/guards/no-permission.guard';
 import { SettingsPermissionGuard } from 'src/engine/guards/settings-permission.guard';
 import { WorkspaceAuthGuard } from 'src/engine/guards/workspace-auth.guard';
+import { InjectMessageQueue } from 'src/engine/core-modules/message-queue/decorators/message-queue.decorator';
+import { MessageQueue } from 'src/engine/core-modules/message-queue/message-queue.constants';
+import { MessageQueueService } from 'src/engine/core-modules/message-queue/services/message-queue.service';
 import { ConnectedAccountMetadataService } from 'src/engine/metadata-modules/connected-account/connected-account-metadata.service';
 import { ConnectedAccountDTO } from 'src/engine/metadata-modules/connected-account/dtos/connected-account.dto';
 import { ConnectedAccountGraphqlApiExceptionInterceptor } from 'src/engine/metadata-modules/connected-account/interceptors/connected-account-graphql-api-exception.interceptor';
+import {
+  DeleteConnectedAccountAssociatedCalendarDataJob,
+  type DeleteConnectedAccountAssociatedCalendarDataJobData,
+} from 'src/modules/calendar/calendar-event-cleaner/jobs/delete-connected-account-associated-calendar-data.job';
+import {
+  MessagingConnectedAccountDeletionCleanupJob,
+  type MessagingConnectedAccountDeletionCleanupJobData,
+} from 'src/modules/messaging/message-cleaner/jobs/messaging-connected-account-deletion-cleanup.job';
 
 @UseGuards(WorkspaceAuthGuard, FeatureFlagGuard)
 @UseInterceptors(ConnectedAccountGraphqlApiExceptionInterceptor)
@@ -26,6 +37,10 @@ import { ConnectedAccountGraphqlApiExceptionInterceptor } from 'src/engine/metad
 export class ConnectedAccountResolver {
   constructor(
     private readonly connectedAccountMetadataService: ConnectedAccountMetadataService,
+    @InjectMessageQueue(MessageQueue.messagingQueue)
+    private readonly messagingQueueService: MessageQueueService,
+    @InjectMessageQueue(MessageQueue.calendarQueue)
+    private readonly calendarQueueService: MessageQueueService,
   ) {}
 
   @Query(() => [ConnectedAccountDTO])
@@ -63,6 +78,16 @@ export class ConnectedAccountResolver {
       userWorkspaceId,
       workspaceId: workspace.id,
     });
+
+    await this.messagingQueueService.add<MessagingConnectedAccountDeletionCleanupJobData>(
+      MessagingConnectedAccountDeletionCleanupJob.name,
+      { workspaceId: workspace.id, connectedAccountId: id },
+    );
+
+    await this.calendarQueueService.add<DeleteConnectedAccountAssociatedCalendarDataJobData>(
+      DeleteConnectedAccountAssociatedCalendarDataJob.name,
+      { workspaceId: workspace.id, connectedAccountId: id },
+    );
 
     return this.connectedAccountMetadataService.delete({
       id,
