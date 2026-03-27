@@ -47,6 +47,20 @@ export const SentryInitEffect = () => {
                 onunhandledrejection: false, // handled in PromiseRejectionEffect
               }),
             ],
+            beforeBreadcrumb(breadcrumb) {
+              if (
+                breadcrumb.category === 'sentry.event' &&
+                breadcrumb.level === 'error' &&
+                typeof breadcrumb.message === 'string' &&
+                (breadcrumb.message.includes('Unknown type') ||
+                  breadcrumb.message.includes('Cannot query field')) &&
+                window.location.pathname === '/welcome'
+              ) {
+                return null;
+              }
+
+              return breadcrumb;
+            },
             tracePropagationTargets: [
               'localhost:3001',
               REACT_APP_SERVER_BASE_URL,
