@@ -11,6 +11,8 @@ import { LogicFunctionToolProvider } from 'src/engine/core-modules/tool-provider
 import { MetadataToolProvider } from 'src/engine/core-modules/tool-provider/providers/metadata-tool.provider';
 import { NativeModelToolProvider } from 'src/engine/core-modules/tool-provider/providers/native-model-tool.provider';
 import { ViewFieldToolProvider } from 'src/engine/core-modules/tool-provider/providers/view-field-tool.provider';
+import { ViewFilterToolProvider } from 'src/engine/core-modules/tool-provider/providers/view-filter-tool.provider';
+import { ViewSortToolProvider } from 'src/engine/core-modules/tool-provider/providers/view-sort-tool.provider';
 import { ViewToolProvider } from 'src/engine/core-modules/tool-provider/providers/view-tool.provider';
 import { WorkflowToolProvider } from 'src/engine/core-modules/tool-provider/providers/workflow-tool.provider';
 import { ToolExecutorService } from 'src/engine/core-modules/tool-provider/services/tool-executor.service';
@@ -25,6 +27,8 @@ import { ObjectMetadataModule } from 'src/engine/metadata-modules/object-metadat
 import { PermissionsModule } from 'src/engine/metadata-modules/permissions/permissions.module';
 import { UserRoleModule } from 'src/engine/metadata-modules/user-role/user-role.module';
 import { ViewFieldModule } from 'src/engine/metadata-modules/view-field/view-field.module';
+import { ViewFilterModule } from 'src/engine/metadata-modules/view-filter/view-filter.module';
+import { ViewSortModule } from 'src/engine/metadata-modules/view-sort/view-sort.module';
 import { ViewModule } from 'src/engine/metadata-modules/view/view.module';
 import { WorkspaceCacheModule } from 'src/engine/workspace-cache/workspace-cache.module';
 
@@ -48,6 +52,8 @@ import { ToolRegistryService } from './services/tool-registry.service';
     PermissionsModule,
     ViewModule,
     ViewFieldModule,
+    ViewFilterModule,
+    ViewSortModule,
     WorkspaceCacheModule,
     WorkspaceManyOrAllFlatEntityMapsCacheModule,
     LogicFunctionModule,
@@ -64,6 +70,8 @@ import { ToolRegistryService } from './services/tool-registry.service';
     NativeModelToolProvider,
     LogicFunctionToolProvider,
     ViewFieldToolProvider,
+    ViewFilterToolProvider,
+    ViewSortToolProvider,
     ViewToolProvider,
     WorkflowToolProvider,
     {
@@ -77,6 +85,8 @@ import { ToolRegistryService } from './services/tool-registry.service';
         metadataProvider: MetadataToolProvider,
         logicFunctionProvider: LogicFunctionToolProvider,
         viewFieldProvider: ViewFieldToolProvider,
+        viewFilterProvider: ViewFilterToolProvider,
+        viewSortProvider: ViewSortToolProvider,
         viewProvider: ViewToolProvider,
         workflowProvider: WorkflowToolProvider,
       ) => [
@@ -86,6 +96,8 @@ import { ToolRegistryService } from './services/tool-registry.service';
         metadataProvider,
         logicFunctionProvider,
         viewFieldProvider,
+        viewFilterProvider,
+        viewSortProvider,
         viewProvider,
         workflowProvider,
       ],
@@ -96,6 +108,8 @@ import { ToolRegistryService } from './services/tool-registry.service';
         MetadataToolProvider,
         LogicFunctionToolProvider,
         ViewFieldToolProvider,
+        ViewFilterToolProvider,
+        ViewSortToolProvider,
         ViewToolProvider,
         WorkflowToolProvider,
       ],

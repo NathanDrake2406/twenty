@@ -65,10 +65,33 @@ export const useAgentChat = (
     agentChatDraftsByThreadIdState,
   );
 
-  const retryFetchWithRenewedToken = async (
+  const getCurrentAccessToken = () => {
+    const currentTokenPair = store.get(tokenPairState.atom);
+
+    return currentTokenPair?.accessOrWorkspaceAgnosticToken?.token;
+  };
+
+  const retryFetchWithCurrentOrRenewedToken = async (
     input: RequestInfo | URL,
     init?: RequestInit,
+    failedAccessToken?: string,
   ) => {
+    const currentAccessToken = getCurrentAccessToken();
+
+    if (
+      isDefined(currentAccessToken) &&
+      currentAccessToken !== failedAccessToken
+    ) {
+      const updatedHeaders = new Headers(init?.headers ?? {});
+
+      updatedHeaders.set('Authorization', `Bearer ${currentAccessToken}`);
+
+      return fetch(input, {
+        ...init,
+        headers: updatedHeaders,
+      });
+    }
+
     const tokenPair = getTokenPair();
 
     if (!isDefined(tokenPair)) {
@@ -82,7 +105,6 @@ export const useAgentChat = (
       );
 
       if (!isDefined(renewedTokens)) {
-        setTokenPair(null);
         return null;
       }
 
@@ -90,7 +112,6 @@ export const useAgentChat = (
         renewedTokens.accessOrWorkspaceAgnosticToken?.token;
 
       if (!isDefined(renewedAccessToken)) {
-        setTokenPair(null);
         return null;
       }
 
@@ -98,6 +119,7 @@ export const useAgentChat = (
       setTokenPair(renewedTokens);
 
       const updatedHeaders = new Headers(init?.headers ?? {});
+
       updatedHeaders.set('Authorization', `Bearer ${renewedAccessToken}`);
 
       return fetch(input, {
@@ -105,7 +127,6 @@ export const useAgentChat = (
         headers: updatedHeaders,
       });
     } catch {
-      setTokenPair(null);
       return null;
     }
   };
@@ -113,14 +134,26 @@ export const useAgentChat = (
   const { sendMessage, messages, status, error, regenerate, stop } = useChat({
     transport: new DefaultChatTransport({
       api: `${REST_API_BASE_URL}/agent-chat/stream`,
-      headers: () => ({
-        Authorization: `Bearer ${getTokenPair()?.accessOrWorkspaceAgnosticToken.token}`,
-      }),
+      headers: () => {
+        const token = getCurrentAccessToken();
+
+        return {
+          Authorization: token ? `Bearer ${token}` : '',
+        };
+      },
       fetch: async (input, init) => {
         const response = await fetch(input, init);
 
         if (response.status === 401) {
-          const retriedResponse = await retryFetchWithRenewedToken(input, init);
+          const failedAccessToken = new Headers(init?.headers ?? {})
+            .get('Authorization')
+            ?.replace('Bearer ', '');
+
+          const retriedResponse = await retryFetchWithCurrentOrRenewedToken(
+            input,
+            init,
+            failedAccessToken,
+          );
 
           return retriedResponse ?? response;
         }
