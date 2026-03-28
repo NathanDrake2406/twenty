@@ -17,6 +17,7 @@ export const buildDefaultIndexesForCustomObject = ({
   defaultFlatFieldForCustomObjectMaps: DefaultFlatFieldForCustomObjectMaps;
 }) => {
   const tsFlatVectorIndexUniversalIdentifier = v4();
+  const positionIndexUniversalIdentifier = v4();
   const createdAt = new Date();
   const tsVectorFlatIndex = generateFlatIndexMetadataWithNameOrThrow({
     objectFlatFieldMetadatas,
@@ -48,9 +49,39 @@ export const buildDefaultIndexesForCustomObject = ({
     flatObjectMetadata,
   });
 
+  const positionFlatIndex = generateFlatIndexMetadataWithNameOrThrow({
+    objectFlatFieldMetadatas,
+    flatIndex: {
+      createdAt: createdAt.toISOString(),
+      universalFlatIndexFieldMetadatas: [
+        {
+          createdAt: createdAt.toISOString(),
+          fieldMetadataUniversalIdentifier:
+            defaultFlatFieldForCustomObjectMaps.fields.position
+              .universalIdentifier,
+          indexMetadataUniversalIdentifier: positionIndexUniversalIdentifier,
+          order: 0,
+          updatedAt: createdAt.toISOString(),
+        },
+      ],
+
+      indexType: IndexType.BTREE,
+      indexWhereClause: null,
+      isCustom: false,
+      isUnique: false,
+      objectMetadataUniversalIdentifier: flatObjectMetadata.universalIdentifier,
+      universalIdentifier: positionIndexUniversalIdentifier,
+      updatedAt: createdAt.toISOString(),
+      applicationUniversalIdentifier:
+        flatObjectMetadata.applicationUniversalIdentifier,
+    },
+    flatObjectMetadata,
+  });
+
   return {
     indexes: {
       tsVectorFlatIndex,
+      positionFlatIndex,
     },
   } as const satisfies { indexes: Record<string, UniversalFlatIndexMetadata> };
 };
