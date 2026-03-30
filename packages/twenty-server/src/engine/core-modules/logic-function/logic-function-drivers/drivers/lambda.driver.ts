@@ -1,6 +1,6 @@
 import { createHash } from 'crypto';
 import * as fs from 'fs/promises';
-import { resolve, join } from 'path';
+import { join, resolve } from 'path';
 
 import {
   CreateFunctionCommand,
@@ -16,12 +16,15 @@ import {
   type ListLayerVersionsCommandInput,
   LogType,
   PublishLayerVersionCommand,
+  ResourceConflictException,
   ResourceNotFoundException,
+  UpdateFunctionConfigurationCommand,
   waitUntilFunctionActiveV2,
 } from '@aws-sdk/client-lambda';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { AssumeRoleCommand, STSClient } from '@aws-sdk/client-sts';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { Logger } from '@nestjs/common';
 import { isDefined } from 'twenty-shared/utils';
 
 import {
@@ -35,6 +38,7 @@ import {
 import { ASSET_PATH } from 'src/constants/assets-path';
 import { type FlatApplication } from 'src/engine/core-modules/application/types/flat-application.type';
 import { COMMON_LAYER_DEPENDENCIES_DIRNAME } from 'src/engine/core-modules/logic-function/logic-function-drivers/constants/common-layer-dependencies-dirname';
+import { callWithTimeout } from 'src/engine/core-modules/logic-function/logic-function-drivers/utils/call-with-timeout';
 import { copyBuilder } from 'src/engine/core-modules/logic-function/logic-function-drivers/utils/copy-builder';
 import { copyCommonLayerDependencies } from 'src/engine/core-modules/logic-function/logic-function-drivers/utils/copy-common-layer-dependencies';
 import { copyExecutor } from 'src/engine/core-modules/logic-function/logic-function-drivers/utils/copy-executor';
@@ -43,7 +47,6 @@ import { createZipFile } from 'src/engine/core-modules/logic-function/logic-func
 import { TemporaryDirManager } from 'src/engine/core-modules/logic-function/logic-function-drivers/utils/temporary-dir-manager';
 import { type LogicFunctionResourceService } from 'src/engine/core-modules/logic-function/logic-function-resource/logic-function-resource.service';
 import { type SdkClientArchiveService } from 'src/engine/core-modules/sdk-client/sdk-client-archive.service';
-import { callWithTimeout } from 'src/engine/core-modules/logic-function/logic-function-drivers/utils/call-with-timeout';
 import { LogicFunctionExecutionStatus } from 'src/engine/metadata-modules/logic-function/dtos/logic-function-execution-result.dto';
 import { LogicFunctionRuntime } from 'src/engine/metadata-modules/logic-function/logic-function.entity';
 import {
@@ -116,6 +119,7 @@ export interface LambdaDriverOptions extends LambdaClientConfig {
 }
 
 export class LambdaDriver implements LogicFunctionDriver {
+  private readonly logger = new Logger(LambdaDriver.name);
   private lambdaClient: Lambda | undefined;
   private assumeRoleCredentials:
     | { accessKeyId: string; secretAccessKey: string; sessionToken: string }
@@ -856,8 +860,6 @@ export class LambdaDriver implements LogicFunctionDriver {
     const layers = lambdaExecutor.Configuration?.Layers;
 
     if (!isDefined(layers) || layers.length !== 2) {
-      await this.delete(flatLogicFunction);
-
       return false;
     }
 
@@ -867,17 +869,41 @@ export class LambdaDriver implements LogicFunctionDriver {
       applicationUniversalIdentifier,
     });
 
-    const hasExpectedLayers =
+    return (
       layers.some((layer) => layer.Arn?.includes(depsLayerName)) &&
-      layers.some((layer) => layer.Arn?.includes(sdkLayerName));
+      layers.some((layer) => layer.Arn?.includes(sdkLayerName))
+    );
+  }
 
-    if (hasExpectedLayers) {
-      return true;
+  private async updateLambdaFunction({
+    flatLogicFunction,
+    depsLayerArn,
+    sdkLayerArn,
+  }: {
+    flatLogicFunction: FlatLogicFunction;
+    depsLayerArn: string;
+    sdkLayerArn: string;
+  }) {
+    const lambdaClient = await this.getLambdaClient();
+
+    try {
+      await lambdaClient.send(
+        new UpdateFunctionConfigurationCommand({
+          FunctionName: flatLogicFunction.id,
+          Layers: [depsLayerArn, sdkLayerArn],
+          Runtime: flatLogicFunction.runtime,
+          Timeout: 900,
+        }),
+      );
+    } catch (error) {
+      if (!(error instanceof ResourceConflictException)) {
+        throw error;
+      }
+
+      this.logger.warn(
+        `Concurrent update conflict on function '${flatLogicFunction.id}', deferring to existing update`,
+      );
     }
-
-    await this.delete(flatLogicFunction);
-
-    return false;
   }
 
   private async build({
@@ -900,8 +926,6 @@ export class LambdaDriver implements LogicFunctionDriver {
       return;
     }
 
-    await this.delete(flatLogicFunction);
-
     const depsLayerArn = await this.getLayerArn({
       flatApplication,
       applicationUniversalIdentifier,
@@ -912,6 +936,34 @@ export class LambdaDriver implements LogicFunctionDriver {
       applicationUniversalIdentifier,
     });
 
+    const lambdaExecutor = await this.getLambdaExecutor(flatLogicFunction);
+
+    if (isDefined(lambdaExecutor)) {
+      await this.updateLambdaFunction({
+        flatLogicFunction,
+        depsLayerArn,
+        sdkLayerArn,
+      });
+
+      return;
+    }
+
+    await this.createLambdaFunction({
+      flatLogicFunction,
+      depsLayerArn,
+      sdkLayerArn,
+    });
+  }
+
+  private async createLambdaFunction({
+    flatLogicFunction,
+    depsLayerArn,
+    sdkLayerArn,
+  }: {
+    flatLogicFunction: FlatLogicFunction;
+    depsLayerArn: string;
+    sdkLayerArn: string;
+  }) {
     const temporaryDirManager = new TemporaryDirManager();
 
     const { sourceTemporaryDir, lambdaZipPath } =
@@ -936,9 +988,19 @@ export class LambdaDriver implements LogicFunctionDriver {
         Timeout: 900,
       };
 
-      const command = new CreateFunctionCommand(params);
+      const lambdaClient = await this.getLambdaClient();
 
-      await (await this.getLambdaClient()).send(command);
+      try {
+        await lambdaClient.send(new CreateFunctionCommand(params));
+      } catch (error) {
+        if (!(error instanceof ResourceConflictException)) {
+          throw error;
+        }
+
+        this.logger.warn(
+          `Concurrent create conflict on function '${flatLogicFunction.id}', deferring to existing function`,
+        );
+      }
     } finally {
       await temporaryDirManager.clean();
     }
