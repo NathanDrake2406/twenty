@@ -15,6 +15,7 @@ import {
   agentChatDraftsByThreadIdState,
 } from '@/ai/states/agentChatDraftsByThreadIdState';
 import { agentChatInputState } from '@/ai/states/agentChatInputState';
+import { agentChatQueuedMessagesByThreadIdState } from '@/ai/states/agentChatQueuedMessagesByThreadIdState';
 import { useAgentChatModelId } from '@/ai/hooks/useAgentChatModelId';
 import { REST_API_BASE_URL } from '@/apollo/constant/rest-api-base-url';
 import { getTokenPair } from '@/apollo/utils/getTokenPair';
@@ -62,6 +63,9 @@ export const useAgentChat = (
   const [, setAgentChatInput] = useAtomState(agentChatInputState);
   const setAgentChatDraftsByThreadId = useSetAtomState(
     agentChatDraftsByThreadIdState,
+  );
+  const setAgentChatQueuedMessagesByThreadId = useSetAtomState(
+    agentChatQueuedMessagesByThreadIdState,
   );
 
   const retryFetchWithRenewedToken = async (
@@ -254,7 +258,29 @@ export const useAgentChat = (
           ).trim()
         : store.get(agentChatInputState.atom).trim();
 
-    if (contentToSend === '' || isLoading) {
+    if (contentToSend === '') {
+      return;
+    }
+
+    if (isStreaming) {
+      const threadId =
+        store.get(currentAIChatThreadState.atom) ??
+        AGENT_CHAT_NEW_THREAD_DRAFT_KEY;
+
+      setAgentChatQueuedMessagesByThreadId((prev) => ({
+        ...prev,
+        [threadId]: [...(prev[threadId] ?? []), { text: contentToSend }],
+      }));
+      setAgentChatInput('');
+      setAgentChatDraftsByThreadId((prev) => ({
+        ...prev,
+        [draftKey]: '',
+      }));
+
+      return;
+    }
+
+    if (isLoading) {
       return;
     }
 
@@ -295,6 +321,7 @@ export const useAgentChat = (
   }, [
     store,
     isLoading,
+    isStreaming,
     ensureThreadIdForSend,
     setAgentChatInput,
     getBrowsingContext,
@@ -302,6 +329,50 @@ export const useAgentChat = (
     agentChatUploadedFiles,
     setAgentChatUploadedFiles,
     setAgentChatDraftsByThreadId,
+    setAgentChatQueuedMessagesByThreadId,
+    modelIdForRequest,
+  ]);
+
+  const flushNextQueuedMessage = useCallback(async () => {
+    const threadId = store.get(currentAIChatThreadState.atom);
+
+    if (!isDefined(threadId)) {
+      return;
+    }
+
+    const queue =
+      store.get(agentChatQueuedMessagesByThreadIdState.atom)[threadId] ?? [];
+
+    if (queue.length === 0) {
+      return;
+    }
+
+    const [nextMessage, ...remainingMessages] = queue;
+
+    setAgentChatQueuedMessagesByThreadId((prev) => ({
+      ...prev,
+      [threadId]: remainingMessages,
+    }));
+
+    const browsingContext = getBrowsingContext();
+
+    sendMessage(
+      { text: nextMessage.text },
+      {
+        body: {
+          threadId,
+          browsingContext,
+          ...(isDefined(modelIdForRequest) && {
+            modelId: modelIdForRequest,
+          }),
+        },
+      },
+    );
+  }, [
+    store,
+    sendMessage,
+    getBrowsingContext,
+    setAgentChatQueuedMessagesByThreadId,
     modelIdForRequest,
   ]);
 
@@ -348,6 +419,7 @@ export const useAgentChat = (
     handleSendMessage,
     handleStop,
     resumeStream,
+    flushNextQueuedMessage,
     isLoading,
     error,
     status,

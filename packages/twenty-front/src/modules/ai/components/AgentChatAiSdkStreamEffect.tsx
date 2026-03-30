@@ -81,6 +81,23 @@ export const AgentChatAiSdkStreamEffect = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentAIChatThread, agentChatFetchedMessages.length]);
 
+  // Flush the next queued message when streaming finishes (status
+  // transitions to 'ready'). A small delay ensures the refetch
+  // triggered by onStreamingComplete has time to update state.
+  const { flushNextQueuedMessage } = chatState;
+
+  useEffect(() => {
+    if (chatState.status !== 'ready') {
+      return;
+    }
+
+    const timeoutId = setTimeout(() => {
+      flushNextQueuedMessage();
+    }, 500);
+
+    return () => clearTimeout(timeoutId);
+  }, [chatState.status, flushNextQueuedMessage]);
+
   const setAgentChatMessages = useSetAtomComponentFamilyState(
     agentChatMessagesComponentFamilyState,
     { threadId: currentAIChatThread },
