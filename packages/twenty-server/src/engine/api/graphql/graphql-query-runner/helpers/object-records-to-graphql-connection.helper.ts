@@ -124,10 +124,19 @@ export class ObjectRecordsToGraphqlConnectionHelper {
           return acc;
         }
 
+        const sanitizedValue =
+          typeof aggregatedFieldValue === 'number' &&
+          !Number.isFinite(aggregatedFieldValue)
+            ? null
+            : aggregatedFieldValue;
+
+        if (!isDefined(sanitizedValue)) {
+          return acc;
+        }
+
         return {
           ...acc,
-          [aggregatedFieldName]:
-            objectRecordsAggregatedValues[aggregatedFieldName],
+          [aggregatedFieldName]: sanitizedValue,
         };
       },
       {},
@@ -319,6 +328,12 @@ export class ObjectRecordsToGraphqlConnectionHelper {
       case FieldMetadataType.DATE:
       case FieldMetadataType.DATE_TIME:
         return value instanceof Date ? value.toISOString() : value;
+      case FieldMetadataType.NUMBER:
+      case FieldMetadataType.NUMERIC:
+      case FieldMetadataType.POSITION:
+        return typeof value === 'number' && !Number.isFinite(value)
+          ? null
+          : value;
       default:
         return value;
     }
