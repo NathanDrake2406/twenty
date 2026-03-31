@@ -25,6 +25,7 @@ The current upgrade system has several pain points:
 
 - **Sequentiality**: the upgrade processes one version bundle at a time, fully completing it (`instanceCommands`, stamp `instanceVersion`, then `perWorkspaceCommands` for all workspaces) before moving to the next. There is no cross-version interleaving -- the instance must finish upgrading all workspaces to version N before any version N+1 commands run.
 - **Idempotency**: all upgrade commands -- both `GlobalCommand` (in `instanceCommands`) and `PerWorkspaceCommand` (in `perWorkspaceCommands`) -- must be idempotent. Running the same command twice on the same workspace (or the same global state) produces the same result as running it once. This is critical because re-runs after partial failures must be safe, and single-workspace upgrades re-run global commands that may have already been applied.
+- **`instanceVersion` advancement guard**: `instanceVersion` can only advance to N+1 if **all workspace versions equal `instanceVersion`** (i.e. all workspaces are at N). If any workspace is behind -- because it failed a previous `perWorkspaceCommands` pass -- the orchestrator refuses to run the next bundle's `instanceCommands`. The operator must fix the failing workspace and re-run before the instance can move forward.
 - **Forward compatibility of global changes**: global commands (especially `instanceCommands` like TypeORM migrations) must produce a schema that is compatible with workspaces still at `instanceVersion - 1`. Since `instanceVersion` is stamped after `instanceCommands`, workspaces are still at the previous version when the global schema changes land. A global schema change that breaks those workspaces violates the upgrade contract.
 - **No downgrade support**: the upgrade path is forward-only.
 
@@ -45,14 +46,15 @@ Stored in the existing `KeyValuePair` table (`core` schema) as a `CONFIG_VARIABL
 
 ### Lifecycle
 
-1. Before any upgrade, `instanceVersion` reflects the last version whose `instanceCommands` completed (e.g. `1.18.0`).
-2. The orchestrator picks the next version bundle in `UPGRADE_COMMAND_SUPPORTED_VERSIONS` (e.g. `bundle_1190`).
-3. The `instanceCommands` run (global schema changes).
-4. `instanceVersion` is stamped to `1.19.0`. The shared database is now at this version's global state.
-5. The `perWorkspaceCommands` run for all workspaces at `1.18.0` (i.e. `instanceVersion - 1`).
-6. Once all workspaces succeed, the orchestrator moves to the next version bundle.
+1. Before any upgrade, `instanceVersion` reflects the last fully-completed version bundle (e.g. `1.18.0`).
+2. The orchestrator verifies all workspace versions equal `instanceVersion` (advancement guard).
+3. The orchestrator picks the next version bundle in `UPGRADE_COMMAND_SUPPORTED_VERSIONS` (e.g. `bundle_1190`).
+4. The `instanceCommands` run (global schema changes).
+5. `instanceVersion` is stamped to `1.19.0`. The shared database is now at this version's global state.
+6. The `perWorkspaceCommands` run for all workspaces at `1.18.0` (i.e. `instanceVersion - 1`).
+7. Once all workspaces succeed, the orchestrator moves to the next version bundle.
 
-`instanceVersion` advances after `instanceCommands` complete -- it reflects the global schema state. Workspace versions catch up via `perWorkspaceCommands`. During cloud development, `instanceVersion` is bumped on each deploy that runs `instanceCommands`, while workspace versions stay at the previous stable version until the release owner runs the full orchestrator (see "Deploying a Partial Next Version to Cloud Production").
+`instanceVersion` advances after `instanceCommands` complete -- it reflects the global schema state. Workspace versions catch up via `perWorkspaceCommands`. During cloud development, `instanceVersion` is **not** bumped on deploys -- only `instanceCommands` are executed (with skip-if-completed via `instance_upgrade_history`). `instanceVersion` stays at the previous stable version until the release owner runs the full orchestrator (see "Deploying a Partial Next Version to Cloud Production").
 
 ### Workspace Eligibility
 
@@ -281,13 +283,15 @@ The operator investigates workspace B's failure (using the `workspace_upgrade_hi
 ### Failure Behavior
 
 - **Instance command failure**: the upgrade aborts immediately. `instanceVersion` is not stamped (the failing command's transaction is rolled back, previously completed commands remain applied). No per-workspace commands run.
-- **Per-workspace command failure (any workspace)**: the upgrade stops entirely. `instanceVersion` was already stamped (after `instanceCommands`). The failed workspace keeps its current version. Workspaces already upgraded in this bundle's per-workspace pass keep their new version stamp. The operator must fix the issue and re-run -- already-completed commands are skipped via the history tables.
+- **Per-workspace command failure (any workspace)**: the upgrade stops entirely. `instanceVersion` was already stamped (after `instanceCommands`). The failed workspace keeps its current version. Workspaces already upgraded in this bundle's per-workspace pass keep their new version stamp. The operator must fix the issue and re-run -- already-completed commands are skipped via the history tables. Critically, the `instanceVersion` advancement guard prevents the next bundle from starting: since the failed workspace's version is still at `instanceVersion - 1` (not equal to `instanceVersion`), the orchestrator will refuse to advance further until all workspaces catch up.
 
 The final report includes per-workspace status (success / failure / not-attempted).
 
 ### Guard Logic
 
-Before starting the upgrade, the orchestrator checks for workspaces below `instanceVersion - 1` (relative to the first version bundle to process). These workspaces are too far behind to be eligible:
+Before running `instanceCommands` for a version bundle, the orchestrator verifies that **all workspace versions equal `instanceVersion`**. If any workspace is behind (e.g. it failed during the previous bundle's `perWorkspaceCommands`), the orchestrator refuses to advance. This is the primary guard -- `instanceVersion` never moves forward while any workspace is lagging.
+
+On the very first bundle (or after a fresh deploy), the orchestrator also checks for workspaces below `instanceVersion`. These workspaces are too far behind to be eligible:
 
 - **Self-hosted (default)**: the upgrade refuses to start. A clear message lists the affected workspaces and the minimum required version.
 - **Self-hosted (`--force`)**: the upgrade proceeds, but ineligible workspaces are skipped and reported as "refused". The hard-block on workspace failure still applies to eligible workspaces.
@@ -300,6 +304,8 @@ When targeting a single workspace, the orchestrator still runs all `instanceComm
 - Global schema changes are forward-compatible by design -- workspaces at `instanceVersion - 1` continue to work against the new schema.
 
 The orchestrator logs a clear warning when running in single-workspace mode: global commands will be applied to the shared database and affect all workspaces.
+
+Note: after a single-workspace upgrade, the non-targeted workspaces are still at the previous version. The `instanceVersion` advancement guard will block the next bundle until all workspaces are upgraded to `instanceVersion`. The operator must run the full orchestrator (or target each remaining workspace individually) before the instance can advance further.
 
 ### Breaking Changes and Stale Versions
 
@@ -406,10 +412,10 @@ During the development cycle for a new version (e.g. `1.21.0`), the cloud produc
 
 ### How It Works
 
-- **`instanceCommands` run automatically on each deploy** via a dedicated CLI mode (similar to `database:reset --force`). Each deploy runs the full `instanceCommands` array for the current version bundle. Commands already recorded as `completed` in `instance_upgrade_history` are skipped. New commands added since the last deploy are executed. `instanceVersion` is stamped to `1.21.0` after the first deploy that runs `instanceCommands`.
+- **`instanceCommands` run automatically on each deploy** via a dedicated CLI mode (similar to `database:reset --force`). Each deploy runs the full `instanceCommands` array for the current version bundle. Commands already recorded as `completed` in `instance_upgrade_history` are skipped. New commands added since the last deploy are executed. **`instanceVersion` is not stamped** -- it stays at the previous stable version (e.g. `1.20.0`) throughout the development cycle. The skip-if-completed mechanism (via `instance_upgrade_history`) is what prevents re-running already-applied commands on subsequent deploys, not the version stamp.
 - **`perWorkspaceCommands` are run manually** by developers via CLI as needed. This gives developers control over when workspace-level migrations run during the development cycle.
 - **New workspaces** created during the development cycle get the last **sealed** workspace version (e.g. `1.20.0`). They will be upgraded when the release owner runs the full orchestrator.
-- **At stable release**, the release owner runs the full upgrade orchestrator. The orchestrator processes `bundle_1210`: `instanceCommands` are all skipped (already `completed` in history), `instanceVersion` is already `1.21.0` (no-op), and `perWorkspaceCommands` run for all workspaces still at `1.20.0`. Commands already applied manually during the dev cycle are skipped via `workspace_upgrade_history`.
+- **At stable release**, the release owner runs the full upgrade orchestrator. The orchestrator processes `bundle_1210`: `instanceCommands` are all skipped (already `completed` in history), then `perWorkspaceCommands` run for all workspaces still at `1.20.0` (commands already applied manually during the dev cycle are skipped via `workspace_upgrade_history`). Once all workspaces succeed, `instanceVersion` is stamped to `1.21.0` along with all workspace versions. This is the first and only time `instanceVersion` advances.
 
 ### Real-World Example
 
@@ -424,7 +430,7 @@ During the development cycle for a new version (e.g. `1.21.0`), the cloud produc
   instanceCommands:
     [global] TypeORM migrations for 1.21.0    OK
     [global] Add new core index              OK
-  instanceVersion stamped to 1.21.0
+  instanceVersion not stamped (auto-deploy mode)
 
   perWorkspaceCommands: not run (auto-deploy mode only runs instanceCommands)
 ```
@@ -432,14 +438,14 @@ During the development cycle for a new version (e.g. `1.21.0`), the cloud produc
 **Deploy 2** (a developer adds a new instance command to `bundle_1210`):
 
 ```
-> APP_VERSION = 1.21.0, instanceVersion = 1.21.0
+> APP_VERSION = 1.21.0, instanceVersion = 1.20.0
 > Running instanceCommands for bundle_1210 (auto-deploy mode)...
 
   instanceCommands:
     [global] TypeORM migrations for 1.21.0    SKIP (completed in history)
     [global] Add new core index              SKIP (completed in history)
     [global] Seed new config variable        OK  (new command)
-  instanceVersion already at 1.21.0 (no-op)
+  instanceVersion not stamped (auto-deploy mode)
 ```
 
 **Developer manually runs perWorkspaceCommands** for a specific workspace during testing:
@@ -460,14 +466,14 @@ During the development cycle for a new version (e.g. `1.21.0`), the cloud produc
 **Stable release** -- the release owner runs the full upgrade orchestrator:
 
 ```
-> APP_VERSION = 1.21.0, instanceVersion = 1.21.0
+> APP_VERSION = 1.21.0, instanceVersion = 1.20.0
 > Processing bundle_1210...
 
   instanceCommands:
     [global] TypeORM migrations for 1.21.0    SKIP (completed in history)
     [global] Add new core index              SKIP (completed in history)
     [global] Seed new config variable        SKIP (completed in history)
-  instanceVersion already at 1.21.0 (no-op)
+  instanceVersion stamped to 1.21.0
 
   perWorkspaceCommands (workspaces at 1.20.0: A, B, C, E):
     > Workspace A:
@@ -495,10 +501,10 @@ During the development cycle for a new version (e.g. `1.21.0`), the cloud produc
 
 **Key observations**:
 
-- All `instanceCommands` were skipped -- they were already applied across the two deploys during development.
+- All `instanceCommands` were skipped -- they were already applied across the two deploys during development. The `skipIfCompleted` mechanism (via `instance_upgrade_history`) is what makes this possible, not the version stamp.
+- `instanceVersion` stayed at `1.20.0` throughout the entire development cycle. It is only stamped to `1.21.0` now, during the full orchestrator run.
 - Workspace D was manually upgraded during development and is skipped (already at `1.21.0`).
 - Workspace E was created during the dev cycle with version `1.20.0` and is upgraded now.
-- The `skipIfCompleted` mechanism is what makes this workflow possible -- without it, the release orchestrator would redundantly re-execute all commands.
 
 ---
 
@@ -582,10 +588,11 @@ The refactor is designed to be shipped incrementally, phase by phase, without re
 
 - Introduce `instanceVersion` stored in the `KeyValuePair` table (`CONFIG_VARIABLE`, `userId = null`, `workspaceId = null`, key = `INSTANCE_VERSION`). Seed it from `APP_VERSION` on first deployment.
 - The orchestrator iterates through `UPGRADE_COMMAND_SUPPORTED_VERSIONS` from `instanceVersion + 1` to `APP_VERSION`, processing one version bundle at a time: `instanceCommands`, stamp `instanceVersion`, `perWorkspaceCommands` for all workspaces at `instanceVersion - 1`, verify all succeeded.
+- `instanceVersion` advancement guard: before running `instanceCommands` for a bundle, verify all workspace versions equal `instanceVersion`. If any workspace is behind, the orchestrator refuses to advance.
 - Workspace eligibility: only workspaces at exactly `instanceVersion - 1` are upgraded. No straggler rescue.
 - Hard-block on failure: if any workspace fails during per-workspace commands, the upgrade stops entirely.
 - Version comparison is updated to support patch-level diffs (not just major.minor).
-- Guard logic: workspaces below `instanceVersion - 1` block the upgrade (self-hosted default) or are skipped with `--force`.
+- Guard logic: workspaces below `instanceVersion` block the upgrade (self-hosted default) or are skipped with `--force`.
 
 ### Phase 3: Health Check and Error Reporting
 
