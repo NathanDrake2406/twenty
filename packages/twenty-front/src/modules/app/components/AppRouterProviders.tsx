@@ -9,7 +9,7 @@ import { PageChangeEffect } from '@/app/effect-components/PageChangeEffect';
 import { SignOutOnOtherTabSignOutEffect } from '@/auth/effect-components/SignOutOnOtherTabSignOutEffect';
 import { AuthProvider } from '@/auth/components/AuthProvider';
 import { CaptchaProvider } from '@/captcha/components/CaptchaProvider';
-import { ClientConfigProvider } from '@/client-config/components/ClientConfigProvider';
+import { ClientConfigErrorGate } from '@/client-config/components/ClientConfigErrorGate';
 import { ClientConfigProviderEffect } from '@/client-config/components/ClientConfigProviderEffect';
 import { MainContextStoreProvider } from '@/context-store/components/MainContextStoreProvider';
 import { ErrorMessageEffect } from '@/error-handler/components/ErrorMessageEffect';
@@ -47,7 +47,7 @@ export const AppRouterProviders = () => {
         <MinimalMetadataLoadEffect />
         <IsMinimalMetadataReadyEffect />
         <WorkspaceProviderEffect />
-        <ClientConfigProvider>
+        <ClientConfigErrorGate>
           <CaptchaProvider>
             <MinimalMetadataGater>
               <AuthProvider>
@@ -86,7 +86,7 @@ export const AppRouterProviders = () => {
               </AuthProvider>
             </MinimalMetadataGater>
           </CaptchaProvider>
-        </ClientConfigProvider>
+        </ClientConfigErrorGate>
       </BaseThemeProvider>
     </ApolloProvider>
   );

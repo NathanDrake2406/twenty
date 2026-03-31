@@ -2,14 +2,15 @@ import { clientConfigApiStatusState } from '@/client-config/states/clientConfigA
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
 import { AppFullScreenErrorFallback } from '@/error-handler/components/AppFullScreenErrorFallback';
 import { useLingui } from '@lingui/react/macro';
+import { isDefined } from 'twenty-shared/utils';
 
-export const ClientConfigProvider: React.FC<React.PropsWithChildren> = ({
+export const ClientConfigErrorGate: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
-  const { isErrored, error } = useAtomStateValue(clientConfigApiStatusState);
+  const { error } = useAtomStateValue(clientConfigApiStatusState);
   const { t } = useLingui();
 
-  return isErrored && error instanceof Error ? (
+  return isDefined(error) ? (
     <AppFullScreenErrorFallback
       error={error}
       resetErrorBoundary={() => {

@@ -23,24 +23,14 @@ import { isMultiWorkspaceEnabledState } from '@/client-config/states/isMultiWork
 import { labPublicFeatureFlagsState } from '@/client-config/states/labPublicFeatureFlagsState';
 import { sentryConfigState } from '@/client-config/states/sentryConfigState';
 import { supportChatState } from '@/client-config/states/supportChatState';
-import { type ClientConfig } from '@/client-config/types/ClientConfig';
 import { domainConfigurationState } from '@/domain-manager/states/domainConfigurationState';
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { clientConfigApiStatusState } from '@/client-config/states/clientConfigApiStatusState';
 import { getClientConfig } from '@/client-config/utils/getClientConfig';
 import { allowRequestsToTwentyIconsState } from '@/client-config/states/allowRequestsToTwentyIcons';
 import { useSetAtomState } from '@/ui/utilities/state/jotai/hooks/useSetAtomState';
-import { useAtomState } from '@/ui/utilities/state/jotai/hooks/useAtomState';
 
-type UseClientConfigResult = {
-  data: { clientConfig: ClientConfig } | undefined;
-  loading: boolean;
-  error: Error | undefined;
-  fetchClientConfig: () => Promise<void>;
-  refetch: () => Promise<void>;
-};
-
-export const useClientConfig = (): UseClientConfigResult => {
+export const useClientConfig = () => {
   const setIsAnalyticsEnabled = useSetAtomState(isAnalyticsEnabledState);
   const setDomainConfiguration = useSetAtomState(domainConfigurationState);
   const setAuthProviders = useSetAtomState(authProvidersState);
@@ -60,9 +50,7 @@ export const useClientConfig = (): UseClientConfigResult => {
   const setSupportChat = useSetAtomState(supportChatState);
 
   const setSentryConfig = useSetAtomState(sentryConfigState);
-  const [clientConfigApiStatus, setClientConfigApiStatus] = useAtomState(
-    clientConfigApiStatusState,
-  );
+  const setClientConfigApiStatus = useSetAtomState(clientConfigApiStatusState);
 
   const setCaptcha = useSetAtomState(captchaState);
 
@@ -119,27 +107,18 @@ export const useClientConfig = (): UseClientConfigResult => {
 
   const setAppVersion = useSetAtomState(appVersionState);
 
+  const isFetchingRef = useRef(false);
+
   const fetchClientConfig = useCallback(async () => {
-    setClientConfigApiStatus((prev) => ({
-      ...prev,
-      isLoading: true,
-    }));
+    if (isFetchingRef.current) {
+      return;
+    }
+
+    isFetchingRef.current = true;
 
     try {
       const clientConfig = await getClientConfig();
-      setClientConfigApiStatus((prev) => ({
-        ...prev,
-        isLoading: false,
-        isLoadedOnce: true,
-        isErrored: false,
-        error: undefined,
-        data: { clientConfig },
-      }));
-      setClientConfigApiStatus((currentStatus) => ({
-        ...currentStatus,
-        isErrored: false,
-        error: undefined,
-      }));
+
       setAppVersion(clientConfig.appVersion);
       setAuthProviders({
         google: clientConfig.authProviders.google,
@@ -155,18 +134,15 @@ export const useClientConfig = (): UseClientConfigResult => {
       setIsEmailVerificationRequired(clientConfig.isEmailVerificationRequired);
       setBilling(clientConfig.billing);
       setSupportChat(clientConfig.support);
-
       setSentryConfig({
         dsn: clientConfig?.sentry?.dsn,
         release: clientConfig?.sentry?.release,
         environment: clientConfig?.sentry?.environment,
       });
-
       setCaptcha({
         provider: clientConfig?.captcha?.provider,
         siteKey: clientConfig?.captcha?.siteKey,
       });
-
       setApiConfig(clientConfig?.api);
       setDomainConfiguration({
         defaultSubdomain: clientConfig?.defaultSubdomain,
@@ -182,11 +158,6 @@ export const useClientConfig = (): UseClientConfigResult => {
       setIsConfigVariablesInDbEnabled(
         clientConfig?.isConfigVariablesInDbEnabled,
       );
-      setClientConfigApiStatus((currentStatus) => ({
-        ...currentStatus,
-        isSaved: true,
-      }));
-
       setCalendarBookingPageId(clientConfig?.calendarBookingPageId ?? null);
       setIsImapSmtpCaldavEnabled(clientConfig?.isImapSmtpCaldavEnabled);
       setIsEmailingDomainsEnabled(clientConfig?.isEmailingDomainsEnabled);
@@ -195,16 +166,14 @@ export const useClientConfig = (): UseClientConfigResult => {
         clientConfig?.isCloudflareIntegrationEnabled,
       );
       setIsClickHouseConfigured(clientConfig?.isClickHouseConfigured ?? false);
+
+      setClientConfigApiStatus({ isLoaded: true, error: undefined });
     } catch (err) {
       const error =
         err instanceof Error ? err : new Error('Failed to fetch client config');
-      setClientConfigApiStatus((prev) => ({
-        ...prev,
-        isLoading: false,
-        isLoadedOnce: true,
-        isErrored: true,
-        error,
-      }));
+      setClientConfigApiStatus({ isLoaded: true, error });
+    } finally {
+      isFetchingRef.current = false;
     }
   }, [
     setAiModels,
@@ -237,11 +206,5 @@ export const useClientConfig = (): UseClientConfigResult => {
     setAllowRequestsToTwentyIcons,
   ]);
 
-  return {
-    data: clientConfigApiStatus.data,
-    loading: clientConfigApiStatus.isLoading || false,
-    error: clientConfigApiStatus.error,
-    fetchClientConfig,
-    refetch: fetchClientConfig,
-  };
+  return { fetchClientConfig };
 };

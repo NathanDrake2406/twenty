@@ -42,7 +42,9 @@ export const VerifyEmailEffect = () => {
   const { redirectToWorkspaceDomain } = useRedirectToWorkspaceDomain();
   const { verifyLoginToken } = useVerifyLogin();
   const { isOnAWorkspace } = useIsCurrentLocationOnAWorkspace();
-  const clientConfigApiStatus = useAtomStateValue(clientConfigApiStatusState);
+  const { isLoaded: isClientConfigLoaded } = useAtomStateValue(
+    clientConfigApiStatusState,
+  );
 
   const { t } = useLingui();
   useEffect(() => {
@@ -113,7 +115,7 @@ export const VerifyEmailEffect = () => {
       }
     };
 
-    if (!clientConfigApiStatus.isLoadedOnce) {
+    if (!isClientConfigLoaded) {
       return;
     }
 
@@ -121,7 +123,7 @@ export const VerifyEmailEffect = () => {
 
     // Verify email only needs to run once at mount
     // oxlint-disable-next-line react-hooks/exhaustive-deps
-  }, [clientConfigApiStatus.isLoadedOnce]);
+  }, [isClientConfigLoaded]);
 
   if (isError) {
     return (

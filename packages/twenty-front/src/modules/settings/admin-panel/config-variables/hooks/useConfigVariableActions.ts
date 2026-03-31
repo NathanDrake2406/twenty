@@ -15,7 +15,7 @@ import {
 export const useConfigVariableActions = (variableName: string) => {
   const { t } = useLingui();
   const { enqueueSuccessSnackBar, enqueueErrorSnackBar } = useSnackBar();
-  const { refetch: refetchClientConfig } = useClientConfig();
+  const { fetchClientConfig: refetchClientConfig } = useClientConfig();
 
   const [updateDatabaseConfigVariable] = useMutation(
     UpdateDatabaseConfigVariableDocument,

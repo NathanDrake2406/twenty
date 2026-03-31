@@ -84,7 +84,9 @@ const StandardContent = ({
 export const SignInUp = () => {
   const { t } = useLingui();
   const setSignInUpStep = useSetAtomState(signInUpStepState);
-  const clientConfigApiStatus = useAtomStateValue(clientConfigApiStatusState);
+  const { isLoaded: isClientConfigLoaded } = useAtomStateValue(
+    clientConfigApiStatusState,
+  );
 
   const { form } = useSignInUpForm();
   const { signInUpStep } = useSignInUp(form);
@@ -146,7 +148,7 @@ export const SignInUp = () => {
   ]);
 
   const signInUpForm = useMemo(() => {
-    if (getPublicWorkspaceDataLoading || !clientConfigApiStatus.isLoadedOnce) {
+    if (getPublicWorkspaceDataLoading || !isClientConfigLoaded) {
       return (
         <StyledLoaderContainer>
           <Loader color="gray" />
@@ -194,7 +196,7 @@ export const SignInUp = () => {
       </>
     );
   }, [
-    clientConfigApiStatus.isLoadedOnce,
+    isClientConfigLoaded,
     isDefaultDomain,
     isMultiWorkspaceEnabled,
     isOnAWorkspace,

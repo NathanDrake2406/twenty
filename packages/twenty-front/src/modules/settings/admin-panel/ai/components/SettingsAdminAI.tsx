@@ -51,7 +51,7 @@ type UsageBreakdownItem = {
 
 export const SettingsAdminAI = () => {
   const { enqueueErrorSnackBar } = useSnackBar();
-  const { refetch: refetchClientConfig } = useClientConfig();
+  const { fetchClientConfig: refetchClientConfig } = useClientConfig();
   const { formatUsageValue } = useUsageValueFormatter();
   const currentWorkspace = useAtomStateValue(currentWorkspaceState);
   const billing = useAtomStateValue(billingState);

@@ -9,10 +9,10 @@ import { isUndefinedOrNull } from '~/utils/isUndefinedOrNull';
 export const useCaptcha = () => {
   const captcha = useAtomStateValue(captchaState);
   const captchaToken = useAtomStateValue(captchaTokenState);
-  const clientConfigApiStatus = useAtomStateValue(clientConfigApiStatusState);
+  const { isLoaded: isClientConfigLoaded } = useAtomStateValue(
+    clientConfigApiStatusState,
+  );
   const isCaptchaScriptLoaded = useAtomStateValue(isCaptchaScriptLoadedState);
-
-  const isClientConfigLoaded = clientConfigApiStatus.isLoadedOnce;
   const isSiteKeyDefined = isDefined(captcha?.siteKey);
   const isTokenAvailable = isDefined(captchaToken);
 

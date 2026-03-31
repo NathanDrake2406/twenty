@@ -51,7 +51,7 @@ export const SettingsAdminAiProviderDetail = () => {
   const { providerName } = useParams<{ providerName: string }>();
   const navigate = useNavigate();
   const { enqueueErrorSnackBar, enqueueSuccessSnackBar } = useSnackBar();
-  const { refetch: refetchClientConfig } = useClientConfig();
+  const { fetchClientConfig: refetchClientConfig } = useClientConfig();
   const { openModal } = useModal();
   const [searchQuery, setSearchQuery] = useState('');
   const [modelToRemove, setModelToRemove] = useState<{

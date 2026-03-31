@@ -20,7 +20,7 @@ import { IsMinimalMetadataReadyEffect } from '@/metadata-store/effect-components
 import { MinimalMetadataLoadEffect } from '@/metadata-store/effect-components/MinimalMetadataLoadEffect';
 import { jotaiStore } from '@/ui/utilities/state/jotai/jotaiStore';
 import { useState } from 'react';
-import { ClientConfigProvider } from '~/modules/client-config/components/ClientConfigProvider';
+import { ClientConfigErrorGate } from '~/modules/client-config/components/ClientConfigErrorGate';
 import { mockedApolloClient } from '~/testing/mockedApolloClient';
 
 import { MainContextStoreProvider } from '@/context-store/components/MainContextStoreProvider';
@@ -85,7 +85,7 @@ const Providers = () => {
           <I18nProvider i18n={i18n}>
             <ApolloStorybookDevLogEffect />
             <ClientConfigProviderEffect />
-            <ClientConfigProvider>
+            <ClientConfigErrorGate>
               <UserMetadataProviderInitialEffect />
               <MinimalMetadataLoadEffect />
               <IsMinimalMetadataReadyEffect />
@@ -106,7 +106,7 @@ const Providers = () => {
                   <MainContextStoreProvider />
                 </ApolloCoreClientMockedProvider>
               </MinimalMetadataGater>
-            </ClientConfigProvider>
+            </ClientConfigErrorGate>
           </I18nProvider>
         </ApolloProvider>
       </SnackBarComponentInstanceContext.Provider>

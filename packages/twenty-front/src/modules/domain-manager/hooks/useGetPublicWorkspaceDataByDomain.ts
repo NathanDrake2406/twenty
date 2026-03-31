@@ -29,7 +29,9 @@ export const useGetPublicWorkspaceDataByDomain = () => {
   const workspacePublicData = useAtomStateValue(workspacePublicDataState);
   const { redirectToDefaultDomain } = useRedirectToDefaultDomain();
   const setWorkspacePublicData = useSetAtomState(workspacePublicDataState);
-  const clientConfigApiStatus = useAtomStateValue(clientConfigApiStatusState);
+  const { isLoaded: isClientConfigLoaded } = useAtomStateValue(
+    clientConfigApiStatusState,
+  );
 
   const { loading, data, error } = useQuery(
     GetPublicWorkspaceDataByDomainDocument,
@@ -38,7 +40,7 @@ export const useGetPublicWorkspaceDataByDomain = () => {
         origin,
       },
       skip:
-        !clientConfigApiStatus.isSaved ||
+        !isClientConfigLoaded ||
         (isMultiWorkspaceEnabled && isDefaultDomain) ||
         isDefined(workspacePublicData),
     },
