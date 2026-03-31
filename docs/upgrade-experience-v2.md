@@ -23,9 +23,41 @@ The current upgrade system has several pain points:
 
 ## Core Principles
 
-- **Idempotency**: all upgrade commands -- both `GlobalCommand` and `PerWorkspaceCommand` -- must be idempotent. Running the same command twice on the same workspace (or the same global state) produces the same result as running it once. This is critical because global commands affect the shared database and may run before all workspaces are upgraded, and single-workspace upgrades re-run global commands that may have already been applied.
-- **Forward compatibility of global changes**: global commands (especially `fast` ones like TypeORM migrations) must produce a schema that is compatible with workspaces still on older versions. A global schema change that breaks older workspaces violates the cross-version upgrade contract.
+- **Sequentiality**: the upgrade processes one version bundle at a time, fully completing it (fast + slow, all workspaces) before moving to the next. There is no cross-version interleaving -- the instance must finish upgrading all workspaces to version N before any version N+1 commands run.
+- **Idempotency**: all upgrade commands -- both `GlobalCommand` and `PerWorkspaceCommand` -- must be idempotent. Running the same command twice on the same workspace (or the same global state) produces the same result as running it once. This is critical because re-runs after partial failures must be safe, and single-workspace upgrades re-run global commands that may have already been applied.
+- **Forward compatibility of global changes**: global commands (especially `fast` ones like TypeORM migrations) must produce a schema that is compatible with workspaces still on the previous version. A global schema change that breaks workspaces at `instanceVersion - 1` violates the upgrade contract.
 - **No downgrade support**: the upgrade path is forward-only.
+
+---
+
+## Instance Version
+
+The upgrade system introduces a new concept: **`instanceVersion`** -- the version the instance's global state (schema, core data) has been upgraded to. This is distinct from:
+
+- **`APP_VERSION`**: the version of the deployed Twenty codebase (set at build time, read from env/package).
+- **Workspace version**: the version each individual workspace has been upgraded to.
+
+`instanceVersion` tracks how far the shared database has progressed through the upgrade timeline. It is the gate that controls which workspaces are eligible for upgrade.
+
+### Storage
+
+Stored in the existing `KeyValuePair` table (`core` schema) as a `CONFIG_VARIABLE` entry with `userId = null` and `workspaceId = null`, key = `INSTANCE_VERSION`. This leverages the existing `ConfigStorageService` / `ConfigVariables` infrastructure -- no new table or schema change required.
+
+### Lifecycle
+
+1. Before any upgrade, `instanceVersion` reflects the last fully completed version (e.g. `1.18.0`).
+2. The orchestrator picks the next version bundle in `UPGRADE_COMMAND_SUPPORTED_VERSIONS` (e.g. `bundle_1190`).
+3. After the `fast` commands of that bundle complete successfully, `instanceVersion` is stamped to `1.19.0`.
+4. The `slow` commands then run for all workspaces at `1.18.0` (i.e. `instanceVersion - 1`).
+5. Once all workspaces succeed, the orchestrator moves to the next version bundle.
+
+### Workspace Eligibility
+
+A workspace can only be upgraded by a version bundle if it is at exactly `instanceVersion - 1` -- the version immediately before the current instance version in `UPGRADE_COMMAND_SUPPORTED_VERSIONS`. Workspaces that are further behind are not eligible and must be addressed before the instance can proceed to the next version.
+
+### Initial Value
+
+On a fresh install, `instanceVersion` is set to `APP_VERSION` (no upgrade needed). On an existing instance that predates this feature, the migration that introduces `instanceVersion` seeds it from the current `APP_VERSION` at the time of deployment.
 
 ---
 
@@ -35,7 +67,7 @@ Replace the current deep inheritance chain with explicit base classes and an orc
 
 ### Terminology
 
-- **UpgradeCommandOrchestrator**: the top-level orchestrator that resolves versions, runs phases, and manages the upgrade flow.
+- **UpgradeCommandOrchestrator**: the top-level orchestrator that resolves versions, processes version bundles sequentially, and manages the upgrade flow.
 - **UpgradeVersionBundle**: the per-version `{ fast, slow }` object (e.g. `bundle_1200`). Groups all commands needed to upgrade workspaces *to* that version.
 - **UpgradeCommand**: an individual command within a bundle's `fast` or `slow` array. Base class for all upgrade commands. Subtypes:
   - **GlobalCommand**: runs once, globally, workspace-agnostic. Example: TypeORM core migrations, breaking schema changes.
@@ -109,10 +141,12 @@ const bundle_1200: UpgradeVersionBundle = {
 
 `UpgradeCommandOrchestrator` (renamed from `UpgradeCommand`) is responsible for:
 
-1. Resolving the current app version and the supported upgrade range.
-2. Determining which version bundles to run based on the workspace's current version.
-3. **Phase 1**: run `fast` arrays (global-only) for all intermediate version bundles up to the target.
-4. **Phase 2**: for each workspace (sorted by version desc), walk through missing version bundles running each `slow` array as-is (global + per-workspace commands interleaved).
+1. Resolving the current `APP_VERSION`, `instanceVersion`, and the supported upgrade range.
+2. For each version bundle from `instanceVersion + 1` to `APP_VERSION` (sequentially):
+   a. Run the `fast` array (global commands).
+   b. Stamp `instanceVersion` to this version.
+   c. Run the `slow` array for all workspaces at `instanceVersion - 1`.
+   d. Verify all workspaces succeeded before moving to the next version bundle.
 
 ---
 
@@ -120,49 +154,43 @@ const bundle_1200: UpgradeVersionBundle = {
 
 ### How It Works
 
-`UPGRADE_COMMAND_SUPPORTED_VERSIONS` remains an ordered list of versions (e.g. `['1.18.0', '1.19.0', '1.20.0']`). The orchestrator uses it as a timeline:
+`UPGRADE_COMMAND_SUPPORTED_VERSIONS` remains an ordered list of versions (e.g. `['1.18.0', '1.19.0', '1.20.0']`). The orchestrator uses it as a timeline, combined with `instanceVersion` to determine where to start:
 
-1. Read the workspace's current version.
-2. Find that version in the ordered list.
-3. Run all version bundles from the next entry up to (and including) the current app version, sequentially.
+1. Read `instanceVersion` from the database.
+2. Find the next version after `instanceVersion` in the ordered list.
+3. Process each version bundle sequentially up to `APP_VERSION`, fully completing one before starting the next.
 
 No per-version allowlist is needed. The ordered list itself defines the upgrade path. The oldest entry in the list is the oldest supported source version -- anything below it is out of range.
 
-### Key Principle: Rescue Stragglers Within the Supported Range
-
-The cross-version upgrade attempts to bring **all** workspaces within the supported range up to the target version -- not just workspaces that were on the previously installed version. If a workspace was already behind before this deploy (e.g. it failed a previous upgrade), the orchestrator still attempts to walk it through all intermediate version bundles.
-
-This means the `1.20.0` codebase must ship all version bundles back to the oldest supported version. If `UPGRADE_COMMAND_SUPPORTED_VERSIONS` is `['1.17.0', '1.18.0', '1.19.0', '1.20.0']`, then the `1.20.0` release includes `bundle_1180`, `bundle_1190`, and `bundle_1200`.
-
-Workspaces below the oldest supported version (e.g. `1.16.0` when the oldest is `1.17.0`) are out of range and handled by the guard/force logic.
+The `1.20.0` codebase must ship all version bundles back to the oldest supported version. If `UPGRADE_COMMAND_SUPPORTED_VERSIONS` is `['1.17.0', '1.18.0', '1.19.0', '1.20.0']`, then the `1.20.0` release includes `bundle_1180`, `bundle_1190`, and `bundle_1200`.
 
 ### Execution Flow
 
-The upgrade runs in two phases:
+The upgrade processes **one version bundle at a time**, fully completing it before moving to the next:
 
-**Phase 1 -- Fast commands (global, all intermediate versions)**:
+**For each version bundle** (from `instanceVersion + 1` to `APP_VERSION`):
 
-The orchestrator runs the `fast` array for **every version from the oldest needed up to the target**, in order. Since fast commands are global and affect the shared database, they must all run to bring the core schema to the target state. TypeORM migrations are naturally incremental (pending migrations run in timestamp order), but non-TypeORM global commands in `fast` also need to execute for each intermediate version.
+1. **Run `fast` array** (global commands). If any fast command fails, the upgrade aborts immediately. There is no rollback of previously completed fast commands; each runs in its own transaction. The operator must fix the issue and re-run (idempotency ensures completed commands no-op).
 
-**If any fast command fails, the upgrade aborts immediately** -- Phase 2 does not start. There is no rollback of previously completed fast commands; each command runs in its own transaction, so only the failing command's transaction is not applied. Previously completed commands remain in effect. The operator must fix the issue and re-run the upgrade (idempotency ensures already-completed commands no-op).
+2. **Stamp `instanceVersion`** to this version. The shared database is now at this version's global state.
 
-**Phase 2 -- Slow commands (per-workspace, sorted by version desc)**:
+3. **Run `slow` array** for all workspaces at `instanceVersion - 1`. The orchestrator queries for workspaces at exactly the previous version and runs the `slow` commands for each. Both `global` and `per-workspace` commands are interleaved, preserving their defined order. Global commands in `slow` are idempotent and no-op after their first execution. Each workspace's version is stamped after its slow commands complete.
 
-Workspaces are sorted by version descending (most up-to-date first). This gets the majority upgraded quickly -- most workspaces are near the latest version and only need one version bundle. Stragglers on older versions are handled after.
+4. **All workspaces must succeed** before the orchestrator moves to the next version bundle. If any workspace fails during a slow command, the upgrade **stops entirely**. The failed workspace keeps its current version stamp. The operator must fix the issue and re-run.
 
-For each workspace, the orchestrator walks through the missing version bundles in order, running each bundle's `slow` array **as-is** -- both `global` and `per-workspace` commands, interleaved, preserving their defined order. Global commands in `slow` are idempotent and no-op after their first execution. The workspace version is stamped after each version bundle completes.
+### No Straggler Rescue
+
+Unlike a model where the orchestrator walks behind-workspaces through multiple intermediate bundles, the sequential model requires workspaces to be at exactly `instanceVersion - 1` to be eligible for upgrade. Workspaces that are further behind (e.g. they failed a previous upgrade cycle) are **not eligible** -- they block the instance from proceeding to the next version.
+
+This is intentional: the hard-block forces operators to resolve failures before moving forward, preventing a growing tail of broken workspaces across versions.
 
 ### Real-World Example
 
-**Context**: the server was previously running `1.18.0`. We are now deploying `1.20.0`.
+**Context**: the server was previously running `1.18.0` (`instanceVersion = 1.18.0`). We are now deploying `1.20.0`.
 
 **Supported versions**: `['1.17.0', '1.18.0', '1.19.0', '1.20.0']`
 
-**Workspaces**:
-
-- Workspace A: version `1.18.0` (was current, one bundle behind target)
-- Workspace B: version `1.17.0` (straggler -- failed or was skipped during the `1.18.0` upgrade)
-- Workspace C: version `1.18.0` (was current, one bundle behind target)
+**Workspaces**: all at `1.18.0` (A, B, C).
 
 **Version bundles shipped with `1.20.0`**:
 
@@ -174,98 +202,102 @@ this.allBundles = {
 };
 ```
 
-**Phase 1 -- Fast (global, sequential by version)**:
-
-The orchestrator determines the oldest workspace version (`1.17.0`) and runs fast commands from `1.18.0` through `1.20.0`:
+**Version bundle 1.19.0**:
 
 ```
-> Running fast commands (global)...
-  1.18.0.fast:
-    [global] TypeORM migrations for 1.18.0    OK (already applied, no-op)
-  1.19.0.fast:
+> instanceVersion = 1.18.0, target = 1.20.0
+> Processing bundle_1190...
+
+  fast:
     [global] TypeORM migrations for 1.19.0    OK
     [global] Schema change ABC                OK
-  1.20.0.fast:
+  instanceVersion stamped to 1.19.0
+
+  slow (workspaces at 1.18.0: A, B, C):
+    > Workspace A:
+      [per-workspace] backfill feature flags    OK
+      [global] cleanup temp table               OK (first execution)
+      Workspace A stamped to 1.19.0
+    > Workspace B:
+      [per-workspace] backfill feature flags    FAILED
+      *** Upgrade stops. Workspace B stays at 1.18.0. ***
+```
+
+**The upgrade halts.** `instanceVersion` is `1.19.0`, but workspace B is still at `1.18.0`. Workspaces A is at `1.19.0`, C is still at `1.18.0` (not yet attempted).
+
+The operator investigates workspace B's failure (using the `workspace_upgrade_history` table and captured logs), fixes the underlying issue, and re-runs the upgrade command.
+
+**Re-run**:
+
+```
+> instanceVersion = 1.19.0, target = 1.20.0
+> Processing bundle_1190...
+
+  fast:
+    [global] TypeORM migrations for 1.19.0    OK (no-op, idempotent)
+    [global] Schema change ABC                OK (no-op, idempotent)
+  instanceVersion stamped to 1.19.0 (no-op)
+
+  slow (workspaces at 1.18.0: B, C):
+    > Workspace B:
+      [per-workspace] backfill feature flags    OK (fixed)
+      [global] cleanup temp table               OK (no-op, idempotent)
+      Workspace B stamped to 1.19.0
+    > Workspace C:
+      [per-workspace] backfill feature flags    OK
+      [global] cleanup temp table               OK (no-op, idempotent)
+      Workspace C stamped to 1.19.0
+
+> Processing bundle_1200...
+
+  fast:
     [global] TypeORM migrations for 1.20.0    OK
     [global] Breaking schema change XYZ       OK
-```
+  instanceVersion stamped to 1.20.0
 
-Note: `1.18.0.fast` was already applied when the server was on `1.18.0` -- it no-ops thanks to idempotency. The orchestrator runs it anyway because it doesn't track which fast commands were previously run; idempotency makes this safe.
-
-**Phase 2 -- Slow (per-workspace, sorted by version desc)**:
-
-Sorted: A (`1.18.0`), C (`1.18.0`), then B (`1.17.0`).
-
-```
-> Workspace A (1.18.0 -> 1.20.0)
-  Needs: bundle_1190.slow then bundle_1200.slow
-  Running bundle_1190.slow:
-    [per-workspace] backfill feature flags    OK
-    [global] cleanup temp table               OK (idempotent, first execution)
-  Version stamped to 1.19.0
-  Running bundle_1200.slow:
-    [per-workspace] backfillCommandMenuItems  OK
-    [per-workspace] migrateRichTextToText     OK
-  Version stamped to 1.20.0
-
-> Workspace C (1.18.0 -> 1.20.0)
-  Needs: bundle_1190.slow then bundle_1200.slow
-  Running bundle_1190.slow:
-    [per-workspace] backfill feature flags    OK
-    [global] cleanup temp table               OK (no-op, idempotent)
-  Version stamped to 1.19.0
-  Running bundle_1200.slow:
-    [per-workspace] backfillCommandMenuItems  OK
-    [per-workspace] migrateRichTextToText     OK
-  Version stamped to 1.20.0
-
-> Workspace B (1.17.0 -> 1.20.0)
-  Needs: bundle_1180.slow then bundle_1190.slow then bundle_1200.slow
-  Running bundle_1180.slow:
-    [per-workspace] migrate legacy data       OK
-    [per-workspace] backfill new column       OK
-  Version stamped to 1.18.0
-  Running bundle_1190.slow:
-    [per-workspace] backfill feature flags    OK
-    [global] cleanup temp table               OK (no-op, idempotent)
-  Version stamped to 1.19.0
-  Running bundle_1200.slow:
-    [per-workspace] backfillCommandMenuItems  OK
-    [per-workspace] migrateRichTextToText     OK
-  Version stamped to 1.20.0
+  slow (workspaces at 1.19.0: A, B, C):
+    > Workspace A:
+      [per-workspace] backfillCommandMenuItems  OK
+      [per-workspace] migrateRichTextToText     OK
+      Workspace A stamped to 1.20.0
+    > Workspace B:
+      [per-workspace] backfillCommandMenuItems  OK
+      [per-workspace] migrateRichTextToText     OK
+      Workspace B stamped to 1.20.0
+    > Workspace C:
+      [per-workspace] backfillCommandMenuItems  OK
+      [per-workspace] migrateRichTextToText     OK
+      Workspace C stamped to 1.20.0
 ```
 
 **Key observations**:
 
-- Workspace version is stamped after each version bundle, not at the end. If B fails during `bundle_1190.slow`, it stays on `1.18.0` and can be retried later.
-- Global commands in `slow` (like "cleanup temp table") exist because their ordering relative to per-workspace commands matters (e.g. a global cleanup that must happen after a per-workspace backfill). They run once on the first workspace that reaches them, then no-op for subsequent workspaces thanks to idempotency.
-- Phase 1 only runs `fast` arrays (global-only, must be quick). It does **not** extract globals from `slow` -- those stay in Phase 2 to preserve ordering.
-- The `1.18.0` version bundle that previously failed for B is retried -- this is the "rescue straggler" behavior.
+- The upgrade is strictly sequential: `bundle_1190` must fully complete (fast + all workspaces slow) before `bundle_1200` starts.
+- Workspace A was already at `1.19.0` from the first run -- it is not re-processed by `bundle_1190.slow` on re-run (it's no longer at `instanceVersion - 1` for that bundle).
+- Fast commands are idempotent and no-op on re-run. `instanceVersion` stamping is also idempotent.
+- Global commands in `slow` (like "cleanup temp table") no-op after their first execution thanks to idempotency.
+- The failure of workspace B blocked the entire upgrade, forcing the operator to fix it before proceeding.
 
-### Failure Isolation
+### Failure Behavior
 
-If a workspace fails during any slow command, the orchestrator logs the failure and continues to the next workspace. The failed workspace keeps the version stamp of the last completed version bundle. The final report includes per-workspace status (success / failure / skipped / refused).
+- **Fast command failure**: the upgrade aborts immediately. `instanceVersion` is not stamped for this bundle. No slow commands run.
+- **Slow command failure (any workspace)**: the upgrade stops entirely. The failed workspace keeps its current version. Workspaces already upgraded in this bundle's slow pass keep their new version stamp. The operator must fix the issue and re-run.
 
-### Cloud Production Mode
+The final report includes per-workspace status (success / failure / not-attempted).
 
-On cloud prod, the orchestrator runs with `--force` semantics by default:
+### Guard Logic
 
-- **Fast commands always run unconditionally** for all intermediate versions up to the target. The shared database must be at the target schema regardless of individual workspace states.
-- **Slow commands are guarded per workspace**: if a workspace is below the oldest supported version, its slow bundles are skipped and it is reported as "refused" in the final report (rather than blocking the entire upgrade).
-- Workspaces are processed most-up-to-date first to unblock the majority quickly.
+Before starting the upgrade, the orchestrator checks for workspaces below `instanceVersion - 1` (relative to the first version bundle to process). These workspaces are too far behind to be eligible:
 
-### Self-Hosted Mode
-
-- **Default**: if any workspace is below the oldest supported version, the upgrade refuses before running anything (including fast commands). A clear message lists the affected workspaces and the minimum supported source version.
-- **--force**: overrides the guard -- fast commands run unconditionally, slow commands are attempted per workspace with failures isolated and reported.
-- No downgrade support.
+- **Self-hosted (default)**: the upgrade refuses to start. A clear message lists the affected workspaces and the minimum required version.
+- **Self-hosted (`--force`)**: the upgrade proceeds, but ineligible workspaces are skipped and reported as "refused". The hard-block on workspace failure still applies to eligible workspaces.
 
 ### Single-Workspace Upgrade (`-w`)
 
-When targeting a single workspace, the orchestrator still runs all global commands (`fast` for all intermediate version bundles, and any `global` entries in `slow`) because they affect the shared database. This means global changes "leak" to all other workspaces. This is acceptable because:
+When targeting a single workspace, the orchestrator still runs all global commands (`fast` for the relevant version bundle, and any `global` entries in `slow`) because they affect the shared database. `instanceVersion` is stamped after fast commands complete. This means global changes "leak" to all other workspaces. This is acceptable because:
 
 - All commands are idempotent -- when other workspaces are upgraded later, global commands no-op.
-- Global schema changes are forward-compatible by design -- older workspaces continue to work against the new schema.
+- Global schema changes are forward-compatible by design -- workspaces at `instanceVersion - 1` continue to work against the new schema.
 
 The orchestrator logs a clear warning when running in single-workspace mode: global commands will be applied to the shared database and affect all workspaces.
 
@@ -286,7 +318,7 @@ Example: `bundle_1190` has a command that backfills column `X`. In `1.21.0`, a b
 A dedicated recap/status command should provide visibility into this:
 
 - List all workspaces with their current version.
-- Flag workspaces that are **below the supported range** (stragglers that can no longer be upgraded by the current version).
+- Flag workspaces that are **below the supported range** (too far behind to be upgraded by the current version).
 - Flag workspaces that are **at risk** of falling out of range if the next version introduces a breaking change.
 - Warn when a version is about to be or has been dropped from the supported list, and which workspaces are affected.
 
@@ -344,10 +376,11 @@ If idempotent no-op commands become a performance bottleneck at scale (e.g. a fu
 
 ## Post-Upgrade Health Check
 
-After all version bundles complete, the orchestrator runs a health check per workspace:
+After all version bundles complete, the orchestrator runs a health check:
 
-- **Version stamp**: confirm `workspace.version` was updated to the target version.
-- **Command completion**: verify all commands in the `workspace_upgrade_history` table for this workspace are `completed` (no `started` rows without `completedAt`, which would indicate a crash mid-command).
+- **Instance version**: confirm `instanceVersion` matches `APP_VERSION`.
+- **Workspace versions**: confirm all workspace versions match `APP_VERSION`.
+- **Command completion**: verify all commands in the `workspace_upgrade_history` table are `completed` (no `started` rows without `completedAt`, which would indicate a crash mid-command).
 
 Health check results are included in the upgrade report. Failures are warnings (the upgrade itself already succeeded), not rollback triggers.
 
@@ -361,10 +394,10 @@ Note: broader workspace health (metadata consistency, runtime checks, etc.) is a
 
 Replace raw stack traces with a structured report, built from the `workspace_upgrade_history` table:
 
-- Per-workspace status: success / failure / skipped (already at target version) / refused (below range).
+- Per-workspace status: success / failure / not-attempted / refused (below supported range, with `--force`).
 - For failures: the command that failed, a human-readable error message, and the full stack trace captured (not dumped to stdout).
-- For skipped commands: reason (already completed in history, or workspace already at target).
-- Summary: total workspaces, succeeded, failed, skipped.
+- Summary: total workspaces, succeeded, failed, not-attempted.
+- Instance version before and after the upgrade.
 
 ### Report-a-Problem Template (follow-up)
 
@@ -413,16 +446,18 @@ The refactor is designed to be shipped incrementally, phase by phase, without re
 
 **Validation**: the upgrade command produces the same outcome as before -- same TypeORM migrations run, same per-workspace commands execute in the same order.
 
-### Phase 2: Cross-Version Upgrade
+### Phase 2: Cross-Version Upgrade and Instance Version
 
-**Goal**: Allow a workspace to upgrade across multiple minor versions in a single run.
+**Goal**: Allow an instance to upgrade across multiple minor versions in a single run, with strict sequential version-by-version processing.
 
 **What changes**:
 
-- The orchestrator iterates through `UPGRADE_COMMAND_SUPPORTED_VERSIONS` from the workspace's current version to the target, running each version bundle sequentially.
+- Introduce `instanceVersion` stored in the `KeyValuePair` table (`CONFIG_VARIABLE`, `userId = null`, `workspaceId = null`, key = `INSTANCE_VERSION`). Seed it from `APP_VERSION` on first deployment.
+- The orchestrator iterates through `UPGRADE_COMMAND_SUPPORTED_VERSIONS` from `instanceVersion + 1` to `APP_VERSION`, processing one version bundle at a time: fast, stamp `instanceVersion`, slow for all workspaces at `instanceVersion - 1`, verify all succeeded.
+- Workspace eligibility: only workspaces at exactly `instanceVersion - 1` are upgraded. No straggler rescue.
+- Hard-block on failure: if any workspace fails during slow commands, the upgrade stops entirely.
 - Version comparison is updated to support patch-level diffs (not just major.minor).
-- Guard logic updated: the minimum supported source version is the oldest entry in the supported versions list.
-- `--force` behavior preserved for cloud prod.
+- Guard logic: workspaces below `instanceVersion - 1` block the upgrade (self-hosted default) or are skipped with `--force`.
 
 ### Phase 3: Health Check and Error Reporting
 
@@ -430,7 +465,7 @@ The refactor is designed to be shipped incrementally, phase by phase, without re
 
 **What changes**:
 
-- Post-upgrade health check runs after all version bundles complete (schema consistency, version stamp, metadata sync).
+- Post-upgrade health check runs after all version bundles complete (instance version, workspace versions, command completion).
 - Structured upgrade report replaces raw stack traces: per-workspace status, failure details with captured stack traces, summary counts.
 - Report-a-problem template groundwork (workspace status endpoint).
 
