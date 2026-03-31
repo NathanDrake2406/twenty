@@ -15,7 +15,7 @@ The current upgrade system has several pain points:
 - **Cross-version upgrade** works across the ordered list of supported versions (a workspace on `1.18.0` targeting `1.20.0` runs `1.19.0` then `1.20.0` steps sequentially).
 - **Patch-version upgrade support**: the upgrade triggers on patch version differences, not just major.minor. Currently `compareVersionMajorAndMinor` ignores patches entirely, meaning a workspace on `1.20.0` is considered "equal" to `1.20.1` and patch-level upgrade steps cannot run.
 - **Post-upgrade health check** validates workspace consistency after migration.
-- **Improved developer experience** for twenty-eng: clear command taxonomy, scoped responsibilities, easy to add new upgrade steps.
+- **Improved developer experience** for twenty-eng: clear command taxonomy, scoped responsibilities, easy to add new version bundles and steps.
 - **Report-a-problem template** that gathers workspace status including upgrade stack traces.
 - **Settings page** (follow-up) shows current workspace version; if it differs from the installed server version, prompts the user to contact their administrator.
 
@@ -38,9 +38,14 @@ Replace the current deep inheritance chain with two explicit base classes and an
 - **GlobalCommand**: Runs once, globally, workspace-agnostic. Example: running pending TypeORM core migrations (`transaction: 'each'`), applying a breaking schema change.
 - **PerWorkspaceCommand**: Iterates over all active/suspended workspaces and executes per-workspace logic. Example: backfilling data, migrating workspace schemas.
 
-### Version Step Bundle: Fast and Slow
+### Version Bundles and Steps
 
-Each version defines its upgrade steps as two ordered arrays:
+**Terminology**:
+
+- A **version bundle** is the per-version `{ fast, slow }` object (e.g. `steps_1200`). It groups all commands needed to upgrade workspaces *to* that version.
+- A **step** is an individual entry within a `fast` or `slow` array -- a single `{ type, command }` pair.
+
+Each version defines its upgrade bundle as two ordered arrays:
 
 - **`fast`**: Commands that must execute quickly (e.g. breaking schema changes, TypeORM migrations). Contains **only `GlobalCommand` entries**. These run first.
 - **`slow`**: Commands that may take longer (backfills, data migrations). Contains an **interleaved mix of `GlobalCommand` and `PerWorkspaceCommand` entries**. These run after `fast` completes.
@@ -64,9 +69,9 @@ const steps_1200: VersionUpgradeSteps = {
 `UpgradeCommandOrchestrator` (renamed from `UpgradeCommand`) is responsible for:
 
 1. Resolving the current app version and the supported upgrade range.
-2. Determining which version steps to run based on the workspace's current version.
-3. **Phase 1**: run `fast` arrays (global-only) for all intermediate versions up to the target.
-4. **Phase 2**: for each workspace (sorted by version desc), walk through missing version steps running each `slow` array as-is (global + per-workspace interleaved).
+2. Determining which version bundles to run based on the workspace's current version.
+3. **Phase 1**: run `fast` arrays (global-only) for all intermediate version bundles up to the target.
+4. **Phase 2**: for each workspace (sorted by version desc), walk through missing version bundles running each `slow` array as-is (global + per-workspace steps interleaved).
 
 ### Diagram
 
@@ -78,16 +83,16 @@ flowchart TD
   FastLoop --> SortWs["Phase 2: sort workspaces by version desc"]
   SortWs --> WsLoop["For each workspace"]
   WsLoop --> DetectGap["Detect version gap"]
-  DetectGap --> VersionStepLoop["For each missing version step"]
-  VersionStepLoop --> SlowStep["For each step in slow array"]
+  DetectGap --> VersionBundleLoop["For each missing version bundle"]
+  VersionBundleLoop --> SlowStep["For each step in slow array"]
   SlowStep --> IsGlobal{Step type?}
   IsGlobal -->|global| RunGlobal["Execute GlobalCommand (idempotent)"]
   IsGlobal -->|per-workspace| RunPerWs["Execute for this workspace"]
   RunGlobal --> SlowStep
   RunPerWs --> SlowStep
   SlowStep --> StampVersion["Stamp workspace version"]
-  StampVersion --> VersionStepLoop
-  VersionStepLoop --> WsLoop
+  StampVersion --> VersionBundleLoop
+  VersionBundleLoop --> WsLoop
   WsLoop --> HealthCheck["Post-upgrade health check"]
   HealthCheck --> Report["Generate upgrade report"]
 ```
@@ -102,15 +107,15 @@ flowchart TD
 
 1. Read the workspace's current version.
 2. Find that version in the ordered list.
-3. Run all version steps from the next entry up to (and including) the current app version, sequentially.
+3. Run all version bundles from the next entry up to (and including) the current app version, sequentially.
 
 No per-version allowlist is needed. The ordered list itself defines the upgrade path. The oldest entry in the list is the oldest supported source version -- anything below it is out of range.
 
 ### Key Principle: Rescue Stragglers Within the Supported Range
 
-The cross-version upgrade attempts to bring **all** workspaces within the supported range up to the target version -- not just workspaces that were on the previously installed version. If a workspace was already behind before this deploy (e.g. it failed a previous upgrade), the orchestrator still attempts to walk it through all intermediate steps.
+The cross-version upgrade attempts to bring **all** workspaces within the supported range up to the target version -- not just workspaces that were on the previously installed version. If a workspace was already behind before this deploy (e.g. it failed a previous upgrade), the orchestrator still attempts to walk it through all intermediate version bundles.
 
-This means the `1.20.0` codebase must ship all upgrade steps back to the oldest supported version. If `UPGRADE_COMMAND_SUPPORTED_VERSIONS` is `['1.17.0', '1.18.0', '1.19.0', '1.20.0']`, then the `1.20.0` release includes `steps_1180`, `steps_1190`, and `steps_1200`.
+This means the `1.20.0` codebase must ship all version bundles back to the oldest supported version. If `UPGRADE_COMMAND_SUPPORTED_VERSIONS` is `['1.17.0', '1.18.0', '1.19.0', '1.20.0']`, then the `1.20.0` release includes `steps_1180`, `steps_1190`, and `steps_1200`.
 
 Workspaces below the oldest supported version (e.g. `1.16.0` when the oldest is `1.17.0`) are out of range and handled by the guard/force logic.
 
@@ -124,9 +129,9 @@ The orchestrator runs the `fast` array for **every version from the oldest neede
 
 **Phase 2 -- Slow commands (per-workspace, sorted by version desc)**:
 
-Workspaces are sorted by version descending (most up-to-date first). This gets the majority upgraded quickly -- most workspaces are near the latest version and only need one version step. Stragglers on older versions are handled after.
+Workspaces are sorted by version descending (most up-to-date first). This gets the majority upgraded quickly -- most workspaces are near the latest version and only need one version bundle. Stragglers on older versions are handled after.
 
-For each workspace, the orchestrator walks through the missing version steps in order, running each version's `slow` array **as-is** -- both `global` and `per-workspace` entries, interleaved, preserving their defined order. Global commands in `slow` are idempotent and no-op after their first execution. The workspace version is stamped after each version step completes.
+For each workspace, the orchestrator walks through the missing version bundles in order, running each bundle's `slow` array **as-is** -- both `global` and `per-workspace` steps, interleaved, preserving their defined order. Global commands in `slow` are idempotent and no-op after their first execution. The workspace version is stamped after each version bundle completes.
 
 ### Real-World Example
 
@@ -140,7 +145,7 @@ For each workspace, the orchestrator walks through the missing version steps in 
 - Workspace B: version `1.17.0` (straggler -- failed or was skipped during the `1.18.0` upgrade)
 - Workspace C: version `1.18.0` (was current, one step behind target)
 
-**Version steps shipped with `1.20.0`**:
+**Version bundles shipped with `1.20.0`**:
 
 ```typescript
 this.allSteps = {
@@ -213,14 +218,14 @@ Sorted: A (`1.18.0`), C (`1.18.0`), then B (`1.17.0`).
 
 **Key observations**:
 
-- Workspace version is stamped after each version step, not at the end. If B fails during `steps_1190.slow`, it stays on `1.18.0` and can be retried later.
-- Global commands in `slow` (like "cleanup temp table") exist because their ordering relative to per-workspace steps matters (e.g. a global cleanup that must happen after a per-workspace backfill). They run once on the first workspace that reaches them, then no-op for subsequent workspaces thanks to idempotency.
+- Workspace version is stamped after each version bundle, not at the end. If B fails during `steps_1190.slow`, it stays on `1.18.0` and can be retried later.
+- Global steps in `slow` (like "cleanup temp table") exist because their ordering relative to per-workspace steps matters (e.g. a global cleanup that must happen after a per-workspace backfill). They run once on the first workspace that reaches them, then no-op for subsequent workspaces thanks to idempotency.
 - Phase 1 only runs `fast` arrays (global-only, must be quick). It does **not** extract globals from `slow` -- those stay in Phase 2 to preserve ordering.
-- The `1.18.0` upgrade steps that previously failed for B are retried -- this is the "rescue straggler" behavior.
+- The `1.18.0` version bundle that previously failed for B is retried -- this is the "rescue straggler" behavior.
 
 ### Failure Isolation
 
-If a workspace fails during any slow step, the orchestrator logs the failure and continues to the next workspace. The failed workspace keeps the version stamp of the last completed step. The final report includes per-workspace status (success / failure / skipped / refused).
+If a workspace fails during any slow step, the orchestrator logs the failure and continues to the next workspace. The failed workspace keeps the version stamp of the last completed version bundle. The final report includes per-workspace status (success / failure / skipped / refused).
 
 ### Diagram
 
@@ -233,11 +238,11 @@ flowchart TD
   FastLoop --> SortWs["Sort workspaces by version desc"]
   SortWs --> WsLoop["For each workspace"]
   WsLoop --> DetectGap["Detect version gap: workspace version -> target"]
-  DetectGap --> VersionStepLoop["For each missing version step"]
-  VersionStepLoop --> RunSlow["Run slow array for this version step"]
+  DetectGap --> VersionBundleLoop["For each missing version bundle"]
+  VersionBundleLoop --> RunSlow["Run slow array for this version bundle"]
   RunSlow --> StampVersion["Stamp workspace to this version"]
-  StampVersion --> VersionStepLoop
-  VersionStepLoop -->|"failure: log and continue"| WsLoop
+  StampVersion --> VersionBundleLoop
+  VersionBundleLoop -->|"failure: log and continue"| WsLoop
   WsLoop --> Report["Generate upgrade report"]
 ```
 
@@ -246,7 +251,7 @@ flowchart TD
 On cloud prod, the orchestrator runs with `--force` semantics by default:
 
 - **Fast commands always run unconditionally** for all intermediate versions up to the target. The shared database must be at the target schema regardless of individual workspace states.
-- **Slow commands are guarded per workspace**: if a workspace is below the oldest supported version, its slow steps are skipped and it is reported as "refused" in the final report (rather than blocking the entire upgrade).
+- **Slow commands are guarded per workspace**: if a workspace is below the oldest supported version, its slow bundles are skipped and it is reported as "refused" in the final report (rather than blocking the entire upgrade).
 - Workspaces are processed most-up-to-date first to unblock the majority quickly.
 
 ### Self-Hosted Mode
@@ -257,7 +262,7 @@ On cloud prod, the orchestrator runs with `--force` semantics by default:
 
 ### Single-Workspace Upgrade (`-w`)
 
-When targeting a single workspace, the orchestrator still runs all global commands (`fast` for all intermediate versions, and any `global` entries in `slow`) because they affect the shared database. This means global changes "leak" to all other workspaces. This is acceptable because:
+When targeting a single workspace, the orchestrator still runs all global steps (`fast` for all intermediate version bundles, and any `global` entries in `slow`) because they affect the shared database. This means global changes "leak" to all other workspaces. This is acceptable because:
 
 - All commands are idempotent -- when other workspaces are upgraded later, global commands no-op.
 - Global schema changes are forward-compatible by design -- older workspaces continue to work against the new schema.
@@ -268,13 +273,13 @@ The orchestrator logs a clear warning when running in single-workspace mode: glo
 
 Breaking changes in the upgrade history are avoided unless they would break the cross-version upgrade path. When a breaking change is unavoidable:
 
-- The breaking change may make one or more commands in an older version's steps **stale** (e.g. a command that backfills a column that no longer exists after the breaking change).
-- When any command in a version's steps becomes stale, the **entire version must be dropped** from `UPGRADE_COMMAND_SUPPORTED_VERSIONS` -- not just the individual stale command. A workspace on that version needs all of its steps to upgrade successfully; if even one step is broken, the full upgrade path from that version is invalid.
-- All of that version's steps (`fast` and `slow`) are removed from the codebase as a unit.
+- The breaking change may make one or more steps in an older version bundle **stale** (e.g. a command that backfills a column that no longer exists after the breaking change).
+- When any step in a version bundle becomes stale, the **entire version must be dropped** from `UPGRADE_COMMAND_SUPPORTED_VERSIONS` -- not just the individual stale step. A workspace on that version needs all of its bundle's steps to upgrade successfully; if even one step is broken, the full upgrade path from that version is invalid.
+- The entire version bundle (`fast` and `slow`) is removed from the codebase as a unit.
 
-Since the supported range is a contiguous upgrade path, invalidating a version also invalidates **every version below it** -- those workspaces would need to pass through the invalidated version's steps to reach the target.
+Since the supported range is a contiguous upgrade path, invalidating a version also invalidates **every version below it** -- those workspaces would need to pass through the invalidated version bundle to reach the target.
 
-Example: `steps_1190` has a command that backfills column `X`. In `1.21.0`, a breaking change drops column `X`. That single stale command invalidates the entire `1.19.0` upgrade path. But `1.18.0` and `1.17.0` are also invalidated because they depend on `steps_1190` to reach the target. All three versions and their steps are removed from `UPGRADE_COMMAND_SUPPORTED_VERSIONS`. The oldest supported source version becomes `1.20.0`.
+Example: `steps_1190` has a command that backfills column `X`. In `1.21.0`, a breaking change drops column `X`. That single stale step invalidates the entire `1.19.0` version bundle. But `1.18.0` and `1.17.0` are also invalidated because they depend on the `1.19.0` bundle to reach the target. All three versions and their bundles are removed from `UPGRADE_COMMAND_SUPPORTED_VERSIONS`. The oldest supported source version becomes `1.20.0`.
 
 ### Workspace Recap Tooling
 
@@ -291,7 +296,7 @@ This recap is also the foundation for the "report-a-problem" template and the se
 
 ## Post-Upgrade Health Check
 
-After all version steps complete, the orchestrator runs a health check per workspace:
+After all version bundles complete, the orchestrator runs a health check per workspace:
 
 - **Schema consistency**: verify expected tables/columns exist after migrations.
 - **Version stamp**: confirm `workspace.version` was updated to the target version.
@@ -337,7 +342,7 @@ The refactor is designed to be shipped incrementally, phase by phase, without re
 
 ### Phase 1: Command Taxonomy Refactor (start here)
 
-**Goal**: Introduce `GlobalCommand` and `PerWorkspaceCommand` base classes and the `VersionUpgradeSteps` (`fast`/`slow`) format, applied to the current version's upgrade steps.
+**Goal**: Introduce `GlobalCommand` and `PerWorkspaceCommand` base classes and the `VersionUpgradeSteps` (`fast`/`slow`) format, applied to the current version's upgrade bundle.
 
 **What changes**:
 
@@ -352,7 +357,7 @@ The refactor is designed to be shipped incrementally, phase by phase, without re
 
 - `UpgradeCommand` remains the nest-commander entry point, delegating to the orchestrator.
 - Version comparison still uses major.minor (patch support comes in Phase 2).
-- Only the current version's steps are refactored; older version entries (e.g. `1.19.0: []`) are left as-is or trivially wrapped.
+- Only the current version bundle is refactored; older version entries (e.g. `1.19.0: []`) are left as-is or trivially wrapped.
 
 **Validation**: the upgrade command produces the same outcome as before -- same TypeORM migrations run, same per-workspace steps execute in the same order.
 
@@ -362,7 +367,7 @@ The refactor is designed to be shipped incrementally, phase by phase, without re
 
 **What changes**:
 
-- The orchestrator iterates through `UPGRADE_COMMAND_SUPPORTED_VERSIONS` from the workspace's current version to the target, running each version's `VersionUpgradeSteps` sequentially.
+- The orchestrator iterates through `UPGRADE_COMMAND_SUPPORTED_VERSIONS` from the workspace's current version to the target, running each version bundle sequentially.
 - Version comparison is updated to support patch-level diffs (not just major.minor).
 - Guard logic updated: the minimum supported source version is the oldest entry in the supported versions list.
 - `--force` behavior preserved for cloud prod.
@@ -373,7 +378,7 @@ The refactor is designed to be shipped incrementally, phase by phase, without re
 
 **What changes**:
 
-- Post-upgrade health check runs after all version steps complete (schema consistency, version stamp, metadata sync).
+- Post-upgrade health check runs after all version bundles complete (schema consistency, version stamp, metadata sync).
 - Structured upgrade report replaces raw stack traces: per-workspace status, failure details with captured stack traces, summary counts.
 - Report-a-problem template groundwork (workspace status endpoint).
 
@@ -394,4 +399,4 @@ The current inheritance chain in `command-runners/` is replaced in Phase 1:
 - `UpgradeCommandRunner` -- Becomes `UpgradeCommandOrchestrator`
 - `UpgradeCommand` -- Stays as the nest-commander entry point, delegates to orchestrator
 
-Individual upgrade steps (e.g. `backfillCommandMenuItems`) keep their current granularity but extend either `GlobalCommand` or `PerWorkspaceCommand` explicitly.
+Individual steps (e.g. `backfillCommandMenuItems`) keep their current granularity but extend either `GlobalCommand` or `PerWorkspaceCommand` explicitly.
