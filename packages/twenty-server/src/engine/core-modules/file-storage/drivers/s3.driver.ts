@@ -37,6 +37,14 @@ export interface S3DriverOptions extends S3ClientConfig {
   presignEndpoint?: string;
 }
 
+// AWS error names that indicate expired/invalid temporary credentials
+// and are recoverable by retrying (which triggers credential refresh)
+const RETRYABLE_CREDENTIAL_ERROR_NAMES = [
+  'ExpiredToken',
+  'ExpiredTokenException',
+  'RequestExpired',
+];
+
 export class S3Driver implements StorageDriver {
   private s3Client: S3;
   private presignClient: S3 | undefined;
@@ -71,6 +79,10 @@ export class S3Driver implements StorageDriver {
     return this.s3Client;
   }
 
+  private isRetryableCredentialError(error: { name?: string }): boolean {
+    return RETRYABLE_CREDENTIAL_ERROR_NAMES.includes(error.name ?? '');
+  }
+
   async readFile(params: { filePath: string }): Promise<Readable> {
     const command = new GetObjectCommand({
       Key: params.filePath,
@@ -91,6 +103,25 @@ export class S3Driver implements StorageDriver {
           'File not found',
           FileStorageExceptionCode.FILE_NOT_FOUND,
         );
+      }
+
+      if (this.isRetryableCredentialError(error)) {
+        this.logger.warn(
+          `S3 credential error (${error.name}), retrying once to trigger credential refresh`,
+        );
+
+        const retryCommand = new GetObjectCommand({
+          Key: params.filePath,
+          Bucket: this.bucketName,
+        });
+
+        const file = await this.s3Client.send(retryCommand);
+
+        if (!file || !file.Body || !(file.Body instanceof Readable)) {
+          throw new Error('Unable to get file stream');
+        }
+
+        return Readable.from(file.Body);
       }
 
       throw error;
