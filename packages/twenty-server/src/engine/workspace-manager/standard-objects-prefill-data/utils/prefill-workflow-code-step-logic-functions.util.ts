@@ -56,47 +56,31 @@ const FIND_MATCHING_COMPANY_BY_DOMAIN_TOOL_INPUT_SCHEMA = {
   required: ['companies', 'domain'],
 };
 
-const EXTRACT_DOMAIN_LOGIC_FUNCTION_SOURCE = `const MULTI_PART_SUFFIXES = new Set([
-  'ac.uk',
-  'co.in',
-  'co.jp',
-  'co.kr',
-  'co.nz',
-  'co.uk',
-  'co.za',
-  'com.ar',
-  'com.au',
-  'com.br',
-  'com.cn',
-  'com.hk',
-  'com.mx',
-  'com.sg',
-  'com.tr',
-  'com.tw',
-  'com.ua',
-  'gov.uk',
-  'ne.jp',
-  'net.au',
-  'org.au',
-  'org.uk',
-]);
+const PSL_DOMAIN_UTILS_SOURCE = `import psl from 'psl';
 
-const getRegistrableDomain = (host) => {
-  const normalizedHost = host.toLowerCase().replace(/^www\\./, '');
-  const parts = normalizedHost.split('.').filter(Boolean);
-
-  if (parts.length <= 2) {
-    return normalizedHost;
+const normalizeHost = (value) => {
+  if (typeof value !== 'string') {
+    return '';
   }
 
-  const lastTwo = parts.slice(-2).join('.');
-
-  if (MULTI_PART_SUFFIXES.has(lastTwo) && parts.length >= 3) {
-    return parts.slice(-3).join('.');
-  }
-
-  return lastTwo;
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/^https?:\\/\\//, '')
+    .replace(/^www\\./, '')
+    .split('/')[0]
+    .split('?')[0]
+    .split('#')[0]
+    .split(':')[0];
 };
+
+const getRegistrableDomain = (value) => {
+  const normalizedHost = normalizeHost(value);
+
+  return normalizedHost ? psl.get(normalizedHost) ?? '' : '';
+};`;
+
+const EXTRACT_DOMAIN_LOGIC_FUNCTION_SOURCE = `${PSL_DOMAIN_UTILS_SOURCE}
 
 export const main = async (params) => {
   const email =
@@ -110,30 +94,7 @@ export const main = async (params) => {
   };
 };`;
 
-const IS_PERSONAL_EMAIL_LOGIC_FUNCTION_SOURCE = `const MULTI_PART_SUFFIXES = new Set([
-  'ac.uk',
-  'co.in',
-  'co.jp',
-  'co.kr',
-  'co.nz',
-  'co.uk',
-  'co.za',
-  'com.ar',
-  'com.au',
-  'com.br',
-  'com.cn',
-  'com.hk',
-  'com.mx',
-  'com.sg',
-  'com.tr',
-  'com.tw',
-  'com.ua',
-  'gov.uk',
-  'ne.jp',
-  'net.au',
-  'org.au',
-  'org.uk',
-]);
+const IS_PERSONAL_EMAIL_LOGIC_FUNCTION_SOURCE = `${PSL_DOMAIN_UTILS_SOURCE}
 
 const PERSONAL_EMAIL_DOMAINS = new Set([
   'aol.com',
@@ -172,23 +133,6 @@ const PERSONAL_EMAIL_DOMAINS = new Set([
   'gmail.com',
 ]);
 
-const getRegistrableDomain = (host) => {
-  const normalizedHost = host.toLowerCase().replace(/^www\\./, '');
-  const parts = normalizedHost.split('.').filter(Boolean);
-
-  if (parts.length <= 2) {
-    return normalizedHost;
-  }
-
-  const lastTwo = parts.slice(-2).join('.');
-
-  if (MULTI_PART_SUFFIXES.has(lastTwo) && parts.length >= 3) {
-    return parts.slice(-3).join('.');
-  }
-
-  return lastTwo;
-};
-
 export const main = async (params) => {
   const email =
     typeof params?.primaryEmail === 'string'
@@ -210,63 +154,7 @@ export const main = async (params) => {
   };
 };`;
 
-const FIND_MATCHING_COMPANY_BY_DOMAIN_LOGIC_FUNCTION_SOURCE = `const MULTI_PART_SUFFIXES = new Set([
-  'ac.uk',
-  'co.in',
-  'co.jp',
-  'co.kr',
-  'co.nz',
-  'co.uk',
-  'co.za',
-  'com.ar',
-  'com.au',
-  'com.br',
-  'com.cn',
-  'com.hk',
-  'com.mx',
-  'com.sg',
-  'com.tr',
-  'com.tw',
-  'com.ua',
-  'gov.uk',
-  'ne.jp',
-  'net.au',
-  'org.au',
-  'org.uk',
-]);
-
-const normalizeHost = (value) => {
-  if (typeof value !== 'string') {
-    return '';
-  }
-
-  return value
-    .trim()
-    .toLowerCase()
-    .replace(/^https?:\\/\\//, '')
-    .replace(/^www\\./, '')
-    .split('/')[0]
-    .split('?')[0]
-    .split('#')[0]
-    .split(':')[0];
-};
-
-const getRegistrableDomain = (value) => {
-  const normalizedHost = normalizeHost(value);
-  const parts = normalizedHost.split('.').filter(Boolean);
-
-  if (parts.length <= 2) {
-    return normalizedHost;
-  }
-
-  const lastTwo = parts.slice(-2).join('.');
-
-  if (MULTI_PART_SUFFIXES.has(lastTwo) && parts.length >= 3) {
-    return parts.slice(-3).join('.');
-  }
-
-  return lastTwo;
-};
+const FIND_MATCHING_COMPANY_BY_DOMAIN_LOGIC_FUNCTION_SOURCE = `${PSL_DOMAIN_UTILS_SOURCE}
 
 export const main = async (params) => {
   const domain = getRegistrableDomain(params?.domain);
