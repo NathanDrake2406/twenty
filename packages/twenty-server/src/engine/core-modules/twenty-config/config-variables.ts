@@ -1081,6 +1081,17 @@ export class ConfigVariables {
   APP_SECRET: string;
 
   @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.SERVER_CONFIG,
+    isSensitive: true,
+    description:
+      'Comma-separated list of previous APP_SECRET values for key rotation. Tokens signed with these keys will still be accepted during rotation.',
+    isEnvOnly: true,
+    type: ConfigVariableType.STRING,
+  })
+  @IsOptional()
+  APP_SECRET_PREVIOUS_KEYS = '';
+
+  @ConfigVariablesMetadata({
     group: ConfigVariablesGroup.RATE_LIMITING,
     description: 'Maximum number of records affected by mutations',
     type: ConfigVariableType.NUMBER,
