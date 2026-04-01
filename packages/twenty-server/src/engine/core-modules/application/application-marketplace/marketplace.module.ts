@@ -11,6 +11,7 @@ import { MarketplaceService } from 'src/engine/core-modules/application/applicat
 import { FeatureFlagModule } from 'src/engine/core-modules/feature-flag/feature-flag.module';
 import { TwentyConfigModule } from 'src/engine/core-modules/twenty-config/twenty-config.module';
 import { PermissionsModule } from 'src/engine/metadata-modules/permissions/permissions.module';
+import { WorkspaceMigrationGraphqlApiExceptionInterceptor } from 'src/engine/workspace-manager/workspace-migration/interceptors/workspace-migration-graphql-api-exception.interceptor';
 import { MarketplaceCatalogSyncCommand } from 'src/engine/core-modules/application/application-marketplace/crons/commands/marketplace-catalog-sync.command';
 
 @Module({
@@ -29,6 +30,7 @@ import { MarketplaceCatalogSyncCommand } from 'src/engine/core-modules/applicati
     MarketplaceCatalogSyncCronCommand,
     MarketplaceCatalogSyncCommand,
     MarketplaceResolver,
+    WorkspaceMigrationGraphqlApiExceptionInterceptor,
   ],
   exports: [
     MarketplaceCatalogSyncService,
