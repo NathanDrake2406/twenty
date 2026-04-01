@@ -563,6 +563,45 @@ Out of scope for this doc but planned:
 
 ---
 
+## Testing Strategy
+
+### Orchestrator Unit Tests
+
+The orchestrator motor is covered by unit tests that exercise the full state machine in isolation -- no real database, no real commands. Commands are stubbed to return `completed` or `failed` as needed, and the tests verify the orchestrator's decisions and side effects.
+
+**Edge cases covered**:
+
+- **Happy path**: single-version upgrade, multi-version cross-version upgrade, all workspaces succeed.
+- **Instance command failure**: verify `instanceVersion` is not stamped, no `perWorkspaceCommands` run.
+- **Per-workspace command failure (single workspace)**: verify the orchestrator continues to all remaining workspaces, records the failure, and halts after the full pass.
+- **Per-workspace command failure (multiple workspaces)**: verify all failures are collected and reported.
+- **`instanceVersion` advancement guard**: verify the orchestrator refuses to start the next bundle when any workspace version != `instanceVersion`.
+- **Skip-if-completed**: verify already-completed commands (both instance and per-workspace) are skipped on re-run.
+- **Retry counter**: verify re-run inserts a new row with incremented `retry`, previous rows untouched.
+- **`--force-rerun`**: verify all commands re-execute regardless of history.
+- **`--force` with straggler workspaces**: verify ineligible workspaces are skipped and reported as "refused".
+- **Single-workspace mode (`-w`)**: verify `instanceCommands` run, only the targeted workspace's `perWorkspaceCommands` run, other workspaces untouched.
+- **No-op upgrade**: `instanceVersion` == `APP_VERSION`, nothing to do.
+- **Log capture**: verify failure logs are stored in the history row, success logs are discarded.
+- **Row eviction**: verify rows for versions not in `UPGRADE_COMMAND_SUPPORTED_VERSIONS` are deleted at the start of the run.
+
+### Pre-Release CI: Full Cross-Version Upgrade
+
+A CI pipeline runs before every release to validate the entire cross-version upgrade path end-to-end. This catches breaking changes that would silently narrow the supported upgrade range.
+
+**What it does**:
+
+1. Starts a Twenty instance at the **oldest version in `UPGRADE_COMMAND_SUPPORTED_VERSIONS`** (e.g. `1.17.0`) with a seeded database containing representative workspace data.
+2. Deploys the **latest release candidate** (`APP_VERSION` = target version).
+3. Runs the full upgrade orchestrator.
+4. Verifies: `instanceVersion` matches `APP_VERSION`, all workspace versions match `APP_VERSION`, all commands recorded as `completed` in both history tables, post-upgrade health check passes.
+
+**Why this matters**: the orchestrator unit tests validate the motor's logic, but they don't catch stale commands -- e.g. a `perWorkspaceCommand` in `bundle_1190` that reads a column dropped by `bundle_1210`'s `instanceCommands`. Only a real end-to-end run against actual version bundles surfaces these. This CI is the safety net for the breaking change backward compatibility principle.
+
+**Trigger**: runs as a pre-release gate. A failure blocks the release until the breaking change is resolved (either by fixing the command or by dropping the affected versions from `UPGRADE_COMMAND_SUPPORTED_VERSIONS`).
+
+---
+
 ## Incremental Implementation Roadmap
 
 The refactor is designed to be shipped incrementally, phase by phase, without requiring a big-bang rewrite.
