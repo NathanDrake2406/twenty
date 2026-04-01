@@ -1,4 +1,3 @@
-import { useDateTimeFormat } from '@/localization/hooks/useDateTimeFormat';
 import { FormFieldInput } from '@/object-record/record-field/ui/components/FormFieldInput';
 import { FormSingleRecordPicker } from '@/object-record/record-field/ui/form-types/components/FormSingleRecordPicker';
 import { type FieldMetadata } from '@/object-record/record-field/ui/types/FieldMetadata';
@@ -12,9 +11,10 @@ import { useUpdateWorkflowRunStep } from '@/workflow/workflow-steps/hooks/useUpd
 import { WorkflowFormFieldInput } from '@/workflow/workflow-steps/workflow-actions/components/WorkflowFormFieldInput';
 import { useSubmitFormStep } from '@/workflow/workflow-steps/workflow-actions/form-action/hooks/useSubmitFormStep';
 import { type WorkflowFormActionField } from '@/workflow/workflow-steps/workflow-actions/form-action/types/WorkflowFormActionField';
-import { getWorkflowFormFieldPlaceholder } from '@/workflow/workflow-steps/workflow-actions/form-action/utils/getWorkflowFormFieldPlaceholder';
-import { useLingui } from '@lingui/react/macro';
+import { getDefaultFormFieldSettings } from '@/workflow/workflow-steps/workflow-actions/form-action/utils/getDefaultFormFieldSettings';
 import { styled } from '@linaria/react';
+import { useLingui } from '@lingui/react/macro';
+import { isNonEmptyString } from '@sniptt/guards';
 import { useEffect, useState } from 'react';
 import { isDefined } from 'twenty-shared/utils';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
@@ -53,7 +53,6 @@ export const WorkflowEditActionFormFiller = ({
   actionOptions,
 }: WorkflowEditActionFormFillerProps) => {
   const { t } = useLingui();
-  const { dateFormat } = useDateTimeFormat();
   const { submitFormStep } = useSubmitFormStep();
   const [formData, setFormData] = useState<FormData>(action.settings.input);
   const workflowRunId = useWorkflowRunIdOrThrow();
@@ -125,84 +124,85 @@ export const WorkflowEditActionFormFiller = ({
     <StyledWorkflowFormFillerRoot>
       <WorkflowStepBody>
         <StyledWorkflowFormFillerFields>
-        {formData.map((field) => {
-          if (field.type === 'RECORD') {
-            const objectNameSingular = field.settings?.objectName;
+          {formData.map((field) => {
+            if (field.type === 'RECORD') {
+              const objectNameSingular = field.settings?.objectName;
 
-            if (!isDefined(objectNameSingular)) {
-              return null;
+              if (!isDefined(objectNameSingular)) {
+                return null;
+              }
+
+              const recordId = field.value?.id;
+
+              return (
+                <FormSingleRecordPicker
+                  key={field.id}
+                  label={field.label}
+                  defaultValue={recordId}
+                  onChange={(recordId) => {
+                    onFieldUpdate({
+                      fieldId: field.id,
+                      value: {
+                        id: recordId,
+                      },
+                    });
+                  }}
+                  objectNameSingulars={[objectNameSingular]}
+                  disabled={actionOptions.readonly}
+                />
+              );
             }
 
-            const recordId = field.value?.id;
+            if (field.type === 'SELECT' || field.type === 'MULTI_SELECT') {
+              const selectedFieldId = field.settings?.selectedFieldId;
 
-            return (
-              <FormSingleRecordPicker
-                key={field.id}
-                label={field.label}
-                defaultValue={recordId}
-                onChange={(recordId) => {
-                  onFieldUpdate({
-                    fieldId: field.id,
-                    value: {
-                      id: recordId,
-                    },
-                  });
-                }}
-                objectNameSingulars={[objectNameSingular]}
-                disabled={actionOptions.readonly}
-              />
-            );
-          }
+              if (!isDefined(selectedFieldId)) {
+                return null;
+              }
 
-          if (field.type === 'SELECT' || field.type === 'MULTI_SELECT') {
-            const selectedFieldId = field.settings?.selectedFieldId;
-
-            if (!isDefined(selectedFieldId)) {
-              return null;
+              return (
+                <WorkflowFormFieldInput
+                  key={field.id}
+                  fieldMetadataId={selectedFieldId}
+                  defaultValue={field.value}
+                  readonly={actionOptions.readonly}
+                  onChange={(value) => {
+                    onFieldUpdate({
+                      fieldId: field.id,
+                      value,
+                    });
+                  }}
+                />
+              );
             }
 
             return (
-              <WorkflowFormFieldInput
+              <FormFieldInput
                 key={field.id}
-                fieldMetadataId={selectedFieldId}
                 defaultValue={field.value}
-                readonly={actionOptions.readonly}
+                field={{
+                  label: field.label,
+                  type: field.type,
+                  metadata: {} as FieldMetadata,
+                }}
                 onChange={(value) => {
                   onFieldUpdate({
                     fieldId: field.id,
                     value,
                   });
                 }}
+                onError={(error) => {
+                  setError(error);
+                }}
+                placeholder={
+                  isNonEmptyString(field.placeholder)
+                    ? field.placeholder
+                    : getDefaultFormFieldSettings(field.type).placeholder
+                }
+                readonly={actionOptions.readonly}
               />
             );
-          }
-
-          return (
-            <FormFieldInput
-              key={field.id}
-              defaultValue={field.value}
-              field={{
-                label: field.label,
-                type: field.type,
-                metadata: {} as FieldMetadata,
-              }}
-              onChange={(value) => {
-                onFieldUpdate({
-                  fieldId: field.id,
-                  value,
-                });
-              }}
-              onError={(error) => {
-                setError(error);
-              }}
-              placeholder={getWorkflowFormFieldPlaceholder({
-                field,
-                dateFormat,
-              })}
-              readonly={actionOptions.readonly}
-            />
-          );
-        })}
+          })}
         </StyledWorkflowFormFillerFields>
       </WorkflowStepBody>
       {!actionOptions.readonly && (

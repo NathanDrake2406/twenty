@@ -157,9 +157,7 @@ export const ReadonlyMode: Story = {
     const numberInput = await canvas.findByPlaceholderText('Enter number');
     expect(numberInput).toBeDisabled();
 
-    const dateInput = await canvas.findByPlaceholderText(
-      /^(dd\/MM\/yyyy|MM\/dd\/yyyy|yyyy-MM-dd)$/,
-    );
+    const dateInput = await canvas.findByPlaceholderText('mm/dd/yyyy');
     expect(dateInput).toBeDisabled();
 
     const submitButton = canvas.queryByText('Submit');

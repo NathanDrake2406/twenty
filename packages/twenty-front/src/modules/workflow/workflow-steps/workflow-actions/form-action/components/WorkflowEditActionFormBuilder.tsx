@@ -11,15 +11,14 @@ import {
 } from '@/workflow/types/Workflow';
 import { WorkflowStepBody } from '@/workflow/workflow-steps/components/WorkflowStepBody';
 import { WorkflowStepFooter } from '@/workflow/workflow-steps/components/WorkflowStepFooter';
-import { useDateTimeFormat } from '@/localization/hooks/useDateTimeFormat';
 import { WorkflowEditActionFormFieldSettings } from '@/workflow/workflow-steps/workflow-actions/form-action/components/WorkflowEditActionFormFieldSettings';
 import { type WorkflowFormActionField } from '@/workflow/workflow-steps/workflow-actions/form-action/types/WorkflowFormActionField';
 import { getDefaultFormFieldSettings } from '@/workflow/workflow-steps/workflow-actions/form-action/utils/getDefaultFormFieldSettings';
-import { getWorkflowFormFieldPlaceholder } from '@/workflow/workflow-steps/workflow-actions/form-action/utils/getWorkflowFormFieldPlaceholder';
 import { styled } from '@linaria/react';
 import { type OnDragEndResponder } from '@hello-pangea/dnd';
 import { useLingui } from '@lingui/react/macro';
 import { useContext, useEffect, useState } from 'react';
+import { isNonEmptyString } from '@sniptt/guards';
 import { FieldMetadataType } from 'twenty-shared/types';
 import { isDefined } from 'twenty-shared/utils';
 import {
@@ -166,7 +165,6 @@ export const WorkflowEditActionFormBuilder = ({
   actionOptions,
 }: WorkflowEditActionFormBuilderProps) => {
   const { t } = useLingui();
-  const { dateFormat } = useDateTimeFormat();
   const { theme } = useContext(ThemeContext);
 
   const [formData, setFormData] = useState<FormData>(action.settings.input);
@@ -338,10 +336,10 @@ export const WorkflowEditActionFormBuilder = ({
                               >
                                 <StyledPlaceholderContainer>
                                   <FormFieldPlaceholder>
-                                    {getWorkflowFormFieldPlaceholder({
-                                      field,
-                                      dateFormat,
-                                    })}
+                                    {isNonEmptyString(field.placeholder)
+                                      ? field.placeholder
+                                      : getDefaultFormFieldSettings(field.type)
+                                          .placeholder}
                                   </FormFieldPlaceholder>
                                 </StyledPlaceholderContainer>
                                 {(field.type === 'RECORD' ||

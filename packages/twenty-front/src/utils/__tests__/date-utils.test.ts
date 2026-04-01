@@ -5,7 +5,6 @@ import { SOURCE_LOCALE } from 'twenty-shared/translations';
 import { messages as enMessages } from '~/locales/generated/en';
 import { messages as frMessages } from '~/locales/generated/fr-FR';
 
-import { DateFormat } from '@/localization/constants/DateFormat';
 import {
   beautifyDateDiff,
   beautifyExactDate,
@@ -13,7 +12,6 @@ import {
   beautifyPastDateRelativeToNow,
   beautifyPastDateRelativeToNowShort,
   hasDatePassed,
-  isCompleteDatePickerMaskInput,
   parseDate,
 } from '~/utils/date-utils';
 import { logError } from '~/utils/logError';
@@ -82,35 +80,6 @@ describe('parseDate', () => {
     expect(() => {
       parseDate(new Date(NaN));
     }).toThrow(Error('Invalid date passed to formatPastDate: "Invalid Date"'));
-  });
-});
-
-describe('isCompleteDatePickerMaskInput', () => {
-  it('should reject slash dates until the year has four digits', () => {
-    expect(
-      isCompleteDatePickerMaskInput('01/01/2', DateFormat.DAY_FIRST),
-    ).toBe(false);
-    expect(
-      isCompleteDatePickerMaskInput('01/01/20', DateFormat.DAY_FIRST),
-    ).toBe(false);
-    expect(
-      isCompleteDatePickerMaskInput('01/01/2004', DateFormat.DAY_FIRST),
-    ).toBe(true);
-  });
-
-  it('should reject ISO-style dates until month and day are two digits', () => {
-    expect(
-      isCompleteDatePickerMaskInput('2004-1-15', DateFormat.YEAR_FIRST),
-    ).toBe(false);
-    expect(
-      isCompleteDatePickerMaskInput('2004-01-15', DateFormat.YEAR_FIRST),
-    ).toBe(true);
-  });
-
-  it('should treat empty string as incomplete', () => {
-    expect(isCompleteDatePickerMaskInput('', DateFormat.MONTH_FIRST)).toBe(
-      false,
-    );
   });
 });
 

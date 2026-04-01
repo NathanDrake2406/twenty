@@ -22,6 +22,7 @@ const StyledInputContainer = styled.div`
   border-top-right-radius: ${themeCssVariables.border.radius.md};
   display: flex;
   height: ${themeCssVariables.spacing[8]};
+  min-width: 0;
   width: 100%;
 `;
 
@@ -32,19 +33,34 @@ const StyledInput = styled.input<{ hasError?: boolean }>`
     hasError
       ? themeCssVariables.color.red
       : themeCssVariables.font.color.primary};
+  flex: 1 1 auto;
   font-size: ${themeCssVariables.font.size.md};
   font-weight: 500;
+  min-width: 0;
   outline: none;
   padding: 4px 8px 4px 8px;
   width: 100%;
+
+  &:disabled {
+    color: ${themeCssVariables.font.color.tertiary};
+  }
 `;
 
 type DatePickerInputProps = {
-  onChange?: (date: string | null) => void;
   date: string | null;
+  hasError?: boolean;
+  onChange?: (date: string | null) => void;
+  onFocus?: () => void;
+  readonly?: boolean;
 };
 
-export const DatePickerInput = ({ date, onChange }: DatePickerInputProps) => {
+export const DatePickerInput = ({
+  date,
+  hasError,
+  onChange,
+  onFocus,
+  readonly,
+}: DatePickerInputProps) => {
   const { dateFormat } = useDateTimeFormat();
 
   const [internalDate, setInternalDate] = useState(date);
@@ -71,15 +87,17 @@ export const DatePickerInput = ({ date, onChange }: DatePickerInputProps) => {
     ? (parsePlainDateToDateInputString(internalDate) ?? undefined)
     : undefined;
 
-  const { ref, setValue, value } = useIMask(
+  const { ref, setValue } = useIMask(
     {
       mask: Date,
       pattern,
       blocks,
       min: MIN_DATE,
       max: MAX_DATE,
-      format: (date: any) =>
-        isDefined(date) ? parseIMaskJSDateIMaskDateInputString(date) : '',
+      format: (dateValue: unknown) =>
+        isDefined(dateValue) && dateValue instanceof Date
+          ? parseIMaskJSDateIMaskDateInputString(dateValue)
+          : '',
       parse: parseIMaskDateInputStringToJSDate,
       lazy: false,
       autofix: true,
@@ -89,25 +107,35 @@ export const DatePickerInput = ({ date, onChange }: DatePickerInputProps) => {
       onComplete: (newValue) => {
         const parsedDate = parseDateInputStringToPlainDate(newValue);
 
-        onChange?.(parsedDate);
+        onChange?.(isDefined(parsedDate) ? parsedDate : null);
       },
     },
   );
 
   useEffect(() => {
-    if (isDefined(date) && internalDate !== date) {
-      setInternalDate(date);
+    if (date === internalDate) {
+      return;
+    }
+
+    setInternalDate(date);
+
+    if (isDefined(date)) {
       setValue(parsePlainDateToDateInputString(date));
+    } else {
+      setValue('');
     }
   }, [date, internalDate, parsePlainDateToDateInputString, setValue]);
+
+  const shouldDisplayReadOnly = readonly === true;
 
   return (
     <StyledInputContainer>
       <StyledInput
+        disabled={shouldDisplayReadOnly}
+        hasError={hasError}
         type="text"
         ref={ref as any}
-        value={value}
-        onChange={() => {}} // Prevent React warning
+        onFocus={!shouldDisplayReadOnly ? onFocus : undefined}
       />
     </StyledInputContainer>
   );

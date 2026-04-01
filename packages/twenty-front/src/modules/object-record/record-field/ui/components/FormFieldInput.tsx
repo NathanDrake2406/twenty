@@ -59,7 +59,6 @@ type FormFieldInputProps = {
   defaultValue: JsonValue;
   error?: string;
   field: Pick<FieldDefinition<FieldMetadata>, 'label' | 'metadata' | 'type'>;
-  fullWidth?: boolean;
   onChange: (value: JsonValue) => void;
   onClear?: () => void;
   onError?: (error: string | undefined) => void;
@@ -73,7 +72,6 @@ export const FormFieldInput = ({
   defaultValue,
   error,
   field,
-  fullWidth,
   onChange,
   onClear,
   onError,
@@ -172,7 +170,6 @@ export const FormFieldInput = ({
     <FormDateFieldInput
       defaultValue={defaultValue as string | undefined}
       error={error}
-      fullWidth={fullWidth ?? true}
       label={field.label}
       onChange={onChange}
       onError={onError}
@@ -183,7 +180,6 @@ export const FormFieldInput = ({
   ) : isFieldDateTime(field) ? (
     <FormDateTimeFieldInput
       defaultValue={defaultValue as string | undefined}
-      fullWidth={fullWidth ?? true}
       label={field.label}
       onChange={onChange}
       readonly={readonly}

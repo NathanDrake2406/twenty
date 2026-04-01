@@ -256,23 +256,3 @@ export const getDateFormatStringForDatePickerInputMask = (
       return `MM/dd/yyyy`;
   }
 };
-
-// date-fns parse accepts partial years (e.g. dd/MM/yyyy "01/01/2" → year 2). Only treat
-// input as complete when the year segment is four digits (and ISO parts are full width).
-export const isCompleteDatePickerMaskInput = (
-  trimmedInput: string,
-  dateFormat: DateFormat,
-): boolean => {
-  if (trimmedInput === '') {
-    return false;
-  }
-
-  switch (dateFormat) {
-    case DateFormat.YEAR_FIRST:
-      return /^\d{4}-\d{2}-\d{2}$/.test(trimmedInput);
-    case DateFormat.DAY_FIRST:
-    case DateFormat.MONTH_FIRST:
-    default:
-      return /^\d{1,2}\/\d{1,2}\/\d{4}$/.test(trimmedInput);
-  }
-};

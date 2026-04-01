@@ -21,12 +21,12 @@ const StyledWorkflowStepBody = styled.div<{
   height: 100%;
   min-width: 0;
   overflow: ${({ overflow }) => overflow ?? 'hidden scroll'};
-  width: 100%;
   padding-block: ${({ paddingBlock }) =>
     paddingBlock ?? themeCssVariables.spacing[4]};
   padding-inline: ${({ paddingInline }) =>
     paddingInline ?? themeCssVariables.spacing[3]};
   row-gap: ${({ rowGap }) => rowGap ?? themeCssVariables.spacing[4]};
+  width: 100%;
 `;
 
 export const WorkflowStepBody = ({
