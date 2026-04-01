@@ -11,7 +11,6 @@ import {
 import { PermissionFlagType } from 'twenty-shared/constants';
 
 import { InjectRepository } from '@nestjs/typeorm';
-import type { ExtendedUIMessage } from 'twenty-shared/ai';
 import { isDefined } from 'twenty-shared/utils';
 import type { Repository } from 'typeorm';
 
@@ -71,7 +70,6 @@ export class AgentChatController {
     @Body()
     body: {
       text: string;
-      messages?: ExtendedUIMessage[];
       browsingContext?: BrowsingContextType | null;
       modelId?: string;
     },
@@ -136,11 +134,11 @@ export class AgentChatController {
 
     const result = await this.agentStreamingService.streamAgentChat({
       threadId,
-      messages: body.messages ?? [],
       browsingContext: body.browsingContext ?? null,
       modelId: body.modelId,
       userWorkspaceId,
       workspace,
+      text: body.text,
     });
 
     return { messageId: threadId, queued: false, streamId: result.streamId };

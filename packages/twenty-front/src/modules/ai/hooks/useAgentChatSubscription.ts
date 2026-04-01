@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-import { readUIMessageStream } from 'ai';
-import { type UIMessageChunk } from 'ai';
+import { readUIMessageStream, type UIMessageChunk } from 'ai';
 import { print, type ExecutionResult } from 'graphql';
 import { useStore } from 'jotai';
-import { type AgentChatSubscriptionEvent, type ExtendedUIMessage } from 'twenty-shared/ai';
+import {
+  type AgentChatSubscriptionEvent,
+  type ExtendedUIMessage,
+} from 'twenty-shared/ai';
 import { isDefined } from 'twenty-shared/utils';
 
 import { AGENT_CHAT_INSTANCE_ID } from '@/ai/constants/AgentChatInstanceId';
@@ -31,10 +33,16 @@ type AgentChatEventPayload = {
 export const useAgentChatSubscription = (threadId: string | null) => {
   const store = useStore();
   const sseClient = useAtomStateValue(sseClientState);
+  // These refs hold imperative handles (subscription dispose, stream writer)
+  // and a non-reactive flag mirroring the atom to avoid stale closures in
+  // the async stream loop — they are not used for rendering state.
+  // oxlint-disable-next-line twenty/no-state-useref
   const disposeRef = useRef<(() => void) | null>(null);
+  // oxlint-disable-next-line twenty/no-state-useref
   const writerRef = useRef<WritableStreamDefaultWriter<UIMessageChunk> | null>(
     null,
   );
+  // oxlint-disable-next-line twenty/no-state-useref
   const isStreamingRef = useRef(false);
 
   const cleanup = useCallback(() => {
@@ -98,10 +106,10 @@ export const useAgentChatSubscription = (threadId: string | null) => {
           updatedMessages,
         );
       } else {
-        store.set(
-          agentChatMessagesComponentFamilyState.atomFamily(atomKey),
-          [...currentMessages, messageToFlush],
-        );
+        store.set(agentChatMessagesComponentFamilyState.atomFamily(atomKey), [
+          ...currentMessages,
+          messageToFlush,
+        ]);
       }
     };
 
@@ -121,9 +129,7 @@ export const useAgentChatSubscription = (threadId: string | null) => {
       }
     };
 
-    const startReadLoop = async (
-      readable: ReadableStream<UIMessageChunk>,
-    ) => {
+    const startReadLoop = async (readable: ReadableStream<UIMessageChunk>) => {
       const messageStream = readUIMessageStream({ stream: readable });
 
       for await (const message of messageStream) {
@@ -134,14 +140,8 @@ export const useAgentChatSubscription = (threadId: string | null) => {
           (part) => part.type === 'data-thread-title',
         );
 
-        if (
-          isDefined(titlePart) &&
-          titlePart.type === 'data-thread-title'
-        ) {
-          store.set(
-            currentAIChatThreadTitleState.atom,
-            titlePart.data.title,
-          );
+        if (isDefined(titlePart) && titlePart.type === 'data-thread-title') {
+          store.set(currentAIChatThreadTitleState.atom, titlePart.data.title);
         }
 
         const metadata = extendedMessage.metadata as
@@ -261,13 +261,10 @@ export const useAgentChatSubscription = (threadId: string | null) => {
         variables: { threadId },
       },
       {
-        next: (
-          value: ExecutionResult<AgentChatEventPayload>,
-        ) => {
+        next: (value: ExecutionResult<AgentChatEventPayload>) => {
           if (isDefined(value.data?.onAgentChatEvent?.event)) {
             handleEvent(
-              value.data.onAgentChatEvent
-                .event as AgentChatSubscriptionEvent,
+              value.data.onAgentChatEvent.event as AgentChatSubscriptionEvent,
             );
           }
         },

@@ -2,7 +2,6 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { generateId } from 'ai';
-import { type ExtendedUIMessage } from 'twenty-shared/ai';
 import { type Repository } from 'typeorm';
 
 import { InjectMessageQueue } from 'src/engine/core-modules/message-queue/decorators/message-queue.decorator';
@@ -28,7 +27,7 @@ export type StreamAgentChatOptions = {
   threadId: string;
   userWorkspaceId: string;
   workspace: WorkspaceEntity;
-  messages: ExtendedUIMessage[];
+  text: string;
   browsingContext: BrowsingContextType | null;
   modelId?: string;
 };
@@ -50,7 +49,7 @@ export class AgentChatStreamingService {
     threadId,
     userWorkspaceId,
     workspace,
-    messages,
+    text,
     browsingContext,
     modelId,
   }: StreamAgentChatOptions): Promise<{ streamId: string }> {
@@ -68,10 +67,9 @@ export class AgentChatStreamingService {
       );
     }
 
+    const messages = await this.loadMessagesFromDB(threadId, userWorkspaceId);
+
     const streamId = generateId();
-    const lastUserMessage = messages[messages.length - 1];
-    const lastUserText =
-      lastUserMessage?.parts.find((part) => part.type === 'text')?.text ?? '';
 
     await this.messageQueueService.add<StreamAgentChatJobData>(
       STREAM_AGENT_CHAT_JOB_NAME,
@@ -83,8 +81,8 @@ export class AgentChatStreamingService {
         messages,
         browsingContext,
         modelId,
-        lastUserMessageText: lastUserText,
-        lastUserMessageParts: lastUserMessage?.parts ?? [],
+        lastUserMessageText: text,
+        lastUserMessageParts: [{ type: 'text', text }],
         hasTitle: !!thread.title,
       },
     );
@@ -137,19 +135,7 @@ export class AgentChatStreamingService {
       event: { type: 'message-persisted', messageId: nextQueued.id },
     });
 
-    const allMessages = await this.agentChatService.getMessagesForThread(
-      threadId,
-      userWorkspaceId,
-    );
-
-    const uiMessages = allMessages
-      .filter((message) => message.status !== AgentMessageStatus.QUEUED)
-      .map((message) => ({
-        id: message.id,
-        role: message.role as 'user' | 'assistant' | 'system',
-        parts: mapDBPartsToUIMessageParts(message.parts ?? []),
-        createdAt: message.createdAt,
-      }));
+    const uiMessages = await this.loadMessagesFromDB(threadId, userWorkspaceId);
 
     const streamId = generateId();
 
@@ -172,5 +158,21 @@ export class AgentChatStreamingService {
     await this.threadRepository.update(threadId, {
       activeStreamId: streamId,
     });
+  }
+
+  private async loadMessagesFromDB(threadId: string, userWorkspaceId: string) {
+    const allMessages = await this.agentChatService.getMessagesForThread(
+      threadId,
+      userWorkspaceId,
+    );
+
+    return allMessages
+      .filter((message) => message.status !== AgentMessageStatus.QUEUED)
+      .map((message) => ({
+        id: message.id,
+        role: message.role as 'user' | 'assistant' | 'system',
+        parts: mapDBPartsToUIMessageParts(message.parts ?? []),
+        createdAt: message.createdAt,
+      }));
   }
 }

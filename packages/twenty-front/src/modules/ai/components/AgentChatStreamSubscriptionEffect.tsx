@@ -109,7 +109,11 @@ export const AgentChatStreamSubscriptionEffect = () => {
       agentChatMessagesLoading || agentChatThreadsLoading;
 
     setAgentChatIsLoading(combinedIsLoading);
-  }, [agentChatMessagesLoading, agentChatThreadsLoading, setAgentChatIsLoading]);
+  }, [
+    agentChatMessagesLoading,
+    agentChatThreadsLoading,
+    setAgentChatIsLoading,
+  ]);
 
   useEffect(() => {
     handleLoadingChange();

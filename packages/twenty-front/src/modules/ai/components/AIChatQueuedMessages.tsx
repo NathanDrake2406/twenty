@@ -1,11 +1,8 @@
 import { styled } from '@linaria/react';
 
-import { AGENT_CHAT_REFETCH_MESSAGES_EVENT_NAME } from '@/ai/constants/AgentChatRefetchMessagesEventName';
 import { agentChatQueuedMessagesComponentFamilyState } from '@/ai/states/agentChatQueuedMessagesComponentFamilyState';
 import { currentAIChatThreadState } from '@/ai/states/currentAIChatThreadState';
-import { REST_API_BASE_URL } from '@/apollo/constant/rest-api-base-url';
-import { getTokenPair } from '@/apollo/utils/getTokenPair';
-import { dispatchBrowserEvent } from '@/browser-event/utils/dispatchBrowserEvent';
+import { useDeleteQueuedMessage } from '@/ai/hooks/useDeleteQueuedMessage';
 import { useAtomComponentFamilyStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomComponentFamilyStateValue';
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
 import { isDefined } from 'twenty-shared/utils';
@@ -50,32 +47,11 @@ export const AIChatQueuedMessages = () => {
     agentChatQueuedMessagesComponentFamilyState,
     { threadId: currentAIChatThread },
   );
+  const { deleteQueuedMessage } = useDeleteQueuedMessage();
 
   if (!isDefined(currentAIChatThread) || agentChatQueuedMessages.length === 0) {
     return null;
   }
-
-  const handleRemove = (messageId: string) => {
-    const tokenPair = getTokenPair();
-
-    if (!isDefined(tokenPair)) {
-      return;
-    }
-
-    fetch(
-      `${REST_API_BASE_URL}/agent-chat/${currentAIChatThread}/queue/${messageId}`,
-      {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${tokenPair.accessOrWorkspaceAgnosticToken.token}`,
-        },
-      },
-    )
-      .then(() => {
-        dispatchBrowserEvent(AGENT_CHAT_REFETCH_MESSAGES_EVENT_NAME);
-      })
-      .catch(() => {});
-  };
 
   return (
     <StyledQueueContainer>
@@ -91,7 +67,9 @@ export const AIChatQueuedMessages = () => {
             <StyledQueuedText>{displayText}</StyledQueuedText>
             <LightIconButton
               Icon={IconX}
-              onClick={() => handleRemove(message.id)}
+              onClick={() =>
+                deleteQueuedMessage(currentAIChatThread, message.id)
+              }
               size="small"
             />
           </StyledQueuedItem>

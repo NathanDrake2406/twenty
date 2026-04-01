@@ -2,6 +2,7 @@ import { useStore } from 'jotai';
 import { useCallback, useState } from 'react';
 import { type ExtendedUIMessage } from 'twenty-shared/ai';
 import { isDefined, isValidUuid } from 'twenty-shared/utils';
+import { v4 } from 'uuid';
 
 import { AGENT_CHAT_INSTANCE_ID } from '@/ai/constants/AgentChatInstanceId';
 import { AGENT_CHAT_REFETCH_MESSAGES_EVENT_NAME } from '@/ai/constants/AgentChatRefetchMessagesEventName';
@@ -14,31 +15,23 @@ import {
 import { agentChatInputState } from '@/ai/states/agentChatInputState';
 import { agentChatSelectedFilesState } from '@/ai/states/agentChatSelectedFilesState';
 import { agentChatUploadedFilesState } from '@/ai/states/agentChatUploadedFilesState';
-import { agentChatFetchedMessagesComponentFamilyState } from '@/ai/states/agentChatFetchedMessagesComponentFamilyState';
-import { agentChatIsStreamingState } from '@/ai/states/agentChatIsStreamingState';
 import { agentChatMessagesComponentFamilyState } from '@/ai/states/agentChatMessagesComponentFamilyState';
-import { agentChatQueuedMessagesComponentFamilyState } from '@/ai/states/agentChatQueuedMessagesComponentFamilyState';
 import { currentAIChatThreadState } from '@/ai/states/currentAIChatThreadState';
 import { useGetBrowsingContext } from '@/ai/hooks/useBrowsingContext';
 import { useAgentChatModelId } from '@/ai/hooks/useAgentChatModelId';
-import { REST_API_BASE_URL } from '@/apollo/constant/rest-api-base-url';
-import { getTokenPair } from '@/apollo/utils/getTokenPair';
-import { renewToken } from '@/auth/services/AuthService';
-import { tokenPairState } from '@/auth/states/tokenPairState';
+import { useAuthenticatedAgentChatFetch } from '@/ai/hooks/useAuthenticatedAgentChatFetch';
 import { useListenToBrowserEvent } from '@/browser-event/hooks/useListenToBrowserEvent';
 import { dispatchBrowserEvent } from '@/browser-event/utils/dispatchBrowserEvent';
 import { useAtomState } from '@/ui/utilities/state/jotai/hooks/useAtomState';
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
 import { useSetAtomState } from '@/ui/utilities/state/jotai/hooks/useSetAtomState';
-import { REACT_APP_SERVER_BASE_URL } from '~/config';
 
 export const useAgentChat = (
   ensureThreadIdForSend: () => Promise<string | null>,
 ) => {
-  const setTokenPair = useSetAtomState(tokenPairState);
-
   const { modelIdForRequest } = useAgentChatModelId();
   const { getBrowsingContext } = useGetBrowsingContext();
+  const { authenticatedFetch } = useAuthenticatedAgentChatFetch();
   const setCurrentAIChatThread = useSetAtomState(currentAIChatThreadState);
   const store = useStore();
 
@@ -54,69 +47,6 @@ export const useAgentChat = (
   const setAgentChatDraftsByThreadId = useSetAtomState(
     agentChatDraftsByThreadIdState,
   );
-
-  const retryFetchWithRenewedToken = async (
-    input: RequestInfo | URL,
-    init?: RequestInit,
-  ) => {
-    const tokenPair = getTokenPair();
-
-    if (!isDefined(tokenPair)) {
-      return null;
-    }
-
-    try {
-      const renewedTokens = await renewToken(
-        `${REACT_APP_SERVER_BASE_URL}/metadata`,
-        tokenPair,
-      );
-
-      if (!isDefined(renewedTokens)) {
-        setTokenPair(null);
-
-        return null;
-      }
-
-      const renewedAccessToken =
-        renewedTokens.accessOrWorkspaceAgnosticToken?.token;
-
-      if (!isDefined(renewedAccessToken)) {
-        setTokenPair(null);
-
-        return null;
-      }
-
-      setTokenPair(renewedTokens);
-
-      const updatedHeaders = new Headers(init?.headers ?? {});
-
-      updatedHeaders.set('Authorization', `Bearer ${renewedAccessToken}`);
-
-      return fetch(input, {
-        ...init,
-        headers: updatedHeaders,
-      });
-    } catch {
-      setTokenPair(null);
-
-      return null;
-    }
-  };
-
-  const authenticatedFetch = async (
-    input: RequestInfo | URL,
-    init?: RequestInit,
-  ) => {
-    const response = await fetch(input, init);
-
-    if (response.status === 401) {
-      const retriedResponse = await retryFetchWithRenewedToken(input, init);
-
-      return retriedResponse ?? response;
-    }
-
-    return response;
-  };
 
   const handleSendMessage = useCallback(async () => {
     const draftKey =
@@ -159,17 +89,11 @@ export const useAgentChat = (
 
     const browsingContext = getBrowsingContext();
 
-    // Build the current messages list for the server
-    const fetchedMessages = store.get(
-      agentChatFetchedMessagesComponentFamilyState.atomFamily({
-        instanceId: AGENT_CHAT_INSTANCE_ID,
-        familyKey: { threadId },
-      }),
-    );
-
-    // Optimistic user message
+    // Optimistic user message — always placed in the main messages atom.
+    // The next REFETCH_MESSAGES event will reconcile with server state,
+    // moving it to the queued list if the server queued it.
     const optimisticUserMessage: ExtendedUIMessage = {
-      id: `optimistic-${Date.now()}`,
+      id: v4(),
       role: 'user',
       parts: [
         { type: 'text' as const, text: contentToSend },
@@ -186,44 +110,27 @@ export const useAgentChat = (
       familyKey: { threadId },
     };
 
-    // Mirror the server's queue decision: if already streaming, place the
-    // optimistic message directly in the queue to avoid a visible flash.
-    const isCurrentlyStreaming = store.get(agentChatIsStreamingState.atom);
-    const targetAtom = isCurrentlyStreaming
-      ? agentChatQueuedMessagesComponentFamilyState
-      : agentChatMessagesComponentFamilyState;
-
-    const currentTargetMessages = store.get(
-      targetAtom.atomFamily(atomKey),
+    const currentMessages = store.get(
+      agentChatMessagesComponentFamilyState.atomFamily(atomKey),
     );
 
-    store.set(targetAtom.atomFamily(atomKey), [
-      ...currentTargetMessages,
+    store.set(agentChatMessagesComponentFamilyState.atomFamily(atomKey), [
+      ...currentMessages,
       optimisticUserMessage,
     ]);
 
     setAgentChatUploadedFiles([]);
 
-    const tokenPair = getTokenPair();
-
-    if (!isDefined(tokenPair)) {
-      return;
-    }
-
-    const allMessages = [...fetchedMessages, optimisticUserMessage];
-
     try {
       const response = await authenticatedFetch(
-        `${REST_API_BASE_URL}/agent-chat/${threadId}/message`,
+        `/agent-chat/${threadId}/message`,
         {
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${tokenPair.accessOrWorkspaceAgnosticToken.token}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             text: contentToSend,
-            messages: allMessages,
             browsingContext,
             ...(isDefined(modelIdForRequest) && {
               modelId: modelIdForRequest,
@@ -232,28 +139,13 @@ export const useAgentChat = (
         },
       );
 
-      const result = await response.json();
-
-      if (result.queued) {
-        if (!isCurrentlyStreaming) {
-          // Server queued it but we optimistically placed in main thread.
-          // Move it to the queue (edge case: streaming started between
-          // our check and the server's decision).
-          const latestMessages = store.get(
-            agentChatMessagesComponentFamilyState.atomFamily(atomKey),
-          );
-
-          store.set(
-            agentChatMessagesComponentFamilyState.atomFamily(atomKey),
-            latestMessages.filter(
-              (message) => message.id !== optimisticUserMessage.id,
-            ),
-          );
-        }
-
-        // Refetch to get authoritative queue state from the server
-        dispatchBrowserEvent(AGENT_CHAT_REFETCH_MESSAGES_EVENT_NAME);
+      if (!response?.ok) {
+        throw new Error('Failed to send message');
       }
+
+      // Server returns authoritative state — refetch to reconcile
+      // optimistic message with actual queued/sent status.
+      dispatchBrowserEvent(AGENT_CHAT_REFETCH_MESSAGES_EVENT_NAME);
 
       // Handle pending thread ID for first send
       setPendingThreadIdAfterFirstSend((pendingId) => {
@@ -266,11 +158,11 @@ export const useAgentChat = (
     } catch {
       // Remove the optimistic message on failure
       const latestMessages = store.get(
-        targetAtom.atomFamily(atomKey),
+        agentChatMessagesComponentFamilyState.atomFamily(atomKey),
       );
 
       store.set(
-        targetAtom.atomFamily(atomKey),
+        agentChatMessagesComponentFamilyState.atomFamily(atomKey),
         latestMessages.filter(
           (message) => message.id !== optimisticUserMessage.id,
         ),
@@ -288,6 +180,7 @@ export const useAgentChat = (
     setAgentChatDraftsByThreadId,
     modelIdForRequest,
     setCurrentAIChatThread,
+    authenticatedFetch,
   ]);
 
   useListenToBrowserEvent({
@@ -302,31 +195,18 @@ export const useAgentChat = (
       return;
     }
 
-    const tokenPair = getTokenPair();
-
-    if (!isDefined(tokenPair)) {
-      return;
-    }
-
-    authenticatedFetch(
-      `${REST_API_BASE_URL}/agent-chat/${threadId}/stream`,
-      {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${tokenPair.accessOrWorkspaceAgnosticToken.token}`,
-        },
-      },
-    ).catch(() => {});
-  }, [store]);
+    authenticatedFetch(`/agent-chat/${threadId}/stream`, {
+      method: 'DELETE',
+    }).catch(() => {});
+  }, [store, authenticatedFetch]);
 
   useListenToBrowserEvent({
     eventName: AGENT_CHAT_STOP_EVENT_NAME,
     onBrowserEvent: handleStop,
   });
 
-  // TODO: implement proper retry (re-send last user message to /message)
-  // The AIChatErrorMessage UI still dispatches AGENT_CHAT_RETRY_EVENT_NAME
-  // but no listener is wired until retry is properly implemented.
+  // TODO: implement retry by re-sending last user message to /message.
+  // The retry button in AIChatErrorMessage is hidden until this is ready.
 
   return {
     handleSendMessage,
