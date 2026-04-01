@@ -1422,7 +1422,7 @@ export interface PublicFeatureFlag {
     __typename: 'PublicFeatureFlag'
 }
 
-export type FeatureFlagKey = 'IS_UNIQUE_INDEXES_ENABLED' | 'IS_JSON_FILTER_ENABLED' | 'IS_AI_ENABLED' | 'IS_COMMAND_MENU_ITEM_ENABLED' | 'IS_MARKETPLACE_ENABLED' | 'IS_RECORD_PAGE_LAYOUT_EDITING_ENABLED' | 'IS_PUBLIC_DOMAIN_ENABLED' | 'IS_EMAILING_DOMAIN_ENABLED' | 'IS_JUNCTION_RELATIONS_ENABLED' | 'IS_DRAFT_EMAIL_ENABLED' | 'IS_USAGE_ANALYTICS_ENABLED' | 'IS_RICH_TEXT_V1_MIGRATED' | 'IS_DIRECT_GRAPHQL_EXECUTION_ENABLED' | 'IS_RECORD_PAGE_LAYOUT_GLOBAL_EDITION_ENABLED' | 'IS_CONNECTED_ACCOUNT_MIGRATED' | 'IS_GRAPHQL_QUERY_TIMING_ENABLED' | 'IS_RECORD_TABLE_WIDGET_ENABLED' | 'IS_DATASOURCE_MIGRATED'
+export type FeatureFlagKey = 'IS_UNIQUE_INDEXES_ENABLED' | 'IS_JSON_FILTER_ENABLED' | 'IS_AI_ENABLED' | 'IS_MARKETPLACE_ENABLED' | 'IS_RECORD_PAGE_LAYOUT_EDITING_ENABLED' | 'IS_PUBLIC_DOMAIN_ENABLED' | 'IS_EMAILING_DOMAIN_ENABLED' | 'IS_JUNCTION_RELATIONS_ENABLED' | 'IS_COMMAND_MENU_ITEM_ENABLED' | 'IS_DRAFT_EMAIL_ENABLED' | 'IS_USAGE_ANALYTICS_ENABLED' | 'IS_RICH_TEXT_V1_MIGRATED' | 'IS_DIRECT_GRAPHQL_EXECUTION_ENABLED' | 'IS_RECORD_PAGE_LAYOUT_GLOBAL_EDITION_ENABLED' | 'IS_CONNECTED_ACCOUNT_MIGRATED' | 'IS_GRAPHQL_QUERY_TIMING_ENABLED' | 'IS_RECORD_TABLE_WIDGET_ENABLED' | 'IS_DATASOURCE_MIGRATED'
 
 export interface ClientConfig {
     appVersion?: Scalars['String']
@@ -2471,6 +2471,18 @@ export interface AISystemPromptPreview {
     __typename: 'AISystemPromptPreview'
 }
 
+export interface ChatStreamCatchupChunks {
+    chunks: Scalars['JSON'][]
+    maxSeq: Scalars['Int']
+    __typename: 'ChatStreamCatchupChunks'
+}
+
+export interface AgentChatEvent {
+    threadId: Scalars['String']
+    event: Scalars['JSON']
+    __typename: 'AgentChatEvent'
+}
+
 export interface AgentChatThreadEdge {
     /** The node containing the AgentChatThread */
     node: AgentChatThread
@@ -2715,6 +2727,7 @@ export interface Query {
     minimalMetadata: MinimalMetadata
     chatThread: AgentChatThread
     chatMessages: AgentMessage[]
+    chatStreamCatchupChunks: ChatStreamCatchupChunks
     getAISystemPromptPreview: AISystemPromptPreview
     skills: Skill[]
     skill?: Skill
@@ -3003,6 +3016,7 @@ export type FileFolder = 'ProfilePicture' | 'WorkspaceLogo' | 'Attachment' | 'Pe
 export interface Subscription {
     onEventSubscription?: EventSubscription
     logicFunctionLogs: LogicFunctionLogs
+    onAgentChatEvent: AgentChatEvent
     __typename: 'Subscription'
 }
 
@@ -5623,6 +5637,20 @@ export interface AISystemPromptPreviewGenqlSelection{
     __scalar?: boolean | number
 }
 
+export interface ChatStreamCatchupChunksGenqlSelection{
+    chunks?: boolean | number
+    maxSeq?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+export interface AgentChatEventGenqlSelection{
+    threadId?: boolean | number
+    event?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
 export interface AgentChatThreadEdgeGenqlSelection{
     /** The node containing the AgentChatThread */
     node?: AgentChatThreadGenqlSelection
@@ -5872,6 +5900,7 @@ export interface QueryGenqlSelection{
     minimalMetadata?: MinimalMetadataGenqlSelection
     chatThread?: (AgentChatThreadGenqlSelection & { __args: {id: Scalars['UUID']} })
     chatMessages?: (AgentMessageGenqlSelection & { __args: {threadId: Scalars['UUID']} })
+    chatStreamCatchupChunks?: (ChatStreamCatchupChunksGenqlSelection & { __args: {threadId: Scalars['UUID']} })
     getAISystemPromptPreview?: AISystemPromptPreviewGenqlSelection
     skills?: SkillGenqlSelection
     skill?: (SkillGenqlSelection & { __args: {id: Scalars['UUID']} })
@@ -6500,6 +6529,7 @@ export interface WorkspaceMigrationDeleteActionInput {type: WorkspaceMigrationAc
 export interface SubscriptionGenqlSelection{
     onEventSubscription?: (EventSubscriptionGenqlSelection & { __args: {eventStreamId: Scalars['String']} })
     logicFunctionLogs?: (LogicFunctionLogsGenqlSelection & { __args: {input: LogicFunctionLogsInput} })
+    onAgentChatEvent?: (AgentChatEventGenqlSelection & { __args: {threadId: Scalars['String']} })
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -8427,6 +8457,22 @@ export interface LogicFunctionLogsInput {applicationId?: (Scalars['UUID'] | null
     
 
 
+    const ChatStreamCatchupChunks_possibleTypes: string[] = ['ChatStreamCatchupChunks']
+    export const isChatStreamCatchupChunks = (obj?: { __typename?: any } | null): obj is ChatStreamCatchupChunks => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isChatStreamCatchupChunks"')
+      return ChatStreamCatchupChunks_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const AgentChatEvent_possibleTypes: string[] = ['AgentChatEvent']
+    export const isAgentChatEvent = (obj?: { __typename?: any } | null): obj is AgentChatEvent => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isAgentChatEvent"')
+      return AgentChatEvent_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
     const AgentChatThreadEdge_possibleTypes: string[] = ['AgentChatThreadEdge']
     export const isAgentChatThreadEdge = (obj?: { __typename?: any } | null): obj is AgentChatThreadEdge => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isAgentChatThreadEdge"')
@@ -8953,12 +8999,12 @@ export const enumFeatureFlagKey = {
    IS_UNIQUE_INDEXES_ENABLED: 'IS_UNIQUE_INDEXES_ENABLED' as const,
    IS_JSON_FILTER_ENABLED: 'IS_JSON_FILTER_ENABLED' as const,
    IS_AI_ENABLED: 'IS_AI_ENABLED' as const,
-   IS_COMMAND_MENU_ITEM_ENABLED: 'IS_COMMAND_MENU_ITEM_ENABLED' as const,
    IS_MARKETPLACE_ENABLED: 'IS_MARKETPLACE_ENABLED' as const,
    IS_RECORD_PAGE_LAYOUT_EDITING_ENABLED: 'IS_RECORD_PAGE_LAYOUT_EDITING_ENABLED' as const,
    IS_PUBLIC_DOMAIN_ENABLED: 'IS_PUBLIC_DOMAIN_ENABLED' as const,
    IS_EMAILING_DOMAIN_ENABLED: 'IS_EMAILING_DOMAIN_ENABLED' as const,
    IS_JUNCTION_RELATIONS_ENABLED: 'IS_JUNCTION_RELATIONS_ENABLED' as const,
+   IS_COMMAND_MENU_ITEM_ENABLED: 'IS_COMMAND_MENU_ITEM_ENABLED' as const,
    IS_DRAFT_EMAIL_ENABLED: 'IS_DRAFT_EMAIL_ENABLED' as const,
    IS_USAGE_ANALYTICS_ENABLED: 'IS_USAGE_ANALYTICS_ENABLED' as const,
    IS_RICH_TEXT_V1_MIGRATED: 'IS_RICH_TEXT_V1_MIGRATED' as const,
