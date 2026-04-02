@@ -288,14 +288,14 @@ export class UserResolver {
       });
 
     const toWorkspaceMemberDtoArgs =
-      workspaceMemberEntities.map<ToWorkspaceMemberDtoArgs>(
-        (workspaceMemberEntity) => {
+      workspaceMemberEntities.reduce<ToWorkspaceMemberDtoArgs[]>(
+        (acc, workspaceMemberEntity) => {
           const userWorkspace = userWorkspacesByUserIdMap.get(
             workspaceMemberEntity.userId,
           );
 
           if (!isDefined(userWorkspace)) {
-            throw new Error('UserEntity workspace not found');
+            return acc;
           }
 
           const userWorkspaceRoles = rolesByUserWorkspacesMap.get(
@@ -303,15 +303,18 @@ export class UserResolver {
           );
 
           if (!isDefined(userWorkspaceRoles)) {
-            throw new Error('UserEntity workspace roles not found');
+            return acc;
           }
 
-          return {
+          acc.push({
             userWorkspace,
             userWorkspaceRoles,
             workspaceMemberEntity,
-          };
+          });
+
+          return acc;
         },
+        [],
       );
 
     return this.workspaceMemberTranspiler.toWorkspaceMemberDtos(
