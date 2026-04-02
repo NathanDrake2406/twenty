@@ -4,8 +4,12 @@ import { Command } from 'nest-commander';
 import { DataSource, Repository } from 'typeorm';
 import { v4 } from 'uuid';
 
-import { ActiveOrSuspendedWorkspacesMigrationCommandRunner } from 'src/database/commands/command-runners/active-or-suspended-workspaces-migration.command-runner';
+import {
+  ActiveOrSuspendedWorkspacesMigrationCommandRunner,
+  type ActiveOrSuspendedWorkspacesMigrationCommandOptions,
+} from 'src/database/commands/command-runners/active-or-suspended-workspaces-migration.command-runner';
 import { RunOnWorkspaceArgs } from 'src/database/commands/command-runners/workspaces-migration.command-runner';
+import { addPayloadCheckConstraintToCommandMenuItem } from 'src/database/typeorm/core/migrations/utils/1775129635528-add-payload-to-command-menu-item.util';
 import { ApplicationService } from 'src/engine/core-modules/application/application.service';
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
 import { CommandMenuItemAvailabilityType } from 'src/engine/metadata-modules/command-menu-item/enums/command-menu-item-availability-type.enum';
@@ -49,6 +53,42 @@ export class RefactorNavigationCommandsCommand extends ActiveOrSuspendedWorkspac
     private readonly workspaceMigrationValidateBuildAndRunService: WorkspaceMigrationValidateBuildAndRunService,
   ) {
     super(workspaceRepository, twentyORMGlobalManager, dataSourceService);
+  }
+
+  override async runMigrationCommand(
+    passedParams: string[],
+    options: ActiveOrSuspendedWorkspacesMigrationCommandOptions,
+  ): Promise<void> {
+    await super.runMigrationCommand(passedParams, options);
+
+    if (this.workspaceIds.size > 0) {
+      this.logger.log(
+        'Skipping CHECK constraint application: command was not launched for all workspaces',
+      );
+
+      return;
+    }
+
+    if (options.dryRun) {
+      this.logger.log(
+        '[DRY RUN] Would apply CHK_CMD_MENU_ITEM_ENGINE_KEY_COHERENCE',
+      );
+
+      return;
+    }
+
+    const queryRunner = this.coreDataSource.createQueryRunner();
+
+    await queryRunner.connect();
+
+    try {
+      await addPayloadCheckConstraintToCommandMenuItem(queryRunner);
+      this.logger.log(
+        'Successfully applied CHK_CMD_MENU_ITEM_ENGINE_KEY_COHERENCE',
+      );
+    } finally {
+      await queryRunner.release();
+    }
   }
 
   override async runOnWorkspace({
