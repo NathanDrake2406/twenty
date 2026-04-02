@@ -146,12 +146,13 @@ export class ApolloFactory implements ApolloManager {
         attempts: {
           max: 2,
           retryIf: (error) => {
-            // oxlint-disable-next-line no-console
-            console.log('retryIf error from retryLink', error);
             if (this.isAuthenticationError(error)) {
               return false;
             }
             if (this.isPayloadTooLargeError(error)) {
+              return false;
+            }
+            if (this.isGatewayError(error)) {
               return false;
             }
             return Boolean(error);
@@ -386,6 +387,15 @@ export class ApolloFactory implements ApolloManager {
 
   private isPayloadTooLargeError(error: ErrorLike): boolean {
     return ServerError.is(error) && error.statusCode === 413;
+  }
+
+  private isGatewayError(error: ErrorLike): boolean {
+    return (
+      ServerError.is(error) &&
+      (error.statusCode === 502 ||
+        error.statusCode === 503 ||
+        error.statusCode === 504)
+    );
   }
 
   updateWorkspaceMember(workspaceMember: CurrentWorkspaceMember | null) {
