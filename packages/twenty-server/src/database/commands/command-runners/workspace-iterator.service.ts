@@ -12,12 +12,13 @@ import { GlobalWorkspaceDataSource } from 'src/engine/twenty-orm/global-workspac
 import { GlobalWorkspaceOrmManager } from 'src/engine/twenty-orm/global-workspace-datasource/global-workspace-orm.manager';
 import { buildSystemAuthContext } from 'src/engine/twenty-orm/utils/build-system-auth-context.util';
 
-export type WorkspaceIteratorOptions = {
+export type WorkspaceIteratorArgs = {
   workspaceIds?: string[];
   activationStatuses?: WorkspaceActivationStatus[];
   startFromWorkspaceId?: string;
   workspaceCountLimit?: number;
   dryRun?: boolean;
+  callback: (context: WorkspaceIteratorContext) => Promise<void>;
 };
 
 export type WorkspaceIteratorContext = {
@@ -53,10 +54,9 @@ export class WorkspaceIteratorService {
     private readonly dataSourceService: DataSourceService,
   ) {}
 
-  async iterate(
-    options: WorkspaceIteratorOptions,
-    callback: (context: WorkspaceIteratorContext) => Promise<void>,
-  ): Promise<WorkspaceIteratorReport> {
+  async iterate(args: WorkspaceIteratorArgs): Promise<WorkspaceIteratorReport> {
+    const { callback, ...options } = args;
+
     const report: WorkspaceIteratorReport = {
       fail: [],
       success: [],

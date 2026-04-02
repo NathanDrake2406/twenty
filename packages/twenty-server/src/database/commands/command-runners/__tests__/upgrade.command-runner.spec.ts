@@ -132,38 +132,32 @@ const buildUpgradeCommandModule = async ({
       {
         provide: WorkspaceIteratorService,
         useValue: {
-          iterate: jest
-            .fn()
-            .mockImplementation(
-              async (
-                options: any,
-                callback: (context: any) => Promise<void>,
-              ) => {
-                const workspaceIds =
-                  options.workspaceIds ??
-                  workspaces.map((workspace) => workspace.id);
+          iterate: jest.fn().mockImplementation(async (args: any) => {
+            const { callback, ...options } = args;
+            const workspaceIds =
+              options.workspaceIds ??
+              workspaces.map((workspace) => workspace.id);
 
-                const report = {
-                  fail: [] as any[],
-                  success: [] as any[],
-                };
+            const report = {
+              fail: [] as any[],
+              success: [] as any[],
+            };
 
-                for (const [index, workspaceId] of workspaceIds.entries()) {
-                  try {
-                    await callback({
-                      workspaceId,
-                      index,
-                      total: workspaceIds.length,
-                    });
-                    report.success.push({ workspaceId });
-                  } catch (error) {
-                    report.fail.push({ error, workspaceId });
-                  }
-                }
+            for (const [index, workspaceId] of workspaceIds.entries()) {
+              try {
+                await callback({
+                  workspaceId,
+                  index,
+                  total: workspaceIds.length,
+                });
+                report.success.push({ workspaceId });
+              } catch (error) {
+                report.fail.push({ error, workspaceId });
+              }
+            }
 
-                return report;
-              },
-            ),
+            return report;
+          }),
         },
       },
     ],

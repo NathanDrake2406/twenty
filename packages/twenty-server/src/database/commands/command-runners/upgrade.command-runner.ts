@@ -6,6 +6,7 @@ import { SemVer } from 'semver';
 import { isDefined } from 'twenty-shared/utils';
 import { Repository } from 'typeorm';
 
+import { ActiveOrSuspendedWorkspacesMigrationCommandRunner } from 'src/database/commands/command-runners/active-or-suspended-workspaces-migration.command-runner';
 import { MigrationCommandRunner } from 'src/database/commands/command-runners/migration.command-runner';
 import {
   type WorkspaceIteratorContext,
@@ -16,7 +17,6 @@ import {
   type WorkspacesMigrationCommandOptions,
   WorkspacesMigrationCommandRunner,
 } from 'src/database/commands/command-runners/workspaces-migration.command-runner';
-import { ActiveOrSuspendedWorkspacesMigrationCommandRunner } from 'src/database/commands/command-runners/active-or-suspended-workspaces-migration.command-runner';
 import { CoreMigrationRunnerService } from 'src/database/commands/core-migration-runner/services/core-migration-runner.service';
 import { type UpgradeCommandVersion } from 'src/engine/constants/upgrade-command-supported-versions.constant';
 import { CoreEngineVersionService } from 'src/engine/core-engine-version/services/core-engine-version.service';
@@ -201,24 +201,18 @@ If any workspaces are not on the previous minor version, roll back to that versi
       return;
     }
 
-    // 3. Run core migrations
     await this.coreMigrationRunnerService.run();
 
-    // 4. Run per-workspace commands
-    const iteratorReport = await this.workspaceIteratorService.iterate(
-      {
-        workspaceIds:
-          this.workspaceIds.size > 0
-            ? Array.from(this.workspaceIds)
-            : undefined,
-        startFromWorkspaceId: this.startFromWorkspaceId,
-        workspaceCountLimit: this.workspaceCountLimit,
-        dryRun: options.dryRun,
-      },
-      async (context) => {
+    const iteratorReport = await this.workspaceIteratorService.iterate({
+      workspaceIds:
+        this.workspaceIds.size > 0 ? Array.from(this.workspaceIds) : undefined,
+      startFromWorkspaceId: this.startFromWorkspaceId,
+      workspaceCountLimit: this.workspaceCountLimit,
+      dryRun: options.dryRun,
+      callback: async (context) => {
         await this.runOnWorkspace(context, options);
       },
-    );
+    });
 
     this.migrationReport = iteratorReport;
   }

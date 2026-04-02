@@ -93,18 +93,14 @@ export abstract class WorkspacesMigrationCommandRunner<
     _passedParams: string[],
     options: Options,
   ) {
-    this.migrationReport = await this.workspaceIteratorService.iterate(
-      {
-        workspaceIds:
-          this.workspaceIds.size > 0
-            ? Array.from(this.workspaceIds)
-            : undefined,
-        activationStatuses: this.activationStatuses,
-        startFromWorkspaceId: this.startFromWorkspaceId,
-        workspaceCountLimit: this.workspaceCountLimit,
-        dryRun: options.dryRun,
-      },
-      async (context) => {
+    this.migrationReport = await this.workspaceIteratorService.iterate({
+      workspaceIds:
+        this.workspaceIds.size > 0 ? Array.from(this.workspaceIds) : undefined,
+      activationStatuses: this.activationStatuses,
+      startFromWorkspaceId: this.startFromWorkspaceId,
+      workspaceCountLimit: this.workspaceCountLimit,
+      dryRun: options.dryRun,
+      callback: async (context) => {
         await this.runOnWorkspace({
           options,
           workspaceId: context.workspaceId,
@@ -113,7 +109,7 @@ export abstract class WorkspacesMigrationCommandRunner<
           total: context.total,
         });
       },
-    );
+    });
   }
 
   public abstract runOnWorkspace(args: RunOnWorkspaceArgs): Promise<void>;
