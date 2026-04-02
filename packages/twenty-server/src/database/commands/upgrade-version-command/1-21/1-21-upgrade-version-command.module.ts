@@ -6,6 +6,7 @@ import { BackfillDatasourceToWorkspaceCommand } from 'src/database/commands/upgr
 import { BackfillPageLayoutsAndFieldsWidgetViewFieldsCommand } from 'src/database/commands/upgrade-version-command/1-21/1-21-backfill-page-layouts-and-fields-widget-view-fields.command';
 import { DeduplicateEngineCommandsCommand } from 'src/database/commands/upgrade-version-command/1-21/1-21-deduplicate-engine-commands.command';
 import { MigrateAiAgentTextToJsonResponseFormatCommand } from 'src/database/commands/upgrade-version-command/1-21/1-21-migrate-ai-agent-text-to-json-response-format.command';
+import { RefactorNavigationCommandsCommand } from 'src/database/commands/upgrade-version-command/1-21/1-21-refactor-navigation-commands.command';
 import { UpdateEditLayoutCommandMenuItemLabelCommand } from 'src/database/commands/upgrade-version-command/1-21/1-21-update-edit-layout-command-menu-item-label.command';
 import { ApplicationModule } from 'src/engine/core-modules/application/application.module';
 import { FeatureFlagModule } from 'src/engine/core-modules/feature-flag/feature-flag.module';
@@ -31,6 +32,7 @@ import { WorkspaceMigrationModule } from 'src/engine/workspace-manager/workspace
     DeduplicateEngineCommandsCommand,
     MigrateAiAgentTextToJsonResponseFormatCommand,
     UpdateEditLayoutCommandMenuItemLabelCommand,
+    RefactorNavigationCommandsCommand,
   ],
   exports: [
     AddGlobalKeyValuePairUniqueIndexCommand,
@@ -39,6 +41,7 @@ import { WorkspaceMigrationModule } from 'src/engine/workspace-manager/workspace
     DeduplicateEngineCommandsCommand,
     MigrateAiAgentTextToJsonResponseFormatCommand,
     UpdateEditLayoutCommandMenuItemLabelCommand,
+    RefactorNavigationCommandsCommand,
   ],
 })
 export class V1_21_UpgradeVersionCommandModule {}

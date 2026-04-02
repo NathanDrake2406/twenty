@@ -276,6 +276,7 @@ export class BackfillCommandMenuItemsCommand extends ActiveOrSuspendedWorkspaces
             icon: trigger.settings.icon ?? null,
             isPinned: trigger.settings.isPinned ?? false,
             position: 0,
+            payload: null,
             hotKeys: null,
             availabilityType,
             availabilityObjectMetadataId: availabilityObjectMetadataId ?? null,

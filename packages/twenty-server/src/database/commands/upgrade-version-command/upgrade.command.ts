@@ -31,6 +31,7 @@ import { BackfillPageLayoutsAndFieldsWidgetViewFieldsCommand } from 'src/databas
 import { DeduplicateEngineCommandsCommand } from 'src/database/commands/upgrade-version-command/1-21/1-21-deduplicate-engine-commands.command';
 import { MigrateAiAgentTextToJsonResponseFormatCommand } from 'src/database/commands/upgrade-version-command/1-21/1-21-migrate-ai-agent-text-to-json-response-format.command';
 import { UpdateEditLayoutCommandMenuItemLabelCommand } from 'src/database/commands/upgrade-version-command/1-21/1-21-update-edit-layout-command-menu-item-label.command';
+import { RefactorNavigationCommandsCommand } from 'src/database/commands/upgrade-version-command/1-21/1-21-refactor-navigation-commands.command';
 import { CoreEngineVersionService } from 'src/engine/core-engine-version/services/core-engine-version.service';
 import { TwentyConfigService } from 'src/engine/core-modules/twenty-config/twenty-config.service';
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
@@ -79,6 +80,7 @@ export class UpgradeCommand extends UpgradeCommandRunner {
     protected readonly deduplicateEngineCommandsCommand: DeduplicateEngineCommandsCommand,
     protected readonly migrateAiAgentTextToJsonResponseFormatCommand: MigrateAiAgentTextToJsonResponseFormatCommand,
     protected readonly updateEditLayoutCommandMenuItemLabelCommand: UpdateEditLayoutCommandMenuItemLabelCommand,
+    protected readonly refactorNavigationCommandsCommand: RefactorNavigationCommandsCommand,
   ) {
     super(
       workspaceRepository,
@@ -118,6 +120,7 @@ export class UpgradeCommand extends UpgradeCommandRunner {
       this.deduplicateEngineCommandsCommand,
       this.migrateAiAgentTextToJsonResponseFormatCommand,
       this.updateEditLayoutCommandMenuItemLabelCommand,
+      this.refactorNavigationCommandsCommand,
     ];
 
     this.allCommands = {
