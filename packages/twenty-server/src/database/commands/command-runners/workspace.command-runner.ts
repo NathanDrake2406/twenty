@@ -2,10 +2,7 @@ import chalk from 'chalk';
 import { CommandRunner, Option } from 'nest-commander';
 import { WorkspaceActivationStatus } from 'twenty-shared/workspace';
 
-import {
-  type WorkspaceIteratorReport,
-  WorkspaceIteratorService,
-} from 'src/database/commands/command-runners/workspace-iterator.service';
+import { WorkspaceIteratorService } from 'src/database/commands/command-runners/workspace-iterator.service';
 import { CommandLogger } from 'src/database/commands/logger';
 import { GlobalWorkspaceDataSource } from 'src/engine/twenty-orm/global-workspace-datasource/global-workspace-datasource';
 
@@ -25,8 +22,6 @@ export type RunOnWorkspaceArgs = {
   total: number;
 };
 
-export type WorkspaceCommandReport = WorkspaceIteratorReport;
-
 export abstract class WorkspaceCommandRunner<
   Options extends WorkspaceCommandOptions = WorkspaceCommandOptions,
 > extends CommandRunner {
@@ -35,10 +30,6 @@ export abstract class WorkspaceCommandRunner<
   protected workspaceIds: Set<string> = new Set();
   private startFromWorkspaceId: string | undefined;
   private workspaceCountLimit: number | undefined;
-  public migrationReport: WorkspaceCommandReport = {
-    fail: [],
-    success: [],
-  };
 
   constructor(
     protected readonly workspaceIteratorService: WorkspaceIteratorService,
@@ -122,7 +113,7 @@ export abstract class WorkspaceCommandRunner<
     }
 
     try {
-      this.migrationReport = await this.workspaceIteratorService.iterate({
+      await this.workspaceIteratorService.iterate({
         workspaceIds:
           this.workspaceIds.size > 0
             ? Array.from(this.workspaceIds)
