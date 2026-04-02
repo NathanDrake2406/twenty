@@ -93,25 +93,26 @@ export class WorkspaceManagerService {
         },
       );
 
-    await this.messageQueueService.add<GenerateSdkClientJobData>(
-      GenerateSdkClientJob.name,
-      {
-        workspaceId,
-        applicationId: twentyStandardFlatApplication.id,
-        applicationUniversalIdentifier:
-          twentyStandardFlatApplication.universalIdentifier,
-      },
-    );
-
-    await this.messageQueueService.add<GenerateSdkClientJobData>(
-      GenerateSdkClientJob.name,
-      {
-        workspaceId,
-        applicationId: workspaceCustomFlatApplication.id,
-        applicationUniversalIdentifier:
-          workspaceCustomFlatApplication.universalIdentifier,
-      },
-    );
+    await Promise.all([
+      this.messageQueueService.add<GenerateSdkClientJobData>(
+        GenerateSdkClientJob.name,
+        {
+          workspaceId,
+          applicationId: twentyStandardFlatApplication.id,
+          applicationUniversalIdentifier:
+            twentyStandardFlatApplication.universalIdentifier,
+        },
+      ),
+      this.messageQueueService.add<GenerateSdkClientJobData>(
+        GenerateSdkClientJob.name,
+        {
+          workspaceId,
+          applicationId: workspaceCustomFlatApplication.id,
+          applicationUniversalIdentifier:
+            workspaceCustomFlatApplication.universalIdentifier,
+        },
+      ),
+    ]);
 
     await this.setupDefaultRoles({
       workspaceId,

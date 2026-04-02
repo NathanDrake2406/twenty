@@ -29,8 +29,9 @@ import { WebhookJobModule } from 'src/engine/metadata-modules/webhook/jobs/webho
 import { SubscriptionsModule } from 'src/engine/subscriptions/subscriptions.module';
 import { CleanOnboardingWorkspacesJob } from 'src/engine/workspace-manager/workspace-cleaner/crons/clean-onboarding-workspaces.job';
 import { CleanSuspendedWorkspacesJob } from 'src/engine/workspace-manager/workspace-cleaner/crons/clean-suspended-workspaces.job';
-import { CleanWorkspaceDeletionWarningUserVarsJob } from 'src/engine/workspace-manager/workspace-cleaner/jobs/clean-workspace-deletion-warning-user-vars.job';
+import { GenerateSdkClientJob } from 'src/engine/core-modules/sdk-client/jobs/generate-sdk-client.job';
 import { SdkClientModule } from 'src/engine/core-modules/sdk-client/sdk-client.module';
+import { CleanWorkspaceDeletionWarningUserVarsJob } from 'src/engine/workspace-manager/workspace-cleaner/jobs/clean-workspace-deletion-warning-user-vars.job';
 import { WorkspaceCleanerModule } from 'src/engine/workspace-manager/workspace-cleaner/workspace-cleaner.module';
 import { CalendarEventParticipantManagerModule } from 'src/modules/calendar/calendar-event-participant-manager/calendar-event-participant-manager.module';
 import { CalendarModule } from 'src/modules/calendar/calendar.module';
@@ -65,8 +66,8 @@ import { WorkflowModule } from 'src/modules/workflow/workflow.module';
     WorkflowModule,
     FavoriteModule,
     NavigationMenuItemModule,
-    WorkspaceCleanerModule,
     SdkClientModule,
+    WorkspaceCleanerModule,
     SubscriptionsModule,
     AuditJobModule,
     AiAgentMonitorModule,
@@ -82,6 +83,7 @@ import { WorkflowModule } from 'src/modules/workflow/workflow.module';
     HandleWorkspaceMemberDeletedJob,
     CleanWorkspaceDeletionWarningUserVarsJob,
     UpdateWorkspaceMemberEmailJob,
+    GenerateSdkClientJob,
   ],
 })
 export class JobsModule {
