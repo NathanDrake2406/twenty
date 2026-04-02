@@ -66,10 +66,13 @@ export class CalDAVClient {
   constructor(credentials: CalendarCredentials) {
     this.credentials = credentials;
     this.logger = new Logger(CalDAVClient.name);
-    this.headers = getBasicAuthHeaders({
-      username: credentials.username,
-      password: credentials.password,
-    });
+    this.headers = {
+      ...getBasicAuthHeaders({
+        username: credentials.username,
+        password: credentials.password,
+      }),
+      'accept-language': 'en-US,en;q=0.5',
+    };
   }
 
   private hasFileExtension(url: string): boolean {
