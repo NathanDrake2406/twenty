@@ -1,5 +1,5 @@
 export enum SidePanelPages {
-  Root = 'root',
+  CommandMenuDisplay = 'command-menu-display',
   ViewRecord = 'view-record',
   MergeRecords = 'merge-records',
   UpdateRecords = 'update-records',
@@ -22,7 +22,9 @@ export enum SidePanelPages {
   PageLayoutTabSettings = 'page-layout-tab-settings',
   PageLayoutFieldsSettings = 'page-layout-fields-settings',
   PageLayoutRecordTableSettings = 'page-layout-record-table-settings',
+  PageLayoutFieldSettings = 'page-layout-field-settings',
   ViewFrontComponent = 'view-front-component',
   NavigationMenuItemEdit = 'navigation-menu-item-edit',
   NavigationMenuAddItem = 'navigation-menu-add-item',
+  CommandMenuEdit = 'command-menu-edit',
 }

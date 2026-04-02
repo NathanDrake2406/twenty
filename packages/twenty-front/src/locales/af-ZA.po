@@ -154,19 +154,16 @@ msgid "{0, plural, one {You do not have permission to access the {fieldsList} fi
 msgstr "{0, plural, one {Jy het nie toestemming om toegang tot die {fieldsList} veld te hê nie} other {Jy het nie toestemming om toegang tot die {fieldsList} velde te hê nie}}"
 
 #. js-lingui-id: dNIJYp
-#. placeholder {0}: formatNumber(totalCredits)
 #. placeholder {0}: formatNumber(datum.value)
-#: src/pages/settings/SettingsUsageUserDetail.tsx
 #: src/modules/settings/usage/components/UsagePieChart.tsx
-#: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
 msgid "{0} credits"
 msgstr "{0} krediete"
 
-#. js-lingui-id: m8fdzW
-#. placeholder {0}: formatNumber(totalCredits)
+#. js-lingui-id: r4l/MK
+#. placeholder {0}: formatUsageValue(totalCredits)
 #: src/pages/settings/SettingsUsageUserDetail.tsx
-msgid "{0} credits used"
-msgstr "{0} krediete gebruik"
+msgid "{0} used"
+msgstr ""
 
 #. js-lingui-id: qdQhzv
 #: src/modules/views/advanced-filter-chip/components/AdvancedFilterChip.tsx
@@ -506,10 +503,10 @@ msgstr "1. Tipe"
 msgid "10,000 workflow node executions"
 msgstr "10 000 werkvloeiknoopuitvoerings"
 
-#. js-lingui-id: bM5lnW
+#. js-lingui-id: rU05hS
 #: src/modules/settings/experience/components/DateTimeSettingsTimeFormatSelect.tsx
-msgid "12h - {hour12Label}"
-msgstr "12u - {hour12Label}"
+msgid "12h"
+msgstr ""
 
 #. js-lingui-id: 4EdXYs
 #: src/pages/settings/profile/appearance/components/DateTimeSettingsTimeFormatSelect.tsx
@@ -542,10 +539,10 @@ msgstr "20 000 werkvloeiknoopuitvoerings"
 msgid "200 OK - {duration}ms"
 msgstr "200 OK - {duration}ms"
 
-#. js-lingui-id: mwTnop
+#. js-lingui-id: W1k7eB
 #: src/modules/settings/experience/components/DateTimeSettingsTimeFormatSelect.tsx
-msgid "24h - {hour24Label}"
-msgstr "24u - {hour24Label}"
+msgid "24h"
+msgstr ""
 
 #. js-lingui-id: QsMprd
 #: src/pages/settings/profile/appearance/components/DateTimeSettingsTimeFormatSelect.tsx
@@ -674,10 +671,10 @@ msgstr "Toegangsleutel-ID"
 msgid "Access workspace data"
 msgstr "Toegang tot werkruimtedata"
 
-#. js-lingui-id: W5nhmk
+#. js-lingui-id: c2UA7k
 #: src/pages/settings/ai/components/SettingsAIMCP.tsx
-msgid "Access your workspace data from your favorite MCP client like Claude Desktop, Claude Code, Cursor, or ChatGPT. Once connected, try: \"Show me the 5 most recently created companies\" or \"Create a new person named Jane Doe\"."
-msgstr "Kry toegang tot jou werkspasie-data vanaf jou gunsteling MCP-kliënt soos Claude Desktop, Claude Code, Cursor of ChatGPT. Sodra jy gekoppel is, probeer: \"Wys vir my die 5 mees onlangs geskepte maatskappye\" of \"Skep 'n nuwe persoon met die naam Jane Doe\"."
+msgid "Access your workspace data from your favorite MCP client like Claude Desktop, Windsurf or Cursor."
+msgstr ""
 
 #. js-lingui-id: u2Cycw
 #: src/modules/settings/logic-functions/components/SettingsLogicFunctionTabEnvironmentVariablesSection.tsx
@@ -770,8 +767,8 @@ msgstr "Aksies gebruikers kan uitvoer op hierdie voorwerp"
 #: src/modules/settings/security/components/SSO/SettingsSecuritySSORowDropdownMenu.tsx
 #: src/modules/settings/data-model/objects/components/SettingsObjectInactiveMenuDropDown.tsx
 #: src/modules/settings/data-model/object-details/components/SettingsObjectFieldDisabledActionDropdown.tsx
+#: src/modules/settings/components/SettingsEnterpriseFeatureGateCard.tsx
 #: src/modules/information-banner/components/enterprise/InformationBannerLegacyEnterpriseKey.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
 msgid "Activate"
 msgstr "Aktiveer"
 
@@ -779,11 +776,6 @@ msgstr "Aktiveer"
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx
 msgid "Activate Enterprise Key"
 msgstr "Aktiveer ondernemingsleutel"
-
-#. js-lingui-id: tu8A/k
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Activate Workflow"
-msgstr "Aktiveer Werkstroom"
 
 #. js-lingui-id: jSZacs
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx
@@ -843,12 +835,6 @@ msgstr "Voeg 'n groep by"
 msgid "Add a new company we're in touch with (e.g. name, website, industry). Details: "
 msgstr "Voeg 'n nuwe maatskappy by met wie ons in kontak is (bv. naam, webwerf, bedryf). Besonderhede: "
 
-#. js-lingui-id: m3/V2n
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Add a node"
-msgstr "Voeg 'n nodus by"
-
 #. js-lingui-id: nGv1DN
 #: src/modules/side-panel/utils/getSidePanelSubPageTitle.ts
 msgid "Add a record"
@@ -901,7 +887,7 @@ msgid "Add custom endpoints, private gateways, or additional regions."
 msgstr "Voeg pasgemaakte eindpunte, privaat-gateways, of bykomende streke by."
 
 #. js-lingui-id: GuJvBr
-#: src/pages/settings/ai/SettingsAIPrompts.tsx
+#: src/pages/settings/ai/components/SettingsAIMoreTab.tsx
 msgid "Add custom instructions specific to your workspace (appended to system prompt)"
 msgstr "Voeg pasgemaakte instruksies by wat spesifiek is vir jou werkruimte (aangeheg by die stelselprompt)"
 
@@ -1026,6 +1012,7 @@ msgstr "Voeg nota by"
 
 #. js-lingui-id: dEO3Zx
 #: src/pages/settings/data-model/SettingsObjects.tsx
+#: src/pages/settings/data-model/SettingsObjects.tsx
 msgid "Add object"
 msgstr "Voeg objek by"
 
@@ -1132,8 +1119,6 @@ msgid "Add to Favorite"
 msgstr "Voeg by tot gunstelinge"
 
 #. js-lingui-id: pBsoKL
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 #: src/modules/command-menu-item/mock/command-menu-items.mock.tsx
 #: src/modules/command-menu-item/mock/command-menu-items.mock.tsx
 msgid "Add to favorites"
@@ -1177,11 +1162,6 @@ msgstr "Bygevoeg {beautifyPastDateRelative}"
 #: src/modules/settings/accounts/components/SettingsAccountsBlocklistTable.tsx
 msgid "Added to blocklist"
 msgstr "By swartlys gevoeg"
-
-#. js-lingui-id: y5mJau
-#: src/pages/settings/ai/SettingsAIPrompts.tsx
-msgid "Additional Instructions"
-msgstr "Addisionele Instruksies"
 
 #. js-lingui-id: hW/fMg
 #: src/modules/ui/field/input/components/AddressInput.tsx
@@ -1265,6 +1245,7 @@ msgid "After or equal"
 msgstr "Na of gelyk aan"
 
 #. js-lingui-id: fcYF58
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
 msgid "agent"
 msgstr "agent"
@@ -1303,7 +1284,14 @@ msgstr ""
 msgid "Agent tokens"
 msgstr "Agent-tekens"
 
+#. js-lingui-id: ftfADk
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "agents"
+msgstr ""
+
 #. js-lingui-id: 8Uv5e6
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
 #: src/pages/settings/applications/tabs/SettingsApplicationDetailContentTab.tsx
 #: src/modules/settings/roles/role-assignment/components/SettingsRoleAssignmentTable.tsx
 msgid "Agents"
@@ -1313,6 +1301,11 @@ msgstr "Agente"
 #: src/pages/settings/applications/tabs/SettingsApplicationDetailContentTab.tsx
 msgid "Agents powering this app"
 msgstr "Agente wat hierdie toepassing aandryf"
+
+#. js-lingui-id: zaHvxQ
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+msgid "Agents provided by this app"
+msgstr ""
 
 #. js-lingui-id: sPQ5qN
 #: src/modules/side-panel/pages/page-layout/constants/GraphTypeInformation.ts
@@ -1328,6 +1321,7 @@ msgstr ""
 #: src/pages/settings/ai/SettingsAgentTurnDetail.tsx
 #: src/pages/settings/ai/SettingsAgentTurnDetail.tsx
 #: src/pages/settings/ai/SettingsAgentForm.tsx
+#: src/pages/settings/ai/SettingsAIUsageUserDetail.tsx
 #: src/pages/settings/ai/SettingsAIPrompts.tsx
 #: src/pages/settings/ai/SettingsAI.tsx
 #: src/pages/settings/ai/SettingsAI.tsx
@@ -1346,10 +1340,19 @@ msgstr "KI"
 msgid "AI Chat"
 msgstr "AI-klets"
 
+#. js-lingui-id: E/lGXl
+#: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
+msgid "AI consumption across all workspaces."
+msgstr ""
+
+#. js-lingui-id: kkfXGh
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+msgid "AI consumption over time."
+msgstr ""
+
 #. js-lingui-id: kNfr85
 #: src/pages/settings/ai/forms/components/SettingsAIAgentForm.tsx
 #: src/pages/settings/ai/components/SettingsAgentSettingsTab.tsx
-#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowAiAgentPromptTab.tsx
 msgid "AI Model"
 msgstr "KI Model"
 
@@ -1363,10 +1366,60 @@ msgstr "AI nie gekonfigureer nie. Stel OPENAI_API_KEY, ANTHROPIC_API_KEY of XAI_
 msgid "AI request prep"
 msgstr "Voorbereiding van KI-versoek"
 
-#. js-lingui-id: QwgquD
-#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowOutputSchemaBuilder.tsx
-msgid "AI Response Schema"
-msgstr "KI Antwoord Skema"
+#. js-lingui-id: tzhisR
+#: src/pages/settings/ai/SettingsAIUsageUserDetail.tsx
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+msgid "AI Usage"
+msgstr ""
+
+#. js-lingui-id: Ad11E9
+#: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
+msgid "AI usage analytics across workspaces is available with an Enterprise key."
+msgstr ""
+
+#. js-lingui-id: zkptxb
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+msgid "AI usage analytics is available with an Enterprise key."
+msgstr ""
+
+#. js-lingui-id: U2F/HK
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+msgid "AI usage analytics requires ClickHouse. Contact your administrator."
+msgstr ""
+
+#. js-lingui-id: SknniY
+#: src/pages/settings/ai/SettingsAIUsageUserDetail.tsx
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+msgid "AI Usage by Model"
+msgstr ""
+
+#. js-lingui-id: ehjYr9
+#: src/pages/settings/ai/SettingsAIUsageUserDetail.tsx
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+msgid "AI Usage by Type"
+msgstr ""
+
+#. js-lingui-id: X2afmM
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+msgid "AI Usage by User"
+msgstr ""
+
+#. js-lingui-id: jyqPfh
+#: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
+msgid "AI Usage by Workspace"
+msgstr ""
+
+#. js-lingui-id: KLyZ6L
+#: src/pages/settings/ai/SettingsAIUsageUserDetail.tsx
+msgid "AI User Usage"
+msgstr ""
+
+#. js-lingui-id: TLbVxH
+#: src/modules/settings/usage/utils/getOperationTypeLabel.ts
+msgid "AI Workflow"
+msgstr ""
 
 #. js-lingui-id: BAiyFV
 #: src/pages/settings/admin-panel/SettingsAdminNewAiProvider.tsx
@@ -1455,6 +1508,11 @@ msgstr "Alle lede"
 #: src/modules/settings/developers/components/WebhookEntitySelect.tsx
 msgid "All Metadata"
 msgstr "Alle Metadata"
+
+#. js-lingui-id: zIk4M6
+#: src/modules/side-panel/components/SidePanelObjectFilterDropdownContent.tsx
+msgid "All objects"
+msgstr ""
 
 #. js-lingui-id: aFE/OW
 #: src/pages/settings/security/event-logs/components/EventLogFilters.tsx
@@ -1746,6 +1804,11 @@ msgstr "API-sleutel is na knipbord gekopieer"
 msgid "API key is required"
 msgstr "API-sleutel word vereis"
 
+#. js-lingui-id: sb6i1L
+#: src/pages/settings/developers/api-keys/SettingsDevelopersApiKeyDetail.tsx
+msgid "API key name cannot be empty"
+msgstr ""
+
 #. js-lingui-id: Widx6n
 #: src/modules/settings/roles/components/SettingsRolesList.tsx
 msgid "API key roles"
@@ -1811,10 +1874,10 @@ msgstr "API's"
 msgid "APIs & Webhooks"
 msgstr "API's & Webhooks"
 
-#. js-lingui-id: BnUHmx
+#. js-lingui-id: 0UMxlw
 #: src/modules/settings/experience/components/NumberFormatSelect.tsx
-msgid "Apostrophe and dot - {apostropheAndDotExample}"
-msgstr "Afkappingsteken en punt - {apostropheAndDotExample}"
+msgid "Apostrophe and dot"
+msgstr ""
 
 #. js-lingui-id: LMUw1U
 #: src/pages/settings/data-model/SettingsObjectFieldTable.tsx
@@ -1945,29 +2008,29 @@ msgstr "Is jy seker jy wil hierdie verwante {relationObjectMetadataNameSingular}
 msgid "Are you sure you want to delete this skill? This action cannot be undone."
 msgstr "Is jy seker jy wil hierdie vaardigheid verwyder? Hierdie aksie kan nie ongedaan gemaak word nie."
 
-#. js-lingui-id: OJOR8q
-#: src/modules/command-menu-item/record/multiple-records/components/DestroyMultipleRecordsCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/multiple-records/components/DestroyMultipleRecordsCommand.tsx
-msgid "Are you sure you want to destroy these records? They won't be recoverable anymore."
-msgstr "Is jy seker jy wil hierdie rekords vernietig? Hulle sal nie meer herstelbaar wees nie."
+#. js-lingui-id: EySr+c
+#. placeholder {0}: objectMetadataItem.labelPlural
+#: src/modules/command-menu-item/engine-command/record/components/DestroyRecordsCommand.tsx
+msgid "Are you sure you want to destroy these {0}? They won't be recoverable anymore."
+msgstr ""
 
-#. js-lingui-id: UK5TO6
-#: src/modules/command-menu-item/record/single-record/components/DestroySingleRecordCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/single-record/components/DestroySingleRecordCommand.tsx
-msgid "Are you sure you want to destroy this record? It cannot be recovered anymore."
-msgstr "Is jy seker jy wil hierdie rekord vernietig? Dit kan nie meer herstel word nie."
+#. js-lingui-id: GfgNgF
+#. placeholder {0}: objectMetadataItem.labelSingular
+#: src/modules/command-menu-item/engine-command/record/components/DestroyRecordsCommand.tsx
+msgid "Are you sure you want to destroy this {0}? It cannot be recovered anymore."
+msgstr ""
 
-#. js-lingui-id: mcHVC1
-#: src/modules/command-menu-item/record/multiple-records/components/RestoreMultipleRecordsCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/multiple-records/components/RestoreMultipleRecordsCommand.tsx
-msgid "Are you sure you want to restore these records?"
-msgstr "Is jy seker jy wil hierdie rekords herstel?"
+#. js-lingui-id: RzJL8J
+#. placeholder {0}: objectMetadataItem.labelPlural
+#: src/modules/command-menu-item/engine-command/record/components/RestoreRecordsCommand.tsx
+msgid "Are you sure you want to restore these {0}?"
+msgstr ""
 
-#. js-lingui-id: lmgkf0
-#: src/modules/command-menu-item/record/single-record/components/RestoreSingleRecordCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/single-record/components/RestoreSingleRecordCommand.tsx
-msgid "Are you sure you want to restore this record?"
-msgstr "Is jy seker jy wil hierdie rekord herstel?"
+#. js-lingui-id: XTKWxO
+#. placeholder {0}: objectMetadataItem.labelSingular
+#: src/modules/command-menu-item/engine-command/record/components/RestoreRecordsCommand.tsx
+msgid "Are you sure you want to restore this {0}?"
+msgstr ""
 
 #. js-lingui-id: 9JFf0y
 #: src/modules/settings/members/components/MemberPermissionsTab.tsx
@@ -2004,9 +2067,6 @@ msgstr "Oplopend"
 #: src/modules/side-panel/hooks/useOpenAskAIPageInSidePanel.ts
 #: src/modules/side-panel/components/SidePanelAskAIInfo.tsx
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useActionRolePermissionFlagConfig.ts
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
 #: src/modules/command-menu-item/engine-command/constants/EngineComponentKeyHeadlessComponentMap.tsx
 msgid "Ask AI"
 msgstr "Vra AI"
@@ -2192,11 +2252,6 @@ msgstr "Magtiging"
 msgid "Authentication failed"
 msgstr "Magtiging het misluk"
 
-#. js-lingui-id: TxT0ER
-#: src/pages/settings/ai/components/SettingsAIMCP.tsx
-msgid "Authentication method"
-msgstr "Outentikasie-metode"
-
 #. js-lingui-id: H7qgYQ
 #: src/pages/settings/SettingsTwoFactorAuthenticationMethod.tsx
 msgid "Authenticator app"
@@ -2362,6 +2417,11 @@ msgstr "Omdat hierdie werkvloei nie 'n handmatige sneller gebruik nie, sal die v
 msgid "Before"
 msgstr "Voor"
 
+#. js-lingui-id: KYr9vA
+#: src/pages/settings/ai/components/SettingsAIModelsTab.tsx
+msgid "Best"
+msgstr ""
+
 #. js-lingui-id: NgFKo1
 #: src/modules/workflow/workflow-trigger/utils/cron-to-human/descriptors/getMonthsDescription.ts
 msgid "between {startMonth} and {endMonth}"
@@ -2383,6 +2443,8 @@ msgid "between the {startOrdinal} and {endOrdinal} of the month"
 msgstr "tussen die {startOrdinal} en {endOrdinal} van die maand"
 
 #. js-lingui-id: R+w/Va
+#: src/pages/settings/SettingsUsageUserDetail.tsx
+#: src/pages/settings/SettingsUsage.tsx
 #: src/pages/settings/SettingsBilling.tsx
 #: src/pages/settings/SettingsBilling.tsx
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useSettingsRolePermissionFlagConfig.ts
@@ -2444,6 +2506,12 @@ msgstr "Boole"
 #: src/modules/side-panel/pages/page-layout/utils/getChartAxisNameDisplayOptions.ts
 msgid "Both"
 msgstr "Albei"
+
+#. js-lingui-id: 1hGdwj
+#: src/pages/settings/ai/SettingsAIUsageUserDetail.tsx
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+msgid "Breakdown across AI models."
+msgstr ""
 
 #. js-lingui-id: qDsMss
 #: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowOutputSchemaBuilder.tsx
@@ -2645,14 +2713,8 @@ msgstr "Kan nie skandeer nie? Kopieer die"
 #: src/modules/settings/components/SaveAndCancelButtons/CancelButton.tsx
 #: src/modules/settings/components/SaveAndCancelButtons/CancelButton.tsx
 #: src/modules/object-record/record-update-multiple/components/UpdateMultipleRecordsFooter.tsx
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
 msgid "Cancel"
 msgstr "Kanselleer"
-
-#. js-lingui-id: HYLdMN
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Cancel Edition"
-msgstr "Kanselleer uitgawe"
 
 #. js-lingui-id: dV4HC5
 #: src/modules/settings/billing/components/SettingsBillingSubscriptionInfo.tsx
@@ -2741,6 +2803,12 @@ msgstr "Kan nie meer as {maxNumberOfValues} lêers oplaai nie"
 #: src/modules/auth/sign-in-up/components/internal/SignInUpTwoFactorAuthenticationVerification.tsx
 msgid "Captcha (anti-bot check) is still loading, try again"
 msgstr "Captcha (anti-bot greep) laai steeds, probeer weer"
+
+#. js-lingui-id: kryGs+
+#: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutFieldSettings.tsx
+#: src/modules/side-panel/pages/page-layout/components/dropdown-content/FieldWidgetLayoutDropdownContent.tsx
+msgid "Card"
+msgstr ""
 
 #. js-lingui-id: M1RLfx
 #: src/pages/settings/profile/appearance/components/LocalePicker.tsx
@@ -2930,6 +2998,7 @@ msgid "Clear the field or \"X\" to revert to environment/default value."
 msgstr "Maak die veld skoon of \"X\" om terug te keer na omgewing/standaardwaarde."
 
 #. js-lingui-id: Gt8ndY
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
 #: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
 msgid "Click a user to see their daily breakdown."
 msgstr "Klik op 'n gebruiker om hul daaglikse uiteensetting te sien."
@@ -2971,6 +3040,8 @@ msgstr "ClickHouse is nodig vir ouditlogboeke. Kontak jou administrateur."
 
 #. js-lingui-id: CTdw8/
 #: src/pages/settings/security/event-logs/SettingsEventLogs.tsx
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+#: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
 msgid "ClickHouse Not Configured"
 msgstr "ClickHouse is nie gekonfigureer nie"
 
@@ -3013,6 +3084,7 @@ msgstr "Sluit banier"
 
 #. js-lingui-id: saip/v
 #: src/modules/ui/layout/page-header/components/PageHeaderToggleSidePanelButton.tsx
+#: src/modules/command-menu-item/server-items/display/components/CommandMenuItemMoreActionsButton.tsx
 msgid "Close side panel"
 msgstr "Maak sypaneel toe"
 
@@ -3084,6 +3156,11 @@ msgstr "kolomdata is nie versoenbaar met Multi-Select nie. Vereiste formaat is '
 msgid "Columns not matched:"
 msgstr "Kolomme nie ooreenstem nie:"
 
+#. js-lingui-id: pOJNDA
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "command"
+msgstr ""
+
 #. js-lingui-id: cj9UFG
 #: src/pages/settings/applications/tabs/SettingsApplicationsDeveloperTab.tsx
 msgid "Command copied to clipboard"
@@ -3104,15 +3181,20 @@ msgstr "Opdragkieslys"
 msgid "command menu item"
 msgstr "opdragkieslysitem"
 
+#. js-lingui-id: 9HKBNN
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "commands"
+msgstr ""
+
 #. js-lingui-id: 4XlFx/
 #: src/pages/settings/applications/tabs/SettingsApplicationsDeveloperTab.tsx
 msgid "Commands copied to clipboard"
 msgstr "Opdragte na knipbord gekopieer"
 
-#. js-lingui-id: A9u+7N
+#. js-lingui-id: QeCopv
 #: src/modules/settings/experience/components/NumberFormatSelect.tsx
-msgid "Commas and dot - {commasAndDotExample}"
-msgstr "Kommas en punt - {commasAndDotExample}"
+msgid "Commas and dot"
+msgstr ""
 
 #. js-lingui-id: NBdIgR
 #: src/pages/settings/ai/SettingsAgentTurnDetail.tsx
@@ -3126,7 +3208,6 @@ msgstr "Kompakte aansig"
 
 #. js-lingui-id: s2QZS6
 #: src/modules/sign-in-background-mock/components/SignInBackgroundMockPage.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 msgid "Companies"
 msgstr "Maatskappye"
 
@@ -3178,7 +3259,6 @@ msgid "Configuration"
 msgstr "Konfigurasie"
 
 #. js-lingui-id: iAL9tI
-#: src/pages/settings/ai/SettingsAI.tsx
 #: src/pages/settings/admin-panel/SettingsAdminAiProviderDetail.tsx
 msgid "Configure"
 msgstr "Stel op"
@@ -3217,6 +3297,11 @@ msgstr "Konfigureer verstek-AI-modelle en beskikbaarheid"
 #: src/pages/settings/security/SettingsSecurity.tsx
 msgid "Configure fallback login methods for users with SSO bypass permissions"
 msgstr "Konfigureer terugval-aanmeldmetodes vir gebruikers met SSO omseil toestemmings"
+
+#. js-lingui-id: OLqG0t
+#: src/modules/settings/data-model/object-details/components/tabs/ObjectSettings.tsx
+msgid "Configure how this object appears in search results"
+msgstr ""
 
 #. js-lingui-id: ghdb7+
 #: src/modules/settings/accounts/components/SettingsAccountsCalendarChannelsGeneral.tsx
@@ -3382,6 +3467,7 @@ msgstr "Inhoud"
 #. js-lingui-id: M73whl
 #: src/modules/side-panel/pages/root/components/SidePanelRootPage.tsx
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAiModelHoverCard.tsx
+#: src/modules/command-menu-item/server-items/display/components/SidePanelCommandMenuItemDisplayPage.tsx
 #: src/modules/ai/components/RoutingDebugDisplay.tsx
 msgid "Context"
 msgstr "Konteks"
@@ -3529,6 +3615,11 @@ msgstr "Plak die kode hieronder"
 #: src/modules/auth/sign-in-up/components/internal/SignInUpTwoFactorAuthenticationProvision.tsx
 msgid "Copy Setup Key"
 msgstr "Kopieer Setup Sleutel"
+
+#. js-lingui-id: RGCCrg
+#: src/pages/settings/applications/tabs/SettingsApplicationRegistrationDistributionTab.tsx
+msgid "Copy share link"
+msgstr ""
 
 #. js-lingui-id: Ej5euX
 #: src/pages/settings/developers/api-keys/SettingsDevelopersApiKeyDetail.tsx
@@ -3684,12 +3775,6 @@ msgstr "skep"
 msgid "Create"
 msgstr "Skep"
 
-#. js-lingui-id: M1NpGt
-#: src/modules/command-menu-item/record-agnostic/hooks/useRelatedRecordCommands.ts
-#: src/modules/command-menu-item/record-agnostic/hooks/useRelatedRecordCommands.ts
-msgid "Create {targetObjectLabelSingular}"
-msgstr "Skep {targetObjectLabelSingular}"
-
 #. js-lingui-id: 5XhrY3
 #: src/pages/settings/applications/tabs/SettingsApplicationsDeveloperTab.tsx
 msgid "Create & Develop"
@@ -3756,25 +3841,10 @@ msgstr "Skep persoonlike aansig"
 msgid "Create date field"
 msgstr "Skep datumveld"
 
-#. js-lingui-id: kCNBJG
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Create new dashboard"
-msgstr "Skep nuwe instrumentpaneel"
-
-#. js-lingui-id: d0DCww
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Create new record"
-msgstr "Skep nuwe rekord"
-
 #. js-lingui-id: vY2Gfm
 #: src/modules/views/view-picker/components/ViewPickerCreateButton.tsx
 msgid "Create new view"
 msgstr "Skep nuwe aansig"
-
-#. js-lingui-id: UDbEyl
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Create new workflow"
-msgstr "Skep nuwe werksvloei"
 
 #. js-lingui-id: gSyzEV
 #: src/pages/onboarding/CreateProfile.tsx
@@ -3811,12 +3881,6 @@ msgstr "Skep Kies..."
 #: src/modules/views/view-picker/components/ViewPickerContentCreateMode.tsx
 #: src/modules/views/components/UpdateViewButtonGroup.tsx
 msgid "Create view"
-msgstr "Skep aansig"
-
-#. js-lingui-id: 3D0MXY
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Create View"
 msgstr "Skep aansig"
 
 #. js-lingui-id: SiPp29
@@ -3873,6 +3937,7 @@ msgstr "Besig om jou werksruimte te skep"
 
 #. js-lingui-id: HAzhV7
 #: src/pages/settings/admin-panel/SettingsAdminAiProviderDetail.tsx
+#: src/pages/settings/admin-panel/SettingsAdminAiProviderDetail.tsx
 msgid "Credentials"
 msgstr "Geloofsbriewe"
 
@@ -3901,15 +3966,8 @@ msgstr "Kredietgebruik"
 msgid "Credit usage breakdown for your workspace."
 msgstr "Uiteensetting van kredietgebruik vir jou werkruimte."
 
-#. js-lingui-id: UQ4Hjl
-#: src/modules/ai/components/internal/AIChatContextUsageButton.tsx
-#: src/modules/ai/components/internal/AIChatContextUsageButton.tsx
-msgid "credits"
-msgstr "krediete"
-
 #. js-lingui-id: lDIOek
 #: src/pages/settings/SettingsUsageUserDetail.tsx
-#: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
 #: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
 msgid "Credits"
 msgstr "Krediete"
@@ -3976,6 +4034,7 @@ msgid "Currency Code"
 msgstr "Geldeenheidskode"
 
 #. js-lingui-id: Hp1l6f
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 #: src/modules/settings/billing/components/internal/SubscriptionInfoRowContainer.tsx
 msgid "Current"
 msgstr "Huidig"
@@ -4060,6 +4119,7 @@ msgid "Customization"
 msgstr "Pasmaak"
 
 #. js-lingui-id: srRMnJ
+#: src/modules/settings/data-model/object-details/components/tabs/ObjectLayout.tsx
 #: src/modules/navigation-menu-item/edit/side-panel/components/SidePanelNavigationMenuItemEditPage.tsx
 #: src/modules/navigation-menu-item/edit/side-panel/components/SidePanelEditObjectViewBase.tsx
 #: src/modules/navigation-menu-item/edit/side-panel/components/SidePanelEditLinkItemView.tsx
@@ -4081,6 +4141,16 @@ msgstr "Pas velde aan"
 msgid "Customize page layouts and UI structure"
 msgstr "Pas bladsy-uitlegte en UI-struktuur aan"
 
+#. js-lingui-id: LMX+xC
+#: src/modules/settings/data-model/object-details/components/tabs/ObjectLayout.tsx
+msgid "Customize record page"
+msgstr ""
+
+#. js-lingui-id: 1KIzk7
+#: src/modules/settings/data-model/object-details/components/tabs/ObjectLayout.tsx
+msgid "Customize the layout for this role"
+msgstr ""
+
 #. js-lingui-id: ZBgSzH
 #: src/modules/settings/members/components/MemberPermissionsTab.tsx
 msgid "Customize what this user can view and perform"
@@ -4100,6 +4170,12 @@ msgstr "Siaan"
 #: src/pages/settings/profile/appearance/components/LocalePicker.tsx
 msgid "Czech"
 msgstr "Tsjeggies"
+
+#. js-lingui-id: ShUrwO
+#: src/pages/settings/ai/SettingsAIUsageUserDetail.tsx
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+msgid "Daily AI Usage"
+msgstr ""
 
 #. js-lingui-id: KXQkvT
 #: src/pages/settings/SettingsUsageUserDetail.tsx
@@ -4134,15 +4210,9 @@ msgid "Dark"
 msgstr "Donker"
 
 #. js-lingui-id: ogQzcZ
-#: src/modules/command-menu-item/record/single-record/dashboard/components/DuplicateDashboardSingleRecordCommand.tsx
 #: src/modules/command-menu-item/engine-command/record/single-record/dashboard/components/DuplicateDashboardSingleRecordCommand.tsx
 msgid "Dashboard duplicated successfully"
 msgstr "Paneelbord suksesvol gedupliseer"
-
-#. js-lingui-id: w6iIMm
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Dashboards"
-msgstr "Paneelborde"
 
 #. js-lingui-id: HKH+W+
 #: src/pages/settings/applications/components/SettingsApplicationDataTable.tsx
@@ -4156,6 +4226,7 @@ msgstr "Data"
 
 #. js-lingui-id: nxnCld
 #: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutFieldsSettings.tsx
+#: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutFieldSettings.tsx
 msgid "Data and display"
 msgstr "Data en vertoon"
 
@@ -4214,6 +4285,7 @@ msgstr "Data-ligging"
 #. js-lingui-id: r+cVRP
 #: src/pages/settings/data-model/SettingsObjectFieldTable.tsx
 #: src/modules/settings/roles/role-permissions/object-level-permissions/field-permissions/components/SettingsRolePermissionsObjectLevelObjectFieldPermissionTable.tsx
+#: src/modules/settings/data-model/object-details/components/tabs/SettingsObjectSearchSection.tsx
 msgid "Data type"
 msgstr "Data tipe"
 
@@ -4307,7 +4379,6 @@ msgstr "Dae tussen snellers"
 #: src/pages/settings/ai/SettingsSkillForm.tsx
 #: src/modules/settings/security/components/SSO/SettingsSecuritySSORowDropdownMenu.tsx
 #: src/modules/settings/data-model/object-details/components/tabs/ObjectSettings.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
 msgid "Deactivate"
 msgstr "Deaktiveer"
 
@@ -4337,15 +4408,10 @@ msgstr "Deaktiveer of verwyder hierdie vaardigheid"
 msgid "Deactivate this field"
 msgstr "Deaktiveer hierdie veld"
 
-#. js-lingui-id: 4tpC8V
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Deactivate Workflow"
-msgstr "Deaktiveer Werksvloei"
-
 #. js-lingui-id: yAT3be
 #: src/pages/settings/SettingsProfile.tsx
 #: src/pages/settings/data-model/SettingsObjectTable.tsx
-#: src/pages/settings/ai/components/SettingsSkillsTable.tsx
+#: src/pages/settings/ai/components/SettingsAgentSkills.tsx
 #: src/modules/settings/data-model/object-details/components/SettingsObjectRelationItemTableRow.tsx
 #: src/modules/settings/data-model/object-details/components/SettingsObjectItemTableRow.tsx
 #: src/modules/settings/data-model/object-details/components/SettingsObjectFieldItemTableRow.tsx
@@ -4362,6 +4428,11 @@ msgstr "Ontfoutingsinligting"
 #: src/modules/settings/data-model/fields/forms/address/components/SettingsDataModelFieldAddressForm.tsx
 msgid "Decide which Sub-address fields you want to display"
 msgstr "Besluit watter Subadresvelde jy wil vertoon"
+
+#. js-lingui-id: Bn9+El
+#: src/modules/ai/hooks/useAiModelOptions.ts
+msgid "default"
+msgstr ""
 
 #. js-lingui-id: ovBPCi
 #: src/modules/settings/data-model/fields/forms/date/utils/getDisplayFormatLabel.ts
@@ -4499,9 +4570,6 @@ msgstr "verwyder"
 #: src/modules/object-record/record-field-list/record-detail-section/relation/components/RecordDetailRelationRecordsListItem.tsx
 #: src/modules/object-record/record-field/ui/meta-types/input/components/MultiItemFieldMenuItem.tsx
 #: src/modules/navigation-menu-item/display/folder/components/NavigationMenuItemFolderNavigationDrawerItemDropdown.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 #: src/modules/command-menu-item/mock/command-menu-items.mock.tsx
 #: src/modules/command-menu-item/mock/command-menu-items.mock.tsx
 #: src/modules/blocknote-editor/components/CustomSideMenu.tsx
@@ -4564,16 +4632,6 @@ msgstr "Verwyder API-sleutel"
 msgid "Delete app"
 msgstr "Verwyder app"
 
-#. js-lingui-id: ikGfT5
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Delete dashboard"
-msgstr "Verwyder paneelbord"
-
-#. js-lingui-id: qnWLDf
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Delete dashboards"
-msgstr "Verwyder paneelborde"
-
 #. js-lingui-id: gf2eXy
 #: src/pages/settings/ai/components/SettingsAgentEvalsTab.tsx
 msgid "Delete Evaluation Input"
@@ -4603,11 +4661,6 @@ msgstr "Verwyder nodus"
 #: src/pages/settings/applications/tabs/SettingsApplicationRegistrationGeneralTab.tsx
 msgid "Delete or transfer this app registration"
 msgstr "Vee hierdie app-registrasie uit of dra dit oor"
-
-#. js-lingui-id: kf0A63
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Delete records"
-msgstr "Verwyder rekords"
 
 #. js-lingui-id: mcXHCJ
 #: src/modules/settings/roles/role-permissions/objects-permissions/components/SettingsRolePermissionsObjectsSection.tsx
@@ -4671,18 +4724,9 @@ msgstr "Verwyder webhook"
 
 #. js-lingui-id: tWD0z0
 #: src/modules/side-panel/pages/page-layout/components/WidgetSettingsFooter.tsx
+#: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutFieldsSettings.tsx
 msgid "Delete widget"
 msgstr "Verwyder widget"
-
-#. js-lingui-id: UA2IpC
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Delete workflow"
-msgstr "Verwyder werkvloei"
-
-#. js-lingui-id: ABwG9x
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Delete workflows"
-msgstr "Verwyder werkvloeie"
 
 #. js-lingui-id: kYu0eF
 #: src/modules/settings/profile/components/DeleteWorkspace.tsx
@@ -4706,11 +4750,6 @@ msgstr "Verwyder"
 #: src/modules/blocknote-editor/blocks/MentionInlineContent.tsx
 msgid "Deleted record"
 msgstr "Verwyderde rekord"
-
-#. js-lingui-id: WH/5rN
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Deleted records"
-msgstr "Verwyderde rekords"
 
 #. js-lingui-id: wIAG+H
 #: src/modules/settings/two-factor-authentication/components/DeleteTwoFactorAuthenticationMethod.tsx
@@ -4740,11 +4779,8 @@ msgstr "Beskryf wat jy wil hê die KI moet doen..."
 
 #. js-lingui-id: Nu4oKW
 #: src/pages/settings/data-model/SettingsObjectFieldEdit.tsx
-#: src/pages/settings/applications/tabs/SettingsApplicationRegistrationGeneralTab.tsx
-#: src/pages/settings/applications/tabs/SettingsApplicationDetailAboutTab.tsx
 #: src/pages/settings/applications/components/SettingsApplicationsTable.tsx
 #: src/pages/settings/applications/components/SettingsApplicationNameDescriptionTable.tsx
-#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowOutputSchemaBuilder.tsx
 #: src/modules/settings/roles/role-permissions/permission-flags/components/SettingsRolePermissionsSettingsTableHeader.tsx
 #: src/modules/settings/roles/role-assignment/components/SettingsRoleAssignmentTable.tsx
 #: src/modules/settings/logic-functions/components/SettingsLogicFunctionNewForm.tsx
@@ -4753,33 +4789,16 @@ msgstr "Beskryf wat jy wil hê die KI moet doen..."
 msgid "Description"
 msgstr "Beskrywing"
 
-#. js-lingui-id: CuAMy4
-#: src/pages/settings/applications/tabs/SettingsApplicationDetailAboutTab.tsx
-msgid "Description of the application"
-msgstr "Beskrywing van die aansoek"
-
 #. js-lingui-id: +ow7t4
 #: src/modules/settings/roles/role-permissions/object-level-permissions/utils/objectPermissionKeyToHumanReadableText.ts
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
 msgid "destroy"
 msgstr "vernietig"
 
-#. js-lingui-id: 2xxBws
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Destroy"
-msgstr "Vernietig"
-
 #. js-lingui-id: YI3c7h
 #: src/modules/settings/roles/role-permissions/object-level-permissions/object-form/components/SettingsRolePermissionsObjectLevelObjectFormObjectLevel.tsx
 msgid "Destroy {objectLabelPlural}"
 msgstr "Vernietig {objectLabelPlural}"
-
-#. js-lingui-id: kG5yO6
-#: src/modules/command-menu-item/record/multiple-records/components/DestroyMultipleRecordsCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/multiple-records/components/DestroyMultipleRecordsCommand.tsx
-msgid "Destroy Records"
-msgstr "Vernietig rekords"
 
 #. js-lingui-id: L68qSB
 #: src/modules/settings/roles/role-permissions/objects-permissions/components/SettingsRolePermissionsObjectsSection.tsx
@@ -4806,12 +4825,6 @@ msgstr "Ontwikkelaar"
 #: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 msgid "Developers links"
 msgstr "Skakels vir ontwikkelaars"
-
-#. js-lingui-id: zAg2B9
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Discard Draft"
-msgstr "Verwerp Konsep"
 
 #. js-lingui-id: Xm/s+u
 #: src/modules/settings/accounts/components/SettingsAccountsCalendarChannelsGeneral.tsx
@@ -4931,10 +4944,10 @@ msgstr "Moenie kontakte van/na Gmail, Outlook e-posse skep nie"
 msgid "Don't sync emails from team@ support@ noreply@..."
 msgstr "Moenie e-posse vanaf team@ support@ noreply@... sinkroniseer nie"
 
-#. js-lingui-id: bd+DPX
+#. js-lingui-id: Wm78zZ
 #: src/modules/settings/experience/components/NumberFormatSelect.tsx
-msgid "Dots and comma - {dotsAndCommaExample}"
-msgstr "Punte en komma - {dotsAndCommaExample}"
+msgid "Dots and comma"
+msgstr ""
 
 #. js-lingui-id: LE8J+K
 #: src/modules/settings/billing/components/internal/MeteredPriceSelector.tsx
@@ -4996,15 +5009,8 @@ msgstr "Los lêer hier..."
 
 #. js-lingui-id: euc6Ns
 #: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutTabSettingsContent.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
 msgid "Duplicate"
 msgstr ""
-
-#. js-lingui-id: MR2sZ1
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Duplicate Dashboard"
-msgstr "Dupliseer paneelbord"
 
 #. js-lingui-id: qaE1sk
 #: src/modules/workflow/workflow-steps/components/WorkflowStepFooter.tsx
@@ -5014,11 +5020,6 @@ msgstr "Dupliseer node"
 #. js-lingui-id: mMsEuG
 #: src/modules/side-panel/pages/page-layout/components/WidgetSettingsFooter.tsx
 msgid "Duplicate widget"
-msgstr ""
-
-#. js-lingui-id: 2RpRNn
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Duplicate Workflow"
 msgstr ""
 
 #. js-lingui-id: cheWPw
@@ -5094,7 +5095,7 @@ msgid "e.g. OpenAI EU"
 msgstr "bv. OpenAI EU"
 
 #. js-lingui-id: p5P8NB
-#: src/pages/settings/ai/SettingsAIPrompts.tsx
+#: src/pages/settings/ai/components/SettingsAIMoreTab.tsx
 msgid "E.g., \"We are a B2B SaaS company. Always use formal language...\""
 msgstr "Byvoorbeeld: \"Ons is 'n B2B SaaS-maatskappy. Gebruik altyd formele taal...\""
 
@@ -5139,7 +5140,6 @@ msgstr "eddy@gmail.com, @apple.com"
 #: src/modules/object-record/record-group/hooks/useRecordGroupActions.ts
 #: src/modules/object-record/record-field/ui/meta-types/input/components/MultiItemFieldMenuItem.tsx
 #: src/modules/object-record/record-field/ui/form-types/components/FormMultiSelectFieldInput.tsx
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
 msgid "Edit"
 msgstr "Redigeer"
 
@@ -5154,10 +5154,12 @@ msgstr "Wysig {objectLabelPlural}"
 msgid "Edit Account"
 msgstr "Wysig Rekening"
 
-#. js-lingui-id: GpnfNN
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Edit Dashboard"
-msgstr "Wysig Paneelbord"
+#. js-lingui-id: t1EOLt
+#: src/modules/layout-customization/hooks/useEnterLayoutCustomizationMode.ts
+#: src/modules/command-menu-item/server-items/edit/components/CommandMenuItemEditButton.tsx
+#: src/modules/command-menu-item/server-items/edit/components/CommandMenuItemEditButton.tsx
+msgid "Edit actions"
+msgstr ""
 
 #. js-lingui-id: DMIYL8
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useSettingsRolePermissionFlagConfig.ts
@@ -5193,23 +5195,12 @@ msgstr "Wysig grafiek"
 msgid "Edit iFrame"
 msgstr "Wysig iFrame"
 
-#. js-lingui-id: NZubw3
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Edit Layout"
-msgstr "Redigeer uitleg"
-
 #. js-lingui-id: /PoNoq
 #: src/modules/navigation-menu-item/edit/side-panel/hooks/useAddLinkToNavigationMenu.ts
 #: src/modules/navigation-menu-item/display/sections/workspace/components/WorkspaceSection.tsx
 #: src/modules/navigation-menu-item/display/dnd/hooks/useHandleAddToNavigationDrop.ts
 msgid "Edit link"
 msgstr "Wysig skakel"
-
-#. js-lingui-id: m52s8z
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
-msgid "Edit navigation sidebar"
-msgstr "Wysig navigasiesybalk"
 
 #. js-lingui-id: IaSCqp
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useActionRolePermissionFlagConfig.ts
@@ -5237,11 +5228,6 @@ msgstr "Wysig Rekordtabel"
 #: src/modules/settings/roles/role-permissions/objects-permissions/components/SettingsRolePermissionsObjectsSection.tsx
 msgid "Edit Records on All Objects"
 msgstr "Wysig rekords op alle voorwerpe"
-
-#. js-lingui-id: DpuBzU
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
-msgid "Edit sidebar"
-msgstr "Wysig sybalk"
 
 #. js-lingui-id: eMFB6/
 #: src/modules/views/view-picker/components/ViewPickerContentEditMode.tsx
@@ -5336,6 +5322,11 @@ msgstr "E-pos moet 'n geldige e-pos wees"
 #: src/modules/settings/accounts/components/SettingsAccountsBlocklistInput.tsx
 msgid "Email or domain is already in blocklist"
 msgstr "E-pos of domein is reeds in bloklys"
+
+#. js-lingui-id: jvneza
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "Email support"
+msgstr ""
 
 #. js-lingui-id: +VjrH/
 #: src/modules/side-panel/hooks/useOpenEmailThreadInSidePanel.ts
@@ -5479,14 +5470,24 @@ msgid "Enable bypass options"
 msgstr "Aktiveer omseil opsies"
 
 #. js-lingui-id: gZo0V9
-#: src/pages/settings/ai/components/SettingsAgentModelCapabilities.tsx
+#: src/modules/ai/components/SettingsAgentModelCapabilities.tsx
 msgid "Enable model-specific features"
 msgstr "Aktiveer model-spesifieke funksies"
+
+#. js-lingui-id: IrI9pg
+#: src/modules/settings/admin-panel/health-status/maintenance-mode/components/SettingsAdminMaintenanceMode.tsx
+msgid "End date"
+msgstr ""
 
 #. js-lingui-id: VFv2ZC
 #: src/pages/settings/security/event-logs/components/EventLogFilters.tsx
 msgid "End Date"
 msgstr "Einddatum"
+
+#. js-lingui-id: Fqu/aC
+#: src/modules/settings/admin-panel/health-status/maintenance-mode/components/SettingsAdminMaintenanceMode.tsx
+msgid "End date must be after start date."
+msgstr ""
 
 #. js-lingui-id: k1i50B
 #: src/modules/information-banner/components/billing/InformationBannerEndTrialPeriod.tsx
@@ -5741,10 +5742,17 @@ msgstr "Voer jou API-sleutel in"
 #: src/pages/settings/security/SettingsSecurity.tsx
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
 #: src/modules/settings/admin-panel/components/SettingsAdminContent.tsx
+#: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
 msgid "Enterprise"
 msgstr "Onderneming"
+
+#. js-lingui-id: rmZVdg
+#: src/modules/settings/components/SettingsEnterpriseFeatureGateCard.tsx
+msgid "Enterprise feature"
+msgstr ""
 
 #. js-lingui-id: Kjjkt3
 #: src/pages/settings/security/event-logs/SettingsEventLogs.tsx
@@ -6222,13 +6230,6 @@ msgstr "Verval oor {dateDiff}"
 
 #. js-lingui-id: GS+Mus
 #: src/modules/object-record/record-index/export/hooks/useRecordIndexExportRecords.ts
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 #: src/modules/command-menu-item/mock/command-menu-items.mock.tsx
 #: src/modules/command-menu-item/mock/command-menu-items.mock.tsx
 msgid "Export"
@@ -6248,73 +6249,6 @@ msgstr "Voer uit ({percentageValue}%)"
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useActionRolePermissionFlagConfig.ts
 msgid "Export CSV"
 msgstr "Voer CSV uit"
-
-#. js-lingui-id: KVvnDa
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Export dashboard"
-msgstr "Exporteer paneelbord"
-
-#. js-lingui-id: wVUjld
-#: src/modules/command-menu-item/record/constants/WorkspaceMembersCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkspaceMembersCommandMenuItemsConfig.tsx
-msgid "Export member"
-msgstr ""
-
-#. js-lingui-id: D0b3Ip
-#: src/modules/command-menu-item/record/constants/WorkspaceMembersCommandMenuItemsConfig.tsx
-msgid "Export members"
-msgstr ""
-
-#. js-lingui-id: ep2rbf
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Export records"
-msgstr "Voer rekords uit"
-
-#. js-lingui-id: iHK6np
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-msgid "Export run"
-msgstr "Voer lopie uit"
-
-#. js-lingui-id: vwtAUW
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-msgid "Export runs"
-msgstr "Voer lopies uit"
-
-#. js-lingui-id: q46CjD
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Export to PDF"
-msgstr "Voer uit na PDF"
-
-#. js-lingui-id: BuprEs
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-msgid "Export version"
-msgstr "Voer weergawe uit"
-
-#. js-lingui-id: 4FLUle
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-msgid "Export versions"
-msgstr "Voer weergawes uit"
-
-#. js-lingui-id: DaGxE0
-#: src/modules/command-menu-item/record/constants/WorkspaceMembersCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Export view"
-msgstr "Voer aansig uit"
-
-#. js-lingui-id: +FMXdE
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Export workflow"
-msgstr "Voer werkvloei uit"
-
-#. js-lingui-id: XcAij/
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Export workflows"
-msgstr "Voer werkvloeie uit"
 
 #. js-lingui-id: 1JBTZV
 #: src/modules/workflow/workflow-trigger/components/WorkflowEditTriggerCronForm.tsx
@@ -6355,7 +6289,7 @@ msgid "Failed to activate enterprise license. Please check your key or contact s
 msgstr "Kon nie die ondernemingslisensie aktiveer nie. Gaan asseblief jou sleutel na of kontak ondersteuning."
 
 #. js-lingui-id: vJiM7T
-#: src/pages/settings/ai/components/SettingsSkillsTable.tsx
+#: src/pages/settings/ai/components/SettingsAgentSkills.tsx
 msgid "Failed to activate skill"
 msgstr "Kon nie vaardigheid aktiveer nie"
 
@@ -6380,18 +6314,16 @@ msgid "Failed to delete jobs. Please try again later."
 msgstr "Kon nie werke uitvee nie. Probeer asseblief later weer."
 
 #. js-lingui-id: bmwWKk
-#: src/pages/settings/ai/components/SettingsSkillsTable.tsx
+#: src/pages/settings/ai/components/SettingsAgentSkills.tsx
 msgid "Failed to delete skill"
 msgstr "Kon nie vaardigheid verwyder nie"
 
 #. js-lingui-id: NUmmdc
-#: src/modules/command-menu-item/record/single-record/dashboard/components/DuplicateDashboardSingleRecordCommand.tsx
 #: src/modules/command-menu-item/engine-command/record/single-record/dashboard/components/DuplicateDashboardSingleRecordCommand.tsx
 msgid "Failed to duplicate dashboard"
 msgstr "Kon nie paneelbord dupliseer nie"
 
 #. js-lingui-id: WYXxQF
-#: src/modules/command-menu-item/record/single-record/workflow/components/DuplicateWorkflowSingleRecordCommand.tsx
 #: src/modules/command-menu-item/engine-command/record/single-record/workflow/components/DuplicateWorkflowSingleRecordCommand.tsx
 msgid "Failed to duplicate workflow"
 msgstr ""
@@ -6478,9 +6410,14 @@ msgid "Failed to save role permissions: {errorMessage}"
 msgstr ""
 
 #. js-lingui-id: 9ryUyP
-#: src/pages/settings/ai/SettingsAIPrompts.tsx
+#: src/pages/settings/ai/components/SettingsAIMoreTab.tsx
 msgid "Failed to save workspace instructions"
 msgstr "Kon nie werkruimte-instruksies stoor nie"
+
+#. js-lingui-id: aj02T8
+#: src/modules/settings/admin-panel/health-status/maintenance-mode/components/SettingsAdminMaintenanceMode.tsx
+msgid "Failed to set maintenance mode."
+msgstr ""
 
 #. js-lingui-id: LVcnN8
 #: src/pages/settings/applications/tabs/SettingsApplicationRegistrationGeneralTab.tsx
@@ -6618,6 +6555,7 @@ msgid "Featured only"
 msgstr "Slegs uitgelig"
 
 #. js-lingui-id: 2lOBKV
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
 msgid "field"
 msgstr "veld"
@@ -6625,6 +6563,9 @@ msgstr "veld"
 #. js-lingui-id: AXjA78
 #: src/modules/workflow/workflow-steps/workflow-actions/form-action/components/WorkflowFormFieldSettingsSelect.tsx
 #: src/modules/side-panel/pages/page-layout/utils/getFieldLabelWithSubField.ts
+#: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutFieldSettings.tsx
+#: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutFieldSettings.tsx
+#: src/modules/side-panel/pages/page-layout/components/dropdown-content/FieldWidgetLayoutDropdownContent.tsx
 #: src/modules/settings/developers/components/WebhookEntitySelect.tsx
 #: src/modules/page-layout/widgets/components/RecordPageAddWidgetSection.tsx
 msgid "Field"
@@ -6640,15 +6581,26 @@ msgstr "Veld verwyder"
 msgid "Field name"
 msgstr "Veldnaam"
 
-#. js-lingui-id: fV7qkH
-#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowOutputSchemaBuilder.tsx
-msgid "Field Name"
-msgstr "Veldnaam"
-
 #. js-lingui-id: x07QTl
 #: src/modules/settings/data-model/fields/forms/morph-relation/components/SettingsDataModelFieldRelationForm.tsx
 msgid "Field on destination"
 msgstr "Veld op bestemming"
+
+#. js-lingui-id: P8JCfj
+#: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
+msgid "field permission"
+msgstr ""
+
+#. js-lingui-id: lcNTiF
+#: src/modules/side-panel/pages/page-layout/utils/getPageLayoutPageTitle.ts
+#: src/modules/page-layout/hooks/useEditPageLayoutWidget.ts
+msgid "Field widget"
+msgstr ""
+
+#. js-lingui-id: hlVgd/
+#: src/modules/side-panel/components/hooks/usePageLayoutHeaderInfo.ts
+msgid "Field Widget"
+msgstr ""
 
 #. js-lingui-id: RnX5oc
 #: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
@@ -6742,6 +6694,12 @@ msgstr ""
 msgid "File label"
 msgstr "Lêeretiket"
 
+#. js-lingui-id: QWWgBD
+#. placeholder {0}: file.label
+#: src/modules/ui/field/display/components/FileChip.tsx
+msgid "File no longer exists - {0}"
+msgstr ""
+
 #. js-lingui-id: ncBVqE
 #: src/modules/object-record/record-field/ui/meta-types/hooks/useUploadFilesFieldFile.ts
 msgid "File upload failed"
@@ -6753,9 +6711,6 @@ msgid "Files"
 msgstr "Lêers"
 
 #. js-lingui-id: o7J4JM
-#: src/pages/settings/data-model/SettingsObjectFieldTable.tsx
-#: src/pages/settings/ai/components/SettingsSkillsTable.tsx
-#: src/pages/settings/ai/components/SettingsAIAgentsTable.tsx
 #: src/modules/workflow/workflow-steps/workflow-actions/find-records-action/components/WorkflowEditActionFindRecords.tsx
 #: src/modules/views/components/ViewBarFilterDropdownFieldSelectMenu.tsx
 #: src/modules/views/components/ViewBarFilterButton.tsx
@@ -6772,6 +6727,11 @@ msgstr "Filtreer"
 msgid "Filter by event"
 msgstr "Filter volgens gebeurtenis"
 
+#. js-lingui-id: yZOiaW
+#: src/modules/side-panel/components/SidePanelObjectFilterDropdown.tsx
+msgid "Filter by object type"
+msgstr ""
+
 #. js-lingui-id: gVEHcL
 #: src/pages/settings/security/event-logs/components/EventLogFilters.tsx
 msgid "Filter by record ID"
@@ -6781,6 +6741,11 @@ msgstr "Filter volgens rekord-ID"
 #: src/modules/object-record/advanced-filter/components/AdvancedFilterRecordFilterGroupOptionsDropdown.tsx
 msgid "Filter group rule options"
 msgstr "Opsies vir filterreëlgroep"
+
+#. js-lingui-id: YrBWVK
+#: src/modules/object-record/record-index/utils/getNonReadableViewFieldSubTitle.ts
+msgid "filtering"
+msgstr ""
 
 #. js-lingui-id: cSev+j
 #: src/modules/side-panel/utils/getSidePanelSubPageTitle.ts
@@ -6945,11 +6910,6 @@ msgstr "van {startDay} tot {endDay}"
 msgid "front component"
 msgstr "front-end-komponent"
 
-#. js-lingui-id: +M+QLN
-#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
-msgid "front components"
-msgstr "front-end-komponente"
-
 #. js-lingui-id: IvIKDS
 #: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
 #: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
@@ -6972,13 +6932,7 @@ msgstr "Volle toegang"
 msgid "Function name"
 msgstr "Funksienaam"
 
-#. js-lingui-id: SHkEmV
-#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
-msgid "functions"
-msgstr "funksies"
-
 #. js-lingui-id: xANKBj
-#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
 #: src/pages/settings/applications/tabs/SettingsApplicationDetailContentTab.tsx
 msgid "Functions"
 msgstr "Funksies"
@@ -7070,61 +7024,23 @@ msgstr "Gaan terug"
 msgid "Go to billing portal"
 msgstr "Gaan na die faktureringsportaal"
 
-#. js-lingui-id: mUbv8L
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Go to Companies"
-msgstr "Gaan na Maatskappye"
-
-#. js-lingui-id: dvMw7T
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Go to Dashboards"
-msgstr "Gaan na Paneelborde"
-
 #. js-lingui-id: dHvI9O
 #: src/modules/workflow/components/OverrideWorkflowDraftConfirmationModal.tsx
 msgid "Go to Draft"
 msgstr "Gaan na Konsep"
 
-#. js-lingui-id: BQE4ob
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Go to Notes"
-msgstr "Gaan na Notes"
-
-#. js-lingui-id: buPcNi
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Go to Opportunities"
-msgstr "Gaan na Geleenthede"
-
 #. js-lingui-id: MrE/Qb
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 #: src/modules/command-menu-item/mock/command-menu-items.mock.tsx
 msgid "Go to People"
 msgstr "Gaan na Mense"
-
-#. js-lingui-id: iS69s6
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Go to runs"
-msgstr "Gaan na uitvoerings"
 
 #. js-lingui-id: mT57+Q
 #: src/modules/views/view-picker/components/ViewPickerEditButton.tsx
 #: src/modules/views/view-picker/components/ViewPickerCreateButton.tsx
 #: src/modules/views/view-picker/components/ViewPickerCreateButton.tsx
 #: src/modules/object-record/record-table/empty-state/components/RecordTableEmptyStateRemote.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 msgid "Go to Settings"
 msgstr "Gaan na instellings"
-
-#. js-lingui-id: BM24SF
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Go to Tasks"
-msgstr "Gaan na Take"
-
-#. js-lingui-id: 203RqP
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Go to Workflows"
-msgstr "Gaan na Werkvloeie"
 
 #. js-lingui-id: FYlHHU
 #: src/modules/settings/data-model/fields/forms/select/components/SettingsDataModelFieldSelectFormOptionRow.tsx
@@ -7322,36 +7238,6 @@ msgstr "Verborge velde"
 msgid "Hide"
 msgstr "Steek weg"
 
-#. js-lingui-id: OlbYor
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Hide deleted"
-msgstr "Versteek verwyderde"
-
-#. js-lingui-id: rp2bZI
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Hide deleted dashboards"
-msgstr "Versteek verwyderde paneelborde"
-
-#. js-lingui-id: OTmbll
-#: src/modules/command-menu-item/record/constants/WorkspaceMembersCommandMenuItemsConfig.tsx
-msgid "Hide deleted members"
-msgstr ""
-
-#. js-lingui-id: FHhlye
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Hide deleted records"
-msgstr "Versteek verwyderde rekords"
-
-#. js-lingui-id: 0dZtKR
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-msgid "Hide deleted runs"
-msgstr "Versteek verwyderde lopies"
-
-#. js-lingui-id: aOZAIB
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Hide deleted workflows"
-msgstr "Steek verwyderde werkvloeie weg"
-
 #. js-lingui-id: MuEcPp
 #: src/modules/side-panel/pages/page-layout/constants/settings/ChartConfigurationSettingLabels.ts
 msgid "Hide empty category"
@@ -7371,6 +7257,11 @@ msgstr "Versteek groep {groupValue}"
 #: src/modules/settings/admin-panel/config-variables/components/ConfigVariableOptionsDropdownContent.tsx
 msgid "Hide hidden groups"
 msgstr "Versteek versteekte groepe"
+
+#. js-lingui-id: 2ouyMV
+#: src/modules/command-menu-item/server-items/edit/components/CommandMenuItemOptionsDropdown.tsx
+msgid "Hide label"
+msgstr ""
 
 #. js-lingui-id: i0qMbr
 #: src/modules/page-layout/constants/StandardPageLayoutTabTitleTranslations.ts
@@ -7480,6 +7371,16 @@ msgstr "IAM-geloofsbriewe"
 msgid "IAM credentials configured"
 msgstr "IAM-geloofsbriewe gekonfigureer"
 
+#. js-lingui-id: LlQirF
+#: src/modules/settings/admin-panel/ai/components/SettingsAdminAiProviderListCard.tsx
+msgid "IAM role"
+msgstr ""
+
+#. js-lingui-id: VjDLrJ
+#: src/pages/settings/admin-panel/SettingsAdminAiProviderDetail.tsx
+msgid "IAM role (instance profile)"
+msgstr ""
+
 #. js-lingui-id: wwu18a
 #: src/modules/settings/data-model/objects/forms/components/SettingsDataModelObjectAboutForm.tsx
 msgid "Icon"
@@ -7511,6 +7412,16 @@ msgstr "Identiteitsverskaffer Metadata XML"
 #: src/modules/workflow/workflow-steps/workflow-actions/if-else-action/utils/getBranchLabel.ts
 msgid "if"
 msgstr "indien"
+
+#. js-lingui-id: K6ChR5
+#: src/modules/settings/data-model/object-details/components/tabs/SettingsObjectSearchSection.tsx
+msgid "If disabled, use advanced search filters to find these records"
+msgstr ""
+
+#. js-lingui-id: bTDz/2
+#: src/modules/settings/admin-panel/health-status/maintenance-mode/components/SettingsAdminMaintenanceMode.tsx
+msgid "If there's no link, no button will appear."
+msgstr ""
 
 #. js-lingui-id: ZfP/Ap
 #: src/modules/object-record/record-table/empty-state/components/RecordTableEmptyStateRemote.tsx
@@ -7606,7 +7517,6 @@ msgstr "Nabootsing is gedeaktiveer vir hierdie werksruimte"
 
 #. js-lingui-id: l3s5ri
 #: src/modules/settings/accounts/components/SettingsAccountsMessageChannelDetails.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 msgid "Import"
 msgstr "Invoer"
 
@@ -7624,16 +7534,6 @@ msgstr "Invoer CSV"
 #: src/modules/settings/accounts/components/SettingsAccountsMessageFolderCard.tsx
 msgid "Import only selected folders/labels"
 msgstr "Voer slegs geselekteerde vouers/etikette in"
-
-#. js-lingui-id: eECp4f
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Import records"
-msgstr "Voer rekords in"
-
-#. js-lingui-id: ZsIcZZ
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Import workflows"
-msgstr "Voer werkvloeie in"
 
 #. js-lingui-id: wsKZ+v
 #: src/modules/spreadsheet-import/steps/components/MatchColumnsStep/components/ColumnGrid.tsx
@@ -7687,6 +7587,11 @@ msgstr "Onaktiewe vaardigheidsopsies"
 msgid "Inbox"
 msgstr "Inboks"
 
+#. js-lingui-id: Wyip/m
+#: src/modules/settings/data-model/object-details/components/tabs/SettingsObjectSearchSection.tsx
+msgid "Include in default search"
+msgstr ""
+
 #. js-lingui-id: mtGDyy
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx
 msgid "Incomplete"
@@ -7733,6 +7638,11 @@ msgstr "Inligting"
 #: src/modules/ai/components/ThinkingStepsDisplay.tsx
 msgid "Input"
 msgstr "Invoer"
+
+#. js-lingui-id: /OdOC/
+#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowAiAgentPromptTab.tsx
+msgid "Input (Prompt)"
+msgstr ""
 
 #. js-lingui-id: JE2tjr
 #: src/pages/settings/ai/SettingsSkillForm.tsx
@@ -7814,6 +7724,11 @@ msgstr "Installeer..."
 msgid "Instances"
 msgstr "Instansies"
 
+#. js-lingui-id: tc328m
+#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowOutputSchemaBuilder.tsx
+msgid "Instruction for AI"
+msgstr ""
+
 #. js-lingui-id: NxHkkp
 #: src/pages/settings/ai/SettingsSkillForm.tsx
 msgid "Instructions"
@@ -7823,11 +7738,6 @@ msgstr "Instruksies"
 #: src/pages/settings/ai/SettingsSkillForm.tsx
 msgid "Instructions Editor"
 msgstr "Instruksie-redigeerder"
-
-#. js-lingui-id: g+29+d
-#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowAiAgentPromptTab.tsx
-msgid "Instructions for AI"
-msgstr "Instruksies vir KI"
 
 #. js-lingui-id: RGm66q
 #: src/utils/title-utils.ts
@@ -8368,8 +8278,10 @@ msgid "Launch manually"
 msgstr "Begin handmatig"
 
 #. js-lingui-id: rdU729
+#: src/pages/settings/data-model/SettingsObjectDetailPage.tsx
 #: src/modules/side-panel/utils/getSidePanelSubPageTitle.ts
 #: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutFieldsSettings.tsx
+#: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutFieldSettings.tsx
 #: src/modules/object-record/object-options-dropdown/components/ObjectOptionsDropdownLayoutContent.tsx
 #: src/modules/object-record/object-options-dropdown/components/ObjectOptionsDropdownCustomView.tsx
 msgid "Layout"
@@ -8387,6 +8299,7 @@ msgstr "Uitlegte"
 
 #. js-lingui-id: zwWKhA
 #: src/modules/workflow/workflow-steps/workflow-actions/form-action/components/WorkflowEditActionFormBuilder.tsx
+#: src/modules/information-banner/components/maintenance/InformationBannerMaintenance.tsx
 msgid "Learn more"
 msgstr "Kom meer te wete"
 
@@ -8497,6 +8410,7 @@ msgstr "Lyn grafiek"
 
 #. js-lingui-id: yzF66j
 #: src/modules/side-panel/components/SidePanelLinkInfo.tsx
+#: src/modules/settings/admin-panel/health-status/maintenance-mode/components/SettingsAdminMaintenanceMode.tsx
 #: src/modules/navigation-menu-item/edit/side-panel/components/SidePanelNewSidebarItemMainMenu.tsx
 msgid "Link"
 msgstr "Skakel"
@@ -8684,11 +8598,18 @@ msgid "Logged in as {impersonatedUser}"
 msgstr "Aangemeld as {impersonatedUser}"
 
 #. js-lingui-id: sTlKkx
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
 msgid "logic function"
 msgstr "logiese funksie"
 
+#. js-lingui-id: qqnB9E
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "logic functions"
+msgstr ""
+
 #. js-lingui-id: QTVVDd
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
 #: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
 msgid "Logic functions"
 msgstr "Logiese funksies"
@@ -8740,9 +8661,24 @@ msgstr "lus"
 msgid "Mail Account"
 msgstr "Posrekening"
 
+#. js-lingui-id: 6Dd2PM
+#: src/modules/settings/admin-panel/health-status/maintenance-mode/components/SettingsAdminMaintenanceMode.tsx
+msgid "Maintenance"
+msgstr ""
+
+#. js-lingui-id: /hmUGb
+#: src/modules/settings/admin-panel/health-status/maintenance-mode/components/SettingsAdminMaintenanceMode.tsx
+msgid "Maintenance mode"
+msgstr ""
+
 #. js-lingui-id: MOLprz
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useActionRolePermissionFlagConfig.ts
 msgid "Make HTTP requests to external APIs"
+msgstr ""
+
+#. js-lingui-id: wckWOP
+#: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutFieldsSettings.tsx
+msgid "Manage"
 msgstr ""
 
 #. js-lingui-id: n0FHLv
@@ -8768,20 +8704,10 @@ msgstr "Bestuur faktuurinligting"
 msgid "Manage favorite"
 msgstr "Bestuur gunsteling"
 
-#. js-lingui-id: 8XlVuA
-#: src/modules/command-menu-item/record/constants/WorkspaceMembersCommandMenuItemsConfig.tsx
-msgid "Manage in settings"
-msgstr ""
-
 #. js-lingui-id: T6YjCk
 #: src/pages/settings/members/SettingsWorkspaceMembers.tsx
 msgid "Manage Members"
 msgstr "Bestuur Lede"
-
-#. js-lingui-id: 5hEFxA
-#: src/modules/command-menu-item/record/constants/WorkspaceMembersCommandMenuItemsConfig.tsx
-msgid "Manage members in settings"
-msgstr ""
 
 #. js-lingui-id: eGGH1l
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useSettingsRolePermissionFlagConfig.ts
@@ -8950,7 +8876,6 @@ msgstr "Lede - Instellings"
 
 #. js-lingui-id: UODtG8
 #: src/modules/object-record/record-merge/components/MergeRecordsFooter.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 msgid "Merge"
 msgstr "Saamvoeg"
 
@@ -8961,7 +8886,6 @@ msgstr "Voorskou saamvoeg"
 
 #. js-lingui-id: Cmeamd
 #: src/modules/side-panel/hooks/useOpenMergeRecordsPageInSidePanel.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 msgid "Merge records"
 msgstr "Voeg rekords saam"
 
@@ -9067,6 +8991,11 @@ msgstr "Toestemming om e-poskonsepte op te stel ontbreek."
 msgid "Mission accomplished!"
 msgstr "Missie voltooi!"
 
+#. js-lingui-id: scu3wk
+#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowAiAgentPromptTab.tsx
+msgid "Model"
+msgstr ""
+
 #. js-lingui-id: bC/dq9
 #. placeholder {0}: values.label.trim()
 #: src/pages/settings/admin-panel/SettingsAdminNewAiModel.tsx
@@ -9108,6 +9037,7 @@ msgstr "Modelle vir hierdie verskaffer. Skakel om te aktiveer of te deaktiveer."
 
 #. js-lingui-id: hty0d5
 #: src/pages/settings/profile/appearance/components/DateTimeSettingsCalendarStartDaySelect.tsx
+#: src/pages/settings/profile/appearance/components/DateTimeSettingsCalendarStartDaySelect.tsx
 msgid "Monday"
 msgstr "Maandag"
 
@@ -9144,10 +9074,10 @@ msgstr "Maand van die jaar"
 msgid "monthly"
 msgstr "maandeliks"
 
-#. js-lingui-id: Sew/cK
+#. js-lingui-id: +8Nek/
 #: src/modules/settings/enterprise/components/EnterprisePlanModal.tsx
-msgid "Monthly subscription"
-msgstr "Maandelikse intekening"
+msgid "Monthly"
+msgstr ""
 
 #. js-lingui-id: 6jefe3
 #: src/modules/side-panel/pages/page-layout/utils/getDateGranularityPluralLabel.ts
@@ -9158,6 +9088,7 @@ msgstr ""
 #. js-lingui-id: 2FYpfJ
 #: src/pages/settings/ai/SettingsAI.tsx
 #: src/modules/ui/layout/tab-list/components/TabMoreButton.tsx
+#: src/modules/command-menu-item/server-items/display/components/CommandMenuItemMoreActionsButton.tsx
 msgid "More"
 msgstr "Meer"
 
@@ -9269,7 +9200,6 @@ msgstr "mySkill"
 #: src/pages/settings/data-model/SettingsObjectFieldTable.tsx
 #: src/pages/settings/data-model/constants/SettingsObjectTableMetadata.ts
 #: src/pages/settings/applications/tabs/SettingsApplicationRegistrationGeneralTab.tsx
-#: src/pages/settings/applications/tabs/SettingsApplicationDetailAboutTab.tsx
 #: src/pages/settings/applications/components/SettingsApplicationsTable.tsx
 #: src/pages/settings/applications/components/SettingsApplicationNameDescriptionTable.tsx
 #: src/pages/settings/applications/components/SettingsApplicationDataTableRow.tsx
@@ -9281,7 +9211,7 @@ msgstr "mySkill"
 #: src/pages/settings/admin-panel/SettingsAdminAiProviderDetail.tsx
 #: src/pages/onboarding/CreateProfile.tsx
 #: src/modules/settings/workspace/components/NameField.tsx
-#: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
+#: src/modules/settings/usage/components/UsageByUserTableSection.tsx
 #: src/modules/settings/security/components/SSO/SettingsSSOIdentitiesProvidersForm.tsx
 #: src/modules/settings/security/components/SSO/SettingsSSOIdentitiesProvidersForm.tsx
 #: src/modules/settings/roles/role-permissions/permission-flags/components/SettingsRolePermissionsSettingsTableHeader.tsx
@@ -9298,6 +9228,7 @@ msgstr "mySkill"
 #: src/modules/settings/logic-functions/components/tabs/SettingsLogicFunctionTabEnvironmentVariableTableRow.tsx
 #: src/modules/settings/developers/components/SettingsApiKeysTable.tsx
 #: src/modules/settings/data-model/object-details/components/SettingsObjectRelationsTable.tsx
+#: src/modules/settings/data-model/object-details/components/tabs/SettingsObjectSearchSection.tsx
 #: src/modules/settings/data-model/new-object/components/SettingsAvailableStandardObjectsSection.tsx
 #: src/modules/settings/admin-panel/config-variables/components/SettingsAdminConfigVariablesTable.tsx
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceContent.tsx
@@ -9328,11 +9259,6 @@ msgstr "Naam kan nie leeg wees nie"
 msgid "Name in both singular (e.g., 'Invoice') and plural (e.g., 'Invoices') forms."
 msgstr "Naam in beide enkelvoudige (bv. 'Faktuur') en meervoudige (bv. 'Fakture') vorme."
 
-#. js-lingui-id: 9H6m8L
-#: src/pages/settings/applications/tabs/SettingsApplicationDetailAboutTab.tsx
-msgid "Name of the application"
-msgstr "Naam van die aansoek"
-
 #. js-lingui-id: z+6jaZ
 #: src/pages/settings/developers/api-keys/SettingsDevelopersApiKeysNew.tsx
 #: src/pages/settings/developers/api-keys/SettingsDevelopersApiKeyDetail.tsx
@@ -9349,50 +9275,25 @@ msgstr "Naam van jou werkruimte"
 msgid "Navbar"
 msgstr "Kiesbalk"
 
-#. js-lingui-id: dVQ33h
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Navigate to next dashboard"
-msgstr "Navigeer na volgende paneelbord"
+#. js-lingui-id: Vn3jYy
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+msgid "Navigation items"
+msgstr ""
 
-#. js-lingui-id: 2T8KCk
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Navigate to next record"
-msgstr "Navigeer na volgende rekord"
-
-#. js-lingui-id: veSA19
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-msgid "Navigate to next version"
-msgstr "Navigeer na volgende weergawe"
-
-#. js-lingui-id: ZTEho+
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Navigate to next workflow"
-msgstr "Navigeer na volgende werkstroom"
-
-#. js-lingui-id: /Qu2VT
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Navigate to previous dashboard"
-msgstr "Navigeer na vorige paneelbord"
-
-#. js-lingui-id: 2tw9bo
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Navigate to previous record"
-msgstr "Navigeer na vorige rekord"
-
-#. js-lingui-id: I+Pm5V
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-msgid "Navigate to previous version"
-msgstr "Navigeer na vorige weergawe"
-
-#. js-lingui-id: QVUN3K
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Navigate to previous workflow"
-msgstr "Navigeer na vorige werkstroom"
+#. js-lingui-id: 9o7X1c
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+msgid "Navigation items added by this app"
+msgstr ""
 
 #. js-lingui-id: FpO6v4
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
 msgid "navigation menu item"
 msgstr "navigasiekieslysitem"
+
+#. js-lingui-id: jRptK+
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+msgid "Navigation menu items"
+msgstr ""
 
 #. js-lingui-id: s2HXiD
 #: src/modules/navigation/components/MainNavigationDrawerTabsRow.tsx
@@ -9531,15 +9432,10 @@ msgstr "Nuwe Objek"
 msgid "New Password"
 msgstr "Nuwe Wagwoord"
 
-#. js-lingui-id: BcCzLv
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "New record"
-msgstr "Nuwe rekord"
-
 #. js-lingui-id: gWnSyg
 #: src/pages/settings/ai/SettingsSkillForm.tsx
 #: src/pages/settings/ai/SettingsSkillForm.tsx
-#: src/pages/settings/ai/components/SettingsSkillsTable.tsx
+#: src/pages/settings/ai/components/SettingsAgentSkills.tsx
 msgid "New Skill"
 msgstr "Nuwe vaardigheid"
 
@@ -9645,6 +9541,16 @@ msgstr "Geen agente beskikbaar nie"
 msgid "No agents match your search"
 msgstr "Geen agente voldoen aan jou soektog nie"
 
+#. js-lingui-id: nPalt1
+#: src/pages/settings/ai/SettingsAIUsageUserDetail.tsx
+msgid "No AI consumption recorded for this user."
+msgstr ""
+
+#. js-lingui-id: 42kV9p
+#: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
+msgid "No AI usage data recorded yet."
+msgstr ""
+
 #. js-lingui-id: 9mx36q
 #: src/modules/settings/roles/role-assignment/components/SettingsRoleAssignmentTable.tsx
 msgid "No API keys assigned"
@@ -9679,6 +9585,11 @@ msgstr "Geen inhoud"
 #: src/modules/object-record/record-field/ui/form-types/components/FormCallingCodeSelectInput.tsx
 msgid "No calling code"
 msgstr "Geen roepkode"
+
+#. js-lingui-id: d14J3J
+#: src/modules/ai/components/NavigationDrawerAIChatContent.tsx
+msgid "No chat"
+msgstr ""
 
 #. js-lingui-id: wgUPZ1
 #: src/pages/settings/ai/SettingsAgentTurnDetail.tsx
@@ -9717,11 +9628,6 @@ msgstr "Geen geloofsbriewe"
 #: src/pages/settings/SettingsUsageUserDetail.tsx
 msgid "No credit consumption recorded for this user."
 msgstr "Geen kredietverbruik vir hierdie gebruiker aangeteken nie."
-
-#. js-lingui-id: H7TRcV
-#: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
-msgid "No credit consumption recorded yet."
-msgstr "Nog geen kredietverbruik aangeteken nie."
 
 #. js-lingui-id: kxH3HO
 #: src/modules/object-record/record-field/ui/form-types/components/FormCurrencyFieldInput.tsx
@@ -9779,6 +9685,11 @@ msgstr "Geen Gedeleteerde {objectLabelSingular} gevind"
 #: src/modules/object-record/record-table/empty-state/components/RecordTableEmptyStateSoftDelete.tsx
 msgid "No deleted records matching the filter criteria were found."
 msgstr "Geen gedeleteerde rekords wat aan die filterkriteria voldoen nie, is gevind."
+
+#. js-lingui-id: RRRePs
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "No description available for this application"
+msgstr ""
 
 #. js-lingui-id: mINrlz
 #: src/modules/activities/emails/components/EmailsCard.tsx
@@ -9978,6 +9889,12 @@ msgstr "Geen toestemmings is ingestel vir individuele voorwerpe nie."
 msgid "No record is required to trigger this workflow"
 msgstr "Geen rekord is nodig om hierdie werkvloei te aktiveer nie"
 
+#. js-lingui-id: aqUuQE
+#: src/modules/command-menu-item/server-items/edit/components/CommandMenuItemEditRecordSelectionDropdown.tsx
+#: src/modules/command-menu-item/server-items/edit/components/CommandMenuItemEditRecordSelectionDropdown.tsx
+msgid "No record selected"
+msgstr ""
+
 #. js-lingui-id: X8wJTR
 #: src/modules/object-record/record-field/ui/form-types/components/FormSingleRecordPicker.tsx
 msgid "No records"
@@ -10058,7 +9975,7 @@ msgstr "Geen snellers vir hierdie funksie gekonfigureer nie."
 
 #. js-lingui-id: WwlPOG
 #: src/pages/settings/SettingsUsageUserDetail.tsx
-#: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
+#: src/pages/settings/ai/SettingsAIUsageUserDetail.tsx
 msgid "No usage data"
 msgstr "Geen gebruiksdata nie"
 
@@ -10076,6 +9993,11 @@ msgstr "Geen veranderlikes beskikbaar nie"
 #: src/modules/settings/admin-panel/config-variables/components/SettingsAdminConfigVariables.tsx
 msgid "No variables found"
 msgstr "Geen veranderlikes gevind nie"
+
+#. js-lingui-id: OCektF
+#: src/pages/settings/applications/tabs/SettingsApplicationDetailEnvironmentVariablesTable.tsx
+msgid "No variables to set for this application"
+msgstr ""
 
 #. js-lingui-id: 0uWxPM
 #: src/modules/object-record/record-table/empty-state/utils/getEmptyStateTitle.ts
@@ -10174,7 +10096,6 @@ msgstr "Nota"
 
 #. js-lingui-id: 1DBGsz
 #: src/modules/page-layout/constants/StandardPageLayoutTabTitleTranslations.ts
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 msgid "Notes"
 msgstr "Notas"
 
@@ -10183,6 +10104,11 @@ msgstr "Notas"
 #: src/utils/date-utils.ts
 msgid "now"
 msgstr "nou"
+
+#. js-lingui-id: OduKuG
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "Npm package"
+msgstr ""
 
 #. js-lingui-id: VVexZo
 #: src/modules/advanced-text-editor/extensions/slash-command/DefaultSlashCommands.ts
@@ -10243,12 +10169,8 @@ msgstr "OAuth"
 msgid "OAuth Credentials"
 msgstr "OAuth-geloofsbriewe"
 
-#. js-lingui-id: LNLTJB
-#: src/pages/settings/ai/components/SettingsAIMCP.tsx
-msgid "OAuth or API Key"
-msgstr "OAuth of API-sleutel"
-
 #. js-lingui-id: pNEViR
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
 msgid "object"
 msgstr "objek"
@@ -10263,6 +10185,7 @@ msgstr "objek"
 #: src/modules/workflow/workflow-steps/workflow-actions/components/WorkflowEditActionCreateRecord.tsx
 #: src/modules/side-panel/pages/root/components/SidePanelRootPage.tsx
 #: src/modules/side-panel/components/SidePanelObjectViewRecordInfo.tsx
+#: src/modules/side-panel/components/SidePanelObjectFilterDropdownContent.tsx
 #: src/modules/settings/developers/components/WebhookEntitySelect.tsx
 #: src/modules/navigation-menu-item/edit/side-panel/components/SidePanelNewSidebarItemMainMenu.tsx
 msgid "Object"
@@ -10287,6 +10210,11 @@ msgstr "Objekgebeurtenisse"
 #: src/pages/settings/security/event-logs/components/EventLogResultsTable.tsx
 msgid "Object ID"
 msgstr "Objek-ID"
+
+#. js-lingui-id: PezPrT
+#: src/modules/object-record/record-index/components/RecordIndexEmptyStateNotShared.tsx
+msgid "Object not shared"
+msgstr ""
 
 #. js-lingui-id: wZpAXW
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
@@ -10474,6 +10402,7 @@ msgid "Only the timestamp & participants will be shared with your team."
 msgstr "Slegs die tydstempel en deelnemers sal met jou span gedeel word."
 
 #. js-lingui-id: 1TNIig
+#: src/pages/settings/members/SettingsWorkspaceMembers.tsx
 #: src/modules/settings/data-model/objects/forms/components/SettingsDataModelObjectAboutForm.tsx
 #: src/modules/command-menu-item/components/RecordShowSidePanelOpenRecordButton.tsx
 msgid "Open"
@@ -10507,6 +10436,7 @@ msgstr "Maak Outlook oop"
 
 #. js-lingui-id: bY2Xkv
 #: src/modules/ui/layout/page-header/components/PageHeaderToggleSidePanelButton.tsx
+#: src/modules/command-menu-item/server-items/display/components/CommandMenuItemMoreActionsButton.tsx
 msgid "Open side panel"
 msgstr "Maak sypaneel oop"
 
@@ -10519,11 +10449,6 @@ msgstr "Oopgemaak"
 #: src/modules/settings/admin-panel/health-status/components/SettingsAdminHealthStatusRightContainer.tsx
 msgid "Operational"
 msgstr "Operasioneel"
-
-#. js-lingui-id: 4MyDFl
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Opportunities"
-msgstr "Geleenthede"
 
 #. js-lingui-id: lVa1Xn
 #: src/modules/settings/data-model/fields/forms/select/hooks/useSelectSettingsFormInitialValues.ts
@@ -10604,6 +10529,8 @@ msgstr "Rangskik"
 #: src/modules/page-layout/widgets/fields/hooks/useFieldsWidgetGroups.ts
 #: src/modules/navigation-menu-item/edit/side-panel/components/SidePanelNewSidebarItemMainMenu.tsx
 #: src/modules/navigation/components/NavigationDrawerOtherSection.tsx
+#: src/modules/command-menu-item/server-items/edit/components/SidePanelCommandMenuItemEditPage.tsx
+#: src/modules/command-menu-item/server-items/display/components/SidePanelCommandMenuItemDisplayPage.tsx
 msgid "Other"
 msgstr "Ander"
 
@@ -10645,6 +10572,7 @@ msgstr "Onderbreking"
 
 #. js-lingui-id: gh06VD
 #: src/pages/settings/admin-panel/SettingsAdminNewAiModel.tsx
+#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowOutputSchemaBuilder.tsx
 #: src/modules/workflow/components/WorkflowStepExecutionResult.tsx
 #: src/modules/side-panel/pages/workflow/step/view-run/components/SidePanelWorkflowRunViewStepContent.tsx
 #: src/modules/logic-functions/components/LogicFunctionExecutionResult.tsx
@@ -10654,11 +10582,6 @@ msgstr "Onderbreking"
 #: src/modules/ai/components/CodeExecutionDisplay.tsx
 msgid "Output"
 msgstr "Uitset"
-
-#. js-lingui-id: xvfn7l
-#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowOutputSchemaBuilder.tsx
-msgid "Output Field {fieldNumber}"
-msgstr "Uitvoerveld {fieldNumber}"
 
 #. js-lingui-id: i1+tKD
 #: src/modules/ai/components/internal/AIChatContextUsageButton.tsx
@@ -10715,6 +10638,17 @@ msgstr "bladsyuitleg-oortjie"
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
 msgid "page layout widget"
 msgstr "bladsyuitleg-widget"
+
+#. js-lingui-id: ckYXHz
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+msgid "Page layouts"
+msgstr ""
+
+#. js-lingui-id: gUojnO
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+msgid "Page layouts defined by this app"
+msgstr ""
 
 #. js-lingui-id: IVBjIH
 #: src/pages/settings/security/event-logs/components/EventLogFilters.tsx
@@ -10808,7 +10742,6 @@ msgid "Pending"
 msgstr "Hangend"
 
 #. js-lingui-id: 1wdjme
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 #: src/modules/command-menu-item/mock/command-menu-items.mock.tsx
 msgid "People"
 msgstr "Mense"
@@ -10822,6 +10755,11 @@ msgstr "Mense aan wie ek e-posse gestuur en van ontvang het."
 #: src/modules/settings/accounts/components/SettingsAccountsMessageAutoCreationCard.tsx
 msgid "People I’ve sent emails to."
 msgstr "Mense aan wie ek e-posse gestuur het."
+
+#. js-lingui-id: qMTN0w
+#: src/pages/settings/ai/SettingsAIUsageUserDetail.tsx
+msgid "Per-day AI consumption."
+msgstr ""
 
 #. js-lingui-id: i9iYjM
 #: src/pages/settings/SettingsUsageUserDetail.tsx
@@ -10862,49 +10800,15 @@ msgstr ""
 msgid "Permanent deletion. Enter the number of days."
 msgstr "Permanent verwydering. Voer die aantal dae in."
 
-#. js-lingui-id: rDky0a
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Permanently destroy dashboard"
-msgstr "Vernietig paneelbord permanent"
+#. js-lingui-id: EPkrPQ
+#: src/modules/command-menu-item/engine-command/record/components/DestroyRecordsCommand.tsx
+msgid "Permanently Destroy"
+msgstr ""
 
-#. js-lingui-id: n7S2Oo
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Permanently destroy dashboards"
-msgstr "Vernietig paneelborde permanent"
-
-#. js-lingui-id: Bv3y5w
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Permanently destroy record"
-msgstr "Vernietig rekord permanent"
-
-#. js-lingui-id: 35dBYb
-#: src/modules/command-menu-item/record/single-record/components/DestroySingleRecordCommand.tsx
-#: src/modules/command-menu-item/record/single-record/components/DestroySingleRecordCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/single-record/components/DestroySingleRecordCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/single-record/components/DestroySingleRecordCommand.tsx
-msgid "Permanently Destroy Record"
-msgstr "Vernietig rekord permanent"
-
-#. js-lingui-id: xjWlSJ
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Permanently destroy records"
-msgstr "Vernietig rekords permanent"
-
-#. js-lingui-id: YyP8vD
-#: src/modules/command-menu-item/record/multiple-records/components/DestroyMultipleRecordsCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/multiple-records/components/DestroyMultipleRecordsCommand.tsx
-msgid "Permanently Destroy Records"
-msgstr "Vernietig rekords permanent"
-
-#. js-lingui-id: 0bQ5ba
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Permanently destroy workflow"
-msgstr "Vernietig werkstroom permanent"
-
-#. js-lingui-id: uKWXhB
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Permanently destroy workflows"
-msgstr "Vernietig werkstroomme permanent"
+#. js-lingui-id: 64gHBj
+#: src/modules/command-menu-item/engine-command/record/components/DestroyRecordsCommand.tsx
+msgid "Permanently Destroy {objectLabel}"
+msgstr ""
 
 #. js-lingui-id: yWmZKk
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
@@ -10978,6 +10882,12 @@ msgstr ""
 msgid "Pink"
 msgstr "Pienk"
 
+#. js-lingui-id: kNiQp6
+#: src/modules/command-menu-item/server-items/edit/components/SidePanelCommandMenuItemEditPage.tsx
+#: src/modules/command-menu-item/server-items/display/components/SidePanelCommandMenuItemDisplayPage.tsx
+msgid "Pinned"
+msgstr ""
+
 #. js-lingui-id: hx1ePY
 #: src/modules/workflow/workflow-steps/workflow-actions/form-action/components/WorkflowFormFieldSettingsText.tsx
 #: src/modules/workflow/workflow-steps/workflow-actions/form-action/components/WorkflowFormFieldSettingsNumber.tsx
@@ -10998,6 +10908,12 @@ msgstr "Plan"
 #: src/modules/settings/billing/components/SettingsBillingSubscriptionInfo.tsx
 msgid "Plan switching has been cancelled."
 msgstr "Planwisseling is gekanselleer."
+
+#. js-lingui-id: QLv09h
+#: src/modules/settings/admin-panel/health-status/maintenance-mode/components/SettingsAdminMaintenanceMode.tsx
+#: src/modules/settings/admin-panel/health-status/maintenance-mode/components/SettingsAdminMaintenanceMode.tsx
+msgid "Planned for {formattedStartDate}"
+msgstr ""
 
 #. js-lingui-id: VUi6Nf
 #: src/modules/workflow/workflow-trigger/components/CronExpressionHelper.tsx
@@ -11145,11 +11061,6 @@ msgstr "Voorskou nie beskikbaar nie"
 msgid "Previous"
 msgstr "Vorige"
 
-#. js-lingui-id: 2WAUd8
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
-msgid "Previous AI Chats"
-msgstr "Vorige KI-kletse"
-
 #. js-lingui-id: jmc+FY
 #: src/modules/settings/billing/components/internal/MeteredPriceSelector.tsx
 msgid "Price updated."
@@ -11282,7 +11193,6 @@ msgid "Provider \"{0}\" removed"
 msgstr "Verskaffer \"{0}\" verwyder"
 
 #. js-lingui-id: jerYcl
-#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
 msgid "Providers"
 msgstr "Verskaffers"
@@ -11398,6 +11308,22 @@ msgstr "Lees die veranderingslogboek"
 msgid "Read documentation"
 msgstr "Lees dokumentasie"
 
+#. js-lingui-id: U26cMX
+#: src/pages/settings/ai/components/SettingsAIMoreTab.tsx
+msgid "Read system prompts"
+msgstr ""
+
+#. js-lingui-id: EKsFda
+#: src/pages/settings/ai/components/SettingsAIMoreTab.tsx
+msgid "Read the system prompts to understand how the AI works"
+msgstr ""
+
+#. js-lingui-id: 0URVx8
+#. placeholder {0}: formatNumber( systemPromptTokenCount, { abbreviate: true, decimals: 1, }, )
+#: src/pages/settings/ai/components/SettingsAIMoreTab.tsx
+msgid "Read the system prompts to understand how the AI works (~{0} tokens)"
+msgstr ""
+
 #. js-lingui-id: afMuDE
 #: src/pages/auth/Authorize.tsx
 msgid "Read your profile"
@@ -11450,6 +11376,7 @@ msgstr "rekord"
 #: src/modules/workflow/workflow-steps/workflow-actions/components/WorkflowEditActionUpdateRecord.tsx
 #: src/modules/workflow/workflow-steps/workflow-actions/components/WorkflowEditActionDeleteRecord.tsx
 #: src/modules/navigation-menu-item/edit/side-panel/components/SidePanelNewSidebarItemMainMenu.tsx
+#: src/modules/navigation-menu-item/display/object/components/NavigationDrawerItemForObjectMetadataItem.tsx
 msgid "Record"
 msgstr "Rekord"
 
@@ -11523,6 +11450,12 @@ msgstr "Rekordvlak"
 #: src/modules/settings/roles/role-permissions/object-level-permissions/components/SettingsRolePermissionsObjectLevelTableHeader.tsx
 msgid "Records"
 msgstr "Rekords"
+
+#. js-lingui-id: J+Qyf2
+#: src/modules/command-menu-item/server-items/edit/components/CommandMenuItemEditRecordSelectionDropdown.tsx
+#: src/modules/command-menu-item/server-items/edit/components/CommandMenuItemEditRecordSelectionDropdown.tsx
+msgid "Records selected"
+msgstr ""
 
 #. js-lingui-id: wRTiSD
 #: src/modules/settings/data-model/fields/forms/select/components/SettingsDataModelFieldSelectFormOptionRow.tsx
@@ -11681,12 +11614,6 @@ msgstr "Verwyder as verstek"
 msgid "Remove Deleted filter"
 msgstr "Verwyder Gedeleteerde filter"
 
-#. js-lingui-id: T/pF0Z
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Remove from favorites"
-msgstr "Verwyder uit gunstelinge"
-
 #. js-lingui-id: 9VZ6f0
 #: src/modules/navigation-menu-item/edit/side-panel/components/SidePanelEditOrganizeActions.tsx
 msgid "Remove from sidebar"
@@ -11788,6 +11715,11 @@ msgstr "Reageer"
 msgid "Reply to all"
 msgstr "Beantwoord almal"
 
+#. js-lingui-id: tbmZmI
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "Report and issue"
+msgstr ""
+
 #. js-lingui-id: /laZGZ
 #: src/modules/workflow/workflow-steps/workflow-actions/http-request-action/components/HttpRequestExecutionResult.tsx
 msgid "Request Failed"
@@ -11816,6 +11748,11 @@ msgstr "Stel terug"
 msgid "Reset 2FA"
 msgstr "Herstel 2FA"
 
+#. js-lingui-id: YdI8A2
+#: src/modules/command-menu-item/server-items/edit/components/CommandMenuItemOptionsDropdown.tsx
+msgid "Reset label to default"
+msgstr ""
+
 #. js-lingui-id: 1IWc1n
 #: src/modules/side-panel/pages/root/components/SidePanelResetContextToSelectionButton.tsx
 msgid "Reset to"
@@ -11823,6 +11760,7 @@ msgstr "Herstel na"
 
 #. js-lingui-id: L+rMC9
 #: src/modules/settings/data-model/fields/forms/address/components/SettingsDataModelFieldAddressForm.tsx
+#: src/modules/command-menu-item/server-items/edit/components/SidePanelCommandMenuItemEditPage.tsx
 msgid "Reset to default"
 msgstr "Herstel na Verstek"
 
@@ -11880,46 +11818,13 @@ msgstr "herstel"
 
 #. js-lingui-id: yKu/3Y
 #: src/modules/information-banner/components/deleted-record/InformationBannerDeletedRecord.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 msgid "Restore"
 msgstr "Herstel"
 
-#. js-lingui-id: XRAM5d
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Restore dashboard"
-msgstr "Herstel paneelbord"
-
-#. js-lingui-id: jC7v7d
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Restore dashboards"
-msgstr "Herstel paneelborde"
-
-#. js-lingui-id: y4Ib1n
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Restore record"
-msgstr "Herstel rekord"
-
-#. js-lingui-id: NzMNOA
-#: src/modules/command-menu-item/record/single-record/components/RestoreSingleRecordCommand.tsx
-#: src/modules/command-menu-item/record/single-record/components/RestoreSingleRecordCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/single-record/components/RestoreSingleRecordCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/single-record/components/RestoreSingleRecordCommand.tsx
-msgid "Restore Record"
-msgstr "Herstel rekord"
-
-#. js-lingui-id: Vw369F
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Restore records"
-msgstr "Herstel rekords"
-
-#. js-lingui-id: Xqj0Cb
-#: src/modules/command-menu-item/record/multiple-records/components/RestoreMultipleRecordsCommand.tsx
-#: src/modules/command-menu-item/record/multiple-records/components/RestoreMultipleRecordsCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/multiple-records/components/RestoreMultipleRecordsCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/multiple-records/components/RestoreMultipleRecordsCommand.tsx
-msgid "Restore Records"
-msgstr "Herstel rekords"
+#. js-lingui-id: 8KyDbM
+#: src/modules/command-menu-item/engine-command/record/components/RestoreRecordsCommand.tsx
+msgid "Restore {objectLabel}"
+msgstr ""
 
 #. js-lingui-id: hO3AfV
 #: src/pages/settings/ai/components/SettingsAIModelsTab.tsx
@@ -11945,7 +11850,6 @@ msgstr "Hervat"
 #. js-lingui-id: 6gRgw8
 #: src/modules/settings/admin-panel/health-status/components/SettingsAdminRetryJobsConfirmationModal.tsx
 #: src/modules/settings/admin-panel/health-status/components/SettingsAdminQueueJobRowDropdownMenu.tsx
-#: src/modules/ai/components/AIChatErrorMessage.tsx
 msgid "Retry"
 msgstr "Probeer weer"
 
@@ -11978,6 +11882,7 @@ msgid "Rich Text"
 msgstr "Rykteks"
 
 #. js-lingui-id: E1BXUR
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
 msgid "role"
 msgstr "rol"
@@ -12020,8 +11925,15 @@ msgstr ""
 msgid "Role updated successfully"
 msgstr "Rol suksesvol opdateer"
 
+#. js-lingui-id: i9AFmv
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "roles"
+msgstr ""
+
 #. js-lingui-id: 5dJK4M
 #: src/pages/settings/roles/SettingsRoleAddObjectLevel.tsx
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useSettingsRolePermissionFlagConfig.ts
 #: src/modules/settings/roles/role-permissions/object-level-permissions/object-form/components/SettingsRolePermissionsObjectLevelObjectForm.tsx
 #: src/modules/settings/roles/role/components/SettingsRole.tsx
@@ -12030,6 +11942,11 @@ msgstr "Rol suksesvol opdateer"
 #: src/modules/settings/hooks/useSettingsNavigationItems.tsx
 msgid "Roles"
 msgstr "Rolle"
+
+#. js-lingui-id: ys6cUp
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+msgid "Roles defined by this app"
+msgstr ""
 
 #. js-lingui-id: Qz0FZ3
 #: src/modules/settings/billing/components/SettingsBillingCreditsSection.tsx
@@ -12124,6 +12041,7 @@ msgstr "Russies"
 
 #. js-lingui-id: +5kO8P
 #: src/pages/settings/profile/appearance/components/DateTimeSettingsCalendarStartDaySelect.tsx
+#: src/pages/settings/profile/appearance/components/DateTimeSettingsCalendarStartDaySelect.tsx
 msgid "Saturday"
 msgstr "Saterdag"
 
@@ -12131,7 +12049,6 @@ msgstr "Saterdag"
 #: src/pages/settings/applications/tabs/SettingsApplicationRegistrationOAuthTab.tsx
 #: src/modules/settings/components/SaveAndCancelButtons/SaveButton.tsx
 #: src/modules/settings/admin-panel/config-variables/components/ConfigVariableActionButtons.tsx
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
 msgid "Save"
 msgstr "Stoor"
 
@@ -12139,11 +12056,6 @@ msgstr "Stoor"
 #: src/modules/views/components/UpdateViewButtonGroup.tsx
 msgid "Save as new view"
 msgstr "Stoor as nuwe aansig"
-
-#. js-lingui-id: 7GK4Vt
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Save Dashboard"
-msgstr "Stoor Paneelbord"
 
 #. js-lingui-id: veLq3R
 #: src/pages/settings/applications/tabs/SettingsApplicationsDeveloperTab.tsx
@@ -12154,6 +12066,16 @@ msgstr "Skep die raamwerk vir 'n nuwe toepassing en gebruik dan die CLI om te on
 #: src/modules/workflow/workflow-trigger/components/CronExpressionHelper.tsx
 msgid "Schedule"
 msgstr "Skedule"
+
+#. js-lingui-id: Ys/D8h
+#: src/modules/settings/admin-panel/health-status/maintenance-mode/components/SettingsAdminMaintenanceMode.tsx
+msgid "Schedule a maintenance window and notify all users"
+msgstr ""
+
+#. js-lingui-id: f5yMQc
+#: src/modules/information-banner/components/maintenance/InformationBannerMaintenance.tsx
+msgid "Scheduled maintenance: {startFormatted} — {endFormatted}"
+msgstr ""
 
 #. js-lingui-id: QJ8HBJ
 #: src/modules/settings/playground/components/PlaygroundSetupForm.tsx
@@ -12189,11 +12111,8 @@ msgstr "SDK"
 #: src/modules/sign-in-background-mock/components/SignInAppNavigationDrawerMock.tsx
 #: src/modules/side-panel/hooks/useOpenRecordsSearchPageInSidePanel.ts
 #: src/modules/settings/roles/role-assignment/components/SettingsRoleAssignmentWorkspaceMemberPickerDropdown.tsx
+#: src/modules/settings/data-model/object-details/components/tabs/ObjectSettings.tsx
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
 #: src/modules/command-menu-item/engine-command/constants/EngineComponentKeyHeadlessComponentMap.tsx
 #: src/modules/command-menu-item/engine-command/constants/EngineComponentKeyHeadlessComponentMap.tsx
 msgid "Search"
@@ -12248,7 +12167,7 @@ msgid "Search a role..."
 msgstr "Soek 'n rol..."
 
 #. js-lingui-id: lJNEce
-#: src/pages/settings/ai/components/SettingsSkillsTable.tsx
+#: src/pages/settings/ai/components/SettingsAgentSkills.tsx
 msgid "Search a skill..."
 msgstr "Soek 'n vaardigheid..."
 
@@ -12272,6 +12191,11 @@ msgstr "Soek 'n tipe"
 #: src/modules/navigation-menu-item/edit/side-panel/components/SidePanelNewSidebarItemViewPickerSubView.tsx
 msgid "Search a view..."
 msgstr "Soek 'n aansig..."
+
+#. js-lingui-id: N7Z3jc
+#: src/modules/settings/data-model/object-details/components/tabs/SettingsObjectSearchSection.tsx
+msgid "Search across indexed fields..."
+msgstr ""
 
 #. js-lingui-id: +7s4fw
 #: src/modules/settings/roles/role-assignment/components/SettingsRoleAssignmentEntityPickerDropdown.tsx
@@ -12353,6 +12277,7 @@ msgstr "Soek geldeenheid"
 #. js-lingui-id: 7taA9j
 #: src/modules/views/components/ViewBarFilterDropdownFieldSelectMenu.tsx
 #: src/modules/spreadsheet-import/components/MatchColumnSelectFieldSelectDropdownContent.tsx
+#: src/modules/side-panel/pages/page-layout/components/dropdown-content/FieldWidgetFieldDropdownContent.tsx
 #: src/modules/side-panel/pages/page-layout/components/dropdown-content/ChartGroupByFieldSelectionRelationFieldView.tsx
 #: src/modules/side-panel/pages/page-layout/components/dropdown-content/ChartGroupByFieldSelectionDropdownContentBase.tsx
 #: src/modules/side-panel/pages/page-layout/components/dropdown-content/ChartFieldSelectionForAggregateOperationDropdownContent.tsx
@@ -12369,7 +12294,7 @@ msgid "Search folders..."
 msgstr "Soek vouers..."
 
 #. js-lingui-id: uHAV+O
-#: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
+#: src/modules/settings/usage/components/UsageByUserTableSection.tsx
 msgid "Search for a user..."
 msgstr "Soek vir 'n gebruiker..."
 
@@ -12398,12 +12323,6 @@ msgstr "Soek werksaamhede"
 #: src/modules/side-panel/pages/page-layout/components/dropdown-content/ChartRatioOptionValueSelectionDropdownContent.tsx
 msgid "Search options"
 msgstr "Soekopsies"
-
-#. js-lingui-id: IMeaSJ
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
-msgid "Search records"
-msgstr "Soek rekords"
 
 #. js-lingui-id: rRklUH
 #: src/modules/navigation-menu-item/edit/side-panel/components/SidePanelNewSidebarItemRecordSubPage.tsx
@@ -12441,6 +12360,8 @@ msgid "Searching the web for {query}"
 msgstr "Soek op die web na {query}"
 
 #. js-lingui-id: 8sgZS9
+#: src/modules/settings/enterprise/components/EnterprisePlanModal.tsx
+#: src/modules/settings/enterprise/components/EnterprisePlanModal.tsx
 #: src/modules/settings/enterprise/components/EnterprisePlanModal.tsx
 #: src/modules/settings/billing/components/SubscriptionPrice.tsx
 msgid "seat / month"
@@ -12512,97 +12433,31 @@ msgstr "Sien"
 msgid "See {objectLabelPlural}"
 msgstr "Sien {objectLabelPlural}"
 
-#. js-lingui-id: QREcJS
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "See active version"
-msgstr "Sien aktiewe weergawe"
-
 #. js-lingui-id: R+sqCn
 #: src/modules/page-layout/widgets/components/WidgetActionFieldSeeAll.tsx
 msgid "See all {relationLabelPlural} linked to this record"
 msgstr "Sien al die {relationLabelPlural} wat aan hierdie rekord gekoppel is"
 
-#. js-lingui-id: f4Lu+X
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "See deleted dashboards"
-msgstr "Sien verwyderde paneelborde"
-
-#. js-lingui-id: 8O9AJI
-#: src/modules/command-menu-item/record/constants/WorkspaceMembersCommandMenuItemsConfig.tsx
-msgid "See deleted members"
+#. js-lingui-id: sFsCOG
+#: src/pages/settings/members/SettingsWorkspaceMembers.tsx
+msgid "See data model settings"
 msgstr ""
-
-#. js-lingui-id: BxIUpp
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "See deleted records"
-msgstr "Sien verwyderde rekords"
-
-#. js-lingui-id: Z+SGGW
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-msgid "See deleted runs"
-msgstr "Sien verwyderde lopies"
-
-#. js-lingui-id: 5jZIe5
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "See deleted workflows"
-msgstr "Sien verwyderde werkvloeie"
 
 #. js-lingui-id: oGROXc
 #: src/modules/settings/roles/role-permissions/object-level-permissions/components/SettingsRolePermissionsObjectLevelTableHeader.tsx
 msgid "See Fields"
 msgstr "Sien Velde"
 
+#. js-lingui-id: vn4aKq
+#: src/pages/settings/members/SettingsWorkspaceMembers.tsx
+#: src/pages/settings/data-model/SettingsObjectDetailPage.tsx
+msgid "See records"
+msgstr ""
+
 #. js-lingui-id: irbH/8
 #: src/modules/settings/roles/role-permissions/objects-permissions/components/SettingsRolePermissionsObjectsSection.tsx
 msgid "See Records on All Objects"
 msgstr "Sien rekords op alle voorwerpe"
-
-#. js-lingui-id: OpPn5Z
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "See runs"
-msgstr "Sien lopies"
-
-#. js-lingui-id: gGEfj/
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-msgid "See version"
-msgstr "Sien weergawes"
-
-#. js-lingui-id: EtyY4+
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "See versions"
-msgstr "Sien weergawes"
-
-#. js-lingui-id: lYhPN0
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "See versions history"
-msgstr "Sien weergawes geskiedenis"
-
-#. js-lingui-id: qEKLJV
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-msgid "See workflow"
-msgstr "Sien werksvloei"
-
-#. js-lingui-id: MVYiTN
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "See Workflows"
-msgstr "Sien werkvloeie"
-
-#. js-lingui-id: 2PIP/G
-#: src/modules/ai/components/suggested-prompts/default-suggested-prompts.ts
-msgid "Seed a demo workspace using the dedicated tool, ask me questions about my activity and goals to tailor the seeded data to my needs, and then help me explore the workspace and data you created."
-msgstr "Saai 'n demo-werkruimte met behulp van die toegewyde hulpmiddel, vra my vrae oor my aktiwiteit en doelwitte om die gesaaide data by my behoeftes aan te pas, en help my dan om die werkruimte en data wat jy geskep het, te verken."
 
 #. js-lingui-id: rG3WVm
 #: src/modules/spreadsheet-import/steps/components/ValidationStep/components/columns.tsx
@@ -12686,7 +12541,7 @@ msgid "Select column..."
 msgstr "Kies kolom..."
 
 #. js-lingui-id: U+WOF9
-#: src/pages/settings/security/event-logs/components/EventLogDatePickerInput.tsx
+#: src/modules/settings/components/SettingsDatePickerInput.tsx
 msgid "Select date & time"
 msgstr "Kies datum en tyd"
 
@@ -12948,7 +12803,6 @@ msgstr "Instelling van jou databasis..."
 #: src/modules/settings/accounts/components/SettingsAccountsSettingsSection.tsx
 #: src/modules/object-record/record-merge/hooks/useMergeRecordsContainerTabs.ts
 #: src/modules/navigation/components/NavigationDrawerOtherSection.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 msgid "Settings"
 msgstr "Instellings"
 
@@ -12961,16 +12815,6 @@ msgstr "Instellings Volle Toegang"
 #: src/modules/settings/roles/role-permissions/permission-flags/components/SettingsRolePermissionsSettingsSection.tsx
 msgid "Settings permissions"
 msgstr "Instellings toestemming"
-
-#. js-lingui-id: rl/5Qa
-#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
-msgid "Settings tab"
-msgstr "Instellings-oortjie"
-
-#. js-lingui-id: dIJGKR
-#: src/modules/ai/components/suggested-prompts/default-suggested-prompts.ts
-msgid "Setup a tailor-made workspace"
-msgstr "Stel 'n pasgemaakte werkruimte op"
 
 #. js-lingui-id: Ue7X/E
 #: src/modules/settings/accounts/components/SettingsAccountsConnectedAccountsRowRightContainer.tsx
@@ -12999,14 +12843,25 @@ msgid "Seventh"
 msgstr "Sewende"
 
 #. js-lingui-id: Z8lGw6
+#: src/pages/settings/applications/tabs/SettingsApplicationRegistrationDistributionTab.tsx
 #: src/modules/activities/emails/components/EmailThreadBottomBar.tsx
 msgid "Share"
 msgstr "Deel"
+
+#. js-lingui-id: BkgQSO
+#: src/pages/settings/applications/tabs/SettingsApplicationRegistrationDistributionTab.tsx
+msgid "Share link copied to clipboard"
+msgstr ""
 
 #. js-lingui-id: Vy9kmk
 #: src/pages/settings/members/SettingsWorkspaceMembers.tsx
 msgid "Share this link to invite users to join your workspace"
 msgstr "Deel hierdie skakel om gebruikers uit te nooi om by jou werkruimte aan te sluit"
+
+#. js-lingui-id: 69MEsn
+#: src/pages/settings/applications/tabs/SettingsApplicationRegistrationDistributionTab.tsx
+msgid "Share this link with other workspaces on this server to let them install this application."
+msgstr ""
 
 #. js-lingui-id: RRXpo1
 #: src/modules/settings/data-model/fields/forms/number/constants/NumberDataModelSelectOptions.ts
@@ -13043,6 +12898,11 @@ msgstr "Wys groep {groupValue}"
 msgid "Show hidden groups"
 msgstr "Toon versteekte groepe"
 
+#. js-lingui-id: eOY8jq
+#: src/modules/side-panel/components/SidePanelObjectFilterDropdownContent.tsx
+msgid "Show hidden objects"
+msgstr ""
+
 #. js-lingui-id: qi+g0a
 #: src/modules/spreadsheet-import/steps/components/ValidationStep/ValidationStep.tsx
 msgid "Show only rows with errors"
@@ -13073,6 +12933,11 @@ msgstr "Meld aan of Skep 'n rekening"
 #: src/modules/auth/sign-in-up/components/internal/SignInUpWithCredentials.tsx
 msgid "Sign up"
 msgstr "Registreer"
+
+#. js-lingui-id: mHC57v
+#: src/modules/auth/sign-in-up/components/internal/SignInUpWithCredentials.tsx
+msgid "Sign-up is temporarily unavailable during maintenance."
+msgstr ""
 
 #. js-lingui-id: BZdVGR
 #: src/modules/settings/data-model/fields/forms/select/components/SettingsDataModelFieldSelectForm.tsx
@@ -13110,6 +12975,7 @@ msgid "sk-..."
 msgstr "sk-..."
 
 #. js-lingui-id: vJRTzI
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
 msgid "skill"
 msgstr "vaardigheid"
@@ -13122,12 +12988,12 @@ msgid "Skill"
 msgstr "Vaardigheid"
 
 #. js-lingui-id: h4t38o
-#: src/pages/settings/ai/components/SettingsSkillsTable.tsx
+#: src/pages/settings/ai/components/SettingsAgentSkills.tsx
 msgid "Skill activated"
 msgstr "Vaardigheid geaktiveer"
 
 #. js-lingui-id: /IoK74
-#: src/pages/settings/ai/components/SettingsSkillsTable.tsx
+#: src/pages/settings/ai/components/SettingsAgentSkills.tsx
 msgid "Skill deleted"
 msgstr "Vaardigheid verwyder"
 
@@ -13142,10 +13008,23 @@ msgstr "Vaardigheidsnaam"
 msgid "Skill not found"
 msgstr "Vaardigheid nie gevind nie"
 
+#. js-lingui-id: gPdJ1+
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "skills"
+msgstr ""
+
 #. js-lingui-id: PCSkw2
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
 #: src/pages/settings/ai/SettingsAI.tsx
+#: src/pages/settings/ai/components/SettingsAgentSkills.tsx
 msgid "Skills"
 msgstr "Vaardighede"
+
+#. js-lingui-id: B3q6I4
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+msgid "Skills provided by this app"
+msgstr ""
 
 #. js-lingui-id: 6Uau97
 #: src/pages/onboarding/InviteTeam.tsx
@@ -13273,6 +13152,11 @@ msgstr "Sorteer volgens"
 msgid "Sort By Group"
 msgstr "Sorteer per groep"
 
+#. js-lingui-id: fLIwZB
+#: src/modules/object-record/record-index/utils/getNonReadableViewFieldSubTitle.ts
+msgid "sorting"
+msgstr ""
+
 #. js-lingui-id: 0pWTum
 #: src/modules/side-panel/utils/getSidePanelSubPageTitle.ts
 #: src/modules/side-panel/pages/page-layout/components/record-table-settings/RecordTableSettingsSorts.tsx
@@ -13289,10 +13173,10 @@ msgstr "Sorterings"
 msgid "Source"
 msgstr "Bron"
 
-#. js-lingui-id: IEtmGM
+#. js-lingui-id: xqlr9R
 #: src/modules/settings/experience/components/NumberFormatSelect.tsx
-msgid "Spaces and comma - {spacesAndCommaExample}"
-msgstr "Spasies en komma - {spacesAndCommaExample}"
+msgid "Spaces and comma"
+msgstr ""
 
 #. js-lingui-id: 65A04M
 #: src/pages/settings/profile/appearance/components/LocalePicker.tsx
@@ -13369,6 +13253,11 @@ msgstr "Begin 'n nuwe ondernemingsintekening om ondernemingsfunksies weer te akt
 msgid "Start a new enterprise subscription."
 msgstr "Begin 'n nuwe ondernemingsintekening."
 
+#. js-lingui-id: WAjFYI
+#: src/modules/settings/admin-panel/health-status/maintenance-mode/components/SettingsAdminMaintenanceMode.tsx
+msgid "Start date"
+msgstr ""
+
 #. js-lingui-id: D3iCkb
 #: src/pages/settings/security/event-logs/components/EventLogFilters.tsx
 msgid "Start Date"
@@ -13415,12 +13304,6 @@ msgstr "Opsies vir stapfiltergroep"
 #: src/modules/workflow/workflow-steps/filters/components/WorkflowStepFilterOptionsDropdown.tsx
 msgid "Step filter options"
 msgstr "Opsies vir stapfilter"
-
-#. js-lingui-id: ygCKqB
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-msgid "Stop"
-msgstr "Stop"
 
 #. js-lingui-id: I8EmDx
 #: src/modules/information-banner/components/impersonate/InformationBannerIsImpersonating.tsx
@@ -13598,6 +13481,7 @@ msgstr "Som"
 
 #. js-lingui-id: DBC3t5
 #: src/pages/settings/profile/appearance/components/DateTimeSettingsCalendarStartDaySelect.tsx
+#: src/pages/settings/profile/appearance/components/DateTimeSettingsCalendarStartDaySelect.tsx
 msgid "Sunday"
 msgstr "Sondag"
 
@@ -13724,11 +13608,10 @@ msgstr ""
 #: src/pages/settings/ai/SettingsAIPrompts.tsx
 #: src/pages/settings/ai/SettingsAIPrompts.tsx
 #: src/pages/settings/ai/SettingsAIPrompts.tsx
-#: src/pages/settings/ai/SettingsAIPrompts.tsx
-#: src/pages/settings/ai/SettingsAI.tsx
-#: src/pages/settings/ai/SettingsAI.tsx
 #: src/pages/settings/ai/forms/components/SettingsAIAgentForm.tsx
 #: src/pages/settings/ai/components/SettingsAgentSettingsTab.tsx
+#: src/pages/settings/ai/components/SettingsAIMoreTab.tsx
+#: src/pages/settings/ai/components/SettingsAIMoreTab.tsx
 msgid "System Prompt"
 msgstr "Stelsel Prompt"
 
@@ -13746,42 +13629,23 @@ msgstr "Stelselverhoudings"
 #: src/pages/settings/profile/appearance/components/SettingsExperience.tsx
 #: src/pages/settings/profile/appearance/components/DateTimeSettingsTimeZoneSelect.tsx
 #: src/pages/settings/profile/appearance/components/DateTimeSettingsTimeZoneSelect.tsx
+#: src/pages/settings/profile/appearance/components/DateTimeSettingsCalendarStartDaySelect.tsx
+#: src/modules/settings/experience/components/NumberFormatSelect.tsx
 #: src/modules/settings/experience/components/DateTimeSettingsTimeZoneSelect.tsx
-#: src/modules/settings/experience/components/DateTimeSettingsTimeZoneSelect.tsx
+#: src/modules/settings/experience/components/DateTimeSettingsTimeFormatSelect.tsx
+#: src/modules/settings/experience/components/DateTimeSettingsDateFormatSelect.tsx
 msgid "System settings"
 msgstr "Stelselinstellings"
 
 #. js-lingui-id: E3AMmw
 #: src/pages/settings/profile/appearance/components/DateTimeSettingsDateFormatSelect.tsx
-#: src/modules/settings/experience/components/DateTimeSettingsDateFormatSelect.tsx
 msgid "System settings - {systemDateFormatLabel}"
 msgstr "Stelselinstellings - {systemDateFormatLabel}"
 
-#. js-lingui-id: uKM6SP
-#: src/modules/settings/experience/components/NumberFormatSelect.tsx
-msgid "System Settings - {systemNumberFormatLabel}"
-msgstr "Stelselinstellings - {systemNumberFormatLabel}"
-
 #. js-lingui-id: 0ZgB1e
 #: src/pages/settings/profile/appearance/components/DateTimeSettingsTimeFormatSelect.tsx
-#: src/modules/settings/experience/components/DateTimeSettingsTimeFormatSelect.tsx
 msgid "System Settings - {systemTimeFormatLabel}"
 msgstr "Stelselinstellings - {systemTimeFormatLabel}"
-
-#. js-lingui-id: e89dEj
-#: src/pages/settings/profile/appearance/components/DateTimeSettingsCalendarStartDaySelect.tsx
-msgid "System settings - Monday"
-msgstr "Stelselinstellings - Maandag"
-
-#. js-lingui-id: o+Kvng
-#: src/pages/settings/profile/appearance/components/DateTimeSettingsCalendarStartDaySelect.tsx
-msgid "System settings - Saturday"
-msgstr "Stelselinstellings - Saterdag"
-
-#. js-lingui-id: gluMQd
-#: src/pages/settings/profile/appearance/components/DateTimeSettingsCalendarStartDaySelect.tsx
-msgid "System settings - Sunday"
-msgstr "Stelselinstellings - Sondag"
 
 #. js-lingui-id: HuA3RU
 #: src/modules/side-panel/components/hooks/usePageLayoutHeaderInfo.ts
@@ -13829,7 +13693,6 @@ msgstr "Taaktitel"
 
 #. js-lingui-id: GtycJ/
 #: src/modules/page-layout/constants/StandardPageLayoutTabTitleTranslations.ts
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 msgid "Tasks"
 msgstr "Take"
 
@@ -13856,14 +13719,8 @@ msgstr "Gebruiksvoorwaardes"
 #: src/modules/workflow/workflow-steps/workflow-actions/code-action/components/WorkflowEditActionCode.tsx
 #: src/modules/workflow/workflow-steps/workflow-actions/code-action/components/WorkflowEditActionCode.tsx
 #: src/modules/settings/logic-functions/components/tabs/SettingsLogicFunctionCodeEditorTab.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
 msgid "Test"
 msgstr "Toets"
-
-#. js-lingui-id: bU9B27
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Test Workflow"
-msgstr "Toets Werkvloei"
 
 #. js-lingui-id: 3nWPN6
 #: src/modules/settings/logic-functions/components/tabs/SettingsLogicFunctionTestTab.tsx
@@ -14132,7 +13989,7 @@ msgid "This app is listed on the marketplace because it is published to npm."
 msgstr "Hierdie toepassing is op die markplek gelys omdat dit op npm gepubliseer is."
 
 #. js-lingui-id: SYslQU
-#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+#: src/pages/settings/applications/components/SettingsApplicationDetailTitle.tsx
 msgid "This application is not listed on the marketplace. It was shared via a direct link."
 msgstr "Hierdie toepassing is nie op die markplek gelys nie. Dit is via 'n direkte skakel gedeel."
 
@@ -14231,6 +14088,19 @@ msgstr "Hierdie subdomein is gereserveer"
 msgid "This value will be saved to the database."
 msgstr "Hierdie waarde sal in die databasis gestoor word."
 
+#. js-lingui-id: esVnxk
+#. placeholder {0}: nonReadableViewFieldInfo.fieldLabel
+#. placeholder {1}: nonReadableViewFieldInfo.objectLabel
+#: src/modules/object-record/record-index/utils/getNonReadableViewFieldSubTitle.ts
+msgid "This view uses {usageLabel} on field \"{0}\" on \"{1}\" which is not accessible."
+msgstr ""
+
+#. js-lingui-id: IbwUNd
+#. placeholder {0}: nonReadableViewFieldInfo.objectLabel
+#: src/modules/object-record/record-index/utils/getNonReadableViewFieldSubTitle.ts
+msgid "This view uses {usageLabel} on object \"{0}\" which is not accessible."
+msgstr ""
+
 #. js-lingui-id: yByRxz
 #: src/modules/settings/admin-panel/health-status/constants/WorkerQueueMetricsSelectOptions.ts
 msgid "This week"
@@ -14286,14 +14156,8 @@ msgstr "Dit sal die databasiswaarde na omgewing/verstekwaarde herstel. Die datab
 msgid "Thought"
 msgstr "Gedagte"
 
-#. js-lingui-id: 5g/sE8
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Tidy up"
-msgstr "Maak skoon"
-
 #. js-lingui-id: Vqn9Z1
 #: src/modules/workflow/workflow-diagram/components/WorkflowDiagramRightClickCommandMenu.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
 msgid "Tidy up workflow"
 msgstr "Maak werkvloeie netjies"
 
@@ -14461,6 +14325,12 @@ msgstr "Totale werke"
 msgid "Total time"
 msgstr "Totale tyd"
 
+#. js-lingui-id: BxecEJ
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+msgid "Track AI consumption across your workspace."
+msgstr ""
+
 #. js-lingui-id: YT/cKI
 #: src/modules/settings/billing/components/SettingsBillingCreditsSection.tsx
 msgid "Track your {intervalLabel} workflow credit consumption."
@@ -14617,7 +14487,7 @@ msgid "Twenty fields"
 msgstr "Twenty-velde"
 
 #. js-lingui-id: YIjS4q
-#: src/pages/settings/ai/components/SettingsAgentModelCapabilities.tsx
+#: src/modules/ai/components/SettingsAgentModelCapabilities.tsx
 msgid "Twitter/X Search"
 msgstr "Twitter/X Soek"
 
@@ -14652,6 +14522,7 @@ msgstr "Twee-faktor magtiging-setup suksesvol voltooi!"
 #: src/pages/settings/ai/components/SettingsToolsTable.tsx
 #: src/pages/settings/ai/components/SettingsToolsTable.tsx
 #: src/modules/workflow/workflow-steps/workflow-actions/form-action/components/WorkflowEditActionFormFieldSettings.tsx
+#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowOutputFieldTypeSelector.tsx
 #: src/modules/settings/security/components/SSO/SettingsSSOIdentitiesProvidersForm.tsx
 #: src/modules/settings/data-model/object-details/components/SettingsObjectRelationsTable.tsx
 #: src/modules/settings/components/SettingsDnsRecordsTable.tsx
@@ -14783,6 +14654,7 @@ msgstr "Universele ID"
 
 #. js-lingui-id: Ef7StM
 #: src/pages/settings/emailing-domains/utils/getEmailingDomainStatusText.ts
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 #: src/pages/settings/applications/components/SettingsApplicationVersionContainer.tsx
 #: src/modules/settings/admin-panel/components/SettingsAdminVersionContainer.tsx
 msgid "Unknown"
@@ -14833,6 +14705,13 @@ msgstr "Ongepubliseer"
 msgid "Unlock enterprise features like SSO, row-level security, and audit logs."
 msgstr "Ontsluit ondernemingsfunksies soos SSO, sekuriteit op ryvlak en ouditlogboeke."
 
+#. js-lingui-id: Te2H8x
+#: src/pages/settings/developers/api-keys/SettingsDevelopersApiKeyDetail.tsx
+#: src/pages/settings/developers/api-keys/SettingsDevelopersApiKeyDetail.tsx
+#: src/modules/settings/developers/components/SettingsApiKeysFieldItemTableRow.tsx
+msgid "Unnamed API Key"
+msgstr ""
+
 #. js-lingui-id: eQMhFX
 #: src/modules/advanced-text-editor/extensions/slash-command/DefaultSlashCommands.ts
 msgid "unordered"
@@ -14867,6 +14746,11 @@ msgstr "Ongenoemde"
 msgid "Untitled {labelSingular}"
 msgstr "Naamlose {labelSingular}"
 
+#. js-lingui-id: zJsHrW
+#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowOutputSchemaBuilder.tsx
+msgid "Untitled field"
+msgstr ""
+
 #. js-lingui-id: RBz20h
 #: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutWidgetTypeSelect.tsx
 msgid "Untitled iFrame"
@@ -14898,7 +14782,6 @@ msgstr "opdateer"
 #: src/pages/settings/applications/components/SettingsApplicationTableRow.tsx
 #: src/modules/information-banner/components/billing/InformationBannerFailPaymentInfo.tsx
 #: src/modules/information-banner/components/billing/InformationBannerBillingSubscriptionPaused.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 msgid "Update"
 msgstr "Opdateer"
 
@@ -14914,8 +14797,8 @@ msgstr "Werk die betaalmetode by"
 
 #. js-lingui-id: 0KAL3W
 #: src/modules/side-panel/hooks/useOpenUpdateMultipleRecordsPageInSidePanel.tsx
+#: src/modules/side-panel/components/SidePanelMultipleRecordsInfo.tsx
 #: src/modules/object-record/record-update-multiple/components/UpdateMultipleRecordsContainer.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 msgid "Update records"
 msgstr "Opdateer rekords"
 
@@ -14969,6 +14852,7 @@ msgid "Upgrade Plan"
 msgstr "Gradeer plan op"
 
 #. js-lingui-id: pKCx2F
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 #: src/pages/settings/applications/components/SettingsApplicationVersionContainer.tsx
 msgid "Upgrade to {latestAvailableVersion}"
 msgstr "Opgradeer na {latestAvailableVersion}"
@@ -14978,12 +14862,13 @@ msgstr "Opgradeer na {latestAvailableVersion}"
 msgid "Upgrade to access"
 msgstr "Opgradeer vir toegang"
 
-#. js-lingui-id: jmVW3I
+#. js-lingui-id: Wurpq2
 #: src/pages/settings/security/SettingsSecurity.tsx
-msgid "Upgrade to Enterprise to access audit logs"
-msgstr "Gradeer op na Enterprise om toegang tot ouditlogboeke te kry"
+msgid "Upgrade to Enterprise to access audit logs."
+msgstr ""
 
 #. js-lingui-id: +Gi3x1
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 #: src/pages/settings/applications/components/SettingsApplicationVersionContainer.tsx
 msgid "Upgrading..."
 msgstr "Opgradeer..."
@@ -15056,7 +14941,9 @@ msgstr "us-east-1"
 #: src/pages/settings/SettingsUsageUserDetail.tsx
 #: src/pages/settings/SettingsUsage.tsx
 #: src/pages/settings/SettingsUsage.tsx
-#: src/modules/settings/hooks/useSettingsNavigationItems.tsx
+#: src/pages/settings/ai/SettingsAI.tsx
+#: src/modules/settings/usage/components/UsageByUserTableSection.tsx
+#: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
 msgid "Usage"
 msgstr "Gebruik"
 
@@ -15069,6 +14956,11 @@ msgstr "Gebruik oor alle werkruimtes op hierdie bediener"
 #: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
 msgid "Usage Analytics"
 msgstr "Gebruiksanalise"
+
+#. js-lingui-id: 7Kq6TI
+#: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
+msgid "Usage analytics requires ClickHouse. Contact your administrator."
+msgstr ""
 
 #. js-lingui-id: 7vRxpC
 #: src/pages/settings/SettingsUsageUserDetail.tsx
@@ -15086,12 +14978,6 @@ msgstr "Gebruik per gebruiker"
 msgid "Usage Events"
 msgstr "Gebruiksgebeurtenisse"
 
-#. js-lingui-id: 6dMpmz
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-msgid "Use as draft"
-msgstr "Gebruik as konsep"
-
 #. js-lingui-id: 6kLyt5
 #: src/modules/auth/sign-in-up/components/internal/SignInUpTwoFactorAuthenticationProvision.tsx
 msgid "Use authenticator apps and browser extensions like 1Password, Authy, Microsoft Authenticator to generate one-time passwords"
@@ -15101,6 +14987,11 @@ msgstr "Gebruik magtiging apps en blaaieruitbreidings soos 1Password, Authy, Mic
 #: src/pages/settings/ai/components/SettingsAIModelsTab.tsx
 msgid "Use best models only"
 msgstr "Gebruik slegs die beste modelle"
+
+#. js-lingui-id: cVOIgV
+#: src/pages/settings/ai/components/SettingsAgentSkills.tsx
+msgid "Use filter to see existing tools or create your own"
+msgstr ""
 
 #. js-lingui-id: oTTQsc
 #: src/modules/settings/domains/utils/getSubdomainValidationSchema.ts
@@ -15248,6 +15139,11 @@ msgstr "Veranderlike {variableKey} opgedateer"
 msgid "Variable deleted successfully."
 msgstr "Veranderlike suksesvol verwyder."
 
+#. js-lingui-id: +woNYv
+#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowOutputSchemaBuilder.tsx
+msgid "Variable Name"
+msgstr ""
+
 #. js-lingui-id: dY/1ir
 #: src/modules/object-record/record-field/ui/form-types/components/VariableChip.tsx
 msgid "Variable not found"
@@ -15283,13 +15179,7 @@ msgstr "Verifieer kode vanaf die app"
 msgid "Verify the code from the app"
 msgstr "Verifieer die kode vanaf die app"
 
-#. js-lingui-id: eE0JZ4
-#: src/pages/settings/applications/tabs/SettingsApplicationDetailAboutTab.tsx
-msgid "Version"
-msgstr "Weergawe"
-
 #. js-lingui-id: IHIWR4
-#: src/pages/settings/applications/tabs/SettingsApplicationDetailAboutTab.tsx
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
 msgid "Version of the application"
 msgstr "Weergawe van die aansoek"
@@ -15328,15 +15218,15 @@ msgstr "Aansig"
 msgid "View Agent"
 msgstr ""
 
+#. js-lingui-id: noHthC
+#: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
+msgid "View AI usage breakdown"
+msgstr ""
+
 #. js-lingui-id: nK72s8
 #: src/pages/settings/ai/components/SettingsAgentLogsTab.tsx
 msgid "View all evaluations"
 msgstr ""
-
-#. js-lingui-id: 3JjgWt
-#: src/pages/settings/ai/SettingsAI.tsx
-msgid "View and customize AI instructions"
-msgstr "Bekyk en pas KI-instruksies aan"
 
 #. js-lingui-id: XVf/G7
 #: src/pages/settings/security/SettingsSecurity.tsx
@@ -15412,12 +15302,16 @@ msgstr "Bekyk logboeke"
 
 #. js-lingui-id: 7PrSCy
 #: src/pages/settings/applications/tabs/SettingsApplicationRegistrationDistributionTab.tsx
+#: src/pages/settings/applications/tabs/SettingsApplicationRegistrationDistributionTab.tsx
 msgid "View marketplace page"
 msgstr "Bekyk markplekbladsy"
 
+#. js-lingui-id: sAPirx
+#: src/modules/object-record/record-index/components/RecordIndexEmptyStateNotShared.tsx
+msgid "View not shared"
+msgstr ""
+
 #. js-lingui-id: ecVcAx
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
 #: src/modules/command-menu-item/engine-command/constants/EngineComponentKeyHeadlessComponentMap.tsx
 msgid "View Previous AI Chats"
 msgstr "Sien Vorige KI-kletse"
@@ -15437,11 +15331,6 @@ msgstr ""
 msgid "view sort"
 msgstr "bekyk Sorteer"
 
-#. js-lingui-id: FNDoRH
-#: src/pages/settings/ai/SettingsAI.tsx
-msgid "View the AI system prompt and add custom instructions"
-msgstr "Bekyk die KI-stelselprompt en voeg pasgemaakte instruksies by"
-
 #. js-lingui-id: bJAIqT
 #: src/modules/views/view-picker/components/ViewPickerContentCreateMode.tsx
 msgid "View type"
@@ -15458,9 +15347,16 @@ msgid "View workspace activity logs"
 msgstr "Bekyk werkruimte-aktiwiteitslogboeke"
 
 #. js-lingui-id: 1I6UoR
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
 #: src/modules/navigation-menu-item/edit/side-panel/components/SidePanelNewSidebarItemViewPickerSubView.tsx
 msgid "Views"
 msgstr "Aansigte"
+
+#. js-lingui-id: xF9sRg
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+msgid "Views created by this app"
+msgstr ""
 
 #. js-lingui-id: eedtPL
 #: src/modules/settings/data-model/fields/forms/select/components/SettingsDataModelFieldSelectFormOptionRow.tsx
@@ -15576,7 +15472,7 @@ msgstr ""
 "Probeer asseblief oor 'n paar sekondes weer, jammer."
 
 #. js-lingui-id: LnnVIT
-#: src/pages/settings/ai/components/SettingsAgentModelCapabilities.tsx
+#: src/modules/ai/components/SettingsAgentModelCapabilities.tsx
 msgid "Web Search"
 msgstr "Web Soek"
 
@@ -15639,6 +15535,11 @@ msgstr "Week"
 #. js-lingui-id: IAUiSh
 #: src/modules/side-panel/pages/page-layout/utils/getDateGranularityPluralLabel.ts
 msgid "weeks"
+msgstr ""
+
+#. js-lingui-id: WKHqM+
+#: src/modules/settings/data-model/object-details/components/tabs/SettingsObjectSearchSection.tsx
+msgid "Weight"
 msgstr ""
 
 #. js-lingui-id: nTuObL
@@ -15710,10 +15611,20 @@ msgstr "Waar"
 msgid "Whether this model supports chain-of-thought reasoning"
 msgstr "Of hierdie model 'chain-of-thought'-redenasie ondersteun"
 
+#. js-lingui-id: dmoPOu
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "widget"
+msgstr ""
+
 #. js-lingui-id: fANaAS
 #: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutWidgetTypeSelect.tsx
 msgid "Widget type"
 msgstr "Widget tipe"
+
+#. js-lingui-id: YR3K7M
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "widgets"
+msgstr ""
 
 #. js-lingui-id: j6ncOZ
 #: src/modules/workflow/workflow-steps/workflow-actions/iterator-action/components/WorkflowEditActionIterator.tsx
@@ -15746,7 +15657,6 @@ msgid "Workflow agents"
 msgstr ""
 
 #. js-lingui-id: 2jzcC5
-#: src/modules/command-menu-item/record/single-record/workflow/components/DuplicateWorkflowSingleRecordCommand.tsx
 #: src/modules/command-menu-item/engine-command/record/single-record/workflow/components/DuplicateWorkflowSingleRecordCommand.tsx
 msgid "Workflow duplicated successfully"
 msgstr ""
@@ -15803,6 +15713,7 @@ msgstr "Werksvloeie"
 #: src/pages/settings/ai/SettingsAgentTurnDetail.tsx
 #: src/pages/settings/ai/SettingsAgentTurnDetail.tsx
 #: src/pages/settings/ai/SettingsAgentForm.tsx
+#: src/pages/settings/ai/SettingsAIUsageUserDetail.tsx
 #: src/pages/settings/ai/SettingsAIPrompts.tsx
 #: src/pages/settings/ai/SettingsAI.tsx
 #: src/modules/views/view-picker/components/ViewPickerListContent.tsx
@@ -15817,6 +15728,7 @@ msgstr "Werksvloeie"
 #: src/modules/settings/domains/components/SettingsCustomDomain.tsx
 #: src/modules/settings/domains/components/SettingPublicDomain.tsx
 #: src/modules/settings/developers/components/SettingsDevelopersWebhookForm.tsx
+#: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
 #: src/modules/object-record/object-options-dropdown/components/ObjectOptionsDropdownVisibilityContent.tsx
 #: src/modules/object-record/object-options-dropdown/components/ObjectOptionsDropdownCustomView.tsx
 #: src/modules/navigation-menu-item/display/sections/workspace/components/WorkspaceSection.tsx
@@ -15850,8 +15762,8 @@ msgid "Workspace Info"
 msgstr "Werkruimte-inligting"
 
 #. js-lingui-id: BYrMT0
-#: src/pages/settings/ai/SettingsAIPrompts.tsx
-#: src/pages/settings/ai/SettingsAIPrompts.tsx
+#: src/pages/settings/ai/components/SettingsAIMoreTab.tsx
+#: src/pages/settings/ai/components/SettingsAIMoreTab.tsx
 msgid "Workspace Instructions"
 msgstr "Werkruimte-instruksies"
 
@@ -15943,10 +15855,10 @@ msgstr "Jaar"
 msgid "yearly"
 msgstr "jaarliks"
 
-#. js-lingui-id: Y1GwUe
+#. js-lingui-id: zkWmBh
 #: src/modules/settings/enterprise/components/EnterprisePlanModal.tsx
-msgid "Yearly subscription"
-msgstr "Jaarlikse intekening"
+msgid "Yearly"
+msgstr ""
 
 #. js-lingui-id: +BGee5
 #: src/modules/side-panel/pages/page-layout/utils/getDateGranularityPluralLabel.ts
@@ -16015,13 +15927,17 @@ msgstr "U het nie vergunning om toegang te verkry tot die {objectName} objek nie
 msgid "You do not have permission to view this widget"
 msgstr "U het nie vergunning om hierdie widget te besigtig nie"
 
+#. js-lingui-id: SDVtJI
+#: src/modules/object-record/record-index/components/RecordIndexEmptyStateNotShared.tsx
+msgid "You don't have access to this object."
+msgstr ""
+
 #. js-lingui-id: M2lYgq
 #: src/modules/settings/billing/components/SettingsBillingSubscriptionInfo.tsx
 msgid "You have scheduled a metered tier change. Do you want to cancel it?"
 msgstr "Jy het 'n geskeduleerde gemeterde vlakverandering. Wil jy dit kanselleer?"
 
 #. js-lingui-id: qXzOWu
-#: src/modules/command-menu-item/record/workflow/hooks/useRunWorkflowRecordCommands.tsx
 #: src/modules/command-menu-item/engine-command/hooks/useEnrichHeadlessCommandContextApiWithWorkflowVersionTriggerInformation.ts
 msgid "You selected {selectedCountFormatted} records but manual triggers can run on at most {limitFormatted} records at once. Only the first {limitFormatted} records will be processed."
 msgstr ""

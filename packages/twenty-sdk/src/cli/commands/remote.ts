@@ -17,9 +17,9 @@ const deriveRemoteName = (url: string): string => {
   }
 };
 
-const authenticate = async (apiUrl: string, token?: string): Promise<void> => {
-  const result = token
-    ? await authLogin({ apiKey: token, apiUrl })
+const authenticate = async (apiUrl: string, apiKey?: string): Promise<void> => {
+  const result = apiKey
+    ? await authLogin({ apiKey, apiUrl })
     : await runOAuthWithApiKeyFallback(apiUrl);
 
   if (!result.success) {
@@ -66,95 +66,75 @@ export const registerRemoteCommands = (program: Command): void => {
     .description('Manage remote Twenty servers');
 
   remote
-    .command('add [nameOrUrl]')
+    .command('add')
     .description('Add a new remote or re-authenticate an existing one')
     .option('--as <name>', 'Name for this remote')
-    .option('--local', 'Connect to local development server')
-    .option('--port <port>', 'Port for local server (use with --local)')
-    .option('--token <token>', 'API key for non-interactive auth')
-    .option('--url <url>', 'Server URL (alternative to positional arg)')
+    .option('--api-key <apiKey>', 'API key for non-interactive auth')
+    .option('--api-url <apiUrl>', 'Server URL')
+    .option('--local', 'Connect to a local Twenty server (auto-detect)')
     .action(
-      async (
-        nameOrUrl: string | undefined,
-        options: {
-          as?: string;
-          local?: boolean;
-          port?: string;
-          token?: string;
-          url?: string;
-        },
-      ) => {
+      async (options: {
+        as?: string;
+        apiKey?: string;
+        apiUrl?: string;
+        local?: boolean;
+      }) => {
         const configService = new ConfigService();
         const existingRemotes = await configService.getRemotes();
 
-        if (options.local) {
-          const remoteName = options.as ?? 'local';
-          const preferredPort = options.port
-            ? parseInt(options.port, 10)
-            : undefined;
-          const localUrl = preferredPort
-            ? `http://localhost:${preferredPort}`
-            : await detectLocalServer();
+        if (options.as !== undefined && existingRemotes.includes(options.as)) {
+          const config = await configService.getConfigForRemote(options.as);
 
-          if (!localUrl) {
-            console.error(
-              chalk.red(
-                'No local Twenty server found on ports 2020 or 3000.\n' +
-                  'Start one with: yarn twenty server start',
-              ),
-            );
-            process.exit(1);
-          }
-
-          console.log(chalk.gray(`Found server at ${localUrl}`));
-          ConfigService.setActiveRemote(remoteName);
-          await authenticate(localUrl, options.token);
+          ConfigService.setActiveRemote(options.as);
+          await authenticate(config.apiUrl, options.apiKey);
 
           return;
         }
 
-        // Re-authenticate an existing remote by name
-        const isExistingRemote =
-          nameOrUrl !== undefined && existingRemotes.includes(nameOrUrl);
+        let apiUrl = options.apiUrl;
 
-        if (isExistingRemote) {
-          const config = await configService.getConfigForRemote(nameOrUrl);
+        if (!apiUrl) {
+          const detectedUrl = await detectLocalServer();
 
-          ConfigService.setActiveRemote(nameOrUrl);
-          await authenticate(config.apiUrl, options.token);
+          if (options.local) {
+            if (!detectedUrl) {
+              console.error(
+                chalk.red(
+                  'No local Twenty server found.\n' +
+                    'Start one with: yarn twenty server start',
+                ),
+              );
+              process.exit(1);
+            }
 
-          return;
-        }
+            console.log(chalk.gray(`Found local server at ${detectedUrl}`));
+            apiUrl = detectedUrl;
+          } else {
+            apiUrl = (
+              await inquirer.prompt<{ apiUrl: string }>([
+                {
+                  type: 'input',
+                  name: 'apiUrl',
+                  message: 'Twenty server URL:',
+                  validate: (input: string) => {
+                    try {
+                      new URL(input);
 
-        // Resolve the URL — from args, flags, or interactive prompt
-        const apiUrl =
-          nameOrUrl ??
-          options.url ??
-          (options.token
-            ? ((await detectLocalServer()) ?? 'http://localhost:2020')
-            : (
-                await inquirer.prompt<{ apiUrl: string }>([
-                  {
-                    type: 'input',
-                    name: 'apiUrl',
-                    message: 'Twenty server URL:',
-                    validate: (input: string) => {
-                      try {
-                        new URL(input);
-
-                        return true;
-                      } catch {
-                        return 'Please enter a valid URL';
-                      }
-                    },
+                      return true;
+                    } catch {
+                      return 'Please enter a valid URL';
+                    }
                   },
-                ])
-              ).apiUrl);
+                },
+              ])
+            ).apiUrl;
+          }
+        }
 
         const name = options.as ?? deriveRemoteName(apiUrl);
 
         ConfigService.setActiveRemote(name);
-        await authenticate(apiUrl, options.token);
+        await authenticate(apiUrl, options.apiKey);
 
         const defaultRemote = await configService.getDefaultRemote();
 
@@ -174,7 +154,7 @@ export const registerRemoteCommands = (program: Command): void => {
 
       if (remotes.length === 0) {
         console.log('No remotes configured.');
-        console.log("Use 'twenty remote add <url>' to add one.");
+        console.log("Use 'twenty remote add' to add one.");
 
         return;
       }

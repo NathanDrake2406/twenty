@@ -5,6 +5,7 @@ import { styled } from '@linaria/react';
 import { t } from '@lingui/core/macro';
 import {
   Banner,
+  type BannerColor,
   type BannerVariant,
   type IconComponent,
   IconX,
@@ -17,9 +18,12 @@ const StyledText = styled.div`
   text-overflow: ellipsis;
 `;
 
-const StyledCloseButtonContainer = styled.div`
-  color: ${themeCssVariables.grayScale.gray1};
-  display: flex;
+const StyledInvertedIconButton = styled(IconButton)`
+  color: ${themeCssVariables.font.color.inverted} !important;
+`;
+
+const StyledSecondaryIconButton = styled(IconButton)`
+  color: inherit !important;
 `;
 
 const StyledContent = styled.div<{ hasCloseButton: boolean }>`
@@ -33,7 +37,8 @@ const StyledContent = styled.div<{ hasCloseButton: boolean }>`
 
 export const InformationBanner = ({
   message,
-  variant = 'default',
+  color = 'blue',
+  variant = 'primary',
   buttonTitle,
   buttonIcon,
   buttonOnClick,
@@ -42,6 +47,7 @@ export const InformationBanner = ({
   componentInstanceId,
 }: {
   message: string;
+  color?: BannerColor;
   variant?: BannerVariant;
   buttonTitle?: string;
   buttonIcon?: IconComponent;
@@ -55,6 +61,12 @@ export const InformationBanner = ({
     componentInstanceId,
   );
 
+  const isPrimary = variant === 'primary';
+
+  const CloseIconButton = isPrimary
+    ? StyledInvertedIconButton
+    : StyledSecondaryIconButton;
+
   return (
     <InformationBannerComponentInstanceContext.Provider
       value={{
@@ -62,7 +74,7 @@ export const InformationBanner = ({
       }}
     >
       {informationBannerIsOpen && (
-        <Banner variant={variant}>
+        <Banner color={color} variant={variant}>
           <StyledContent hasCloseButton={!!onClose}>
             <StyledText>{message}</StyledText>
             {buttonTitle && buttonOnClick && (
@@ -71,22 +83,20 @@ export const InformationBanner = ({
                 title={buttonTitle}
                 Icon={buttonIcon}
                 size="small"
-                inverted
+                inverted={isPrimary}
                 onClick={buttonOnClick}
                 disabled={isButtonDisabled}
               />
             )}
           </StyledContent>
           {onClose && (
-            <StyledCloseButtonContainer>
-              <IconButton
-                Icon={IconX}
-                size="small"
-                variant="tertiary"
-                onClick={onClose}
-                ariaLabel={t`Close banner`}
-              />
-            </StyledCloseButtonContainer>
+            <CloseIconButton
+              Icon={IconX}
+              size="small"
+              variant="tertiary"
+              onClick={onClose}
+              ariaLabel={t`Close banner`}
+            />
           )}
         </Banner>
       )}

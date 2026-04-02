@@ -111,15 +111,13 @@ export const SidePanelPageLayoutWidgetTypeSelect = () => {
   const { removePageLayoutWidgetAndPreservePosition } =
     useRemovePageLayoutWidgetAndPreservePosition(pageLayoutId);
 
-  const isApplicationEnabled = useIsFeatureEnabled(
-    FeatureFlagKey.IS_APPLICATION_ENABLED,
+  const isRecordTableWidgetEnabled = useIsFeatureEnabled(
+    FeatureFlagKey.IS_RECORD_TABLE_WIDGET_ENABLED,
   );
 
   const { data: frontComponentsData } = useQuery<{
     frontComponents: FrontComponent[];
-  }>(FIND_MANY_FRONT_COMPONENTS, {
-    skip: !isApplicationEnabled,
-  });
+  }>(FIND_MANY_FRONT_COMPONENTS);
 
   const frontComponents = (frontComponentsData?.frontComponents ?? []).filter(
     (frontComponent) => !frontComponent.isHeadless,
@@ -262,7 +260,7 @@ export const SidePanelPageLayoutWidgetTypeSelect = () => {
 
   const selectableItemIds = [
     'chart',
-    'record-table',
+    ...(isRecordTableWidgetEnabled ? ['record-table'] : []),
     'iframe',
     'rich-text',
     ...frontComponentsWithSelectItemId.map(({ selectItemId }) => selectItemId),
@@ -282,17 +280,19 @@ export const SidePanelPageLayoutWidgetTypeSelect = () => {
             onClick={handleNavigateToGraphTypeSelect}
           />
         </SelectableListItem>
-        <SelectableListItem
-          itemId="record-table"
-          onEnter={handleNavigateToRecordTableSettings}
-        >
-          <CommandMenuItem
-            Icon={IconTable}
-            label={t`Record Table`}
-            id="record-table"
-            onClick={handleNavigateToRecordTableSettings}
-          />
-        </SelectableListItem>
+        {isRecordTableWidgetEnabled && (
+          <SelectableListItem
+            itemId="record-table"
+            onEnter={handleNavigateToRecordTableSettings}
+          >
+            <CommandMenuItem
+              Icon={IconTable}
+              label={t`Record Table`}
+              id="record-table"
+              onClick={handleNavigateToRecordTableSettings}
+            />
+          </SelectableListItem>
+        )}
         <SelectableListItem
           itemId="iframe"
           onEnter={handleNavigateToIframeSettings}
@@ -318,7 +318,7 @@ export const SidePanelPageLayoutWidgetTypeSelect = () => {
         </SelectableListItem>
       </SidePanelGroup>
 
-      {isApplicationEnabled && frontComponentsWithSelectItemId.length > 0 && (
+      {frontComponentsWithSelectItemId.length > 0 && (
         <SidePanelGroup heading={t`Front Components`}>
           {frontComponentsWithSelectItemId.map(
             ({ frontComponent, selectItemId }) => (

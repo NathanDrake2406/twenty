@@ -66,6 +66,16 @@ export const useEditPageLayoutWidget = (pageLayoutIdFromProps?: string) => {
         return;
       }
 
+      if (widgetType === WidgetType.FIELD) {
+        navigatePageLayoutSidePanel({
+          sidePanelPage: SidePanelPages.PageLayoutFieldSettings,
+          pageTitle: t`Field widget`,
+          resetNavigationStack: true,
+        });
+        setPageLayoutEditingWidgetId(widgetId);
+        return;
+      }
+
       if (widgetType === WidgetType.RECORD_TABLE) {
         navigatePageLayoutSidePanel({
           sidePanelPage: SidePanelPages.PageLayoutRecordTableSettings,
@@ -76,7 +86,13 @@ export const useEditPageLayoutWidget = (pageLayoutIdFromProps?: string) => {
         return;
       }
 
-      setSidePanelPage(SidePanelPages.Root);
+      if (widgetType === WidgetType.STANDALONE_RICH_TEXT) {
+        setPageLayoutEditingWidgetId(widgetId);
+        closeSidePanelMenu();
+        return;
+      }
+
+      setSidePanelPage(SidePanelPages.CommandMenuDisplay);
       closeSidePanelMenu();
     },
     [

@@ -154,19 +154,16 @@ msgid "{0, plural, one {You do not have permission to access the {fieldsList} fi
 msgstr "{0, plural, one {No teniu permís per accedir al camp {fieldsList}} other {No teniu permís per accedir als camps {fieldsList}}}"
 
 #. js-lingui-id: dNIJYp
-#. placeholder {0}: formatNumber(totalCredits)
 #. placeholder {0}: formatNumber(datum.value)
-#: src/pages/settings/SettingsUsageUserDetail.tsx
 #: src/modules/settings/usage/components/UsagePieChart.tsx
-#: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
 msgid "{0} credits"
 msgstr "{0} crèdits"
 
-#. js-lingui-id: m8fdzW
-#. placeholder {0}: formatNumber(totalCredits)
+#. js-lingui-id: r4l/MK
+#. placeholder {0}: formatUsageValue(totalCredits)
 #: src/pages/settings/SettingsUsageUserDetail.tsx
-msgid "{0} credits used"
-msgstr "{0} crèdits utilitzats"
+msgid "{0} used"
+msgstr ""
 
 #. js-lingui-id: qdQhzv
 #: src/modules/views/advanced-filter-chip/components/AdvancedFilterChip.tsx
@@ -506,10 +503,10 @@ msgstr "1. Tipus"
 msgid "10,000 workflow node executions"
 msgstr "10.000 execucions de nodes de flux de treball"
 
-#. js-lingui-id: bM5lnW
+#. js-lingui-id: rU05hS
 #: src/modules/settings/experience/components/DateTimeSettingsTimeFormatSelect.tsx
-msgid "12h - {hour12Label}"
-msgstr "12h - {hour12Label}"
+msgid "12h"
+msgstr ""
 
 #. js-lingui-id: 4EdXYs
 #: src/pages/settings/profile/appearance/components/DateTimeSettingsTimeFormatSelect.tsx
@@ -542,10 +539,10 @@ msgstr "20.000 execucions de nodes de flux de treball"
 msgid "200 OK - {duration}ms"
 msgstr "200 OK - {duration}ms"
 
-#. js-lingui-id: mwTnop
+#. js-lingui-id: W1k7eB
 #: src/modules/settings/experience/components/DateTimeSettingsTimeFormatSelect.tsx
-msgid "24h - {hour24Label}"
-msgstr "24h - {hour24Label}"
+msgid "24h"
+msgstr ""
 
 #. js-lingui-id: QsMprd
 #: src/pages/settings/profile/appearance/components/DateTimeSettingsTimeFormatSelect.tsx
@@ -674,10 +671,10 @@ msgstr "ID de la clau d'accés"
 msgid "Access workspace data"
 msgstr "Accedir a les dades de l'espai de treball"
 
-#. js-lingui-id: W5nhmk
+#. js-lingui-id: c2UA7k
 #: src/pages/settings/ai/components/SettingsAIMCP.tsx
-msgid "Access your workspace data from your favorite MCP client like Claude Desktop, Claude Code, Cursor, or ChatGPT. Once connected, try: \"Show me the 5 most recently created companies\" or \"Create a new person named Jane Doe\"."
-msgstr "Accedeix a les dades del teu espai de treball des del teu client MCP preferit, com ara Claude Desktop, Claude Code, Cursor o ChatGPT. Un cop t'hagis connectat, prova: \"Mostra'm les 5 empreses creades més recentment\" o \"Crea una persona nova anomenada Jane Doe\"."
+msgid "Access your workspace data from your favorite MCP client like Claude Desktop, Windsurf or Cursor."
+msgstr ""
 
 #. js-lingui-id: u2Cycw
 #: src/modules/settings/logic-functions/components/SettingsLogicFunctionTabEnvironmentVariablesSection.tsx
@@ -770,8 +767,8 @@ msgstr "Accions que poden realitzar els usuaris en aquest objecte"
 #: src/modules/settings/security/components/SSO/SettingsSecuritySSORowDropdownMenu.tsx
 #: src/modules/settings/data-model/objects/components/SettingsObjectInactiveMenuDropDown.tsx
 #: src/modules/settings/data-model/object-details/components/SettingsObjectFieldDisabledActionDropdown.tsx
+#: src/modules/settings/components/SettingsEnterpriseFeatureGateCard.tsx
 #: src/modules/information-banner/components/enterprise/InformationBannerLegacyEnterpriseKey.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
 msgid "Activate"
 msgstr "Activa"
 
@@ -779,11 +776,6 @@ msgstr "Activa"
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx
 msgid "Activate Enterprise Key"
 msgstr "Activa la clau Enterprise"
-
-#. js-lingui-id: tu8A/k
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Activate Workflow"
-msgstr "Activa el flux de treball"
 
 #. js-lingui-id: jSZacs
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx
@@ -843,12 +835,6 @@ msgstr "Afegeix un grup"
 msgid "Add a new company we're in touch with (e.g. name, website, industry). Details: "
 msgstr "Afegeix una empresa nova amb la qual estiguem en contacte (p. ex., nom, lloc web, sector). Detalls: "
 
-#. js-lingui-id: m3/V2n
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Add a node"
-msgstr "Afegeix un node"
-
 #. js-lingui-id: nGv1DN
 #: src/modules/side-panel/utils/getSidePanelSubPageTitle.ts
 msgid "Add a record"
@@ -901,7 +887,7 @@ msgid "Add custom endpoints, private gateways, or additional regions."
 msgstr "Afegeix punts finals personalitzats, passarel·les privades o regions addicionals."
 
 #. js-lingui-id: GuJvBr
-#: src/pages/settings/ai/SettingsAIPrompts.tsx
+#: src/pages/settings/ai/components/SettingsAIMoreTab.tsx
 msgid "Add custom instructions specific to your workspace (appended to system prompt)"
 msgstr "Afegeix instruccions personalitzades específiques del teu espai de treball (que s'afegiran al prompt del sistema)"
 
@@ -1026,6 +1012,7 @@ msgstr "Afegeix una nota"
 
 #. js-lingui-id: dEO3Zx
 #: src/pages/settings/data-model/SettingsObjects.tsx
+#: src/pages/settings/data-model/SettingsObjects.tsx
 msgid "Add object"
 msgstr "Afegeix objecte"
 
@@ -1132,8 +1119,6 @@ msgid "Add to Favorite"
 msgstr "Afegeix a les preferides"
 
 #. js-lingui-id: pBsoKL
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 #: src/modules/command-menu-item/mock/command-menu-items.mock.tsx
 #: src/modules/command-menu-item/mock/command-menu-items.mock.tsx
 msgid "Add to favorites"
@@ -1177,11 +1162,6 @@ msgstr "Afegit {beautifyPastDateRelative}"
 #: src/modules/settings/accounts/components/SettingsAccountsBlocklistTable.tsx
 msgid "Added to blocklist"
 msgstr "Afegit a la llista de bloqueig"
-
-#. js-lingui-id: y5mJau
-#: src/pages/settings/ai/SettingsAIPrompts.tsx
-msgid "Additional Instructions"
-msgstr "Instruccions addicionals"
 
 #. js-lingui-id: hW/fMg
 #: src/modules/ui/field/input/components/AddressInput.tsx
@@ -1265,6 +1245,7 @@ msgid "After or equal"
 msgstr "Posterior o igual"
 
 #. js-lingui-id: fcYF58
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
 msgid "agent"
 msgstr "agent"
@@ -1303,7 +1284,14 @@ msgstr ""
 msgid "Agent tokens"
 msgstr "Tokens de l'agent"
 
+#. js-lingui-id: ftfADk
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "agents"
+msgstr ""
+
 #. js-lingui-id: 8Uv5e6
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
 #: src/pages/settings/applications/tabs/SettingsApplicationDetailContentTab.tsx
 #: src/modules/settings/roles/role-assignment/components/SettingsRoleAssignmentTable.tsx
 msgid "Agents"
@@ -1313,6 +1301,11 @@ msgstr "Agents"
 #: src/pages/settings/applications/tabs/SettingsApplicationDetailContentTab.tsx
 msgid "Agents powering this app"
 msgstr "Agents que impulsen aquesta aplicació"
+
+#. js-lingui-id: zaHvxQ
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+msgid "Agents provided by this app"
+msgstr ""
 
 #. js-lingui-id: sPQ5qN
 #: src/modules/side-panel/pages/page-layout/constants/GraphTypeInformation.ts
@@ -1328,6 +1321,7 @@ msgstr ""
 #: src/pages/settings/ai/SettingsAgentTurnDetail.tsx
 #: src/pages/settings/ai/SettingsAgentTurnDetail.tsx
 #: src/pages/settings/ai/SettingsAgentForm.tsx
+#: src/pages/settings/ai/SettingsAIUsageUserDetail.tsx
 #: src/pages/settings/ai/SettingsAIPrompts.tsx
 #: src/pages/settings/ai/SettingsAI.tsx
 #: src/pages/settings/ai/SettingsAI.tsx
@@ -1346,10 +1340,19 @@ msgstr "IA"
 msgid "AI Chat"
 msgstr "Xat amb IA"
 
+#. js-lingui-id: E/lGXl
+#: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
+msgid "AI consumption across all workspaces."
+msgstr ""
+
+#. js-lingui-id: kkfXGh
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+msgid "AI consumption over time."
+msgstr ""
+
 #. js-lingui-id: kNfr85
 #: src/pages/settings/ai/forms/components/SettingsAIAgentForm.tsx
 #: src/pages/settings/ai/components/SettingsAgentSettingsTab.tsx
-#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowAiAgentPromptTab.tsx
 msgid "AI Model"
 msgstr "Model IA"
 
@@ -1363,10 +1366,60 @@ msgstr "La IA no està configurada. Estableix OPENAI_API_KEY, ANTHROPIC_API_KEY 
 msgid "AI request prep"
 msgstr "Preparació de la sol·licitud d'IA"
 
-#. js-lingui-id: QwgquD
-#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowOutputSchemaBuilder.tsx
-msgid "AI Response Schema"
-msgstr "Esquema de resposta IA"
+#. js-lingui-id: tzhisR
+#: src/pages/settings/ai/SettingsAIUsageUserDetail.tsx
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+msgid "AI Usage"
+msgstr ""
+
+#. js-lingui-id: Ad11E9
+#: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
+msgid "AI usage analytics across workspaces is available with an Enterprise key."
+msgstr ""
+
+#. js-lingui-id: zkptxb
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+msgid "AI usage analytics is available with an Enterprise key."
+msgstr ""
+
+#. js-lingui-id: U2F/HK
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+msgid "AI usage analytics requires ClickHouse. Contact your administrator."
+msgstr ""
+
+#. js-lingui-id: SknniY
+#: src/pages/settings/ai/SettingsAIUsageUserDetail.tsx
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+msgid "AI Usage by Model"
+msgstr ""
+
+#. js-lingui-id: ehjYr9
+#: src/pages/settings/ai/SettingsAIUsageUserDetail.tsx
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+msgid "AI Usage by Type"
+msgstr ""
+
+#. js-lingui-id: X2afmM
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+msgid "AI Usage by User"
+msgstr ""
+
+#. js-lingui-id: jyqPfh
+#: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
+msgid "AI Usage by Workspace"
+msgstr ""
+
+#. js-lingui-id: KLyZ6L
+#: src/pages/settings/ai/SettingsAIUsageUserDetail.tsx
+msgid "AI User Usage"
+msgstr ""
+
+#. js-lingui-id: TLbVxH
+#: src/modules/settings/usage/utils/getOperationTypeLabel.ts
+msgid "AI Workflow"
+msgstr ""
 
 #. js-lingui-id: BAiyFV
 #: src/pages/settings/admin-panel/SettingsAdminNewAiProvider.tsx
@@ -1455,6 +1508,11 @@ msgstr "Tots els membres"
 #: src/modules/settings/developers/components/WebhookEntitySelect.tsx
 msgid "All Metadata"
 msgstr "Totes les metadades"
+
+#. js-lingui-id: zIk4M6
+#: src/modules/side-panel/components/SidePanelObjectFilterDropdownContent.tsx
+msgid "All objects"
+msgstr ""
 
 #. js-lingui-id: aFE/OW
 #: src/pages/settings/security/event-logs/components/EventLogFilters.tsx
@@ -1746,6 +1804,11 @@ msgstr "La clau API s'ha copiat al porta-retalls"
 msgid "API key is required"
 msgstr "La clau de l'API és necessària"
 
+#. js-lingui-id: sb6i1L
+#: src/pages/settings/developers/api-keys/SettingsDevelopersApiKeyDetail.tsx
+msgid "API key name cannot be empty"
+msgstr ""
+
 #. js-lingui-id: Widx6n
 #: src/modules/settings/roles/components/SettingsRolesList.tsx
 msgid "API key roles"
@@ -1811,10 +1874,10 @@ msgstr "API"
 msgid "APIs & Webhooks"
 msgstr "API i Webhooks"
 
-#. js-lingui-id: BnUHmx
+#. js-lingui-id: 0UMxlw
 #: src/modules/settings/experience/components/NumberFormatSelect.tsx
-msgid "Apostrophe and dot - {apostropheAndDotExample}"
-msgstr "Apòstrof i punt - {apostropheAndDotExample}"
+msgid "Apostrophe and dot"
+msgstr ""
 
 #. js-lingui-id: LMUw1U
 #: src/pages/settings/data-model/SettingsObjectFieldTable.tsx
@@ -1945,29 +2008,29 @@ msgstr "Segur que vols suprimir aquest {relationObjectMetadataNameSingular} rela
 msgid "Are you sure you want to delete this skill? This action cannot be undone."
 msgstr "Segur que vols suprimir aquesta habilitat? Aquesta acció no es pot desfer."
 
-#. js-lingui-id: OJOR8q
-#: src/modules/command-menu-item/record/multiple-records/components/DestroyMultipleRecordsCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/multiple-records/components/DestroyMultipleRecordsCommand.tsx
-msgid "Are you sure you want to destroy these records? They won't be recoverable anymore."
-msgstr "Esteu segur que voleu destruir aquests registres? Ja no seran recuperables."
+#. js-lingui-id: EySr+c
+#. placeholder {0}: objectMetadataItem.labelPlural
+#: src/modules/command-menu-item/engine-command/record/components/DestroyRecordsCommand.tsx
+msgid "Are you sure you want to destroy these {0}? They won't be recoverable anymore."
+msgstr ""
 
-#. js-lingui-id: UK5TO6
-#: src/modules/command-menu-item/record/single-record/components/DestroySingleRecordCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/single-record/components/DestroySingleRecordCommand.tsx
-msgid "Are you sure you want to destroy this record? It cannot be recovered anymore."
-msgstr "Esteu segur que voleu destruir aquest registre? No es podrà recuperar més endavant."
+#. js-lingui-id: GfgNgF
+#. placeholder {0}: objectMetadataItem.labelSingular
+#: src/modules/command-menu-item/engine-command/record/components/DestroyRecordsCommand.tsx
+msgid "Are you sure you want to destroy this {0}? It cannot be recovered anymore."
+msgstr ""
 
-#. js-lingui-id: mcHVC1
-#: src/modules/command-menu-item/record/multiple-records/components/RestoreMultipleRecordsCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/multiple-records/components/RestoreMultipleRecordsCommand.tsx
-msgid "Are you sure you want to restore these records?"
-msgstr "Esteu segur que voleu restaurar aquests registres?"
+#. js-lingui-id: RzJL8J
+#. placeholder {0}: objectMetadataItem.labelPlural
+#: src/modules/command-menu-item/engine-command/record/components/RestoreRecordsCommand.tsx
+msgid "Are you sure you want to restore these {0}?"
+msgstr ""
 
-#. js-lingui-id: lmgkf0
-#: src/modules/command-menu-item/record/single-record/components/RestoreSingleRecordCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/single-record/components/RestoreSingleRecordCommand.tsx
-msgid "Are you sure you want to restore this record?"
-msgstr "Esteu segur que voleu restaurar aquest registre?"
+#. js-lingui-id: XTKWxO
+#. placeholder {0}: objectMetadataItem.labelSingular
+#: src/modules/command-menu-item/engine-command/record/components/RestoreRecordsCommand.tsx
+msgid "Are you sure you want to restore this {0}?"
+msgstr ""
 
 #. js-lingui-id: 9JFf0y
 #: src/modules/settings/members/components/MemberPermissionsTab.tsx
@@ -2004,9 +2067,6 @@ msgstr "Ascendent"
 #: src/modules/side-panel/hooks/useOpenAskAIPageInSidePanel.ts
 #: src/modules/side-panel/components/SidePanelAskAIInfo.tsx
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useActionRolePermissionFlagConfig.ts
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
 #: src/modules/command-menu-item/engine-command/constants/EngineComponentKeyHeadlessComponentMap.tsx
 msgid "Ask AI"
 msgstr "Pregunta a l'IA"
@@ -2192,11 +2252,6 @@ msgstr "Autenticació"
 msgid "Authentication failed"
 msgstr "Error en l'autenticació"
 
-#. js-lingui-id: TxT0ER
-#: src/pages/settings/ai/components/SettingsAIMCP.tsx
-msgid "Authentication method"
-msgstr "Mètode d'autenticació"
-
 #. js-lingui-id: H7qgYQ
 #: src/pages/settings/SettingsTwoFactorAuthenticationMethod.tsx
 msgid "Authenticator app"
@@ -2362,6 +2417,11 @@ msgstr "Com que aquest flux de treball no utilitza un activador manual, el formu
 msgid "Before"
 msgstr "Abans"
 
+#. js-lingui-id: KYr9vA
+#: src/pages/settings/ai/components/SettingsAIModelsTab.tsx
+msgid "Best"
+msgstr ""
+
 #. js-lingui-id: NgFKo1
 #: src/modules/workflow/workflow-trigger/utils/cron-to-human/descriptors/getMonthsDescription.ts
 msgid "between {startMonth} and {endMonth}"
@@ -2383,6 +2443,8 @@ msgid "between the {startOrdinal} and {endOrdinal} of the month"
 msgstr "entre el {startOrdinal} i el {endOrdinal} del mes"
 
 #. js-lingui-id: R+w/Va
+#: src/pages/settings/SettingsUsageUserDetail.tsx
+#: src/pages/settings/SettingsUsage.tsx
 #: src/pages/settings/SettingsBilling.tsx
 #: src/pages/settings/SettingsBilling.tsx
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useSettingsRolePermissionFlagConfig.ts
@@ -2444,6 +2506,12 @@ msgstr "Boolean"
 #: src/modules/side-panel/pages/page-layout/utils/getChartAxisNameDisplayOptions.ts
 msgid "Both"
 msgstr "Tots dos"
+
+#. js-lingui-id: 1hGdwj
+#: src/pages/settings/ai/SettingsAIUsageUserDetail.tsx
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+msgid "Breakdown across AI models."
+msgstr ""
 
 #. js-lingui-id: qDsMss
 #: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowOutputSchemaBuilder.tsx
@@ -2645,14 +2713,8 @@ msgstr "No pots escanejar? Copia la"
 #: src/modules/settings/components/SaveAndCancelButtons/CancelButton.tsx
 #: src/modules/settings/components/SaveAndCancelButtons/CancelButton.tsx
 #: src/modules/object-record/record-update-multiple/components/UpdateMultipleRecordsFooter.tsx
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
 msgid "Cancel"
 msgstr "Cancel·la"
-
-#. js-lingui-id: HYLdMN
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Cancel Edition"
-msgstr "Cancel·la l'edició"
 
 #. js-lingui-id: dV4HC5
 #: src/modules/settings/billing/components/SettingsBillingSubscriptionInfo.tsx
@@ -2741,6 +2803,12 @@ msgstr "No es poden pujar més de {maxNumberOfValues} fitxers"
 #: src/modules/auth/sign-in-up/components/internal/SignInUpTwoFactorAuthenticationVerification.tsx
 msgid "Captcha (anti-bot check) is still loading, try again"
 msgstr "El CAPTCHA (verificació anti-bot) encara s'està carregant, torni a intentar-ho"
+
+#. js-lingui-id: kryGs+
+#: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutFieldSettings.tsx
+#: src/modules/side-panel/pages/page-layout/components/dropdown-content/FieldWidgetLayoutDropdownContent.tsx
+msgid "Card"
+msgstr ""
 
 #. js-lingui-id: M1RLfx
 #: src/pages/settings/profile/appearance/components/LocalePicker.tsx
@@ -2930,6 +2998,7 @@ msgid "Clear the field or \"X\" to revert to environment/default value."
 msgstr "Esborra el camp o \"X\" per tornar al valor predeterminat/entorn."
 
 #. js-lingui-id: Gt8ndY
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
 #: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
 msgid "Click a user to see their daily breakdown."
 msgstr "Fes clic en un usuari per veure el seu desglossament diari."
@@ -2971,6 +3040,8 @@ msgstr "Es requereix ClickHouse per als registres d'auditoria. Contacta amb l'ad
 
 #. js-lingui-id: CTdw8/
 #: src/pages/settings/security/event-logs/SettingsEventLogs.tsx
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+#: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
 msgid "ClickHouse Not Configured"
 msgstr "ClickHouse no està configurat"
 
@@ -3013,6 +3084,7 @@ msgstr "Tanca el bàner"
 
 #. js-lingui-id: saip/v
 #: src/modules/ui/layout/page-header/components/PageHeaderToggleSidePanelButton.tsx
+#: src/modules/command-menu-item/server-items/display/components/CommandMenuItemMoreActionsButton.tsx
 msgid "Close side panel"
 msgstr "Tanca el panell lateral"
 
@@ -3084,6 +3156,11 @@ msgstr "les dades de la columna no són compatibles amb Multi-Select. El format 
 msgid "Columns not matched:"
 msgstr "Columnes no coincidides:"
 
+#. js-lingui-id: pOJNDA
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "command"
+msgstr ""
+
 #. js-lingui-id: cj9UFG
 #: src/pages/settings/applications/tabs/SettingsApplicationsDeveloperTab.tsx
 msgid "Command copied to clipboard"
@@ -3104,15 +3181,20 @@ msgstr "Menú de comandes"
 msgid "command menu item"
 msgstr "element del menú de comandaments"
 
+#. js-lingui-id: 9HKBNN
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "commands"
+msgstr ""
+
 #. js-lingui-id: 4XlFx/
 #: src/pages/settings/applications/tabs/SettingsApplicationsDeveloperTab.tsx
 msgid "Commands copied to clipboard"
 msgstr "Ordres copiades al porta-retalls"
 
-#. js-lingui-id: A9u+7N
+#. js-lingui-id: QeCopv
 #: src/modules/settings/experience/components/NumberFormatSelect.tsx
-msgid "Commas and dot - {commasAndDotExample}"
-msgstr "Comes i punt - {commasAndDotExample}"
+msgid "Commas and dot"
+msgstr ""
 
 #. js-lingui-id: NBdIgR
 #: src/pages/settings/ai/SettingsAgentTurnDetail.tsx
@@ -3126,7 +3208,6 @@ msgstr "Vista compacta"
 
 #. js-lingui-id: s2QZS6
 #: src/modules/sign-in-background-mock/components/SignInBackgroundMockPage.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 msgid "Companies"
 msgstr "Empreses"
 
@@ -3178,7 +3259,6 @@ msgid "Configuration"
 msgstr "Configuració"
 
 #. js-lingui-id: iAL9tI
-#: src/pages/settings/ai/SettingsAI.tsx
 #: src/pages/settings/admin-panel/SettingsAdminAiProviderDetail.tsx
 msgid "Configure"
 msgstr "Configura"
@@ -3217,6 +3297,11 @@ msgstr "Configura els models d'IA predeterminats i la seva disponibilitat"
 #: src/pages/settings/security/SettingsSecurity.tsx
 msgid "Configure fallback login methods for users with SSO bypass permissions"
 msgstr "Configura els mètodes de connexió d'emergència per a usuaris amb permisos per saltar SSO"
+
+#. js-lingui-id: OLqG0t
+#: src/modules/settings/data-model/object-details/components/tabs/ObjectSettings.tsx
+msgid "Configure how this object appears in search results"
+msgstr ""
 
 #. js-lingui-id: ghdb7+
 #: src/modules/settings/accounts/components/SettingsAccountsCalendarChannelsGeneral.tsx
@@ -3382,6 +3467,7 @@ msgstr "Contingut"
 #. js-lingui-id: M73whl
 #: src/modules/side-panel/pages/root/components/SidePanelRootPage.tsx
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAiModelHoverCard.tsx
+#: src/modules/command-menu-item/server-items/display/components/SidePanelCommandMenuItemDisplayPage.tsx
 #: src/modules/ai/components/RoutingDebugDisplay.tsx
 msgid "Context"
 msgstr "Context"
@@ -3529,6 +3615,11 @@ msgstr "Enganxa el codi a continuació"
 #: src/modules/auth/sign-in-up/components/internal/SignInUpTwoFactorAuthenticationProvision.tsx
 msgid "Copy Setup Key"
 msgstr "Copia la clau de configuració"
+
+#. js-lingui-id: RGCCrg
+#: src/pages/settings/applications/tabs/SettingsApplicationRegistrationDistributionTab.tsx
+msgid "Copy share link"
+msgstr ""
 
 #. js-lingui-id: Ej5euX
 #: src/pages/settings/developers/api-keys/SettingsDevelopersApiKeyDetail.tsx
@@ -3684,12 +3775,6 @@ msgstr "crea"
 msgid "Create"
 msgstr "Crea"
 
-#. js-lingui-id: M1NpGt
-#: src/modules/command-menu-item/record-agnostic/hooks/useRelatedRecordCommands.ts
-#: src/modules/command-menu-item/record-agnostic/hooks/useRelatedRecordCommands.ts
-msgid "Create {targetObjectLabelSingular}"
-msgstr "Crea {targetObjectLabelSingular}"
-
 #. js-lingui-id: 5XhrY3
 #: src/pages/settings/applications/tabs/SettingsApplicationsDeveloperTab.tsx
 msgid "Create & Develop"
@@ -3756,25 +3841,10 @@ msgstr "Crea vista personalitzada"
 msgid "Create date field"
 msgstr "Crea camp de data"
 
-#. js-lingui-id: kCNBJG
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Create new dashboard"
-msgstr "Crea un nou tauler"
-
-#. js-lingui-id: d0DCww
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Create new record"
-msgstr "Crea un nou registre"
-
 #. js-lingui-id: vY2Gfm
 #: src/modules/views/view-picker/components/ViewPickerCreateButton.tsx
 msgid "Create new view"
 msgstr "Crea una vista nova"
-
-#. js-lingui-id: UDbEyl
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Create new workflow"
-msgstr "Crea un nou flux de treball"
 
 #. js-lingui-id: gSyzEV
 #: src/pages/onboarding/CreateProfile.tsx
@@ -3811,12 +3881,6 @@ msgstr "Crea Selecció..."
 #: src/modules/views/view-picker/components/ViewPickerContentCreateMode.tsx
 #: src/modules/views/components/UpdateViewButtonGroup.tsx
 msgid "Create view"
-msgstr "Crea vista"
-
-#. js-lingui-id: 3D0MXY
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Create View"
 msgstr "Crea vista"
 
 #. js-lingui-id: SiPp29
@@ -3873,6 +3937,7 @@ msgstr "Creant el teu espai de treball"
 
 #. js-lingui-id: HAzhV7
 #: src/pages/settings/admin-panel/SettingsAdminAiProviderDetail.tsx
+#: src/pages/settings/admin-panel/SettingsAdminAiProviderDetail.tsx
 msgid "Credentials"
 msgstr "Credencials"
 
@@ -3901,15 +3966,8 @@ msgstr "Ús del crèdit"
 msgid "Credit usage breakdown for your workspace."
 msgstr "Desglossament de l'ús de crèdits del teu espai de treball."
 
-#. js-lingui-id: UQ4Hjl
-#: src/modules/ai/components/internal/AIChatContextUsageButton.tsx
-#: src/modules/ai/components/internal/AIChatContextUsageButton.tsx
-msgid "credits"
-msgstr "crèdits"
-
 #. js-lingui-id: lDIOek
 #: src/pages/settings/SettingsUsageUserDetail.tsx
-#: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
 #: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
 msgid "Credits"
 msgstr "Crèdits"
@@ -3976,6 +4034,7 @@ msgid "Currency Code"
 msgstr "Codi de moneda"
 
 #. js-lingui-id: Hp1l6f
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 #: src/modules/settings/billing/components/internal/SubscriptionInfoRowContainer.tsx
 msgid "Current"
 msgstr "Actual"
@@ -4060,6 +4119,7 @@ msgid "Customization"
 msgstr "Personalització"
 
 #. js-lingui-id: srRMnJ
+#: src/modules/settings/data-model/object-details/components/tabs/ObjectLayout.tsx
 #: src/modules/navigation-menu-item/edit/side-panel/components/SidePanelNavigationMenuItemEditPage.tsx
 #: src/modules/navigation-menu-item/edit/side-panel/components/SidePanelEditObjectViewBase.tsx
 #: src/modules/navigation-menu-item/edit/side-panel/components/SidePanelEditLinkItemView.tsx
@@ -4081,6 +4141,16 @@ msgstr "Personalitza camps"
 msgid "Customize page layouts and UI structure"
 msgstr "Personalitza dissenys de pàgina i estructura d'UI"
 
+#. js-lingui-id: LMX+xC
+#: src/modules/settings/data-model/object-details/components/tabs/ObjectLayout.tsx
+msgid "Customize record page"
+msgstr ""
+
+#. js-lingui-id: 1KIzk7
+#: src/modules/settings/data-model/object-details/components/tabs/ObjectLayout.tsx
+msgid "Customize the layout for this role"
+msgstr ""
+
 #. js-lingui-id: ZBgSzH
 #: src/modules/settings/members/components/MemberPermissionsTab.tsx
 msgid "Customize what this user can view and perform"
@@ -4100,6 +4170,12 @@ msgstr "Cian"
 #: src/pages/settings/profile/appearance/components/LocalePicker.tsx
 msgid "Czech"
 msgstr "Txec"
+
+#. js-lingui-id: ShUrwO
+#: src/pages/settings/ai/SettingsAIUsageUserDetail.tsx
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+msgid "Daily AI Usage"
+msgstr ""
 
 #. js-lingui-id: KXQkvT
 #: src/pages/settings/SettingsUsageUserDetail.tsx
@@ -4134,15 +4210,9 @@ msgid "Dark"
 msgstr "Fosc"
 
 #. js-lingui-id: ogQzcZ
-#: src/modules/command-menu-item/record/single-record/dashboard/components/DuplicateDashboardSingleRecordCommand.tsx
 #: src/modules/command-menu-item/engine-command/record/single-record/dashboard/components/DuplicateDashboardSingleRecordCommand.tsx
 msgid "Dashboard duplicated successfully"
 msgstr "Quadre de comandament duplicat correctament"
-
-#. js-lingui-id: w6iIMm
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Dashboards"
-msgstr "Taulers de comandament"
 
 #. js-lingui-id: HKH+W+
 #: src/pages/settings/applications/components/SettingsApplicationDataTable.tsx
@@ -4156,6 +4226,7 @@ msgstr "Dades"
 
 #. js-lingui-id: nxnCld
 #: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutFieldsSettings.tsx
+#: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutFieldSettings.tsx
 msgid "Data and display"
 msgstr "Dades i visualització"
 
@@ -4214,6 +4285,7 @@ msgstr "Residència de dades"
 #. js-lingui-id: r+cVRP
 #: src/pages/settings/data-model/SettingsObjectFieldTable.tsx
 #: src/modules/settings/roles/role-permissions/object-level-permissions/field-permissions/components/SettingsRolePermissionsObjectLevelObjectFieldPermissionTable.tsx
+#: src/modules/settings/data-model/object-details/components/tabs/SettingsObjectSearchSection.tsx
 msgid "Data type"
 msgstr "Tipus de dades"
 
@@ -4307,7 +4379,6 @@ msgstr "Dies entre els activadors"
 #: src/pages/settings/ai/SettingsSkillForm.tsx
 #: src/modules/settings/security/components/SSO/SettingsSecuritySSORowDropdownMenu.tsx
 #: src/modules/settings/data-model/object-details/components/tabs/ObjectSettings.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
 msgid "Deactivate"
 msgstr "Desactiva"
 
@@ -4337,15 +4408,10 @@ msgstr "Desactiva o suprimeix aquesta habilitat"
 msgid "Deactivate this field"
 msgstr "Desactiva aquest camp"
 
-#. js-lingui-id: 4tpC8V
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Deactivate Workflow"
-msgstr "Desactiva el Flux de treball"
-
 #. js-lingui-id: yAT3be
 #: src/pages/settings/SettingsProfile.tsx
 #: src/pages/settings/data-model/SettingsObjectTable.tsx
-#: src/pages/settings/ai/components/SettingsSkillsTable.tsx
+#: src/pages/settings/ai/components/SettingsAgentSkills.tsx
 #: src/modules/settings/data-model/object-details/components/SettingsObjectRelationItemTableRow.tsx
 #: src/modules/settings/data-model/object-details/components/SettingsObjectItemTableRow.tsx
 #: src/modules/settings/data-model/object-details/components/SettingsObjectFieldItemTableRow.tsx
@@ -4362,6 +4428,11 @@ msgstr "Informació de depuració"
 #: src/modules/settings/data-model/fields/forms/address/components/SettingsDataModelFieldAddressForm.tsx
 msgid "Decide which Sub-address fields you want to display"
 msgstr "Decideix quins camps de Sub-adreça vols mostrar"
+
+#. js-lingui-id: Bn9+El
+#: src/modules/ai/hooks/useAiModelOptions.ts
+msgid "default"
+msgstr ""
 
 #. js-lingui-id: ovBPCi
 #: src/modules/settings/data-model/fields/forms/date/utils/getDisplayFormatLabel.ts
@@ -4499,9 +4570,6 @@ msgstr "elimina"
 #: src/modules/object-record/record-field-list/record-detail-section/relation/components/RecordDetailRelationRecordsListItem.tsx
 #: src/modules/object-record/record-field/ui/meta-types/input/components/MultiItemFieldMenuItem.tsx
 #: src/modules/navigation-menu-item/display/folder/components/NavigationMenuItemFolderNavigationDrawerItemDropdown.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 #: src/modules/command-menu-item/mock/command-menu-items.mock.tsx
 #: src/modules/command-menu-item/mock/command-menu-items.mock.tsx
 #: src/modules/blocknote-editor/components/CustomSideMenu.tsx
@@ -4564,16 +4632,6 @@ msgstr "Suprimeix la clau d'API"
 msgid "Delete app"
 msgstr "Suprimeix l'aplicació"
 
-#. js-lingui-id: ikGfT5
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Delete dashboard"
-msgstr "Suprimir quadre de comandament"
-
-#. js-lingui-id: qnWLDf
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Delete dashboards"
-msgstr "Suprimir quadres de comandament"
-
 #. js-lingui-id: gf2eXy
 #: src/pages/settings/ai/components/SettingsAgentEvalsTab.tsx
 msgid "Delete Evaluation Input"
@@ -4603,11 +4661,6 @@ msgstr "Elimina el node"
 #: src/pages/settings/applications/tabs/SettingsApplicationRegistrationGeneralTab.tsx
 msgid "Delete or transfer this app registration"
 msgstr "Suprimeix o transfereix aquest registre d'aplicació"
-
-#. js-lingui-id: kf0A63
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Delete records"
-msgstr "Esborrar registres"
 
 #. js-lingui-id: mcXHCJ
 #: src/modules/settings/roles/role-permissions/objects-permissions/components/SettingsRolePermissionsObjectsSection.tsx
@@ -4671,18 +4724,9 @@ msgstr "Esborrar webhook"
 
 #. js-lingui-id: tWD0z0
 #: src/modules/side-panel/pages/page-layout/components/WidgetSettingsFooter.tsx
+#: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutFieldsSettings.tsx
 msgid "Delete widget"
 msgstr "Elimina el giny"
-
-#. js-lingui-id: UA2IpC
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Delete workflow"
-msgstr "Esborrar procés de treball"
-
-#. js-lingui-id: ABwG9x
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Delete workflows"
-msgstr "Esborrar processos de treball"
 
 #. js-lingui-id: kYu0eF
 #: src/modules/settings/profile/components/DeleteWorkspace.tsx
@@ -4706,11 +4750,6 @@ msgstr "Eliminat"
 #: src/modules/blocknote-editor/blocks/MentionInlineContent.tsx
 msgid "Deleted record"
 msgstr "Registre suprimit"
-
-#. js-lingui-id: WH/5rN
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Deleted records"
-msgstr "Registres suprimits"
 
 #. js-lingui-id: wIAG+H
 #: src/modules/settings/two-factor-authentication/components/DeleteTwoFactorAuthenticationMethod.tsx
@@ -4740,11 +4779,8 @@ msgstr "Descriviu què voleu que faci la IA..."
 
 #. js-lingui-id: Nu4oKW
 #: src/pages/settings/data-model/SettingsObjectFieldEdit.tsx
-#: src/pages/settings/applications/tabs/SettingsApplicationRegistrationGeneralTab.tsx
-#: src/pages/settings/applications/tabs/SettingsApplicationDetailAboutTab.tsx
 #: src/pages/settings/applications/components/SettingsApplicationsTable.tsx
 #: src/pages/settings/applications/components/SettingsApplicationNameDescriptionTable.tsx
-#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowOutputSchemaBuilder.tsx
 #: src/modules/settings/roles/role-permissions/permission-flags/components/SettingsRolePermissionsSettingsTableHeader.tsx
 #: src/modules/settings/roles/role-assignment/components/SettingsRoleAssignmentTable.tsx
 #: src/modules/settings/logic-functions/components/SettingsLogicFunctionNewForm.tsx
@@ -4753,33 +4789,16 @@ msgstr "Descriviu què voleu que faci la IA..."
 msgid "Description"
 msgstr "Descripció"
 
-#. js-lingui-id: CuAMy4
-#: src/pages/settings/applications/tabs/SettingsApplicationDetailAboutTab.tsx
-msgid "Description of the application"
-msgstr "Descripció de l'aplicació"
-
 #. js-lingui-id: +ow7t4
 #: src/modules/settings/roles/role-permissions/object-level-permissions/utils/objectPermissionKeyToHumanReadableText.ts
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
 msgid "destroy"
 msgstr "destruir"
 
-#. js-lingui-id: 2xxBws
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Destroy"
-msgstr "Destruir"
-
 #. js-lingui-id: YI3c7h
 #: src/modules/settings/roles/role-permissions/object-level-permissions/object-form/components/SettingsRolePermissionsObjectLevelObjectFormObjectLevel.tsx
 msgid "Destroy {objectLabelPlural}"
 msgstr "Destruir {objectLabelPlural}"
-
-#. js-lingui-id: kG5yO6
-#: src/modules/command-menu-item/record/multiple-records/components/DestroyMultipleRecordsCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/multiple-records/components/DestroyMultipleRecordsCommand.tsx
-msgid "Destroy Records"
-msgstr "Destruir registres"
 
 #. js-lingui-id: L68qSB
 #: src/modules/settings/roles/role-permissions/objects-permissions/components/SettingsRolePermissionsObjectsSection.tsx
@@ -4806,12 +4825,6 @@ msgstr "Desenvolupador"
 #: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 msgid "Developers links"
 msgstr "Enllaços per a desenvolupadors"
-
-#. js-lingui-id: zAg2B9
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Discard Draft"
-msgstr "Descartar esborrany"
 
 #. js-lingui-id: Xm/s+u
 #: src/modules/settings/accounts/components/SettingsAccountsCalendarChannelsGeneral.tsx
@@ -4931,10 +4944,10 @@ msgstr "No creïs contactes des/de Gmail, correus de Outlook"
 msgid "Don't sync emails from team@ support@ noreply@..."
 msgstr "No sincronitzis correus de team@ support@ noreply@..."
 
-#. js-lingui-id: bd+DPX
+#. js-lingui-id: Wm78zZ
 #: src/modules/settings/experience/components/NumberFormatSelect.tsx
-msgid "Dots and comma - {dotsAndCommaExample}"
-msgstr "Punts i coma - {dotsAndCommaExample}"
+msgid "Dots and comma"
+msgstr ""
 
 #. js-lingui-id: LE8J+K
 #: src/modules/settings/billing/components/internal/MeteredPriceSelector.tsx
@@ -4996,15 +5009,8 @@ msgstr "Deixa el fitxer aquí..."
 
 #. js-lingui-id: euc6Ns
 #: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutTabSettingsContent.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
 msgid "Duplicate"
 msgstr ""
-
-#. js-lingui-id: MR2sZ1
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Duplicate Dashboard"
-msgstr "Duplicar quadre de comandament"
 
 #. js-lingui-id: qaE1sk
 #: src/modules/workflow/workflow-steps/components/WorkflowStepFooter.tsx
@@ -5014,11 +5020,6 @@ msgstr "Duplicar node"
 #. js-lingui-id: mMsEuG
 #: src/modules/side-panel/pages/page-layout/components/WidgetSettingsFooter.tsx
 msgid "Duplicate widget"
-msgstr ""
-
-#. js-lingui-id: 2RpRNn
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Duplicate Workflow"
 msgstr ""
 
 #. js-lingui-id: cheWPw
@@ -5094,7 +5095,7 @@ msgid "e.g. OpenAI EU"
 msgstr "p. ex., OpenAI EU"
 
 #. js-lingui-id: p5P8NB
-#: src/pages/settings/ai/SettingsAIPrompts.tsx
+#: src/pages/settings/ai/components/SettingsAIMoreTab.tsx
 msgid "E.g., \"We are a B2B SaaS company. Always use formal language...\""
 msgstr "P. ex., \"Som una empresa SaaS B2B. Utilitza sempre un llenguatge formal...\""
 
@@ -5139,7 +5140,6 @@ msgstr "eddy@gmail.com, @apple.com"
 #: src/modules/object-record/record-group/hooks/useRecordGroupActions.ts
 #: src/modules/object-record/record-field/ui/meta-types/input/components/MultiItemFieldMenuItem.tsx
 #: src/modules/object-record/record-field/ui/form-types/components/FormMultiSelectFieldInput.tsx
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
 msgid "Edit"
 msgstr "Edita"
 
@@ -5154,10 +5154,12 @@ msgstr "Editar {objectLabelPlural}"
 msgid "Edit Account"
 msgstr "Edita el compte"
 
-#. js-lingui-id: GpnfNN
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Edit Dashboard"
-msgstr "Edita el quadre de comandament"
+#. js-lingui-id: t1EOLt
+#: src/modules/layout-customization/hooks/useEnterLayoutCustomizationMode.ts
+#: src/modules/command-menu-item/server-items/edit/components/CommandMenuItemEditButton.tsx
+#: src/modules/command-menu-item/server-items/edit/components/CommandMenuItemEditButton.tsx
+msgid "Edit actions"
+msgstr ""
 
 #. js-lingui-id: DMIYL8
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useSettingsRolePermissionFlagConfig.ts
@@ -5193,23 +5195,12 @@ msgstr "Edita gràfic"
 msgid "Edit iFrame"
 msgstr "Edita iframe"
 
-#. js-lingui-id: NZubw3
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Edit Layout"
-msgstr "Edita el disseny"
-
 #. js-lingui-id: /PoNoq
 #: src/modules/navigation-menu-item/edit/side-panel/hooks/useAddLinkToNavigationMenu.ts
 #: src/modules/navigation-menu-item/display/sections/workspace/components/WorkspaceSection.tsx
 #: src/modules/navigation-menu-item/display/dnd/hooks/useHandleAddToNavigationDrop.ts
 msgid "Edit link"
 msgstr "Edita l'enllaç"
-
-#. js-lingui-id: m52s8z
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
-msgid "Edit navigation sidebar"
-msgstr "Edita la barra lateral de navegació"
 
 #. js-lingui-id: IaSCqp
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useActionRolePermissionFlagConfig.ts
@@ -5237,11 +5228,6 @@ msgstr "Editar la taula de registres"
 #: src/modules/settings/roles/role-permissions/objects-permissions/components/SettingsRolePermissionsObjectsSection.tsx
 msgid "Edit Records on All Objects"
 msgstr "Editar registres de tots els objectes"
-
-#. js-lingui-id: DpuBzU
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
-msgid "Edit sidebar"
-msgstr "Edita la barra lateral"
 
 #. js-lingui-id: eMFB6/
 #: src/modules/views/view-picker/components/ViewPickerContentEditMode.tsx
@@ -5336,6 +5322,11 @@ msgstr "El correu electrònic ha de ser vàlid"
 #: src/modules/settings/accounts/components/SettingsAccountsBlocklistInput.tsx
 msgid "Email or domain is already in blocklist"
 msgstr "El correu electrònic o domini ja està en la llista de bloqueig"
+
+#. js-lingui-id: jvneza
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "Email support"
+msgstr ""
 
 #. js-lingui-id: +VjrH/
 #: src/modules/side-panel/hooks/useOpenEmailThreadInSidePanel.ts
@@ -5479,14 +5470,24 @@ msgid "Enable bypass options"
 msgstr "Habilita opcions per a saltar"
 
 #. js-lingui-id: gZo0V9
-#: src/pages/settings/ai/components/SettingsAgentModelCapabilities.tsx
+#: src/modules/ai/components/SettingsAgentModelCapabilities.tsx
 msgid "Enable model-specific features"
 msgstr "Activar funcionalitats específiques del model"
+
+#. js-lingui-id: IrI9pg
+#: src/modules/settings/admin-panel/health-status/maintenance-mode/components/SettingsAdminMaintenanceMode.tsx
+msgid "End date"
+msgstr ""
 
 #. js-lingui-id: VFv2ZC
 #: src/pages/settings/security/event-logs/components/EventLogFilters.tsx
 msgid "End Date"
 msgstr "Data de Finalització"
+
+#. js-lingui-id: Fqu/aC
+#: src/modules/settings/admin-panel/health-status/maintenance-mode/components/SettingsAdminMaintenanceMode.tsx
+msgid "End date must be after start date."
+msgstr ""
 
 #. js-lingui-id: k1i50B
 #: src/modules/information-banner/components/billing/InformationBannerEndTrialPeriod.tsx
@@ -5741,10 +5742,17 @@ msgstr "Introdueix la teva clau API"
 #: src/pages/settings/security/SettingsSecurity.tsx
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
 #: src/modules/settings/admin-panel/components/SettingsAdminContent.tsx
+#: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
 msgid "Enterprise"
 msgstr "Empresa"
+
+#. js-lingui-id: rmZVdg
+#: src/modules/settings/components/SettingsEnterpriseFeatureGateCard.tsx
+msgid "Enterprise feature"
+msgstr ""
 
 #. js-lingui-id: Kjjkt3
 #: src/pages/settings/security/event-logs/SettingsEventLogs.tsx
@@ -6222,13 +6230,6 @@ msgstr "Caduca en {dateDiff}"
 
 #. js-lingui-id: GS+Mus
 #: src/modules/object-record/record-index/export/hooks/useRecordIndexExportRecords.ts
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 #: src/modules/command-menu-item/mock/command-menu-items.mock.tsx
 #: src/modules/command-menu-item/mock/command-menu-items.mock.tsx
 msgid "Export"
@@ -6248,73 +6249,6 @@ msgstr "Exporta ({percentageValue}%)"
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useActionRolePermissionFlagConfig.ts
 msgid "Export CSV"
 msgstr "Exporta CSV"
-
-#. js-lingui-id: KVvnDa
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Export dashboard"
-msgstr "Exporta el quadre de comandament"
-
-#. js-lingui-id: wVUjld
-#: src/modules/command-menu-item/record/constants/WorkspaceMembersCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkspaceMembersCommandMenuItemsConfig.tsx
-msgid "Export member"
-msgstr ""
-
-#. js-lingui-id: D0b3Ip
-#: src/modules/command-menu-item/record/constants/WorkspaceMembersCommandMenuItemsConfig.tsx
-msgid "Export members"
-msgstr ""
-
-#. js-lingui-id: ep2rbf
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Export records"
-msgstr "Exportar registres"
-
-#. js-lingui-id: iHK6np
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-msgid "Export run"
-msgstr "Exportar execució"
-
-#. js-lingui-id: vwtAUW
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-msgid "Export runs"
-msgstr "Exportar execucions"
-
-#. js-lingui-id: q46CjD
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Export to PDF"
-msgstr "Exportar a PDF"
-
-#. js-lingui-id: BuprEs
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-msgid "Export version"
-msgstr "Exportar versió"
-
-#. js-lingui-id: 4FLUle
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-msgid "Export versions"
-msgstr "Exportar versions"
-
-#. js-lingui-id: DaGxE0
-#: src/modules/command-menu-item/record/constants/WorkspaceMembersCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Export view"
-msgstr "Exportar vista"
-
-#. js-lingui-id: +FMXdE
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Export workflow"
-msgstr "Exportar el flux de treball"
-
-#. js-lingui-id: XcAij/
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Export workflows"
-msgstr "Exportar fluxos de treball"
 
 #. js-lingui-id: 1JBTZV
 #: src/modules/workflow/workflow-trigger/components/WorkflowEditTriggerCronForm.tsx
@@ -6355,7 +6289,7 @@ msgid "Failed to activate enterprise license. Please check your key or contact s
 msgstr "No s'ha pogut activar la llicència Enterprise. Comproveu la vostra clau o contacteu amb el suport."
 
 #. js-lingui-id: vJiM7T
-#: src/pages/settings/ai/components/SettingsSkillsTable.tsx
+#: src/pages/settings/ai/components/SettingsAgentSkills.tsx
 msgid "Failed to activate skill"
 msgstr "No s'ha pogut activar l'habilitat"
 
@@ -6380,18 +6314,16 @@ msgid "Failed to delete jobs. Please try again later."
 msgstr "Error al suprimir feines. Torneu-ho a provar més tard."
 
 #. js-lingui-id: bmwWKk
-#: src/pages/settings/ai/components/SettingsSkillsTable.tsx
+#: src/pages/settings/ai/components/SettingsAgentSkills.tsx
 msgid "Failed to delete skill"
 msgstr "No s'ha pogut suprimir l'habilitat"
 
 #. js-lingui-id: NUmmdc
-#: src/modules/command-menu-item/record/single-record/dashboard/components/DuplicateDashboardSingleRecordCommand.tsx
 #: src/modules/command-menu-item/engine-command/record/single-record/dashboard/components/DuplicateDashboardSingleRecordCommand.tsx
 msgid "Failed to duplicate dashboard"
 msgstr "No s'ha pogut duplicar el quadre de comandament"
 
 #. js-lingui-id: WYXxQF
-#: src/modules/command-menu-item/record/single-record/workflow/components/DuplicateWorkflowSingleRecordCommand.tsx
 #: src/modules/command-menu-item/engine-command/record/single-record/workflow/components/DuplicateWorkflowSingleRecordCommand.tsx
 msgid "Failed to duplicate workflow"
 msgstr ""
@@ -6478,9 +6410,14 @@ msgid "Failed to save role permissions: {errorMessage}"
 msgstr ""
 
 #. js-lingui-id: 9ryUyP
-#: src/pages/settings/ai/SettingsAIPrompts.tsx
+#: src/pages/settings/ai/components/SettingsAIMoreTab.tsx
 msgid "Failed to save workspace instructions"
 msgstr "No s'han pogut desar les instruccions de l'espai de treball"
+
+#. js-lingui-id: aj02T8
+#: src/modules/settings/admin-panel/health-status/maintenance-mode/components/SettingsAdminMaintenanceMode.tsx
+msgid "Failed to set maintenance mode."
+msgstr ""
 
 #. js-lingui-id: LVcnN8
 #: src/pages/settings/applications/tabs/SettingsApplicationRegistrationGeneralTab.tsx
@@ -6618,6 +6555,7 @@ msgid "Featured only"
 msgstr "Només destacades"
 
 #. js-lingui-id: 2lOBKV
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
 msgid "field"
 msgstr "camp"
@@ -6625,6 +6563,9 @@ msgstr "camp"
 #. js-lingui-id: AXjA78
 #: src/modules/workflow/workflow-steps/workflow-actions/form-action/components/WorkflowFormFieldSettingsSelect.tsx
 #: src/modules/side-panel/pages/page-layout/utils/getFieldLabelWithSubField.ts
+#: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutFieldSettings.tsx
+#: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutFieldSettings.tsx
+#: src/modules/side-panel/pages/page-layout/components/dropdown-content/FieldWidgetLayoutDropdownContent.tsx
 #: src/modules/settings/developers/components/WebhookEntitySelect.tsx
 #: src/modules/page-layout/widgets/components/RecordPageAddWidgetSection.tsx
 msgid "Field"
@@ -6640,15 +6581,26 @@ msgstr "Camp eliminat"
 msgid "Field name"
 msgstr "Nom del camp"
 
-#. js-lingui-id: fV7qkH
-#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowOutputSchemaBuilder.tsx
-msgid "Field Name"
-msgstr "Nom del camp"
-
 #. js-lingui-id: x07QTl
 #: src/modules/settings/data-model/fields/forms/morph-relation/components/SettingsDataModelFieldRelationForm.tsx
 msgid "Field on destination"
 msgstr "Camp a la destinació"
+
+#. js-lingui-id: P8JCfj
+#: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
+msgid "field permission"
+msgstr ""
+
+#. js-lingui-id: lcNTiF
+#: src/modules/side-panel/pages/page-layout/utils/getPageLayoutPageTitle.ts
+#: src/modules/page-layout/hooks/useEditPageLayoutWidget.ts
+msgid "Field widget"
+msgstr ""
+
+#. js-lingui-id: hlVgd/
+#: src/modules/side-panel/components/hooks/usePageLayoutHeaderInfo.ts
+msgid "Field Widget"
+msgstr ""
 
 #. js-lingui-id: RnX5oc
 #: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
@@ -6742,6 +6694,12 @@ msgstr ""
 msgid "File label"
 msgstr "Etiqueta del fitxer"
 
+#. js-lingui-id: QWWgBD
+#. placeholder {0}: file.label
+#: src/modules/ui/field/display/components/FileChip.tsx
+msgid "File no longer exists - {0}"
+msgstr ""
+
 #. js-lingui-id: ncBVqE
 #: src/modules/object-record/record-field/ui/meta-types/hooks/useUploadFilesFieldFile.ts
 msgid "File upload failed"
@@ -6753,9 +6711,6 @@ msgid "Files"
 msgstr "Arxius"
 
 #. js-lingui-id: o7J4JM
-#: src/pages/settings/data-model/SettingsObjectFieldTable.tsx
-#: src/pages/settings/ai/components/SettingsSkillsTable.tsx
-#: src/pages/settings/ai/components/SettingsAIAgentsTable.tsx
 #: src/modules/workflow/workflow-steps/workflow-actions/find-records-action/components/WorkflowEditActionFindRecords.tsx
 #: src/modules/views/components/ViewBarFilterDropdownFieldSelectMenu.tsx
 #: src/modules/views/components/ViewBarFilterButton.tsx
@@ -6772,6 +6727,11 @@ msgstr "Filtrar"
 msgid "Filter by event"
 msgstr "Filtra per esdeveniment"
 
+#. js-lingui-id: yZOiaW
+#: src/modules/side-panel/components/SidePanelObjectFilterDropdown.tsx
+msgid "Filter by object type"
+msgstr ""
+
 #. js-lingui-id: gVEHcL
 #: src/pages/settings/security/event-logs/components/EventLogFilters.tsx
 msgid "Filter by record ID"
@@ -6781,6 +6741,11 @@ msgstr "Filtra per ID del registre"
 #: src/modules/object-record/advanced-filter/components/AdvancedFilterRecordFilterGroupOptionsDropdown.tsx
 msgid "Filter group rule options"
 msgstr "Opcions de regles del grup de filtres"
+
+#. js-lingui-id: YrBWVK
+#: src/modules/object-record/record-index/utils/getNonReadableViewFieldSubTitle.ts
+msgid "filtering"
+msgstr ""
 
 #. js-lingui-id: cSev+j
 #: src/modules/side-panel/utils/getSidePanelSubPageTitle.ts
@@ -6945,11 +6910,6 @@ msgstr "de {startDay} a {endDay}"
 msgid "front component"
 msgstr "component frontal"
 
-#. js-lingui-id: +M+QLN
-#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
-msgid "front components"
-msgstr "components frontals"
-
 #. js-lingui-id: IvIKDS
 #: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
 #: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
@@ -6972,13 +6932,7 @@ msgstr "Accés complet"
 msgid "Function name"
 msgstr "Nom de la funció"
 
-#. js-lingui-id: SHkEmV
-#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
-msgid "functions"
-msgstr "funcions"
-
 #. js-lingui-id: xANKBj
-#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
 #: src/pages/settings/applications/tabs/SettingsApplicationDetailContentTab.tsx
 msgid "Functions"
 msgstr "Funcions"
@@ -7070,61 +7024,23 @@ msgstr "Torna enrere"
 msgid "Go to billing portal"
 msgstr "Aneu al portal de facturació"
 
-#. js-lingui-id: mUbv8L
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Go to Companies"
-msgstr "Ves a Empreses"
-
-#. js-lingui-id: dvMw7T
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Go to Dashboards"
-msgstr "Anar als Taulers de comandament"
-
 #. js-lingui-id: dHvI9O
 #: src/modules/workflow/components/OverrideWorkflowDraftConfirmationModal.tsx
 msgid "Go to Draft"
 msgstr "Anar a l'esborrany"
 
-#. js-lingui-id: BQE4ob
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Go to Notes"
-msgstr "Anar a Notes"
-
-#. js-lingui-id: buPcNi
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Go to Opportunities"
-msgstr "Anar a Oportunitats"
-
 #. js-lingui-id: MrE/Qb
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 #: src/modules/command-menu-item/mock/command-menu-items.mock.tsx
 msgid "Go to People"
 msgstr "Anar a Persones"
-
-#. js-lingui-id: iS69s6
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Go to runs"
-msgstr "Anar a les execucions"
 
 #. js-lingui-id: mT57+Q
 #: src/modules/views/view-picker/components/ViewPickerEditButton.tsx
 #: src/modules/views/view-picker/components/ViewPickerCreateButton.tsx
 #: src/modules/views/view-picker/components/ViewPickerCreateButton.tsx
 #: src/modules/object-record/record-table/empty-state/components/RecordTableEmptyStateRemote.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 msgid "Go to Settings"
 msgstr "Anar a Configuració"
-
-#. js-lingui-id: BM24SF
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Go to Tasks"
-msgstr "Anar a Tasques"
-
-#. js-lingui-id: 203RqP
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Go to Workflows"
-msgstr "Anar als fluxos de treball"
 
 #. js-lingui-id: FYlHHU
 #: src/modules/settings/data-model/fields/forms/select/components/SettingsDataModelFieldSelectFormOptionRow.tsx
@@ -7322,36 +7238,6 @@ msgstr "Camps ocults"
 msgid "Hide"
 msgstr "Amagar"
 
-#. js-lingui-id: OlbYor
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Hide deleted"
-msgstr "Amaga eliminats"
-
-#. js-lingui-id: rp2bZI
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Hide deleted dashboards"
-msgstr "Amaga quadres de comandament suprimits"
-
-#. js-lingui-id: OTmbll
-#: src/modules/command-menu-item/record/constants/WorkspaceMembersCommandMenuItemsConfig.tsx
-msgid "Hide deleted members"
-msgstr ""
-
-#. js-lingui-id: FHhlye
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Hide deleted records"
-msgstr "Amaga registres suprimits"
-
-#. js-lingui-id: 0dZtKR
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-msgid "Hide deleted runs"
-msgstr "Amaga execucions eliminades"
-
-#. js-lingui-id: aOZAIB
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Hide deleted workflows"
-msgstr "Amagar fluxos de treball eliminats"
-
 #. js-lingui-id: MuEcPp
 #: src/modules/side-panel/pages/page-layout/constants/settings/ChartConfigurationSettingLabels.ts
 msgid "Hide empty category"
@@ -7371,6 +7257,11 @@ msgstr "Amaga el grup {groupValue}"
 #: src/modules/settings/admin-panel/config-variables/components/ConfigVariableOptionsDropdownContent.tsx
 msgid "Hide hidden groups"
 msgstr "Amaga grups ocults"
+
+#. js-lingui-id: 2ouyMV
+#: src/modules/command-menu-item/server-items/edit/components/CommandMenuItemOptionsDropdown.tsx
+msgid "Hide label"
+msgstr ""
 
 #. js-lingui-id: i0qMbr
 #: src/modules/page-layout/constants/StandardPageLayoutTabTitleTranslations.ts
@@ -7480,6 +7371,16 @@ msgstr "Credencials d'IAM"
 msgid "IAM credentials configured"
 msgstr "Credencials d'IAM configurades"
 
+#. js-lingui-id: LlQirF
+#: src/modules/settings/admin-panel/ai/components/SettingsAdminAiProviderListCard.tsx
+msgid "IAM role"
+msgstr ""
+
+#. js-lingui-id: VjDLrJ
+#: src/pages/settings/admin-panel/SettingsAdminAiProviderDetail.tsx
+msgid "IAM role (instance profile)"
+msgstr ""
+
 #. js-lingui-id: wwu18a
 #: src/modules/settings/data-model/objects/forms/components/SettingsDataModelObjectAboutForm.tsx
 msgid "Icon"
@@ -7511,6 +7412,16 @@ msgstr "Metadades XML del Proveïdor d'Identitat"
 #: src/modules/workflow/workflow-steps/workflow-actions/if-else-action/utils/getBranchLabel.ts
 msgid "if"
 msgstr "si"
+
+#. js-lingui-id: K6ChR5
+#: src/modules/settings/data-model/object-details/components/tabs/SettingsObjectSearchSection.tsx
+msgid "If disabled, use advanced search filters to find these records"
+msgstr ""
+
+#. js-lingui-id: bTDz/2
+#: src/modules/settings/admin-panel/health-status/maintenance-mode/components/SettingsAdminMaintenanceMode.tsx
+msgid "If there's no link, no button will appear."
+msgstr ""
 
 #. js-lingui-id: ZfP/Ap
 #: src/modules/object-record/record-table/empty-state/components/RecordTableEmptyStateRemote.tsx
@@ -7606,7 +7517,6 @@ msgstr "La suplantació d'identitat està deshabilitada per a aquest espai de tr
 
 #. js-lingui-id: l3s5ri
 #: src/modules/settings/accounts/components/SettingsAccountsMessageChannelDetails.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 msgid "Import"
 msgstr "Importa"
 
@@ -7624,16 +7534,6 @@ msgstr "Importa CSV"
 #: src/modules/settings/accounts/components/SettingsAccountsMessageFolderCard.tsx
 msgid "Import only selected folders/labels"
 msgstr "Importa només les carpetes/etiquetes seleccionades"
-
-#. js-lingui-id: eECp4f
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Import records"
-msgstr "Importar registres"
-
-#. js-lingui-id: ZsIcZZ
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Import workflows"
-msgstr "Importar fluxos de treball"
 
 #. js-lingui-id: wsKZ+v
 #: src/modules/spreadsheet-import/steps/components/MatchColumnsStep/components/ColumnGrid.tsx
@@ -7687,6 +7587,11 @@ msgstr "Opcions de l'habilitat inactiva"
 msgid "Inbox"
 msgstr "Bústia d'entrada"
 
+#. js-lingui-id: Wyip/m
+#: src/modules/settings/data-model/object-details/components/tabs/SettingsObjectSearchSection.tsx
+msgid "Include in default search"
+msgstr ""
+
 #. js-lingui-id: mtGDyy
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx
 msgid "Incomplete"
@@ -7733,6 +7638,11 @@ msgstr "Informació"
 #: src/modules/ai/components/ThinkingStepsDisplay.tsx
 msgid "Input"
 msgstr "Entrada"
+
+#. js-lingui-id: /OdOC/
+#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowAiAgentPromptTab.tsx
+msgid "Input (Prompt)"
+msgstr ""
 
 #. js-lingui-id: JE2tjr
 #: src/pages/settings/ai/SettingsSkillForm.tsx
@@ -7814,6 +7724,11 @@ msgstr "Instal·lant..."
 msgid "Instances"
 msgstr "Instàncies"
 
+#. js-lingui-id: tc328m
+#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowOutputSchemaBuilder.tsx
+msgid "Instruction for AI"
+msgstr ""
+
 #. js-lingui-id: NxHkkp
 #: src/pages/settings/ai/SettingsSkillForm.tsx
 msgid "Instructions"
@@ -7823,11 +7738,6 @@ msgstr "Instruccions"
 #: src/pages/settings/ai/SettingsSkillForm.tsx
 msgid "Instructions Editor"
 msgstr "Editor d'instruccions"
-
-#. js-lingui-id: g+29+d
-#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowAiAgentPromptTab.tsx
-msgid "Instructions for AI"
-msgstr "Instruccions per a la IA"
 
 #. js-lingui-id: RGm66q
 #: src/utils/title-utils.ts
@@ -8368,8 +8278,10 @@ msgid "Launch manually"
 msgstr "Llança manualment"
 
 #. js-lingui-id: rdU729
+#: src/pages/settings/data-model/SettingsObjectDetailPage.tsx
 #: src/modules/side-panel/utils/getSidePanelSubPageTitle.ts
 #: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutFieldsSettings.tsx
+#: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutFieldSettings.tsx
 #: src/modules/object-record/object-options-dropdown/components/ObjectOptionsDropdownLayoutContent.tsx
 #: src/modules/object-record/object-options-dropdown/components/ObjectOptionsDropdownCustomView.tsx
 msgid "Layout"
@@ -8387,6 +8299,7 @@ msgstr "Dissenys"
 
 #. js-lingui-id: zwWKhA
 #: src/modules/workflow/workflow-steps/workflow-actions/form-action/components/WorkflowEditActionFormBuilder.tsx
+#: src/modules/information-banner/components/maintenance/InformationBannerMaintenance.tsx
 msgid "Learn more"
 msgstr "Més informació"
 
@@ -8497,6 +8410,7 @@ msgstr "Gràfic de línies"
 
 #. js-lingui-id: yzF66j
 #: src/modules/side-panel/components/SidePanelLinkInfo.tsx
+#: src/modules/settings/admin-panel/health-status/maintenance-mode/components/SettingsAdminMaintenanceMode.tsx
 #: src/modules/navigation-menu-item/edit/side-panel/components/SidePanelNewSidebarItemMainMenu.tsx
 msgid "Link"
 msgstr "Enllaç"
@@ -8684,11 +8598,18 @@ msgid "Logged in as {impersonatedUser}"
 msgstr "Iniciat com {impersonatedUser}"
 
 #. js-lingui-id: sTlKkx
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
 msgid "logic function"
 msgstr "funció lògica"
 
+#. js-lingui-id: qqnB9E
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "logic functions"
+msgstr ""
+
 #. js-lingui-id: QTVVDd
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
 #: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
 msgid "Logic functions"
 msgstr "Funcions lògiques"
@@ -8740,9 +8661,24 @@ msgstr "bucle"
 msgid "Mail Account"
 msgstr "Compte de correu"
 
+#. js-lingui-id: 6Dd2PM
+#: src/modules/settings/admin-panel/health-status/maintenance-mode/components/SettingsAdminMaintenanceMode.tsx
+msgid "Maintenance"
+msgstr ""
+
+#. js-lingui-id: /hmUGb
+#: src/modules/settings/admin-panel/health-status/maintenance-mode/components/SettingsAdminMaintenanceMode.tsx
+msgid "Maintenance mode"
+msgstr ""
+
 #. js-lingui-id: MOLprz
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useActionRolePermissionFlagConfig.ts
 msgid "Make HTTP requests to external APIs"
+msgstr ""
+
+#. js-lingui-id: wckWOP
+#: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutFieldsSettings.tsx
+msgid "Manage"
 msgstr ""
 
 #. js-lingui-id: n0FHLv
@@ -8768,20 +8704,10 @@ msgstr "Gestiona la informació de facturació"
 msgid "Manage favorite"
 msgstr "Gestiona preferides"
 
-#. js-lingui-id: 8XlVuA
-#: src/modules/command-menu-item/record/constants/WorkspaceMembersCommandMenuItemsConfig.tsx
-msgid "Manage in settings"
-msgstr ""
-
 #. js-lingui-id: T6YjCk
 #: src/pages/settings/members/SettingsWorkspaceMembers.tsx
 msgid "Manage Members"
 msgstr "Gestionar Membres"
-
-#. js-lingui-id: 5hEFxA
-#: src/modules/command-menu-item/record/constants/WorkspaceMembersCommandMenuItemsConfig.tsx
-msgid "Manage members in settings"
-msgstr ""
 
 #. js-lingui-id: eGGH1l
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useSettingsRolePermissionFlagConfig.ts
@@ -8950,7 +8876,6 @@ msgstr "Membres - Configuració"
 
 #. js-lingui-id: UODtG8
 #: src/modules/object-record/record-merge/components/MergeRecordsFooter.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 msgid "Merge"
 msgstr "Fusionar"
 
@@ -8961,7 +8886,6 @@ msgstr "Vista prèvia de la fusió"
 
 #. js-lingui-id: Cmeamd
 #: src/modules/side-panel/hooks/useOpenMergeRecordsPageInSidePanel.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 msgid "Merge records"
 msgstr "Fusionar registres"
 
@@ -9067,6 +8991,11 @@ msgstr "Falta el permís per redactar esborranys de correu electrònic."
 msgid "Mission accomplished!"
 msgstr "Missió acomplerta!"
 
+#. js-lingui-id: scu3wk
+#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowAiAgentPromptTab.tsx
+msgid "Model"
+msgstr ""
+
 #. js-lingui-id: bC/dq9
 #. placeholder {0}: values.label.trim()
 #: src/pages/settings/admin-panel/SettingsAdminNewAiModel.tsx
@@ -9108,6 +9037,7 @@ msgstr "Models per a aquest proveïdor. Commuta per activar o desactivar."
 
 #. js-lingui-id: hty0d5
 #: src/pages/settings/profile/appearance/components/DateTimeSettingsCalendarStartDaySelect.tsx
+#: src/pages/settings/profile/appearance/components/DateTimeSettingsCalendarStartDaySelect.tsx
 msgid "Monday"
 msgstr "Dilluns"
 
@@ -9144,10 +9074,10 @@ msgstr "Mes de l'any"
 msgid "monthly"
 msgstr "mensual"
 
-#. js-lingui-id: Sew/cK
+#. js-lingui-id: +8Nek/
 #: src/modules/settings/enterprise/components/EnterprisePlanModal.tsx
-msgid "Monthly subscription"
-msgstr "Subscripció mensual"
+msgid "Monthly"
+msgstr ""
 
 #. js-lingui-id: 6jefe3
 #: src/modules/side-panel/pages/page-layout/utils/getDateGranularityPluralLabel.ts
@@ -9158,6 +9088,7 @@ msgstr ""
 #. js-lingui-id: 2FYpfJ
 #: src/pages/settings/ai/SettingsAI.tsx
 #: src/modules/ui/layout/tab-list/components/TabMoreButton.tsx
+#: src/modules/command-menu-item/server-items/display/components/CommandMenuItemMoreActionsButton.tsx
 msgid "More"
 msgstr "Més"
 
@@ -9269,7 +9200,6 @@ msgstr "mySkill"
 #: src/pages/settings/data-model/SettingsObjectFieldTable.tsx
 #: src/pages/settings/data-model/constants/SettingsObjectTableMetadata.ts
 #: src/pages/settings/applications/tabs/SettingsApplicationRegistrationGeneralTab.tsx
-#: src/pages/settings/applications/tabs/SettingsApplicationDetailAboutTab.tsx
 #: src/pages/settings/applications/components/SettingsApplicationsTable.tsx
 #: src/pages/settings/applications/components/SettingsApplicationNameDescriptionTable.tsx
 #: src/pages/settings/applications/components/SettingsApplicationDataTableRow.tsx
@@ -9281,7 +9211,7 @@ msgstr "mySkill"
 #: src/pages/settings/admin-panel/SettingsAdminAiProviderDetail.tsx
 #: src/pages/onboarding/CreateProfile.tsx
 #: src/modules/settings/workspace/components/NameField.tsx
-#: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
+#: src/modules/settings/usage/components/UsageByUserTableSection.tsx
 #: src/modules/settings/security/components/SSO/SettingsSSOIdentitiesProvidersForm.tsx
 #: src/modules/settings/security/components/SSO/SettingsSSOIdentitiesProvidersForm.tsx
 #: src/modules/settings/roles/role-permissions/permission-flags/components/SettingsRolePermissionsSettingsTableHeader.tsx
@@ -9298,6 +9228,7 @@ msgstr "mySkill"
 #: src/modules/settings/logic-functions/components/tabs/SettingsLogicFunctionTabEnvironmentVariableTableRow.tsx
 #: src/modules/settings/developers/components/SettingsApiKeysTable.tsx
 #: src/modules/settings/data-model/object-details/components/SettingsObjectRelationsTable.tsx
+#: src/modules/settings/data-model/object-details/components/tabs/SettingsObjectSearchSection.tsx
 #: src/modules/settings/data-model/new-object/components/SettingsAvailableStandardObjectsSection.tsx
 #: src/modules/settings/admin-panel/config-variables/components/SettingsAdminConfigVariablesTable.tsx
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceContent.tsx
@@ -9328,11 +9259,6 @@ msgstr "El nom no pot estar buit"
 msgid "Name in both singular (e.g., 'Invoice') and plural (e.g., 'Invoices') forms."
 msgstr "Nom tant en singular (p. ex., 'Factura') com en plural (p. ex., 'Factures')."
 
-#. js-lingui-id: 9H6m8L
-#: src/pages/settings/applications/tabs/SettingsApplicationDetailAboutTab.tsx
-msgid "Name of the application"
-msgstr "Nom de l'aplicació"
-
 #. js-lingui-id: z+6jaZ
 #: src/pages/settings/developers/api-keys/SettingsDevelopersApiKeysNew.tsx
 #: src/pages/settings/developers/api-keys/SettingsDevelopersApiKeyDetail.tsx
@@ -9349,50 +9275,25 @@ msgstr "Nom del teu espai de treball"
 msgid "Navbar"
 msgstr "Barra de navegació"
 
-#. js-lingui-id: dVQ33h
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Navigate to next dashboard"
-msgstr "Navegar al següent quadre de comandament"
+#. js-lingui-id: Vn3jYy
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+msgid "Navigation items"
+msgstr ""
 
-#. js-lingui-id: 2T8KCk
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Navigate to next record"
-msgstr "Navegar al següent registre"
-
-#. js-lingui-id: veSA19
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-msgid "Navigate to next version"
-msgstr "Navega a la versió següent"
-
-#. js-lingui-id: ZTEho+
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Navigate to next workflow"
-msgstr "Navega al següent workflow"
-
-#. js-lingui-id: /Qu2VT
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Navigate to previous dashboard"
-msgstr "Navega al quadre de comandament anterior"
-
-#. js-lingui-id: 2tw9bo
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Navigate to previous record"
-msgstr "Navega al registre anterior"
-
-#. js-lingui-id: I+Pm5V
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-msgid "Navigate to previous version"
-msgstr "Navega a la versió anterior"
-
-#. js-lingui-id: QVUN3K
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Navigate to previous workflow"
-msgstr "Navega al workflow anterior"
+#. js-lingui-id: 9o7X1c
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+msgid "Navigation items added by this app"
+msgstr ""
 
 #. js-lingui-id: FpO6v4
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
 msgid "navigation menu item"
 msgstr "element del menú de navegació"
+
+#. js-lingui-id: jRptK+
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+msgid "Navigation menu items"
+msgstr ""
 
 #. js-lingui-id: s2HXiD
 #: src/modules/navigation/components/MainNavigationDrawerTabsRow.tsx
@@ -9531,15 +9432,10 @@ msgstr "Nou Objecte"
 msgid "New Password"
 msgstr "Nova contrasenya"
 
-#. js-lingui-id: BcCzLv
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "New record"
-msgstr "Nou registre"
-
 #. js-lingui-id: gWnSyg
 #: src/pages/settings/ai/SettingsSkillForm.tsx
 #: src/pages/settings/ai/SettingsSkillForm.tsx
-#: src/pages/settings/ai/components/SettingsSkillsTable.tsx
+#: src/pages/settings/ai/components/SettingsAgentSkills.tsx
 msgid "New Skill"
 msgstr "Nova habilitat"
 
@@ -9645,6 +9541,16 @@ msgstr "No hi ha agents disponibles"
 msgid "No agents match your search"
 msgstr "Cap agent concorda amb la teva cerca"
 
+#. js-lingui-id: nPalt1
+#: src/pages/settings/ai/SettingsAIUsageUserDetail.tsx
+msgid "No AI consumption recorded for this user."
+msgstr ""
+
+#. js-lingui-id: 42kV9p
+#: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
+msgid "No AI usage data recorded yet."
+msgstr ""
+
 #. js-lingui-id: 9mx36q
 #: src/modules/settings/roles/role-assignment/components/SettingsRoleAssignmentTable.tsx
 msgid "No API keys assigned"
@@ -9679,6 +9585,11 @@ msgstr "Sense cos"
 #: src/modules/object-record/record-field/ui/form-types/components/FormCallingCodeSelectInput.tsx
 msgid "No calling code"
 msgstr "Sense prefix de trucada"
+
+#. js-lingui-id: d14J3J
+#: src/modules/ai/components/NavigationDrawerAIChatContent.tsx
+msgid "No chat"
+msgstr ""
 
 #. js-lingui-id: wgUPZ1
 #: src/pages/settings/ai/SettingsAgentTurnDetail.tsx
@@ -9717,11 +9628,6 @@ msgstr "Sense credencials"
 #: src/pages/settings/SettingsUsageUserDetail.tsx
 msgid "No credit consumption recorded for this user."
 msgstr "No s'ha registrat cap consum de crèdits per a aquest usuari."
-
-#. js-lingui-id: H7TRcV
-#: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
-msgid "No credit consumption recorded yet."
-msgstr "Encara no s'ha registrat cap consum de crèdits."
 
 #. js-lingui-id: kxH3HO
 #: src/modules/object-record/record-field/ui/form-types/components/FormCurrencyFieldInput.tsx
@@ -9779,6 +9685,11 @@ msgstr "No s'ha trobat cap {objectLabelSingular} eliminat"
 #: src/modules/object-record/record-table/empty-state/components/RecordTableEmptyStateSoftDelete.tsx
 msgid "No deleted records matching the filter criteria were found."
 msgstr "No s'han trobat registres eliminats que compleixin els criteris del filtre."
+
+#. js-lingui-id: RRRePs
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "No description available for this application"
+msgstr ""
 
 #. js-lingui-id: mINrlz
 #: src/modules/activities/emails/components/EmailsCard.tsx
@@ -9978,6 +9889,12 @@ msgstr "No s'han establert permisos per a objectes individuals."
 msgid "No record is required to trigger this workflow"
 msgstr "No es requereix cap registre per activar aquest flux de treball"
 
+#. js-lingui-id: aqUuQE
+#: src/modules/command-menu-item/server-items/edit/components/CommandMenuItemEditRecordSelectionDropdown.tsx
+#: src/modules/command-menu-item/server-items/edit/components/CommandMenuItemEditRecordSelectionDropdown.tsx
+msgid "No record selected"
+msgstr ""
+
 #. js-lingui-id: X8wJTR
 #: src/modules/object-record/record-field/ui/form-types/components/FormSingleRecordPicker.tsx
 msgid "No records"
@@ -10058,7 +9975,7 @@ msgstr "No hi ha cap activador configurat per a aquesta funció."
 
 #. js-lingui-id: WwlPOG
 #: src/pages/settings/SettingsUsageUserDetail.tsx
-#: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
+#: src/pages/settings/ai/SettingsAIUsageUserDetail.tsx
 msgid "No usage data"
 msgstr "No hi ha dades d'ús"
 
@@ -10076,6 +9993,11 @@ msgstr "No hi ha variables disponibles"
 #: src/modules/settings/admin-panel/config-variables/components/SettingsAdminConfigVariables.tsx
 msgid "No variables found"
 msgstr "No s'han trobat variables"
+
+#. js-lingui-id: OCektF
+#: src/pages/settings/applications/tabs/SettingsApplicationDetailEnvironmentVariablesTable.tsx
+msgid "No variables to set for this application"
+msgstr ""
 
 #. js-lingui-id: 0uWxPM
 #: src/modules/object-record/record-table/empty-state/utils/getEmptyStateTitle.ts
@@ -10174,7 +10096,6 @@ msgstr "Nota"
 
 #. js-lingui-id: 1DBGsz
 #: src/modules/page-layout/constants/StandardPageLayoutTabTitleTranslations.ts
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 msgid "Notes"
 msgstr "Notes"
 
@@ -10183,6 +10104,11 @@ msgstr "Notes"
 #: src/utils/date-utils.ts
 msgid "now"
 msgstr "ara"
+
+#. js-lingui-id: OduKuG
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "Npm package"
+msgstr ""
 
 #. js-lingui-id: VVexZo
 #: src/modules/advanced-text-editor/extensions/slash-command/DefaultSlashCommands.ts
@@ -10243,12 +10169,8 @@ msgstr "OAuth"
 msgid "OAuth Credentials"
 msgstr "Credencials d'OAuth"
 
-#. js-lingui-id: LNLTJB
-#: src/pages/settings/ai/components/SettingsAIMCP.tsx
-msgid "OAuth or API Key"
-msgstr "OAuth o clau de l'API"
-
 #. js-lingui-id: pNEViR
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
 msgid "object"
 msgstr "objecte"
@@ -10263,6 +10185,7 @@ msgstr "objecte"
 #: src/modules/workflow/workflow-steps/workflow-actions/components/WorkflowEditActionCreateRecord.tsx
 #: src/modules/side-panel/pages/root/components/SidePanelRootPage.tsx
 #: src/modules/side-panel/components/SidePanelObjectViewRecordInfo.tsx
+#: src/modules/side-panel/components/SidePanelObjectFilterDropdownContent.tsx
 #: src/modules/settings/developers/components/WebhookEntitySelect.tsx
 #: src/modules/navigation-menu-item/edit/side-panel/components/SidePanelNewSidebarItemMainMenu.tsx
 msgid "Object"
@@ -10287,6 +10210,11 @@ msgstr "Esdeveniments de l'objecte"
 #: src/pages/settings/security/event-logs/components/EventLogResultsTable.tsx
 msgid "Object ID"
 msgstr "ID de l'objecte"
+
+#. js-lingui-id: PezPrT
+#: src/modules/object-record/record-index/components/RecordIndexEmptyStateNotShared.tsx
+msgid "Object not shared"
+msgstr ""
 
 #. js-lingui-id: wZpAXW
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
@@ -10474,6 +10402,7 @@ msgid "Only the timestamp & participants will be shared with your team."
 msgstr "Només la marca de temps i els participants seran compartits amb el teu equip."
 
 #. js-lingui-id: 1TNIig
+#: src/pages/settings/members/SettingsWorkspaceMembers.tsx
 #: src/modules/settings/data-model/objects/forms/components/SettingsDataModelObjectAboutForm.tsx
 #: src/modules/command-menu-item/components/RecordShowSidePanelOpenRecordButton.tsx
 msgid "Open"
@@ -10507,6 +10436,7 @@ msgstr "Obrir en Outlook"
 
 #. js-lingui-id: bY2Xkv
 #: src/modules/ui/layout/page-header/components/PageHeaderToggleSidePanelButton.tsx
+#: src/modules/command-menu-item/server-items/display/components/CommandMenuItemMoreActionsButton.tsx
 msgid "Open side panel"
 msgstr "Obre el panell lateral"
 
@@ -10519,11 +10449,6 @@ msgstr "Obert"
 #: src/modules/settings/admin-panel/health-status/components/SettingsAdminHealthStatusRightContainer.tsx
 msgid "Operational"
 msgstr "Operatiu"
-
-#. js-lingui-id: 4MyDFl
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Opportunities"
-msgstr "Oportunitats"
 
 #. js-lingui-id: lVa1Xn
 #: src/modules/settings/data-model/fields/forms/select/hooks/useSelectSettingsFormInitialValues.ts
@@ -10604,6 +10529,8 @@ msgstr "Organitza"
 #: src/modules/page-layout/widgets/fields/hooks/useFieldsWidgetGroups.ts
 #: src/modules/navigation-menu-item/edit/side-panel/components/SidePanelNewSidebarItemMainMenu.tsx
 #: src/modules/navigation/components/NavigationDrawerOtherSection.tsx
+#: src/modules/command-menu-item/server-items/edit/components/SidePanelCommandMenuItemEditPage.tsx
+#: src/modules/command-menu-item/server-items/display/components/SidePanelCommandMenuItemDisplayPage.tsx
 msgid "Other"
 msgstr "Altres"
 
@@ -10645,6 +10572,7 @@ msgstr "Interrupció"
 
 #. js-lingui-id: gh06VD
 #: src/pages/settings/admin-panel/SettingsAdminNewAiModel.tsx
+#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowOutputSchemaBuilder.tsx
 #: src/modules/workflow/components/WorkflowStepExecutionResult.tsx
 #: src/modules/side-panel/pages/workflow/step/view-run/components/SidePanelWorkflowRunViewStepContent.tsx
 #: src/modules/logic-functions/components/LogicFunctionExecutionResult.tsx
@@ -10654,11 +10582,6 @@ msgstr "Interrupció"
 #: src/modules/ai/components/CodeExecutionDisplay.tsx
 msgid "Output"
 msgstr "Sortida"
-
-#. js-lingui-id: xvfn7l
-#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowOutputSchemaBuilder.tsx
-msgid "Output Field {fieldNumber}"
-msgstr "Camp de sortida {fieldNumber}"
 
 #. js-lingui-id: i1+tKD
 #: src/modules/ai/components/internal/AIChatContextUsageButton.tsx
@@ -10715,6 +10638,17 @@ msgstr "pestanya de disseny de pàgina"
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
 msgid "page layout widget"
 msgstr "giny de disseny de pàgina"
+
+#. js-lingui-id: ckYXHz
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+msgid "Page layouts"
+msgstr ""
+
+#. js-lingui-id: gUojnO
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+msgid "Page layouts defined by this app"
+msgstr ""
 
 #. js-lingui-id: IVBjIH
 #: src/pages/settings/security/event-logs/components/EventLogFilters.tsx
@@ -10808,7 +10742,6 @@ msgid "Pending"
 msgstr "Pendent"
 
 #. js-lingui-id: 1wdjme
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 #: src/modules/command-menu-item/mock/command-menu-items.mock.tsx
 msgid "People"
 msgstr "Persones"
@@ -10822,6 +10755,11 @@ msgstr "Persones a qui he enviat correus electrònics i de qui n'he rebut."
 #: src/modules/settings/accounts/components/SettingsAccountsMessageAutoCreationCard.tsx
 msgid "People I’ve sent emails to."
 msgstr "Persones a qui he enviat correus electrònics."
+
+#. js-lingui-id: qMTN0w
+#: src/pages/settings/ai/SettingsAIUsageUserDetail.tsx
+msgid "Per-day AI consumption."
+msgstr ""
 
 #. js-lingui-id: i9iYjM
 #: src/pages/settings/SettingsUsageUserDetail.tsx
@@ -10862,49 +10800,15 @@ msgstr ""
 msgid "Permanent deletion. Enter the number of days."
 msgstr "Eliminació permanent. Introduïu el nombre de dies."
 
-#. js-lingui-id: rDky0a
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Permanently destroy dashboard"
-msgstr "Destruir permanentment el quadre de comandament"
+#. js-lingui-id: EPkrPQ
+#: src/modules/command-menu-item/engine-command/record/components/DestroyRecordsCommand.tsx
+msgid "Permanently Destroy"
+msgstr ""
 
-#. js-lingui-id: n7S2Oo
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Permanently destroy dashboards"
-msgstr "Destruir permanentment quadres de comandament"
-
-#. js-lingui-id: Bv3y5w
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Permanently destroy record"
-msgstr "Destruir permanentment el registre"
-
-#. js-lingui-id: 35dBYb
-#: src/modules/command-menu-item/record/single-record/components/DestroySingleRecordCommand.tsx
-#: src/modules/command-menu-item/record/single-record/components/DestroySingleRecordCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/single-record/components/DestroySingleRecordCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/single-record/components/DestroySingleRecordCommand.tsx
-msgid "Permanently Destroy Record"
-msgstr "Destruir permanentment el registre"
-
-#. js-lingui-id: xjWlSJ
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Permanently destroy records"
-msgstr "Destruir permanentment els registres"
-
-#. js-lingui-id: YyP8vD
-#: src/modules/command-menu-item/record/multiple-records/components/DestroyMultipleRecordsCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/multiple-records/components/DestroyMultipleRecordsCommand.tsx
-msgid "Permanently Destroy Records"
-msgstr "Destruir permanentment registres"
-
-#. js-lingui-id: 0bQ5ba
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Permanently destroy workflow"
-msgstr "Destruir permanentment el flux de treball"
-
-#. js-lingui-id: uKWXhB
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Permanently destroy workflows"
-msgstr "Destruir permanentment els workflows"
+#. js-lingui-id: 64gHBj
+#: src/modules/command-menu-item/engine-command/record/components/DestroyRecordsCommand.tsx
+msgid "Permanently Destroy {objectLabel}"
+msgstr ""
 
 #. js-lingui-id: yWmZKk
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
@@ -10978,6 +10882,12 @@ msgstr "Gràfic circular"
 msgid "Pink"
 msgstr "Rosa"
 
+#. js-lingui-id: kNiQp6
+#: src/modules/command-menu-item/server-items/edit/components/SidePanelCommandMenuItemEditPage.tsx
+#: src/modules/command-menu-item/server-items/display/components/SidePanelCommandMenuItemDisplayPage.tsx
+msgid "Pinned"
+msgstr ""
+
 #. js-lingui-id: hx1ePY
 #: src/modules/workflow/workflow-steps/workflow-actions/form-action/components/WorkflowFormFieldSettingsText.tsx
 #: src/modules/workflow/workflow-steps/workflow-actions/form-action/components/WorkflowFormFieldSettingsNumber.tsx
@@ -10998,6 +10908,12 @@ msgstr "Pla"
 #: src/modules/settings/billing/components/SettingsBillingSubscriptionInfo.tsx
 msgid "Plan switching has been cancelled."
 msgstr "El canvi de pla ha estat cancel·lat."
+
+#. js-lingui-id: QLv09h
+#: src/modules/settings/admin-panel/health-status/maintenance-mode/components/SettingsAdminMaintenanceMode.tsx
+#: src/modules/settings/admin-panel/health-status/maintenance-mode/components/SettingsAdminMaintenanceMode.tsx
+msgid "Planned for {formattedStartDate}"
+msgstr ""
 
 #. js-lingui-id: VUi6Nf
 #: src/modules/workflow/workflow-trigger/components/CronExpressionHelper.tsx
@@ -11145,11 +11061,6 @@ msgstr "Vista prèvia no disponible"
 msgid "Previous"
 msgstr "Anterior"
 
-#. js-lingui-id: 2WAUd8
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
-msgid "Previous AI Chats"
-msgstr "Xats d'IA anteriors"
-
 #. js-lingui-id: jmc+FY
 #: src/modules/settings/billing/components/internal/MeteredPriceSelector.tsx
 msgid "Price updated."
@@ -11282,7 +11193,6 @@ msgid "Provider \"{0}\" removed"
 msgstr "S'ha eliminat el proveïdor \"{0}\""
 
 #. js-lingui-id: jerYcl
-#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
 msgid "Providers"
 msgstr "Proveïdors"
@@ -11398,6 +11308,22 @@ msgstr "Consulta el registre de canvis"
 msgid "Read documentation"
 msgstr "Llegeix la documentació"
 
+#. js-lingui-id: U26cMX
+#: src/pages/settings/ai/components/SettingsAIMoreTab.tsx
+msgid "Read system prompts"
+msgstr ""
+
+#. js-lingui-id: EKsFda
+#: src/pages/settings/ai/components/SettingsAIMoreTab.tsx
+msgid "Read the system prompts to understand how the AI works"
+msgstr ""
+
+#. js-lingui-id: 0URVx8
+#. placeholder {0}: formatNumber( systemPromptTokenCount, { abbreviate: true, decimals: 1, }, )
+#: src/pages/settings/ai/components/SettingsAIMoreTab.tsx
+msgid "Read the system prompts to understand how the AI works (~{0} tokens)"
+msgstr ""
+
 #. js-lingui-id: afMuDE
 #: src/pages/auth/Authorize.tsx
 msgid "Read your profile"
@@ -11450,6 +11376,7 @@ msgstr "registre"
 #: src/modules/workflow/workflow-steps/workflow-actions/components/WorkflowEditActionUpdateRecord.tsx
 #: src/modules/workflow/workflow-steps/workflow-actions/components/WorkflowEditActionDeleteRecord.tsx
 #: src/modules/navigation-menu-item/edit/side-panel/components/SidePanelNewSidebarItemMainMenu.tsx
+#: src/modules/navigation-menu-item/display/object/components/NavigationDrawerItemForObjectMetadataItem.tsx
 msgid "Record"
 msgstr "Registre"
 
@@ -11523,6 +11450,12 @@ msgstr "Nivell de registre"
 #: src/modules/settings/roles/role-permissions/object-level-permissions/components/SettingsRolePermissionsObjectLevelTableHeader.tsx
 msgid "Records"
 msgstr "Registres"
+
+#. js-lingui-id: J+Qyf2
+#: src/modules/command-menu-item/server-items/edit/components/CommandMenuItemEditRecordSelectionDropdown.tsx
+#: src/modules/command-menu-item/server-items/edit/components/CommandMenuItemEditRecordSelectionDropdown.tsx
+msgid "Records selected"
+msgstr ""
 
 #. js-lingui-id: wRTiSD
 #: src/modules/settings/data-model/fields/forms/select/components/SettingsDataModelFieldSelectFormOptionRow.tsx
@@ -11681,12 +11614,6 @@ msgstr "Elimina com a predeterminat"
 msgid "Remove Deleted filter"
 msgstr "Elimina filtre Eliminat"
 
-#. js-lingui-id: T/pF0Z
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Remove from favorites"
-msgstr "Elimina dels preferits"
-
 #. js-lingui-id: 9VZ6f0
 #: src/modules/navigation-menu-item/edit/side-panel/components/SidePanelEditOrganizeActions.tsx
 msgid "Remove from sidebar"
@@ -11788,6 +11715,11 @@ msgstr "Respon"
 msgid "Reply to all"
 msgstr "Respon a tots"
 
+#. js-lingui-id: tbmZmI
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "Report and issue"
+msgstr ""
+
 #. js-lingui-id: /laZGZ
 #: src/modules/workflow/workflow-steps/workflow-actions/http-request-action/components/HttpRequestExecutionResult.tsx
 msgid "Request Failed"
@@ -11816,6 +11748,11 @@ msgstr "Restableix"
 msgid "Reset 2FA"
 msgstr "Reinicia 2FA"
 
+#. js-lingui-id: YdI8A2
+#: src/modules/command-menu-item/server-items/edit/components/CommandMenuItemOptionsDropdown.tsx
+msgid "Reset label to default"
+msgstr ""
+
 #. js-lingui-id: 1IWc1n
 #: src/modules/side-panel/pages/root/components/SidePanelResetContextToSelectionButton.tsx
 msgid "Reset to"
@@ -11823,6 +11760,7 @@ msgstr "Reinicia a"
 
 #. js-lingui-id: L+rMC9
 #: src/modules/settings/data-model/fields/forms/address/components/SettingsDataModelFieldAddressForm.tsx
+#: src/modules/command-menu-item/server-items/edit/components/SidePanelCommandMenuItemEditPage.tsx
 msgid "Reset to default"
 msgstr "Restableix a predeterminat"
 
@@ -11880,46 +11818,13 @@ msgstr "restaura"
 
 #. js-lingui-id: yKu/3Y
 #: src/modules/information-banner/components/deleted-record/InformationBannerDeletedRecord.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 msgid "Restore"
 msgstr "Restaura"
 
-#. js-lingui-id: XRAM5d
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Restore dashboard"
-msgstr "Restaura el quadre de comandament"
-
-#. js-lingui-id: jC7v7d
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Restore dashboards"
-msgstr "Restaura els quadres de comandament"
-
-#. js-lingui-id: y4Ib1n
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Restore record"
-msgstr "Restaura el registre"
-
-#. js-lingui-id: NzMNOA
-#: src/modules/command-menu-item/record/single-record/components/RestoreSingleRecordCommand.tsx
-#: src/modules/command-menu-item/record/single-record/components/RestoreSingleRecordCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/single-record/components/RestoreSingleRecordCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/single-record/components/RestoreSingleRecordCommand.tsx
-msgid "Restore Record"
-msgstr "Restaura el Registre"
-
-#. js-lingui-id: Vw369F
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "Restore records"
-msgstr "Restaurar registres"
-
-#. js-lingui-id: Xqj0Cb
-#: src/modules/command-menu-item/record/multiple-records/components/RestoreMultipleRecordsCommand.tsx
-#: src/modules/command-menu-item/record/multiple-records/components/RestoreMultipleRecordsCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/multiple-records/components/RestoreMultipleRecordsCommand.tsx
-#: src/modules/command-menu-item/engine-command/record/multiple-records/components/RestoreMultipleRecordsCommand.tsx
-msgid "Restore Records"
-msgstr "Restaura Registres"
+#. js-lingui-id: 8KyDbM
+#: src/modules/command-menu-item/engine-command/record/components/RestoreRecordsCommand.tsx
+msgid "Restore {objectLabel}"
+msgstr ""
 
 #. js-lingui-id: hO3AfV
 #: src/pages/settings/ai/components/SettingsAIModelsTab.tsx
@@ -11945,7 +11850,6 @@ msgstr "Reprendre"
 #. js-lingui-id: 6gRgw8
 #: src/modules/settings/admin-panel/health-status/components/SettingsAdminRetryJobsConfirmationModal.tsx
 #: src/modules/settings/admin-panel/health-status/components/SettingsAdminQueueJobRowDropdownMenu.tsx
-#: src/modules/ai/components/AIChatErrorMessage.tsx
 msgid "Retry"
 msgstr "Reintentar"
 
@@ -11978,6 +11882,7 @@ msgid "Rich Text"
 msgstr "Text enriquit"
 
 #. js-lingui-id: E1BXUR
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
 msgid "role"
 msgstr "rol"
@@ -12020,8 +11925,15 @@ msgstr ""
 msgid "Role updated successfully"
 msgstr "El rol s'ha actualitzat correctament"
 
+#. js-lingui-id: i9AFmv
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "roles"
+msgstr ""
+
 #. js-lingui-id: 5dJK4M
 #: src/pages/settings/roles/SettingsRoleAddObjectLevel.tsx
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useSettingsRolePermissionFlagConfig.ts
 #: src/modules/settings/roles/role-permissions/object-level-permissions/object-form/components/SettingsRolePermissionsObjectLevelObjectForm.tsx
 #: src/modules/settings/roles/role/components/SettingsRole.tsx
@@ -12030,6 +11942,11 @@ msgstr "El rol s'ha actualitzat correctament"
 #: src/modules/settings/hooks/useSettingsNavigationItems.tsx
 msgid "Roles"
 msgstr "Rols"
+
+#. js-lingui-id: ys6cUp
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+msgid "Roles defined by this app"
+msgstr ""
 
 #. js-lingui-id: Qz0FZ3
 #: src/modules/settings/billing/components/SettingsBillingCreditsSection.tsx
@@ -12124,6 +12041,7 @@ msgstr "Rus"
 
 #. js-lingui-id: +5kO8P
 #: src/pages/settings/profile/appearance/components/DateTimeSettingsCalendarStartDaySelect.tsx
+#: src/pages/settings/profile/appearance/components/DateTimeSettingsCalendarStartDaySelect.tsx
 msgid "Saturday"
 msgstr "Dissabte"
 
@@ -12131,7 +12049,6 @@ msgstr "Dissabte"
 #: src/pages/settings/applications/tabs/SettingsApplicationRegistrationOAuthTab.tsx
 #: src/modules/settings/components/SaveAndCancelButtons/SaveButton.tsx
 #: src/modules/settings/admin-panel/config-variables/components/ConfigVariableActionButtons.tsx
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
 msgid "Save"
 msgstr "Desa"
 
@@ -12139,11 +12056,6 @@ msgstr "Desa"
 #: src/modules/views/components/UpdateViewButtonGroup.tsx
 msgid "Save as new view"
 msgstr "Desa com a nova vista"
-
-#. js-lingui-id: 7GK4Vt
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "Save Dashboard"
-msgstr "Desa el quadre de comandament"
 
 #. js-lingui-id: veLq3R
 #: src/pages/settings/applications/tabs/SettingsApplicationsDeveloperTab.tsx
@@ -12154,6 +12066,16 @@ msgstr "Genera l'esquelet d'una aplicació nova, després utilitza la CLI per de
 #: src/modules/workflow/workflow-trigger/components/CronExpressionHelper.tsx
 msgid "Schedule"
 msgstr "Horari"
+
+#. js-lingui-id: Ys/D8h
+#: src/modules/settings/admin-panel/health-status/maintenance-mode/components/SettingsAdminMaintenanceMode.tsx
+msgid "Schedule a maintenance window and notify all users"
+msgstr ""
+
+#. js-lingui-id: f5yMQc
+#: src/modules/information-banner/components/maintenance/InformationBannerMaintenance.tsx
+msgid "Scheduled maintenance: {startFormatted} — {endFormatted}"
+msgstr ""
 
 #. js-lingui-id: QJ8HBJ
 #: src/modules/settings/playground/components/PlaygroundSetupForm.tsx
@@ -12189,11 +12111,8 @@ msgstr "SDK"
 #: src/modules/sign-in-background-mock/components/SignInAppNavigationDrawerMock.tsx
 #: src/modules/side-panel/hooks/useOpenRecordsSearchPageInSidePanel.ts
 #: src/modules/settings/roles/role-assignment/components/SettingsRoleAssignmentWorkspaceMemberPickerDropdown.tsx
+#: src/modules/settings/data-model/object-details/components/tabs/ObjectSettings.tsx
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
 #: src/modules/command-menu-item/engine-command/constants/EngineComponentKeyHeadlessComponentMap.tsx
 #: src/modules/command-menu-item/engine-command/constants/EngineComponentKeyHeadlessComponentMap.tsx
 msgid "Search"
@@ -12248,7 +12167,7 @@ msgid "Search a role..."
 msgstr "Cerca un rol..."
 
 #. js-lingui-id: lJNEce
-#: src/pages/settings/ai/components/SettingsSkillsTable.tsx
+#: src/pages/settings/ai/components/SettingsAgentSkills.tsx
 msgid "Search a skill..."
 msgstr "Cerca una habilitat..."
 
@@ -12272,6 +12191,11 @@ msgstr "Cerca un tipus"
 #: src/modules/navigation-menu-item/edit/side-panel/components/SidePanelNewSidebarItemViewPickerSubView.tsx
 msgid "Search a view..."
 msgstr "Cerca una vista..."
+
+#. js-lingui-id: N7Z3jc
+#: src/modules/settings/data-model/object-details/components/tabs/SettingsObjectSearchSection.tsx
+msgid "Search across indexed fields..."
+msgstr ""
 
 #. js-lingui-id: +7s4fw
 #: src/modules/settings/roles/role-assignment/components/SettingsRoleAssignmentEntityPickerDropdown.tsx
@@ -12353,6 +12277,7 @@ msgstr "Cerca moneda"
 #. js-lingui-id: 7taA9j
 #: src/modules/views/components/ViewBarFilterDropdownFieldSelectMenu.tsx
 #: src/modules/spreadsheet-import/components/MatchColumnSelectFieldSelectDropdownContent.tsx
+#: src/modules/side-panel/pages/page-layout/components/dropdown-content/FieldWidgetFieldDropdownContent.tsx
 #: src/modules/side-panel/pages/page-layout/components/dropdown-content/ChartGroupByFieldSelectionRelationFieldView.tsx
 #: src/modules/side-panel/pages/page-layout/components/dropdown-content/ChartGroupByFieldSelectionDropdownContentBase.tsx
 #: src/modules/side-panel/pages/page-layout/components/dropdown-content/ChartFieldSelectionForAggregateOperationDropdownContent.tsx
@@ -12369,7 +12294,7 @@ msgid "Search folders..."
 msgstr "Cerca carpetes..."
 
 #. js-lingui-id: uHAV+O
-#: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
+#: src/modules/settings/usage/components/UsageByUserTableSection.tsx
 msgid "Search for a user..."
 msgstr "Cerca un usuari..."
 
@@ -12398,12 +12323,6 @@ msgstr "Cerca operacions"
 #: src/modules/side-panel/pages/page-layout/components/dropdown-content/ChartRatioOptionValueSelectionDropdownContent.tsx
 msgid "Search options"
 msgstr "Opcions de cerca"
-
-#. js-lingui-id: IMeaSJ
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
-msgid "Search records"
-msgstr "Cerca enregistraments"
 
 #. js-lingui-id: rRklUH
 #: src/modules/navigation-menu-item/edit/side-panel/components/SidePanelNewSidebarItemRecordSubPage.tsx
@@ -12441,6 +12360,8 @@ msgid "Searching the web for {query}"
 msgstr "Cercant {query} al web"
 
 #. js-lingui-id: 8sgZS9
+#: src/modules/settings/enterprise/components/EnterprisePlanModal.tsx
+#: src/modules/settings/enterprise/components/EnterprisePlanModal.tsx
 #: src/modules/settings/enterprise/components/EnterprisePlanModal.tsx
 #: src/modules/settings/billing/components/SubscriptionPrice.tsx
 msgid "seat / month"
@@ -12512,97 +12433,31 @@ msgstr "Veure"
 msgid "See {objectLabelPlural}"
 msgstr "Veure {objectLabelPlural}"
 
-#. js-lingui-id: QREcJS
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "See active version"
-msgstr "Veure la versió activa"
-
 #. js-lingui-id: R+sqCn
 #: src/modules/page-layout/widgets/components/WidgetActionFieldSeeAll.tsx
 msgid "See all {relationLabelPlural} linked to this record"
 msgstr "Mostra tots els {relationLabelPlural} vinculats a aquest registre"
 
-#. js-lingui-id: f4Lu+X
-#: src/modules/command-menu-item/record/constants/DashboardCommandMenuItemsConfig.tsx
-msgid "See deleted dashboards"
-msgstr "Mostra quadres de comandament suprimits"
-
-#. js-lingui-id: 8O9AJI
-#: src/modules/command-menu-item/record/constants/WorkspaceMembersCommandMenuItemsConfig.tsx
-msgid "See deleted members"
+#. js-lingui-id: sFsCOG
+#: src/pages/settings/members/SettingsWorkspaceMembers.tsx
+msgid "See data model settings"
 msgstr ""
-
-#. js-lingui-id: BxIUpp
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "See deleted records"
-msgstr "Veure els registres suprimits"
-
-#. js-lingui-id: Z+SGGW
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-msgid "See deleted runs"
-msgstr "Veure execucions eliminades"
-
-#. js-lingui-id: 5jZIe5
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "See deleted workflows"
-msgstr "Veure fluxos de treball eliminats"
 
 #. js-lingui-id: oGROXc
 #: src/modules/settings/roles/role-permissions/object-level-permissions/components/SettingsRolePermissionsObjectLevelTableHeader.tsx
 msgid "See Fields"
 msgstr "Veure camps"
 
+#. js-lingui-id: vn4aKq
+#: src/pages/settings/members/SettingsWorkspaceMembers.tsx
+#: src/pages/settings/data-model/SettingsObjectDetailPage.tsx
+msgid "See records"
+msgstr ""
+
 #. js-lingui-id: irbH/8
 #: src/modules/settings/roles/role-permissions/objects-permissions/components/SettingsRolePermissionsObjectsSection.tsx
 msgid "See Records on All Objects"
 msgstr "Veure registres de tots els objectes"
-
-#. js-lingui-id: OpPn5Z
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "See runs"
-msgstr "Veure les execucions"
-
-#. js-lingui-id: gGEfj/
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-msgid "See version"
-msgstr "Veure la versió"
-
-#. js-lingui-id: EtyY4+
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "See versions"
-msgstr "Veure les versions"
-
-#. js-lingui-id: lYhPN0
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "See versions history"
-msgstr "Veure l'historial de versions"
-
-#. js-lingui-id: qEKLJV
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-msgid "See workflow"
-msgstr "Veure el flux de treball"
-
-#. js-lingui-id: MVYiTN
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
-msgid "See Workflows"
-msgstr "Veure els fluxos de treball"
-
-#. js-lingui-id: 2PIP/G
-#: src/modules/ai/components/suggested-prompts/default-suggested-prompts.ts
-msgid "Seed a demo workspace using the dedicated tool, ask me questions about my activity and goals to tailor the seeded data to my needs, and then help me explore the workspace and data you created."
-msgstr "Omple de dades de mostra un espai de treball de demostració amb l'eina dedicada, fes-me preguntes sobre la meva activitat i els meus objectius per adaptar les dades generades a les meves necessitats i, després, ajuda'm a explorar l'espai de treball i les dades que has creat."
 
 #. js-lingui-id: rG3WVm
 #: src/modules/spreadsheet-import/steps/components/ValidationStep/components/columns.tsx
@@ -12686,7 +12541,7 @@ msgid "Select column..."
 msgstr "Selecciona columna..."
 
 #. js-lingui-id: U+WOF9
-#: src/pages/settings/security/event-logs/components/EventLogDatePickerInput.tsx
+#: src/modules/settings/components/SettingsDatePickerInput.tsx
 msgid "Select date & time"
 msgstr "Selecciona data i hora"
 
@@ -12948,7 +12803,6 @@ msgstr "Configurant la teva base de dades..."
 #: src/modules/settings/accounts/components/SettingsAccountsSettingsSection.tsx
 #: src/modules/object-record/record-merge/hooks/useMergeRecordsContainerTabs.ts
 #: src/modules/navigation/components/NavigationDrawerOtherSection.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 msgid "Settings"
 msgstr "Configuració"
 
@@ -12961,16 +12815,6 @@ msgstr "Configuració amb Accés complet"
 #: src/modules/settings/roles/role-permissions/permission-flags/components/SettingsRolePermissionsSettingsSection.tsx
 msgid "Settings permissions"
 msgstr "Permisos de configuració"
-
-#. js-lingui-id: rl/5Qa
-#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
-msgid "Settings tab"
-msgstr "Pestanya de configuració"
-
-#. js-lingui-id: dIJGKR
-#: src/modules/ai/components/suggested-prompts/default-suggested-prompts.ts
-msgid "Setup a tailor-made workspace"
-msgstr "Configura un espai de treball a mida"
 
 #. js-lingui-id: Ue7X/E
 #: src/modules/settings/accounts/components/SettingsAccountsConnectedAccountsRowRightContainer.tsx
@@ -12999,14 +12843,25 @@ msgid "Seventh"
 msgstr "Setè"
 
 #. js-lingui-id: Z8lGw6
+#: src/pages/settings/applications/tabs/SettingsApplicationRegistrationDistributionTab.tsx
 #: src/modules/activities/emails/components/EmailThreadBottomBar.tsx
 msgid "Share"
 msgstr "Compartir"
+
+#. js-lingui-id: BkgQSO
+#: src/pages/settings/applications/tabs/SettingsApplicationRegistrationDistributionTab.tsx
+msgid "Share link copied to clipboard"
+msgstr ""
 
 #. js-lingui-id: Vy9kmk
 #: src/pages/settings/members/SettingsWorkspaceMembers.tsx
 msgid "Share this link to invite users to join your workspace"
 msgstr "Compartiu aquest enllaç per convidar usuaris a unir-se al vostre espai de treball"
+
+#. js-lingui-id: 69MEsn
+#: src/pages/settings/applications/tabs/SettingsApplicationRegistrationDistributionTab.tsx
+msgid "Share this link with other workspaces on this server to let them install this application."
+msgstr ""
 
 #. js-lingui-id: RRXpo1
 #: src/modules/settings/data-model/fields/forms/number/constants/NumberDataModelSelectOptions.ts
@@ -13043,6 +12898,11 @@ msgstr "Mostra el grup {groupValue}"
 msgid "Show hidden groups"
 msgstr "Mostra grups ocults"
 
+#. js-lingui-id: eOY8jq
+#: src/modules/side-panel/components/SidePanelObjectFilterDropdownContent.tsx
+msgid "Show hidden objects"
+msgstr ""
+
 #. js-lingui-id: qi+g0a
 #: src/modules/spreadsheet-import/steps/components/ValidationStep/ValidationStep.tsx
 msgid "Show only rows with errors"
@@ -13073,6 +12933,11 @@ msgstr "Inicia sessió o crea un compte"
 #: src/modules/auth/sign-in-up/components/internal/SignInUpWithCredentials.tsx
 msgid "Sign up"
 msgstr "Registrar-se"
+
+#. js-lingui-id: mHC57v
+#: src/modules/auth/sign-in-up/components/internal/SignInUpWithCredentials.tsx
+msgid "Sign-up is temporarily unavailable during maintenance."
+msgstr ""
 
 #. js-lingui-id: BZdVGR
 #: src/modules/settings/data-model/fields/forms/select/components/SettingsDataModelFieldSelectForm.tsx
@@ -13110,6 +12975,7 @@ msgid "sk-..."
 msgstr "sk-..."
 
 #. js-lingui-id: vJRTzI
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 #: src/modules/metadata-error-handler/hooks/useMetadataErrorHandler.ts
 msgid "skill"
 msgstr "habilitat"
@@ -13122,12 +12988,12 @@ msgid "Skill"
 msgstr "Habilitat"
 
 #. js-lingui-id: h4t38o
-#: src/pages/settings/ai/components/SettingsSkillsTable.tsx
+#: src/pages/settings/ai/components/SettingsAgentSkills.tsx
 msgid "Skill activated"
 msgstr "Habilitat activada"
 
 #. js-lingui-id: /IoK74
-#: src/pages/settings/ai/components/SettingsSkillsTable.tsx
+#: src/pages/settings/ai/components/SettingsAgentSkills.tsx
 msgid "Skill deleted"
 msgstr "Habilitat suprimida"
 
@@ -13142,10 +13008,23 @@ msgstr "Nom de l'habilitat"
 msgid "Skill not found"
 msgstr "Habilitat no trobada"
 
+#. js-lingui-id: gPdJ1+
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "skills"
+msgstr ""
+
 #. js-lingui-id: PCSkw2
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
 #: src/pages/settings/ai/SettingsAI.tsx
+#: src/pages/settings/ai/components/SettingsAgentSkills.tsx
 msgid "Skills"
 msgstr "Habilitats"
+
+#. js-lingui-id: B3q6I4
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+msgid "Skills provided by this app"
+msgstr ""
 
 #. js-lingui-id: 6Uau97
 #: src/pages/onboarding/InviteTeam.tsx
@@ -13273,6 +13152,11 @@ msgstr "Ordenar per"
 msgid "Sort By Group"
 msgstr "Ordena per grup"
 
+#. js-lingui-id: fLIwZB
+#: src/modules/object-record/record-index/utils/getNonReadableViewFieldSubTitle.ts
+msgid "sorting"
+msgstr ""
+
 #. js-lingui-id: 0pWTum
 #: src/modules/side-panel/utils/getSidePanelSubPageTitle.ts
 #: src/modules/side-panel/pages/page-layout/components/record-table-settings/RecordTableSettingsSorts.tsx
@@ -13289,10 +13173,10 @@ msgstr "Criteris d'ordenació"
 msgid "Source"
 msgstr "Font"
 
-#. js-lingui-id: IEtmGM
+#. js-lingui-id: xqlr9R
 #: src/modules/settings/experience/components/NumberFormatSelect.tsx
-msgid "Spaces and comma - {spacesAndCommaExample}"
-msgstr "Espais i coma - {spacesAndCommaExample}"
+msgid "Spaces and comma"
+msgstr ""
 
 #. js-lingui-id: 65A04M
 #: src/pages/settings/profile/appearance/components/LocalePicker.tsx
@@ -13369,6 +13253,11 @@ msgstr "Inicieu una nova subscripció Enterprise per tornar a habilitar les func
 msgid "Start a new enterprise subscription."
 msgstr "Inicieu una nova subscripció Enterprise."
 
+#. js-lingui-id: WAjFYI
+#: src/modules/settings/admin-panel/health-status/maintenance-mode/components/SettingsAdminMaintenanceMode.tsx
+msgid "Start date"
+msgstr ""
+
 #. js-lingui-id: D3iCkb
 #: src/pages/settings/security/event-logs/components/EventLogFilters.tsx
 msgid "Start Date"
@@ -13415,12 +13304,6 @@ msgstr "Opcions del grup de filtres del pas"
 #: src/modules/workflow/workflow-steps/filters/components/WorkflowStepFilterOptionsDropdown.tsx
 msgid "Step filter options"
 msgstr "Opcions de filtre del pas"
-
-#. js-lingui-id: ygCKqB
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowRunsCommandMenuItemsConfig.tsx
-msgid "Stop"
-msgstr "Atura"
 
 #. js-lingui-id: I8EmDx
 #: src/modules/information-banner/components/impersonate/InformationBannerIsImpersonating.tsx
@@ -13598,6 +13481,7 @@ msgstr "Suma"
 
 #. js-lingui-id: DBC3t5
 #: src/pages/settings/profile/appearance/components/DateTimeSettingsCalendarStartDaySelect.tsx
+#: src/pages/settings/profile/appearance/components/DateTimeSettingsCalendarStartDaySelect.tsx
 msgid "Sunday"
 msgstr "Diumenge"
 
@@ -13724,11 +13608,10 @@ msgstr ""
 #: src/pages/settings/ai/SettingsAIPrompts.tsx
 #: src/pages/settings/ai/SettingsAIPrompts.tsx
 #: src/pages/settings/ai/SettingsAIPrompts.tsx
-#: src/pages/settings/ai/SettingsAIPrompts.tsx
-#: src/pages/settings/ai/SettingsAI.tsx
-#: src/pages/settings/ai/SettingsAI.tsx
 #: src/pages/settings/ai/forms/components/SettingsAIAgentForm.tsx
 #: src/pages/settings/ai/components/SettingsAgentSettingsTab.tsx
+#: src/pages/settings/ai/components/SettingsAIMoreTab.tsx
+#: src/pages/settings/ai/components/SettingsAIMoreTab.tsx
 msgid "System Prompt"
 msgstr "Indicador del Sistema"
 
@@ -13746,42 +13629,23 @@ msgstr "Relacions del sistema"
 #: src/pages/settings/profile/appearance/components/SettingsExperience.tsx
 #: src/pages/settings/profile/appearance/components/DateTimeSettingsTimeZoneSelect.tsx
 #: src/pages/settings/profile/appearance/components/DateTimeSettingsTimeZoneSelect.tsx
+#: src/pages/settings/profile/appearance/components/DateTimeSettingsCalendarStartDaySelect.tsx
+#: src/modules/settings/experience/components/NumberFormatSelect.tsx
 #: src/modules/settings/experience/components/DateTimeSettingsTimeZoneSelect.tsx
-#: src/modules/settings/experience/components/DateTimeSettingsTimeZoneSelect.tsx
+#: src/modules/settings/experience/components/DateTimeSettingsTimeFormatSelect.tsx
+#: src/modules/settings/experience/components/DateTimeSettingsDateFormatSelect.tsx
 msgid "System settings"
 msgstr "Configuració del sistema"
 
 #. js-lingui-id: E3AMmw
 #: src/pages/settings/profile/appearance/components/DateTimeSettingsDateFormatSelect.tsx
-#: src/modules/settings/experience/components/DateTimeSettingsDateFormatSelect.tsx
 msgid "System settings - {systemDateFormatLabel}"
 msgstr "Configuració del sistema - {systemDateFormatLabel}"
 
-#. js-lingui-id: uKM6SP
-#: src/modules/settings/experience/components/NumberFormatSelect.tsx
-msgid "System Settings - {systemNumberFormatLabel}"
-msgstr "Configuració del Sistema - {systemNumberFormatLabel}"
-
 #. js-lingui-id: 0ZgB1e
 #: src/pages/settings/profile/appearance/components/DateTimeSettingsTimeFormatSelect.tsx
-#: src/modules/settings/experience/components/DateTimeSettingsTimeFormatSelect.tsx
 msgid "System Settings - {systemTimeFormatLabel}"
 msgstr "Configuració del Sistema - {systemTimeFormatLabel}"
-
-#. js-lingui-id: e89dEj
-#: src/pages/settings/profile/appearance/components/DateTimeSettingsCalendarStartDaySelect.tsx
-msgid "System settings - Monday"
-msgstr "Configuració del sistema - Dilluns"
-
-#. js-lingui-id: o+Kvng
-#: src/pages/settings/profile/appearance/components/DateTimeSettingsCalendarStartDaySelect.tsx
-msgid "System settings - Saturday"
-msgstr "Configuració del sistema - Dissabte"
-
-#. js-lingui-id: gluMQd
-#: src/pages/settings/profile/appearance/components/DateTimeSettingsCalendarStartDaySelect.tsx
-msgid "System settings - Sunday"
-msgstr "Configuració del sistema - Diumenge"
 
 #. js-lingui-id: HuA3RU
 #: src/modules/side-panel/components/hooks/usePageLayoutHeaderInfo.ts
@@ -13829,7 +13693,6 @@ msgstr "Títol de la tasca"
 
 #. js-lingui-id: GtycJ/
 #: src/modules/page-layout/constants/StandardPageLayoutTabTitleTranslations.ts
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 msgid "Tasks"
 msgstr "Tasques"
 
@@ -13856,14 +13719,8 @@ msgstr "Condicions de Servei"
 #: src/modules/workflow/workflow-steps/workflow-actions/code-action/components/WorkflowEditActionCode.tsx
 #: src/modules/workflow/workflow-steps/workflow-actions/code-action/components/WorkflowEditActionCode.tsx
 #: src/modules/settings/logic-functions/components/tabs/SettingsLogicFunctionCodeEditorTab.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
 msgid "Test"
 msgstr "Provar"
-
-#. js-lingui-id: bU9B27
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Test Workflow"
-msgstr "Provar Workflow"
 
 #. js-lingui-id: 3nWPN6
 #: src/modules/settings/logic-functions/components/tabs/SettingsLogicFunctionTestTab.tsx
@@ -14132,7 +13989,7 @@ msgid "This app is listed on the marketplace because it is published to npm."
 msgstr "Aquesta aplicació figura al marketplace perquè està publicada a npm."
 
 #. js-lingui-id: SYslQU
-#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+#: src/pages/settings/applications/components/SettingsApplicationDetailTitle.tsx
 msgid "This application is not listed on the marketplace. It was shared via a direct link."
 msgstr "Aquesta aplicació no està publicada al Marketplace. S'ha compartit mitjançant un enllaç directe."
 
@@ -14231,6 +14088,19 @@ msgstr "Aquest subdomini està reservat"
 msgid "This value will be saved to the database."
 msgstr "Aquest valor s'emmagatzemarà a la base de dades."
 
+#. js-lingui-id: esVnxk
+#. placeholder {0}: nonReadableViewFieldInfo.fieldLabel
+#. placeholder {1}: nonReadableViewFieldInfo.objectLabel
+#: src/modules/object-record/record-index/utils/getNonReadableViewFieldSubTitle.ts
+msgid "This view uses {usageLabel} on field \"{0}\" on \"{1}\" which is not accessible."
+msgstr ""
+
+#. js-lingui-id: IbwUNd
+#. placeholder {0}: nonReadableViewFieldInfo.objectLabel
+#: src/modules/object-record/record-index/utils/getNonReadableViewFieldSubTitle.ts
+msgid "This view uses {usageLabel} on object \"{0}\" which is not accessible."
+msgstr ""
+
 #. js-lingui-id: yByRxz
 #: src/modules/settings/admin-panel/health-status/constants/WorkerQueueMetricsSelectOptions.ts
 msgid "This week"
@@ -14286,14 +14156,8 @@ msgstr "Això revertirà el valor de la base de dades al valor d'entorn/predeter
 msgid "Thought"
 msgstr "Pensament"
 
-#. js-lingui-id: 5g/sE8
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
-msgid "Tidy up"
-msgstr "Endreça"
-
 #. js-lingui-id: Vqn9Z1
 #: src/modules/workflow/workflow-diagram/components/WorkflowDiagramRightClickCommandMenu.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowCommandMenuItemsConfig.tsx
 msgid "Tidy up workflow"
 msgstr "Endreça el flux de treball"
 
@@ -14461,6 +14325,12 @@ msgstr "Feines totals"
 msgid "Total time"
 msgstr "Temps total"
 
+#. js-lingui-id: BxecEJ
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+#: src/pages/settings/ai/components/SettingsAIUsageTab.tsx
+msgid "Track AI consumption across your workspace."
+msgstr ""
+
 #. js-lingui-id: YT/cKI
 #: src/modules/settings/billing/components/SettingsBillingCreditsSection.tsx
 msgid "Track your {intervalLabel} workflow credit consumption."
@@ -14617,7 +14487,7 @@ msgid "Twenty fields"
 msgstr "Camps de Twenty"
 
 #. js-lingui-id: YIjS4q
-#: src/pages/settings/ai/components/SettingsAgentModelCapabilities.tsx
+#: src/modules/ai/components/SettingsAgentModelCapabilities.tsx
 msgid "Twitter/X Search"
 msgstr "Cerca de Twitter/X"
 
@@ -14652,6 +14522,7 @@ msgstr "Configuració de l'autenticació de dos factors completada amb èxit!"
 #: src/pages/settings/ai/components/SettingsToolsTable.tsx
 #: src/pages/settings/ai/components/SettingsToolsTable.tsx
 #: src/modules/workflow/workflow-steps/workflow-actions/form-action/components/WorkflowEditActionFormFieldSettings.tsx
+#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowOutputFieldTypeSelector.tsx
 #: src/modules/settings/security/components/SSO/SettingsSSOIdentitiesProvidersForm.tsx
 #: src/modules/settings/data-model/object-details/components/SettingsObjectRelationsTable.tsx
 #: src/modules/settings/components/SettingsDnsRecordsTable.tsx
@@ -14783,6 +14654,7 @@ msgstr "ID universal"
 
 #. js-lingui-id: Ef7StM
 #: src/pages/settings/emailing-domains/utils/getEmailingDomainStatusText.ts
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 #: src/pages/settings/applications/components/SettingsApplicationVersionContainer.tsx
 #: src/modules/settings/admin-panel/components/SettingsAdminVersionContainer.tsx
 msgid "Unknown"
@@ -14833,6 +14705,13 @@ msgstr "No Llistat"
 msgid "Unlock enterprise features like SSO, row-level security, and audit logs."
 msgstr "Desbloquegeu funcionalitats Enterprise com SSO, la seguretat a nivell de fila i els registres d'auditoria."
 
+#. js-lingui-id: Te2H8x
+#: src/pages/settings/developers/api-keys/SettingsDevelopersApiKeyDetail.tsx
+#: src/pages/settings/developers/api-keys/SettingsDevelopersApiKeyDetail.tsx
+#: src/modules/settings/developers/components/SettingsApiKeysFieldItemTableRow.tsx
+msgid "Unnamed API Key"
+msgstr ""
+
 #. js-lingui-id: eQMhFX
 #: src/modules/advanced-text-editor/extensions/slash-command/DefaultSlashCommands.ts
 msgid "unordered"
@@ -14867,6 +14746,11 @@ msgstr "Sense títol"
 msgid "Untitled {labelSingular}"
 msgstr "{labelSingular} sense títol"
 
+#. js-lingui-id: zJsHrW
+#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowOutputSchemaBuilder.tsx
+msgid "Untitled field"
+msgstr ""
+
 #. js-lingui-id: RBz20h
 #: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutWidgetTypeSelect.tsx
 msgid "Untitled iFrame"
@@ -14898,7 +14782,6 @@ msgstr "actualitza"
 #: src/pages/settings/applications/components/SettingsApplicationTableRow.tsx
 #: src/modules/information-banner/components/billing/InformationBannerFailPaymentInfo.tsx
 #: src/modules/information-banner/components/billing/InformationBannerBillingSubscriptionPaused.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 msgid "Update"
 msgstr "Actualitza"
 
@@ -14914,8 +14797,8 @@ msgstr "Actualitzeu el mètode de pagament"
 
 #. js-lingui-id: 0KAL3W
 #: src/modules/side-panel/hooks/useOpenUpdateMultipleRecordsPageInSidePanel.tsx
+#: src/modules/side-panel/components/SidePanelMultipleRecordsInfo.tsx
 #: src/modules/object-record/record-update-multiple/components/UpdateMultipleRecordsContainer.tsx
-#: src/modules/command-menu-item/record/constants/DefaultRecordCommandMenuItemsConfig.tsx
 msgid "Update records"
 msgstr "Actualitzar registres"
 
@@ -14969,6 +14852,7 @@ msgid "Upgrade Plan"
 msgstr "Actualitza el pla"
 
 #. js-lingui-id: pKCx2F
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 #: src/pages/settings/applications/components/SettingsApplicationVersionContainer.tsx
 msgid "Upgrade to {latestAvailableVersion}"
 msgstr "Actualitza a {latestAvailableVersion}"
@@ -14978,12 +14862,13 @@ msgstr "Actualitza a {latestAvailableVersion}"
 msgid "Upgrade to access"
 msgstr "Actualitza per accedir"
 
-#. js-lingui-id: jmVW3I
+#. js-lingui-id: Wurpq2
 #: src/pages/settings/security/SettingsSecurity.tsx
-msgid "Upgrade to Enterprise to access audit logs"
-msgstr "Actualitza a Enterprise per accedir als registres d'auditoria"
+msgid "Upgrade to Enterprise to access audit logs."
+msgstr ""
 
 #. js-lingui-id: +Gi3x1
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
 #: src/pages/settings/applications/components/SettingsApplicationVersionContainer.tsx
 msgid "Upgrading..."
 msgstr "Actualitzant..."
@@ -15056,7 +14941,9 @@ msgstr "us-east-1"
 #: src/pages/settings/SettingsUsageUserDetail.tsx
 #: src/pages/settings/SettingsUsage.tsx
 #: src/pages/settings/SettingsUsage.tsx
-#: src/modules/settings/hooks/useSettingsNavigationItems.tsx
+#: src/pages/settings/ai/SettingsAI.tsx
+#: src/modules/settings/usage/components/UsageByUserTableSection.tsx
+#: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
 msgid "Usage"
 msgstr "Ús"
 
@@ -15069,6 +14956,11 @@ msgstr "Ús a tots els espais de treball d'aquest servidor"
 #: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
 msgid "Usage Analytics"
 msgstr "Anàlisi d'ús"
+
+#. js-lingui-id: 7Kq6TI
+#: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
+msgid "Usage analytics requires ClickHouse. Contact your administrator."
+msgstr ""
 
 #. js-lingui-id: 7vRxpC
 #: src/pages/settings/SettingsUsageUserDetail.tsx
@@ -15086,12 +14978,6 @@ msgstr "Ús per usuari"
 msgid "Usage Events"
 msgstr "Esdeveniments d'ús"
 
-#. js-lingui-id: 6dMpmz
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record/constants/WorkflowVersionsCommandMenuItemsConfig.tsx
-msgid "Use as draft"
-msgstr "Utilitzar com a esborrany"
-
 #. js-lingui-id: 6kLyt5
 #: src/modules/auth/sign-in-up/components/internal/SignInUpTwoFactorAuthenticationProvision.tsx
 msgid "Use authenticator apps and browser extensions like 1Password, Authy, Microsoft Authenticator to generate one-time passwords"
@@ -15101,6 +14987,11 @@ msgstr "Utilitza aplicacions d'autenticació i extensions de navegador com 1Pass
 #: src/pages/settings/ai/components/SettingsAIModelsTab.tsx
 msgid "Use best models only"
 msgstr "Utilitzar només els millors models"
+
+#. js-lingui-id: cVOIgV
+#: src/pages/settings/ai/components/SettingsAgentSkills.tsx
+msgid "Use filter to see existing tools or create your own"
+msgstr ""
 
 #. js-lingui-id: oTTQsc
 #: src/modules/settings/domains/utils/getSubdomainValidationSchema.ts
@@ -15248,6 +15139,11 @@ msgstr "Variable {variableKey} actualitzada"
 msgid "Variable deleted successfully."
 msgstr "Variable suprimida amb èxit."
 
+#. js-lingui-id: +woNYv
+#: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/components/WorkflowOutputSchemaBuilder.tsx
+msgid "Variable Name"
+msgstr ""
+
 #. js-lingui-id: dY/1ir
 #: src/modules/object-record/record-field/ui/form-types/components/VariableChip.tsx
 msgid "Variable not found"
@@ -15283,13 +15179,7 @@ msgstr "Verifica el codi de l'aplicació"
 msgid "Verify the code from the app"
 msgstr "Verifica el codi de l'aplicació"
 
-#. js-lingui-id: eE0JZ4
-#: src/pages/settings/applications/tabs/SettingsApplicationDetailAboutTab.tsx
-msgid "Version"
-msgstr "Versió"
-
 #. js-lingui-id: IHIWR4
-#: src/pages/settings/applications/tabs/SettingsApplicationDetailAboutTab.tsx
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
 msgid "Version of the application"
 msgstr "Versió de l'aplicació"
@@ -15328,15 +15218,15 @@ msgstr "Vista"
 msgid "View Agent"
 msgstr ""
 
+#. js-lingui-id: noHthC
+#: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
+msgid "View AI usage breakdown"
+msgstr ""
+
 #. js-lingui-id: nK72s8
 #: src/pages/settings/ai/components/SettingsAgentLogsTab.tsx
 msgid "View all evaluations"
 msgstr ""
-
-#. js-lingui-id: 3JjgWt
-#: src/pages/settings/ai/SettingsAI.tsx
-msgid "View and customize AI instructions"
-msgstr "Visualitza i personalitza les instruccions d'IA"
 
 #. js-lingui-id: XVf/G7
 #: src/pages/settings/security/SettingsSecurity.tsx
@@ -15412,12 +15302,16 @@ msgstr "Veure registres"
 
 #. js-lingui-id: 7PrSCy
 #: src/pages/settings/applications/tabs/SettingsApplicationRegistrationDistributionTab.tsx
+#: src/pages/settings/applications/tabs/SettingsApplicationRegistrationDistributionTab.tsx
 msgid "View marketplace page"
 msgstr "Veure la pàgina del Marketplace"
 
+#. js-lingui-id: sAPirx
+#: src/modules/object-record/record-index/components/RecordIndexEmptyStateNotShared.tsx
+msgid "View not shared"
+msgstr ""
+
 #. js-lingui-id: ecVcAx
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
-#: src/modules/command-menu-item/record-agnostic/constants/RecordAgnosticCommandMenuItemsConfig.tsx
 #: src/modules/command-menu-item/engine-command/constants/EngineComponentKeyHeadlessComponentMap.tsx
 msgid "View Previous AI Chats"
 msgstr "Veure els xats d'IA anteriors"
@@ -15437,11 +15331,6 @@ msgstr ""
 msgid "view sort"
 msgstr "ordenació de vista"
 
-#. js-lingui-id: FNDoRH
-#: src/pages/settings/ai/SettingsAI.tsx
-msgid "View the AI system prompt and add custom instructions"
-msgstr "Visualitza el prompt del sistema d'IA i afegeix instruccions personalitzades"
-
 #. js-lingui-id: bJAIqT
 #: src/modules/views/view-picker/components/ViewPickerContentCreateMode.tsx
 msgid "View type"
@@ -15458,9 +15347,16 @@ msgid "View workspace activity logs"
 msgstr "Veure els registres d'activitat de l'espai de treball"
 
 #. js-lingui-id: 1I6UoR
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
 #: src/modules/navigation-menu-item/edit/side-panel/components/SidePanelNewSidebarItemViewPickerSubView.tsx
 msgid "Views"
 msgstr "Vistes"
+
+#. js-lingui-id: xF9sRg
+#: src/pages/settings/applications/tabs/SettingsAvailableApplicationDetailContentTab.tsx
+msgid "Views created by this app"
+msgstr ""
 
 #. js-lingui-id: eedtPL
 #: src/modules/settings/data-model/fields/forms/select/components/SettingsDataModelFieldSelectFormOptionRow.tsx
@@ -15576,7 +15472,7 @@ msgstr ""
 "Torna-ho a provar d'aquí a uns segons, si us plau. Disculpa."
 
 #. js-lingui-id: LnnVIT
-#: src/pages/settings/ai/components/SettingsAgentModelCapabilities.tsx
+#: src/modules/ai/components/SettingsAgentModelCapabilities.tsx
 msgid "Web Search"
 msgstr "Cerca web"
 
@@ -15639,6 +15535,11 @@ msgstr "Setmana"
 #. js-lingui-id: IAUiSh
 #: src/modules/side-panel/pages/page-layout/utils/getDateGranularityPluralLabel.ts
 msgid "weeks"
+msgstr ""
+
+#. js-lingui-id: WKHqM+
+#: src/modules/settings/data-model/object-details/components/tabs/SettingsObjectSearchSection.tsx
+msgid "Weight"
 msgstr ""
 
 #. js-lingui-id: nTuObL
@@ -15710,10 +15611,20 @@ msgstr "On"
 msgid "Whether this model supports chain-of-thought reasoning"
 msgstr "Si aquest model admet el raonament en cadena"
 
+#. js-lingui-id: dmoPOu
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "widget"
+msgstr ""
+
 #. js-lingui-id: fANaAS
 #: src/modules/side-panel/pages/page-layout/components/SidePanelPageLayoutWidgetTypeSelect.tsx
 msgid "Widget type"
 msgstr "Tipus de widget"
+
+#. js-lingui-id: YR3K7M
+#: src/pages/settings/applications/SettingsAvailableApplicationDetails.tsx
+msgid "widgets"
+msgstr ""
 
 #. js-lingui-id: j6ncOZ
 #: src/modules/workflow/workflow-steps/workflow-actions/iterator-action/components/WorkflowEditActionIterator.tsx
@@ -15746,7 +15657,6 @@ msgid "Workflow agents"
 msgstr ""
 
 #. js-lingui-id: 2jzcC5
-#: src/modules/command-menu-item/record/single-record/workflow/components/DuplicateWorkflowSingleRecordCommand.tsx
 #: src/modules/command-menu-item/engine-command/record/single-record/workflow/components/DuplicateWorkflowSingleRecordCommand.tsx
 msgid "Workflow duplicated successfully"
 msgstr ""
@@ -15803,6 +15713,7 @@ msgstr "Fluxos de treball"
 #: src/pages/settings/ai/SettingsAgentTurnDetail.tsx
 #: src/pages/settings/ai/SettingsAgentTurnDetail.tsx
 #: src/pages/settings/ai/SettingsAgentForm.tsx
+#: src/pages/settings/ai/SettingsAIUsageUserDetail.tsx
 #: src/pages/settings/ai/SettingsAIPrompts.tsx
 #: src/pages/settings/ai/SettingsAI.tsx
 #: src/modules/views/view-picker/components/ViewPickerListContent.tsx
@@ -15817,6 +15728,7 @@ msgstr "Fluxos de treball"
 #: src/modules/settings/domains/components/SettingsCustomDomain.tsx
 #: src/modules/settings/domains/components/SettingPublicDomain.tsx
 #: src/modules/settings/developers/components/SettingsDevelopersWebhookForm.tsx
+#: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
 #: src/modules/object-record/object-options-dropdown/components/ObjectOptionsDropdownVisibilityContent.tsx
 #: src/modules/object-record/object-options-dropdown/components/ObjectOptionsDropdownCustomView.tsx
 #: src/modules/navigation-menu-item/display/sections/workspace/components/WorkspaceSection.tsx
@@ -15850,8 +15762,8 @@ msgid "Workspace Info"
 msgstr "Informació de l'espai de treball"
 
 #. js-lingui-id: BYrMT0
-#: src/pages/settings/ai/SettingsAIPrompts.tsx
-#: src/pages/settings/ai/SettingsAIPrompts.tsx
+#: src/pages/settings/ai/components/SettingsAIMoreTab.tsx
+#: src/pages/settings/ai/components/SettingsAIMoreTab.tsx
 msgid "Workspace Instructions"
 msgstr "Instruccions de l'espai de treball"
 
@@ -15943,10 +15855,10 @@ msgstr "Any"
 msgid "yearly"
 msgstr "anual"
 
-#. js-lingui-id: Y1GwUe
+#. js-lingui-id: zkWmBh
 #: src/modules/settings/enterprise/components/EnterprisePlanModal.tsx
-msgid "Yearly subscription"
-msgstr "Subscripció anual"
+msgid "Yearly"
+msgstr ""
 
 #. js-lingui-id: +BGee5
 #: src/modules/side-panel/pages/page-layout/utils/getDateGranularityPluralLabel.ts
@@ -16015,13 +15927,17 @@ msgstr "No tens permís per accedir a l'objecte {objectName}"
 msgid "You do not have permission to view this widget"
 msgstr "No tens permís per veure aquest giny"
 
+#. js-lingui-id: SDVtJI
+#: src/modules/object-record/record-index/components/RecordIndexEmptyStateNotShared.tsx
+msgid "You don't have access to this object."
+msgstr ""
+
 #. js-lingui-id: M2lYgq
 #: src/modules/settings/billing/components/SettingsBillingSubscriptionInfo.tsx
 msgid "You have scheduled a metered tier change. Do you want to cancel it?"
 msgstr "Has programat un canvi de nivell mesurat. Vols cancel·lar-lo?"
 
 #. js-lingui-id: qXzOWu
-#: src/modules/command-menu-item/record/workflow/hooks/useRunWorkflowRecordCommands.tsx
 #: src/modules/command-menu-item/engine-command/hooks/useEnrichHeadlessCommandContextApiWithWorkflowVersionTriggerInformation.ts
 msgid "You selected {selectedCountFormatted} records but manual triggers can run on at most {limitFormatted} records at once. Only the first {limitFormatted} records will be processed."
 msgstr ""
