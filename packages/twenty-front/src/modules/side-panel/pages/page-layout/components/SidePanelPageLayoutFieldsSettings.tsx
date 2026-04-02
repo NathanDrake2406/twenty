@@ -185,7 +185,7 @@ export const SidePanelPageLayoutFieldsSettings = () => {
         subtitle={t`This will cancel all modifications done on the widget. This action cannot be undone.`}
         onConfirmClick={handleConfirmReset}
         confirmButtonText={t`Reset`}
-        confirmButtonAccent="blue"
+        confirmButtonAccent="danger"
       />
     </StyledContainer>
   );
