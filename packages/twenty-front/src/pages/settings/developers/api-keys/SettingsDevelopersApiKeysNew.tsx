@@ -7,6 +7,7 @@ import { SettingsSkeletonLoader } from '@/settings/components/SettingsSkeletonLo
 import { SettingsDevelopersRoleSelector } from '@/settings/developers/components/SettingsDevelopersRoleSelector';
 import { EXPIRATION_DATES } from '@/settings/developers/constants/ExpirationDates';
 import { apiKeyTokenFamilyState } from '@/settings/developers/states/apiKeyTokenFamilyState';
+import { useSnackBar } from '@/ui/feedback/snack-bar-manager/hooks/useSnackBar';
 import { Select } from '@/ui/input/components/Select';
 import { SettingsTextInput } from '@/ui/input/components/SettingsTextInput';
 import { SubMenuTopBarContainer } from '@/ui/layout/page/components/SubMenuTopBarContainer';
@@ -27,6 +28,8 @@ import { useNavigateSettings } from '~/hooks/useNavigateSettings';
 
 export const SettingsDevelopersApiKeysNew = () => {
   const { t } = useLingui();
+  const { enqueueErrorSnackBar } = useSnackBar();
+  const [isLoading, setIsLoading] = useState(false);
   const [generateOneApiKeyToken] = useMutation(GenerateApiKeyTokenDocument);
   const navigateSettings = useNavigateSettings();
   const { data: rolesData, loading: rolesLoading } = useQuery(GetRolesDocument);
@@ -70,50 +73,58 @@ export const SettingsDevelopersApiKeysNew = () => {
   );
 
   const handleSave = async () => {
-    if (!formValues.name) return;
+    if (!formValues.name || !formValues.roleId) return;
 
-    const expiresAt = addDays(
-      new Date(),
-      formValues.expirationDate ?? 30,
-    ).toISOString();
+    setIsLoading(true);
 
-    const roleIdToUse = formValues.roleId;
+    try {
+      const expiresAt = addDays(
+        new Date(),
+        formValues.expirationDate ?? 30,
+      ).toISOString();
 
-    if (!roleIdToUse) {
-      return;
-    }
-
-    const { data: newApiKeyData } = await createApiKey({
-      variables: {
-        input: {
-          name: formValues.name.trim(),
-          expiresAt,
-          roleId: roleIdToUse,
+      const { data: newApiKeyData } = await createApiKey({
+        variables: {
+          input: {
+            name: formValues.name.trim(),
+            expiresAt,
+            roleId: formValues.roleId,
+          },
         },
-      },
-    });
-
-    const newApiKey = newApiKeyData?.createApiKey;
-
-    if (!newApiKey) {
-      return;
-    }
-
-    const tokenData = await generateOneApiKeyToken({
-      variables: {
-        apiKeyId: newApiKey.id,
-        expiresAt: expiresAt,
-      },
-    });
-
-    if (isDefined(tokenData.data?.generateApiKeyToken)) {
-      setApiKeyTokenCallback(
-        newApiKey.id,
-        tokenData.data.generateApiKeyToken.token,
-      );
-      navigateSettings(SettingsPath.ApiKeyDetail, {
-        apiKeyId: newApiKey.id,
       });
+
+      const newApiKey = newApiKeyData?.createApiKey;
+
+      if (!newApiKey) {
+        enqueueErrorSnackBar({
+          message: t`Error creating API key`,
+        });
+
+        return;
+      }
+
+      const tokenData = await generateOneApiKeyToken({
+        variables: {
+          apiKeyId: newApiKey.id,
+          expiresAt: expiresAt,
+        },
+      });
+
+      if (isDefined(tokenData.data?.generateApiKeyToken)) {
+        setApiKeyTokenCallback(
+          newApiKey.id,
+          tokenData.data.generateApiKeyToken.token,
+        );
+        navigateSettings(SettingsPath.ApiKeyDetail, {
+          apiKeyId: newApiKey.id,
+        });
+      }
+    } catch {
+      enqueueErrorSnackBar({
+        message: t`Error creating API key`,
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -140,6 +151,7 @@ export const SettingsDevelopersApiKeysNew = () => {
       actionButton={
         <SaveAndCancelButtons
           isSaveDisabled={!canSave}
+          isLoading={isLoading}
           onCancel={() => {
             navigateSettings(SettingsPath.ApiWebhooks);
           }}
