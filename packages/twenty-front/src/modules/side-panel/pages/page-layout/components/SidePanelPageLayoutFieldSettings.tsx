@@ -5,6 +5,9 @@ import { SidePanelList } from '@/side-panel/components/SidePanelList';
 import { FieldWidgetFieldDropdownContent } from '@/side-panel/pages/page-layout/components/dropdown-content/FieldWidgetFieldDropdownContent';
 import { FieldWidgetLayoutDropdownContent } from '@/side-panel/pages/page-layout/components/dropdown-content/FieldWidgetLayoutDropdownContent';
 import { WidgetSettingsFooter } from '@/side-panel/pages/page-layout/components/WidgetSettingsFooter';
+import { WidgetSettingsManageSection } from '@/side-panel/pages/page-layout/components/WidgetSettingsManageSection';
+import { WidgetSettingsPlacementSection } from '@/side-panel/pages/page-layout/components/WidgetSettingsPlacementSection';
+import { WIDGET_SETTINGS_SELECTABLE_ITEM_IDS } from '@/side-panel/pages/page-layout/constants/settings/WidgetSettingsSelectableItemIds';
 import { usePageLayoutIdFromContextStore } from '@/side-panel/pages/page-layout/hooks/usePageLayoutIdFromContextStore';
 import { useWidgetInEditMode } from '@/side-panel/pages/page-layout/hooks/useWidgetInEditMode';
 import { DropdownContent } from '@/ui/layout/dropdown/components/DropdownContent';
@@ -62,7 +65,17 @@ export const SidePanelPageLayoutFieldSettings = () => {
     ? (displayModeLabels[currentDisplayMode] ?? '')
     : '';
 
-  const selectableItemIds = ['field', 'layout'];
+  const selectableItemIds = [
+    'field',
+    'layout',
+    WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.REPLACE_WIDGET,
+    WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.DELETE_WIDGET,
+    WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.MOVE_DOWN,
+    WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.MOVE_UP,
+    WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.MOVE_TO_TAB,
+    WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.ADD_WIDGET_ABOVE,
+    WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.ADD_WIDGET_BELOW,
+  ];
 
   return (
     <StyledContainer>
@@ -102,6 +115,8 @@ export const SidePanelPageLayoutFieldSettings = () => {
               />
             </SelectableListItem>
           </SidePanelGroup>
+          <WidgetSettingsManageSection pageLayoutId={pageLayoutId} />
+          <WidgetSettingsPlacementSection pageLayoutId={pageLayoutId} />
         </SidePanelList>
       </StyledSidePanelContainer>
       <WidgetSettingsFooter pageLayoutId={pageLayoutId} />

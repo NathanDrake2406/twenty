@@ -6,6 +6,7 @@ import {
   IconChartPie,
   IconFrame,
   IconList,
+  IconPlus,
   IconTable,
 } from 'twenty-ui/display';
 
@@ -25,6 +26,8 @@ export const getPageLayoutIcon = (page: PageLayoutSidePanelPage) => {
       return IconList;
     case SidePanelPages.PageLayoutRecordTableSettings:
       return IconTable;
+    case SidePanelPages.PageLayoutRecordPageWidgetTypeSelect:
+      return IconPlus;
     default:
       assertUnreachable(page);
   }

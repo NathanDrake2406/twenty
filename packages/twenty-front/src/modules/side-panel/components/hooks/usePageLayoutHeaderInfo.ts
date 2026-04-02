@@ -246,6 +246,18 @@ export const usePageLayoutHeaderInfo = ({
         widgetInEditMode: undefined,
       };
     }
+
+    case SidePanelPages.PageLayoutRecordPageWidgetTypeSelect: {
+      return {
+        headerIcon: IconPlus,
+        headerIconColor: iconColor,
+        headerType: '',
+        title: t`New widget`,
+        isReadonly: true,
+        tab: undefined,
+        widgetInEditMode: undefined,
+      };
+    }
     default:
       return null;
   }

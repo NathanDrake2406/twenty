@@ -7,6 +7,9 @@ import { useSidePanelSubPageHistory } from '@/side-panel/hooks/useSidePanelSubPa
 import { RecordTableDataSourceDropdownContent } from '@/side-panel/pages/page-layout/components/record-table-settings/RecordTableDataSourceDropdownContent';
 import { RecordTableFieldsDropdownContent } from '@/side-panel/pages/page-layout/components/record-table-settings/RecordTableFieldsDropdownContent';
 import { WidgetSettingsFooter } from '@/side-panel/pages/page-layout/components/WidgetSettingsFooter';
+import { WidgetSettingsManageSection } from '@/side-panel/pages/page-layout/components/WidgetSettingsManageSection';
+import { WidgetSettingsPlacementSection } from '@/side-panel/pages/page-layout/components/WidgetSettingsPlacementSection';
+import { WIDGET_SETTINGS_SELECTABLE_ITEM_IDS } from '@/side-panel/pages/page-layout/constants/settings/WidgetSettingsSelectableItemIds';
 import { usePageLayoutIdFromContextStore } from '@/side-panel/pages/page-layout/hooks/usePageLayoutIdFromContextStore';
 import { useWidgetInEditMode } from '@/side-panel/pages/page-layout/hooks/useWidgetInEditMode';
 import { SidePanelSubPages } from '@/side-panel/types/SidePanelSubPages';
@@ -64,6 +67,13 @@ export const SidePanelPageLayoutRecordTableSettings = () => {
     ...(hasViewId
       ? ['record-table-fields', 'record-table-filter', 'record-table-sort']
       : []),
+    WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.REPLACE_WIDGET,
+    WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.DELETE_WIDGET,
+    WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.MOVE_DOWN,
+    WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.MOVE_UP,
+    WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.MOVE_TO_TAB,
+    WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.ADD_WIDGET_ABOVE,
+    WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.ADD_WIDGET_BELOW,
   ];
 
   const handleFilterClick = () => {
@@ -149,6 +159,8 @@ export const SidePanelPageLayoutRecordTableSettings = () => {
                 </>
               )}
             </SidePanelGroup>
+            <WidgetSettingsManageSection pageLayoutId={pageLayoutId} />
+            <WidgetSettingsPlacementSection pageLayoutId={pageLayoutId} />
           </SidePanelList>
         </StyledSettingsContainer>
         <WidgetSettingsFooter pageLayoutId={pageLayoutId} />

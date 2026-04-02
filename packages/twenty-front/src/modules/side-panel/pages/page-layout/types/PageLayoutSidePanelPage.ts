@@ -7,4 +7,5 @@ export type PageLayoutSidePanelPage =
   | SidePanelPages.PageLayoutTabSettings
   | SidePanelPages.PageLayoutFieldsSettings
   | SidePanelPages.PageLayoutFieldSettings
-  | SidePanelPages.PageLayoutRecordTableSettings;
+  | SidePanelPages.PageLayoutRecordTableSettings
+  | SidePanelPages.PageLayoutRecordPageWidgetTypeSelect;
