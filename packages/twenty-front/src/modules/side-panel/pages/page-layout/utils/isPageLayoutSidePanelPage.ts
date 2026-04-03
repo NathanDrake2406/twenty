@@ -1,0 +1,25 @@
+import { SidePanelPages } from 'twenty-shared/types';
+
+import { type PageLayoutSidePanelPage } from '@/side-panel/pages/page-layout/types/PageLayoutSidePanelPage';
+
+const PAGE_LAYOUT_SIDE_PANEL_PAGES: PageLayoutSidePanelPage[] = [
+  SidePanelPages.PageLayoutDashboardWidgetTypeSelect,
+  SidePanelPages.PageLayoutTabSettings,
+  SidePanelPages.DashboardChartSettings,
+  SidePanelPages.DashboardIframeSettings,
+  SidePanelPages.DashboardFieldsSettings,
+  SidePanelPages.DashboardFieldSettings,
+  SidePanelPages.DashboardRecordTableSettings,
+  SidePanelPages.RecordPageChartSettings,
+  SidePanelPages.RecordPageIframeSettings,
+  SidePanelPages.RecordPageFieldsSettings,
+  SidePanelPages.RecordPageFieldSettings,
+  SidePanelPages.RecordPageRecordTableSettings,
+  SidePanelPages.PageLayoutRecordPageWidgetTypeSelect,
+];
+
+export const isPageLayoutSidePanelPage = (
+  page: SidePanelPages,
+): page is PageLayoutSidePanelPage => {
+  return (PAGE_LAYOUT_SIDE_PANEL_PAGES as SidePanelPages[]).includes(page);
+};

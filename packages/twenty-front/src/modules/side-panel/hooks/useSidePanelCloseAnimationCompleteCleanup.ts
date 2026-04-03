@@ -13,6 +13,7 @@ import { SIDE_PANEL_COMPONENT_INSTANCE_ID } from '@/side-panel/constants/SidePan
 import { SIDE_PANEL_CONTEXT_CHIP_GROUPS_DROPDOWN_ID } from '@/side-panel/constants/SidePanelContextChipGroupsDropdownId';
 import { SIDE_PANEL_PREVIOUS_COMPONENT_INSTANCE_ID } from '@/side-panel/constants/SidePanelPreviousComponentInstanceId';
 import { SIDE_PANEL_SELECTABLE_LIST_ID } from '@/side-panel/constants/SidePanelSelectableListId';
+import { isPageLayoutSidePanelPage } from '@/side-panel/pages/page-layout/utils/isPageLayoutSidePanelPage';
 import { hasUserSelectedSidePanelListItemState } from '@/side-panel/states/hasUserSelectedSidePanelListItemState';
 import { isSidePanelClosingState } from '@/side-panel/states/isSidePanelClosingState';
 import { isSidePanelOpenedState } from '@/side-panel/states/isSidePanelOpenedState';
@@ -70,21 +71,7 @@ export const useSidePanelCloseAnimationCompleteCleanup = () => {
       resetContextStoreStates(SIDE_PANEL_COMPONENT_INSTANCE_ID);
       resetContextStoreStates(SIDE_PANEL_PREVIOUS_COMPONENT_INSTANCE_ID);
 
-      const isPageLayoutEditingPage =
-        currentPage === SidePanelPages.PageLayoutDashboardWidgetTypeSelect ||
-        currentPage === SidePanelPages.DashboardChartSettings ||
-        currentPage === SidePanelPages.DashboardIframeSettings ||
-        currentPage === SidePanelPages.DashboardFieldsSettings ||
-        currentPage === SidePanelPages.DashboardFieldSettings ||
-        currentPage === SidePanelPages.DashboardRecordTableSettings ||
-        currentPage === SidePanelPages.RecordPageChartSettings ||
-        currentPage === SidePanelPages.RecordPageIframeSettings ||
-        currentPage === SidePanelPages.RecordPageFieldsSettings ||
-        currentPage === SidePanelPages.RecordPageFieldSettings ||
-        currentPage === SidePanelPages.RecordPageRecordTableSettings ||
-        currentPage === SidePanelPages.PageLayoutTabSettings;
-
-      if (isPageLayoutEditingPage) {
+      if (isDefined(currentPage) && isPageLayoutSidePanelPage(currentPage)) {
         if (
           targetedRecordsRule.mode === 'selection' &&
           targetedRecordsRule.selectedRecordIds.length === 1
