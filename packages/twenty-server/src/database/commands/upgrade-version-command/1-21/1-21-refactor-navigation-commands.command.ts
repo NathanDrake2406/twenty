@@ -2,7 +2,7 @@ import { InjectDataSource } from '@nestjs/typeorm';
 
 import { Command } from 'nest-commander';
 import { DataSource } from 'typeorm';
-import { v4 } from 'uuid';
+import { v4, v5 } from 'uuid';
 
 import { ActiveOrSuspendedWorkspaceCommandRunner } from 'src/database/commands/command-runners/active-or-suspended-workspace.command-runner';
 import { WorkspaceIteratorService } from 'src/database/commands/command-runners/workspace-iterator.service';
@@ -15,7 +15,10 @@ import { ApplicationService } from 'src/engine/core-modules/application/applicat
 import { CommandMenuItemAvailabilityType } from 'src/engine/metadata-modules/command-menu-item/enums/command-menu-item-availability-type.enum';
 import { EngineComponentKey } from 'src/engine/metadata-modules/command-menu-item/enums/engine-component-key.enum';
 import { type FlatCommandMenuItem } from 'src/engine/metadata-modules/flat-command-menu-item/types/flat-command-menu-item.type';
-import { buildNavigationFlatCommandMenuItem } from 'src/engine/metadata-modules/flat-command-menu-item/utils/build-navigation-flat-command-menu-item.util';
+import {
+  buildNavigationFlatCommandMenuItem,
+  NAVIGATION_COMMAND_UUID_NAMESPACE,
+} from 'src/engine/metadata-modules/flat-command-menu-item/utils/build-navigation-flat-command-menu-item.util';
 import { ObjectMetadataEntity } from 'src/engine/metadata-modules/object-metadata/object-metadata.entity';
 import { STANDARD_COMMAND_MENU_ITEMS } from 'src/engine/workspace-manager/twenty-standard-application/constants/standard-command-menu-item.constant';
 import { TWENTY_STANDARD_APPLICATION } from 'src/engine/workspace-manager/twenty-standard-application/constants/twenty-standard-applications';
@@ -134,6 +137,18 @@ export class RefactorNavigationCommandsCommand extends ActiveOrSuspendedWorkspac
         `Found ${objectMetadataItems.length} active object(s) for workspace ${workspaceId}`,
       );
 
+      const existingNavigationRows: { universalIdentifier: string }[] =
+        await queryRunner.query(
+          `SELECT "universalIdentifier" FROM core."commandMenuItem"
+           WHERE "workspaceId" = $1
+             AND "engineComponentKey" = $2`,
+          [workspaceId, EngineComponentKey.NAVIGATION],
+        );
+
+      const existingUniversalIdentifiers = new Set(
+        existingNavigationRows.map((row) => row.universalIdentifier),
+      );
+
       const maxPositionResult = await queryRunner.query(
         `SELECT COALESCE(MAX(position), -1) as "maxPosition"
          FROM core."commandMenuItem"
@@ -154,6 +169,15 @@ export class RefactorNavigationCommandsCommand extends ActiveOrSuspendedWorkspac
       const flatCommandMenuItemsToCreate: FlatCommandMenuItem[] = [];
 
       for (const objectMetadata of objectMetadataItems) {
+        const universalIdentifier = v5(
+          objectMetadata.universalIdentifier,
+          NAVIGATION_COMMAND_UUID_NAMESPACE,
+        );
+
+        if (existingUniversalIdentifiers.has(universalIdentifier)) {
+          continue;
+        }
+
         const position = nextPosition++;
 
         flatCommandMenuItemsToCreate.push(
@@ -168,34 +192,44 @@ export class RefactorNavigationCommandsCommand extends ActiveOrSuspendedWorkspac
         );
       }
 
-      const settingsId = v4();
+      const settingsUniversalIdentifier =
+        STANDARD_COMMAND_MENU_ITEMS.goToSettings.universalIdentifier;
 
-      flatCommandMenuItemsToCreate.push({
-        id: settingsId,
-        universalIdentifier:
-          STANDARD_COMMAND_MENU_ITEMS.goToSettings.universalIdentifier,
-        applicationId: twentyStandardFlatApplication.id,
-        applicationUniversalIdentifier:
-          TWENTY_STANDARD_APPLICATION.universalIdentifier,
-        workspaceId,
-        label: 'Go to Settings',
-        shortLabel: 'Settings',
-        icon: 'IconSettings',
-        position: nextPosition++,
-        isPinned: false,
-        availabilityType: CommandMenuItemAvailabilityType.GLOBAL,
-        conditionalAvailabilityExpression: null,
-        frontComponentId: null,
-        frontComponentUniversalIdentifier: null,
-        engineComponentKey: EngineComponentKey.NAVIGATION,
-        payload: { path: '/settings/profile' },
-        hotKeys: ['G', 'S'],
-        workflowVersionId: null,
-        availabilityObjectMetadataId: null,
-        availabilityObjectMetadataUniversalIdentifier: null,
-        createdAt: now,
-        updatedAt: now,
-      });
+      if (!existingUniversalIdentifiers.has(settingsUniversalIdentifier)) {
+        flatCommandMenuItemsToCreate.push({
+          id: v4(),
+          universalIdentifier: settingsUniversalIdentifier,
+          applicationId: twentyStandardFlatApplication.id,
+          applicationUniversalIdentifier:
+            TWENTY_STANDARD_APPLICATION.universalIdentifier,
+          workspaceId,
+          label: 'Go to Settings',
+          shortLabel: 'Settings',
+          icon: 'IconSettings',
+          position: nextPosition++,
+          isPinned: false,
+          availabilityType: CommandMenuItemAvailabilityType.GLOBAL,
+          conditionalAvailabilityExpression: null,
+          frontComponentId: null,
+          frontComponentUniversalIdentifier: null,
+          engineComponentKey: EngineComponentKey.NAVIGATION,
+          payload: { path: '/settings/profile' },
+          hotKeys: ['G', 'S'],
+          workflowVersionId: null,
+          availabilityObjectMetadataId: null,
+          availabilityObjectMetadataUniversalIdentifier: null,
+          createdAt: now,
+          updatedAt: now,
+        });
+      }
+
+      if (flatCommandMenuItemsToCreate.length === 0) {
+        this.logger.log(
+          `All NAVIGATION commands already exist for workspace ${workspaceId}, skipping`,
+        );
+
+        return;
+      }
 
       this.logger.log(
         `${isDryRun ? '[DRY RUN] Would create' : 'Creating'} ${flatCommandMenuItemsToCreate.length} NAVIGATION command(s) for workspace ${workspaceId}`,

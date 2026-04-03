@@ -6,7 +6,7 @@ import { EngineComponentKey } from 'src/engine/metadata-modules/command-menu-ite
 import { type FlatCommandMenuItem } from 'src/engine/metadata-modules/flat-command-menu-item/types/flat-command-menu-item.type';
 import { TWENTY_STANDARD_APPLICATION } from 'src/engine/workspace-manager/twenty-standard-application/constants/twenty-standard-applications';
 
-const NAVIGATION_COMMAND_UUID_NAMESPACE =
+export const NAVIGATION_COMMAND_UUID_NAMESPACE =
   'b31830da-2ae0-48eb-a915-12fa4ab96dd3';
 
 export const buildNavigationFlatCommandMenuItem = ({
