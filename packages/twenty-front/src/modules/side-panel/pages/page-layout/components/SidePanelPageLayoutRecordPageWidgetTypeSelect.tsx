@@ -192,7 +192,6 @@ export const SidePanelPageLayoutRecordPageWidgetTypeSelect = () => {
     }
 
     const replacePositionIndex = getExistingWidgetPositionIndex();
-    removeExistingWidgetIfReplacing();
 
     const viewId = await createViewForFieldsWidget({
       objectMetadataId: objectMetadataItem.id,
@@ -202,6 +201,8 @@ export const SidePanelPageLayoutRecordPageWidgetTypeSelect = () => {
     if (viewId === null) {
       return;
     }
+
+    removeExistingWidgetIfReplacing();
 
     const activeTab = pageLayoutDraft.tabs.find((tab) => tab.id === tabId);
     const positionIndex =
