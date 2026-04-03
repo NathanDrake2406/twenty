@@ -1118,6 +1118,7 @@ export type CreateCommandMenuItemInput = {
   icon?: InputMaybe<Scalars['String']>;
   isPinned?: InputMaybe<Scalars['Boolean']>;
   label: Scalars['String'];
+  payload?: InputMaybe<Scalars['JSON']>;
   position?: InputMaybe<Scalars['Float']>;
   shortLabel?: InputMaybe<Scalars['String']>;
   workflowVersionId?: InputMaybe<Scalars['UUID']>;
