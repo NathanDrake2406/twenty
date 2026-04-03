@@ -1,23 +1,27 @@
 import { useCallback } from 'react';
 
-import { useSidePanelMenu } from '@/side-panel/hooks/useSidePanelMenu';
-import { sidePanelPageState } from '@/side-panel/states/sidePanelPageState';
-import { useSetAtomComponentState } from '@/ui/utilities/state/jotai/hooks/useSetAtomComponentState';
-import { SidePanelPages } from 'twenty-shared/types';
-
 import { PageLayoutComponentInstanceContext } from '@/page-layout/states/contexts/PageLayoutComponentInstanceContext';
 import { pageLayoutEditingWidgetIdComponentState } from '@/page-layout/states/pageLayoutEditingWidgetIdComponentState';
+import { useSidePanelMenu } from '@/side-panel/hooks/useSidePanelMenu';
+import { useIsDashboardPageLayout } from '@/side-panel/pages/page-layout/hooks/useIsDashboardPageLayout';
 import { useNavigatePageLayoutSidePanel } from '@/side-panel/pages/page-layout/hooks/useNavigatePageLayoutSidePanel';
+import { sidePanelPageState } from '@/side-panel/states/sidePanelPageState';
 import { useAvailableComponentInstanceIdOrThrow } from '@/ui/utilities/state/component-state/hooks/useAvailableComponentInstanceIdOrThrow';
+import { useSetAtomComponentState } from '@/ui/utilities/state/jotai/hooks/useSetAtomComponentState';
 import { useSetAtomState } from '@/ui/utilities/state/jotai/hooks/useSetAtomState';
 import { t } from '@lingui/core/macro';
+import { SidePanelPages } from 'twenty-shared/types';
 import { WidgetType } from '~/generated-metadata/graphql';
 
-export const useEditPageLayoutWidget = (pageLayoutIdFromProps?: string) => {
+export const useOpenWidgetSettingsInSidePanel = (
+  pageLayoutIdFromProps?: string,
+) => {
   const pageLayoutId = useAvailableComponentInstanceIdOrThrow(
     PageLayoutComponentInstanceContext,
     pageLayoutIdFromProps,
   );
+
+  const isDashboardPageLayout = useIsDashboardPageLayout();
 
   const setPageLayoutEditingWidgetId = useSetAtomComponentState(
     pageLayoutEditingWidgetIdComponentState,
@@ -28,7 +32,7 @@ export const useEditPageLayoutWidget = (pageLayoutIdFromProps?: string) => {
   const { closeSidePanelMenu } = useSidePanelMenu();
   const setSidePanelPage = useSetAtomState(sidePanelPageState);
 
-  const handleEditWidget = useCallback(
+  const openWidgetSettingsInSidePanel = useCallback(
     ({
       widgetId,
       widgetType,
@@ -38,7 +42,9 @@ export const useEditPageLayoutWidget = (pageLayoutIdFromProps?: string) => {
     }) => {
       if (widgetType === WidgetType.IFRAME) {
         navigatePageLayoutSidePanel({
-          sidePanelPage: SidePanelPages.PageLayoutIframeSettings,
+          sidePanelPage: isDashboardPageLayout
+            ? SidePanelPages.DashboardIframeSettings
+            : SidePanelPages.RecordPageIframeSettings,
           pageTitle: t`Edit iFrame`,
           resetNavigationStack: true,
         });
@@ -48,7 +54,9 @@ export const useEditPageLayoutWidget = (pageLayoutIdFromProps?: string) => {
 
       if (widgetType === WidgetType.GRAPH) {
         navigatePageLayoutSidePanel({
-          sidePanelPage: SidePanelPages.PageLayoutGraphTypeSelect,
+          sidePanelPage: isDashboardPageLayout
+            ? SidePanelPages.DashboardChartSettings
+            : SidePanelPages.RecordPageChartSettings,
           pageTitle: t`Edit Graph`,
           resetNavigationStack: true,
         });
@@ -58,7 +66,9 @@ export const useEditPageLayoutWidget = (pageLayoutIdFromProps?: string) => {
 
       if (widgetType === WidgetType.FIELDS) {
         navigatePageLayoutSidePanel({
-          sidePanelPage: SidePanelPages.PageLayoutFieldsSettings,
+          sidePanelPage: isDashboardPageLayout
+            ? SidePanelPages.DashboardFieldsSettings
+            : SidePanelPages.RecordPageFieldsSettings,
           pageTitle: t`Edit Fields`,
           resetNavigationStack: true,
         });
@@ -68,7 +78,9 @@ export const useEditPageLayoutWidget = (pageLayoutIdFromProps?: string) => {
 
       if (widgetType === WidgetType.FIELD) {
         navigatePageLayoutSidePanel({
-          sidePanelPage: SidePanelPages.PageLayoutFieldSettings,
+          sidePanelPage: isDashboardPageLayout
+            ? SidePanelPages.DashboardFieldSettings
+            : SidePanelPages.RecordPageFieldSettings,
           pageTitle: t`Field widget`,
           resetNavigationStack: true,
         });
@@ -78,7 +90,9 @@ export const useEditPageLayoutWidget = (pageLayoutIdFromProps?: string) => {
 
       if (widgetType === WidgetType.RECORD_TABLE) {
         navigatePageLayoutSidePanel({
-          sidePanelPage: SidePanelPages.PageLayoutRecordTableSettings,
+          sidePanelPage: isDashboardPageLayout
+            ? SidePanelPages.DashboardRecordTableSettings
+            : SidePanelPages.RecordPageRecordTableSettings,
           pageTitle: t`Edit Record Table`,
           resetNavigationStack: true,
         });
@@ -96,6 +110,7 @@ export const useEditPageLayoutWidget = (pageLayoutIdFromProps?: string) => {
       closeSidePanelMenu();
     },
     [
+      isDashboardPageLayout,
       setPageLayoutEditingWidgetId,
       navigatePageLayoutSidePanel,
       closeSidePanelMenu,
@@ -104,6 +119,6 @@ export const useEditPageLayoutWidget = (pageLayoutIdFromProps?: string) => {
   );
 
   return {
-    handleEditWidget,
+    openWidgetSettingsInSidePanel,
   };
 };

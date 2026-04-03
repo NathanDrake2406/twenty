@@ -6,10 +6,6 @@ import { SidePanelList } from '@/side-panel/components/SidePanelList';
 import { useSidePanelSubPageHistory } from '@/side-panel/hooks/useSidePanelSubPageHistory';
 import { NewFieldDefaultVisibilityToggle } from '@/side-panel/pages/page-layout/components/NewFieldDefaultVisibilityToggle';
 import { WidgetSettingsFooter } from '@/side-panel/pages/page-layout/components/WidgetSettingsFooter';
-import { WidgetSettingsManageSection } from '@/side-panel/pages/page-layout/components/WidgetSettingsManageSection';
-import { WidgetSettingsPlacementSection } from '@/side-panel/pages/page-layout/components/WidgetSettingsPlacementSection';
-import { WIDGET_SETTINGS_SELECTABLE_ITEM_IDS } from '@/side-panel/pages/page-layout/constants/settings/WidgetSettingsSelectableItemIds';
-import { useIsDashboardPageLayout } from '@/side-panel/pages/page-layout/hooks/useIsDashboardPageLayout';
 import { usePageLayoutIdFromContextStore } from '@/side-panel/pages/page-layout/hooks/usePageLayoutIdFromContextStore';
 import { useUpdateCurrentWidgetConfig } from '@/side-panel/pages/page-layout/hooks/useUpdateCurrentWidgetConfig';
 import { useWidgetInEditMode } from '@/side-panel/pages/page-layout/hooks/useWidgetInEditMode';
@@ -34,12 +30,11 @@ const StyledSidePanelContainer = styled.div`
   overflow: hidden;
 `;
 
-export const SidePanelPageLayoutFieldsSettings = () => {
+export const SidePanelDashboardFieldsSettings = () => {
   const { t } = useLingui();
   const { navigateToSidePanelSubPage } = useSidePanelSubPageHistory();
   const { pageLayoutId, objectNameSingular } =
     usePageLayoutIdFromContextStore();
-  const isDashboardPageLayout = useIsDashboardPageLayout();
 
   const { updateCurrentWidgetConfig } =
     useUpdateCurrentWidgetConfig(pageLayoutId);
@@ -85,17 +80,6 @@ export const SidePanelPageLayoutFieldsSettings = () => {
     'new-field-default-visibility',
     'display-more-fields-button',
     'action-button',
-    ...(isDashboardPageLayout
-      ? []
-      : [
-          WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.REPLACE_WIDGET,
-          WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.DELETE_WIDGET,
-        ]),
-    WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.MOVE_DOWN,
-    WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.MOVE_UP,
-    WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.MOVE_TO_TAB,
-    WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.ADD_WIDGET_ABOVE,
-    WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.ADD_WIDGET_BELOW,
   ];
 
   return (
@@ -134,8 +118,6 @@ export const SidePanelPageLayoutFieldsSettings = () => {
               widgetId={widgetInEditMode.id}
             />
           </SidePanelGroup>
-          <WidgetSettingsManageSection pageLayoutId={pageLayoutId} />
-          <WidgetSettingsPlacementSection pageLayoutId={pageLayoutId} />
         </SidePanelList>
       </StyledSidePanelContainer>
       <WidgetSettingsFooter pageLayoutId={pageLayoutId} />

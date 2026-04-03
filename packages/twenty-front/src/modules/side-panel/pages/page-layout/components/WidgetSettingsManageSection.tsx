@@ -3,7 +3,6 @@ import { useDeletePageLayoutWidget } from '@/page-layout/hooks/useDeletePageLayo
 import { pageLayoutEditingWidgetIdComponentState } from '@/page-layout/states/pageLayoutEditingWidgetIdComponentState';
 import { SidePanelGroup } from '@/side-panel/components/SidePanelGroup';
 import { WIDGET_SETTINGS_SELECTABLE_ITEM_IDS } from '@/side-panel/pages/page-layout/constants/settings/WidgetSettingsSelectableItemIds';
-import { useIsDashboardPageLayout } from '@/side-panel/pages/page-layout/hooks/useIsDashboardPageLayout';
 import { useNavigatePageLayoutSidePanel } from '@/side-panel/pages/page-layout/hooks/useNavigatePageLayoutSidePanel';
 import { SelectableListItem } from '@/ui/layout/selectable-list/components/SelectableListItem';
 import { useAtomComponentStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateValue';
@@ -30,9 +29,7 @@ export const WidgetSettingsManageSection = ({
 
   const { navigatePageLayoutSidePanel } = useNavigatePageLayoutSidePanel();
 
-  const isDashboardPageLayout = useIsDashboardPageLayout();
-
-  if (!isDefined(pageLayoutEditingWidgetId) || isDashboardPageLayout) {
+  if (!isDefined(pageLayoutEditingWidgetId)) {
     return null;
   }
 

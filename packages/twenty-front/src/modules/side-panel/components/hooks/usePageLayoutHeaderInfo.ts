@@ -76,7 +76,8 @@ export const usePageLayoutHeaderInfo = ({
       };
     }
 
-    case SidePanelPages.PageLayoutIframeSettings: {
+    case SidePanelPages.DashboardIframeSettings:
+    case SidePanelPages.RecordPageIframeSettings: {
       if (!isDefined(pageLayoutEditingWidgetId)) {
         return null;
       }
@@ -106,7 +107,8 @@ export const usePageLayoutHeaderInfo = ({
       };
     }
 
-    case SidePanelPages.PageLayoutGraphTypeSelect: {
+    case SidePanelPages.DashboardChartSettings:
+    case SidePanelPages.RecordPageChartSettings: {
       if (!isDefined(pageLayoutEditingWidgetId)) {
         return null;
       }
@@ -145,7 +147,8 @@ export const usePageLayoutHeaderInfo = ({
       };
     }
 
-    case SidePanelPages.PageLayoutFieldsSettings: {
+    case SidePanelPages.DashboardFieldsSettings:
+    case SidePanelPages.RecordPageFieldsSettings: {
       if (!isDefined(pageLayoutEditingWidgetId)) {
         return null;
       }
@@ -175,7 +178,8 @@ export const usePageLayoutHeaderInfo = ({
       };
     }
 
-    case SidePanelPages.PageLayoutFieldSettings: {
+    case SidePanelPages.DashboardFieldSettings:
+    case SidePanelPages.RecordPageFieldSettings: {
       if (!isDefined(pageLayoutEditingWidgetId)) {
         return null;
       }
@@ -205,7 +209,8 @@ export const usePageLayoutHeaderInfo = ({
       };
     }
 
-    case SidePanelPages.PageLayoutRecordTableSettings: {
+    case SidePanelPages.DashboardRecordTableSettings:
+    case SidePanelPages.RecordPageRecordTableSettings: {
       if (!isDefined(pageLayoutEditingWidgetId)) {
         return null;
       }

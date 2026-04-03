@@ -72,8 +72,16 @@ export const useSidePanelCloseAnimationCompleteCleanup = () => {
 
       const isPageLayoutEditingPage =
         currentPage === SidePanelPages.PageLayoutWidgetTypeSelect ||
-        currentPage === SidePanelPages.PageLayoutGraphTypeSelect ||
-        currentPage === SidePanelPages.PageLayoutIframeSettings ||
+        currentPage === SidePanelPages.DashboardChartSettings ||
+        currentPage === SidePanelPages.DashboardIframeSettings ||
+        currentPage === SidePanelPages.DashboardFieldsSettings ||
+        currentPage === SidePanelPages.DashboardFieldSettings ||
+        currentPage === SidePanelPages.DashboardRecordTableSettings ||
+        currentPage === SidePanelPages.RecordPageChartSettings ||
+        currentPage === SidePanelPages.RecordPageIframeSettings ||
+        currentPage === SidePanelPages.RecordPageFieldsSettings ||
+        currentPage === SidePanelPages.RecordPageFieldSettings ||
+        currentPage === SidePanelPages.RecordPageRecordTableSettings ||
         currentPage === SidePanelPages.PageLayoutTabSettings;
 
       if (isPageLayoutEditingPage) {

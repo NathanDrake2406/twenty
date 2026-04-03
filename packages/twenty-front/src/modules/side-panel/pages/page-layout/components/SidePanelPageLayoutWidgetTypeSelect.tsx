@@ -132,7 +132,7 @@ export const SidePanelPageLayoutWidgetTypeSelect = () => {
     }
 
     navigatePageLayoutSidePanel({
-      sidePanelPage: SidePanelPages.PageLayoutGraphTypeSelect,
+      sidePanelPage: SidePanelPages.DashboardChartSettings,
       focusTitleInput: true,
     });
   };
@@ -153,7 +153,7 @@ export const SidePanelPageLayoutWidgetTypeSelect = () => {
     }
 
     navigatePageLayoutSidePanel({
-      sidePanelPage: SidePanelPages.PageLayoutIframeSettings,
+      sidePanelPage: SidePanelPages.DashboardIframeSettings,
       focusTitleInput: true,
     });
   };
@@ -196,7 +196,7 @@ export const SidePanelPageLayoutWidgetTypeSelect = () => {
     }
 
     navigatePageLayoutSidePanel({
-      sidePanelPage: SidePanelPages.PageLayoutRecordTableSettings,
+      sidePanelPage: SidePanelPages.DashboardRecordTableSettings,
       focusTitleInput: false,
     });
   };

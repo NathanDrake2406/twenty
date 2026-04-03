@@ -14,7 +14,6 @@ import { useSidePanelMenu } from '@/side-panel/hooks/useSidePanelMenu';
 import { useNavigatePageLayoutSidePanel } from '@/side-panel/pages/page-layout/hooks/useNavigatePageLayoutSidePanel';
 import { usePageLayoutIdFromContextStore } from '@/side-panel/pages/page-layout/hooks/usePageLayoutIdFromContextStore';
 import { getFrontComponentWidgetTypeSelectItemId } from '@/side-panel/pages/page-layout/utils/getFrontComponentWidgetTypeSelectItemId';
-import { useTargetRecord } from '@/ui/layout/contexts/useTargetRecord';
 import { SelectableListItem } from '@/ui/layout/selectable-list/components/SelectableListItem';
 import { useAtomComponentState } from '@/ui/utilities/state/jotai/hooks/useAtomComponentState';
 import { useAtomComponentStateCallbackState } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateCallbackState';
@@ -35,7 +34,8 @@ import {
 } from '~/generated-metadata/graphql';
 
 export const SidePanelPageLayoutRecordPageWidgetTypeSelect = () => {
-  const { pageLayoutId } = usePageLayoutIdFromContextStore();
+  const { pageLayoutId, objectNameSingular: targetObjectNameSingular } =
+    usePageLayoutIdFromContextStore();
 
   const { closeSidePanelMenu } = useSidePanelMenu();
 
@@ -61,8 +61,6 @@ export const SidePanelPageLayoutRecordPageWidgetTypeSelect = () => {
 
   const { insertCreatedWidgetAtContext } =
     useInsertCreatedWidgetAtContext(pageLayoutId);
-
-  const { targetObjectNameSingular } = useTargetRecord();
 
   const { objectMetadataItem } = useObjectMetadataItem({
     objectNameSingular: targetObjectNameSingular,
@@ -141,7 +139,7 @@ export const SidePanelPageLayoutRecordPageWidgetTypeSelect = () => {
     insertCreatedWidgetAtContext(widgetId);
 
     navigatePageLayoutSidePanel({
-      sidePanelPage: SidePanelPages.PageLayoutFieldsSettings,
+      sidePanelPage: SidePanelPages.RecordPageFieldsSettings,
       focusTitleInput: true,
       resetNavigationStack: true,
     });
@@ -208,7 +206,7 @@ export const SidePanelPageLayoutRecordPageWidgetTypeSelect = () => {
     insertCreatedWidgetAtContext(widgetId);
 
     navigatePageLayoutSidePanel({
-      sidePanelPage: SidePanelPages.PageLayoutFieldSettings,
+      sidePanelPage: SidePanelPages.RecordPageFieldSettings,
       focusTitleInput: true,
       resetNavigationStack: true,
     });

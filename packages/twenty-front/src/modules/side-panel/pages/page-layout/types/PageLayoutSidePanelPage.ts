@@ -2,10 +2,15 @@ import { type SidePanelPages } from 'twenty-shared/types';
 
 export type PageLayoutSidePanelPage =
   | SidePanelPages.PageLayoutWidgetTypeSelect
-  | SidePanelPages.PageLayoutGraphTypeSelect
-  | SidePanelPages.PageLayoutIframeSettings
   | SidePanelPages.PageLayoutTabSettings
-  | SidePanelPages.PageLayoutFieldsSettings
-  | SidePanelPages.PageLayoutFieldSettings
-  | SidePanelPages.PageLayoutRecordTableSettings
+  | SidePanelPages.DashboardChartSettings
+  | SidePanelPages.DashboardIframeSettings
+  | SidePanelPages.DashboardFieldsSettings
+  | SidePanelPages.DashboardFieldSettings
+  | SidePanelPages.DashboardRecordTableSettings
+  | SidePanelPages.RecordPageChartSettings
+  | SidePanelPages.RecordPageIframeSettings
+  | SidePanelPages.RecordPageFieldsSettings
+  | SidePanelPages.RecordPageFieldSettings
+  | SidePanelPages.RecordPageRecordTableSettings
   | SidePanelPages.PageLayoutRecordPageWidgetTypeSelect;

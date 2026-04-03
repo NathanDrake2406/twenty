@@ -97,12 +97,17 @@ export const SidePanelPageInfo = ({ pageChip }: SidePanelPageInfoProps) => {
   const isPageLayoutPage = pageChip.page?.page
     ? [
         SidePanelPages.PageLayoutWidgetTypeSelect,
-        SidePanelPages.PageLayoutGraphTypeSelect,
-        SidePanelPages.PageLayoutIframeSettings,
+        SidePanelPages.DashboardChartSettings,
+        SidePanelPages.DashboardIframeSettings,
         SidePanelPages.PageLayoutTabSettings,
-        SidePanelPages.PageLayoutFieldsSettings,
-        SidePanelPages.PageLayoutFieldSettings,
-        SidePanelPages.PageLayoutRecordTableSettings,
+        SidePanelPages.DashboardFieldsSettings,
+        SidePanelPages.DashboardFieldSettings,
+        SidePanelPages.DashboardRecordTableSettings,
+        SidePanelPages.RecordPageChartSettings,
+        SidePanelPages.RecordPageIframeSettings,
+        SidePanelPages.RecordPageFieldsSettings,
+        SidePanelPages.RecordPageFieldSettings,
+        SidePanelPages.RecordPageRecordTableSettings,
       ].includes(pageChip.page?.page)
     : false;
 
