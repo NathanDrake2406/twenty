@@ -18,7 +18,7 @@ type MountCommandParams = {
   workflowVersionId?: string;
   availabilityType?: CommandMenuItemAvailabilityType;
   availabilityObjectMetadataId?: string | null;
-  payload?: Record<string, any> | null;
+  payload?: Record<string, unknown> | null;
 };
 
 export const useMountCommand = () => {

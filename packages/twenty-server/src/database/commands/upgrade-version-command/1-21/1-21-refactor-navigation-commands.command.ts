@@ -19,6 +19,7 @@ import { type FlatCommandMenuItem } from 'src/engine/metadata-modules/flat-comma
 import { buildNavigationFlatCommandMenuItem } from 'src/engine/metadata-modules/flat-command-menu-item/utils/build-navigation-flat-command-menu-item.util';
 import { ObjectMetadataEntity } from 'src/engine/metadata-modules/object-metadata/object-metadata.entity';
 import { GlobalWorkspaceOrmManager } from 'src/engine/twenty-orm/global-workspace-datasource/global-workspace-orm.manager';
+import { STANDARD_COMMAND_MENU_ITEMS } from 'src/engine/workspace-manager/twenty-standard-application/constants/standard-command-menu-item.constant';
 import { TWENTY_STANDARD_APPLICATION } from 'src/engine/workspace-manager/twenty-standard-application/constants/twenty-standard-applications';
 import { WorkspaceMigrationValidateBuildAndRunService } from 'src/engine/workspace-manager/workspace-migration/services/workspace-migration-validate-build-and-run-service';
 
@@ -33,8 +34,6 @@ const GO_TO_ENGINE_KEYS = [
   'GO_TO_WORKFLOWS',
   'GO_TO_RUNS',
 ];
-
-const SETTINGS_UNIVERSAL_IDENTIFIER = 'ef9aba44-0068-453e-930a-f8c182af18ee';
 
 @Command({
   name: 'upgrade:1-21:refactor-navigation-commands',
@@ -178,7 +177,8 @@ export class RefactorNavigationCommandsCommand extends ActiveOrSuspendedWorkspac
 
       flatCommandMenuItemsToCreate.push({
         id: settingsId,
-        universalIdentifier: SETTINGS_UNIVERSAL_IDENTIFIER,
+        universalIdentifier:
+          STANDARD_COMMAND_MENU_ITEMS.goToSettings.universalIdentifier,
         applicationId: twentyStandardFlatApplication.id,
         applicationUniversalIdentifier:
           TWENTY_STANDARD_APPLICATION.universalIdentifier,

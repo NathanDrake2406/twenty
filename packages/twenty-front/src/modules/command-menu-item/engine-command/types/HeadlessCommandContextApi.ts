@@ -16,7 +16,7 @@ export type HeadlessEngineCommandContextApi = {
   targetedRecordsRule: ContextStoreTargetedRecordsRule;
   selectedRecords: ObjectRecord[];
   graphqlFilter: Nullable<RecordGqlOperationFilter>;
-  payload: Nullable<Record<string, any>>;
+  payload: Nullable<Record<string, unknown>>;
 };
 
 export type HeadlessFrontComponentCommandContextApi =
