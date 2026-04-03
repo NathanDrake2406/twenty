@@ -7706,6 +7706,15 @@ export default {
                     ]
                 }
             ],
+            "resetPageLayoutWidgetToDefault": [
+                75,
+                {
+                    "id": [
+                        1,
+                        "String!"
+                    ]
+                }
+            ],
             "createPageLayoutWidget": [
                 75,
                 {
