@@ -5142,6 +5142,9 @@ export default {
             "availabilityType": [
                 296
             ],
+            "payload": [
+                15
+            ],
             "hotKeys": [
                 1
             ],
@@ -10206,6 +10209,9 @@ export default {
             ],
             "availabilityObjectMetadataId": [
                 3
+            ],
+            "payload": [
+                15
             ],
             "__typename": [
                 1
