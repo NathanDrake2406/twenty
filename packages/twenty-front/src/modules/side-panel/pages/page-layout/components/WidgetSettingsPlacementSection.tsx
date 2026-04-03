@@ -114,19 +114,6 @@ export const WidgetSettingsPlacementSection = ({
 
   return (
     <SidePanelGroup heading={t`Placement`}>
-      {showMoveDown && (
-        <SelectableListItem
-          itemId={WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.MOVE_DOWN}
-          onEnter={handleMoveDown}
-        >
-          <CommandMenuItem
-            id={WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.MOVE_DOWN}
-            Icon={IconChevronDown}
-            label={t`Move Down`}
-            onClick={handleMoveDown}
-          />
-        </SelectableListItem>
-      )}
       {showMoveUp && (
         <SelectableListItem
           itemId={WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.MOVE_UP}
@@ -137,6 +124,19 @@ export const WidgetSettingsPlacementSection = ({
             Icon={IconChevronUp}
             label={t`Move Up`}
             onClick={handleMoveUp}
+          />
+        </SelectableListItem>
+      )}
+      {showMoveDown && (
+        <SelectableListItem
+          itemId={WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.MOVE_DOWN}
+          onEnter={handleMoveDown}
+        >
+          <CommandMenuItem
+            id={WIDGET_SETTINGS_SELECTABLE_ITEM_IDS.MOVE_DOWN}
+            Icon={IconChevronDown}
+            label={t`Move Down`}
+            onClick={handleMoveDown}
           />
         </SelectableListItem>
       )}
