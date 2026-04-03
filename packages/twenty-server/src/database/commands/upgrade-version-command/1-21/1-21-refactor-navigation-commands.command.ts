@@ -143,7 +143,7 @@ export class RefactorNavigationCommandsCommand extends ActiveOrSuspendedWorkspac
       );
 
       let nextPosition =
-        (Number(maxPositionResult?.[0]?.maxPosition) ?? -1) + 1;
+        Number(maxPositionResult?.[0]?.maxPosition ?? -1) + 1;
 
       const { twentyStandardFlatApplication } =
         await this.applicationService.findWorkspaceTwentyStandardAndCustomApplicationOrThrow(

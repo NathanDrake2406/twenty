@@ -1,4 +1,5 @@
 export const isObjectMetadataNavigationPayload = (
   payload: Record<string, unknown>,
 ): payload is { objectMetadataItemId: string } =>
-  'objectMetadataItemId' in payload;
+  'objectMetadataItemId' in payload &&
+  typeof payload.objectMetadataItemId === 'string';
