@@ -1,8 +1,8 @@
 import { usePerformMergePreview } from '@/object-record/record-merge/hooks/usePerformMergePreview';
-import { PageLayoutSingleTabRenderer } from '@/page-layout/components/PageLayoutSingleTabRenderer';
-import { usePageLayoutIdForRecord } from '@/page-layout/hooks/usePageLayoutIdForRecord';
+import { SummaryCard } from '@/object-record/record-show/components/SummaryCard';
 import { LayoutRenderingProvider } from '@/ui/layout/contexts/LayoutRenderingContext';
 import { isDefined } from 'twenty-shared/utils';
+import { Section } from 'twenty-ui/layout';
 import { PageLayoutType } from '~/generated-metadata/graphql';
 
 type MergePreviewTabProps = {
@@ -16,16 +16,7 @@ export const MergePreviewTab = ({
     objectNameSingular,
   });
 
-  const { pageLayoutId } = usePageLayoutIdForRecord({
-    id: mergePreviewRecord?.id ?? '',
-    targetObjectNameSingular: objectNameSingular,
-  });
-
-  if (
-    !isDefined(mergePreviewRecord) ||
-    isGeneratingPreview ||
-    !isDefined(pageLayoutId)
-  ) {
+  if (!isDefined(mergePreviewRecord) || isGeneratingPreview) {
     return null;
   }
 
@@ -42,7 +33,13 @@ export const MergePreviewTab = ({
         isInSidePanel: true,
       }}
     >
-      <PageLayoutSingleTabRenderer pageLayoutId={pageLayoutId} />
+      <Section>
+        <SummaryCard
+          objectNameSingular={objectNameSingular}
+          objectRecordId={recordId}
+          isInSidePanel={true}
+        />
+      </Section>
     </LayoutRenderingProvider>
   );
 };
