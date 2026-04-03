@@ -28,7 +28,7 @@ describe('useCreateWidgetFromClick', () => {
   it('should set dragged area and navigate to widget selection when called with a cellId', () => {
     const { result } = renderHook(
       () => ({
-        createWidget: useCreateWidgetFromClick(),
+        createWidget: useCreateWidgetFromClick(PAGE_LAYOUT_TEST_INSTANCE_ID),
         draggedArea: useAtomComponentStateValue(
           pageLayoutDraggedAreaComponentState,
           PAGE_LAYOUT_TEST_INSTANCE_ID,
