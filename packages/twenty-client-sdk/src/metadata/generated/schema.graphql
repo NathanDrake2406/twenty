@@ -2763,6 +2763,11 @@ type DuplicatedDashboard {
   updatedAt: String!
 }
 
+type SendEmailOutput {
+  success: Boolean!
+  error: String
+}
+
 type EventLogRecord {
   event: String!
   timestamp: DateTime!
@@ -3553,6 +3558,7 @@ type Mutation {
   deleteSSOIdentityProvider(input: DeleteSsoInput!): DeleteSso!
   editSSOIdentityProvider(input: EditSsoInput!): EditSso!
   impersonate(userId: UUID!, workspaceId: UUID!): Impersonate!
+  sendEmail(input: SendEmailInput!): SendEmailOutput!
   startChannelSync(connectedAccountId: UUID!): ChannelSyncSuccess!
   saveImapSmtpCaldavAccount(accountOwnerId: UUID!, handle: String!, connectionParameters: EmailAccountConnectionParameters!, id: UUID): ImapSmtpCaldavConnectionSuccess!
   updateLabPublicFeatureFlag(input: UpdateLabPublicFeatureFlagInput!): FeatureFlag!
@@ -4521,6 +4527,16 @@ input DeleteSsoInput {
 input EditSsoInput {
   id: UUID!
   status: SSOIdentityProviderStatus!
+}
+
+input SendEmailInput {
+  connectedAccountId: String!
+  to: String!
+  cc: String
+  bcc: String
+  subject: String!
+  body: String!
+  inReplyTo: String
 }
 
 input EmailAccountConnectionParameters {

@@ -2416,6 +2416,12 @@ export interface DuplicatedDashboard {
     __typename: 'DuplicatedDashboard'
 }
 
+export interface SendEmailOutput {
+    success: Scalars['Boolean']
+    error?: Scalars['String']
+    __typename: 'SendEmailOutput'
+}
+
 export interface EventLogRecord {
     event: Scalars['String']
     timestamp: Scalars['DateTime']
@@ -2999,6 +3005,7 @@ export interface Mutation {
     deleteSSOIdentityProvider: DeleteSso
     editSSOIdentityProvider: EditSso
     impersonate: Impersonate
+    sendEmail: SendEmailOutput
     startChannelSync: ChannelSyncSuccess
     saveImapSmtpCaldavAccount: ImapSmtpCaldavConnectionSuccess
     updateLabPublicFeatureFlag: FeatureFlag
@@ -5615,6 +5622,13 @@ export interface DuplicatedDashboardGenqlSelection{
     __scalar?: boolean | number
 }
 
+export interface SendEmailOutputGenqlSelection{
+    success?: boolean | number
+    error?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
 export interface EventLogRecordGenqlSelection{
     event?: boolean | number
     timestamp?: boolean | number
@@ -6239,6 +6253,7 @@ export interface MutationGenqlSelection{
     deleteSSOIdentityProvider?: (DeleteSsoGenqlSelection & { __args: {input: DeleteSsoInput} })
     editSSOIdentityProvider?: (EditSsoGenqlSelection & { __args: {input: EditSsoInput} })
     impersonate?: (ImpersonateGenqlSelection & { __args: {userId: Scalars['UUID'], workspaceId: Scalars['UUID']} })
+    sendEmail?: (SendEmailOutputGenqlSelection & { __args: {input: SendEmailInput} })
     startChannelSync?: (ChannelSyncSuccessGenqlSelection & { __args: {connectedAccountId: Scalars['UUID']} })
     saveImapSmtpCaldavAccount?: (ImapSmtpCaldavConnectionSuccessGenqlSelection & { __args: {accountOwnerId: Scalars['UUID'], handle: Scalars['String'], connectionParameters: EmailAccountConnectionParameters, id?: (Scalars['UUID'] | null)} })
     updateLabPublicFeatureFlag?: (FeatureFlagGenqlSelection & { __args: {input: UpdateLabPublicFeatureFlagInput} })
@@ -6588,6 +6603,8 @@ export interface SetupSAMLSsoInput {name: Scalars['String'],issuer: Scalars['Str
 export interface DeleteSsoInput {identityProviderId: Scalars['UUID']}
 
 export interface EditSsoInput {id: Scalars['UUID'],status: SSOIdentityProviderStatus}
+
+export interface SendEmailInput {connectedAccountId: Scalars['String'],to: Scalars['String'],cc?: (Scalars['String'] | null),bcc?: (Scalars['String'] | null),subject: Scalars['String'],body: Scalars['String'],inReplyTo?: (Scalars['String'] | null)}
 
 export interface EmailAccountConnectionParameters {IMAP?: (ConnectionParameters | null),SMTP?: (ConnectionParameters | null),CALDAV?: (ConnectionParameters | null)}
 
@@ -8492,6 +8509,14 @@ export interface LogicFunctionLogsInput {applicationId?: (Scalars['UUID'] | null
     export const isDuplicatedDashboard = (obj?: { __typename?: any } | null): obj is DuplicatedDashboard => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isDuplicatedDashboard"')
       return DuplicatedDashboard_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const SendEmailOutput_possibleTypes: string[] = ['SendEmailOutput']
+    export const isSendEmailOutput = (obj?: { __typename?: any } | null): obj is SendEmailOutput => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isSendEmailOutput"')
+      return SendEmailOutput_possibleTypes.includes(obj.__typename)
     }
     
 
