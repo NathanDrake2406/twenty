@@ -3,6 +3,7 @@ import { styled } from '@linaria/react';
 import { ActivityList } from '@/activities/components/ActivityList';
 import { CustomResolverFetchMoreLoader } from '@/activities/components/CustomResolverFetchMoreLoader';
 import { SkeletonLoader } from '@/activities/components/SkeletonLoader';
+import { ComposeEmailButton } from '@/activities/emails/components/ComposeEmailButton';
 import { EmailThreadPreview } from '@/activities/emails/components/EmailThreadPreview';
 import { TIMELINE_THREADS_DEFAULT_PAGE_SIZE } from '@/activities/emails/constants/Messaging';
 import { getTimelineThreadsFromCompanyId } from '@/activities/emails/graphql/queries/getTimelineThreadsFromCompanyId';
@@ -36,6 +37,12 @@ const StyledContainer = styled.div`
   overflow: auto;
   padding: ${themeCssVariables.spacing[6]} ${themeCssVariables.spacing[6]}
     ${themeCssVariables.spacing[2]};
+`;
+
+const StyledHeaderRow = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const StyledH1TitleWrapper = styled.div`
@@ -89,37 +96,48 @@ export const EmailsCard = () => {
 
   if (!firstQueryLoading && !timelineThreads?.length) {
     return (
-      <AnimatedPlaceholderEmptyContainer
-        // oxlint-disable-next-line react/jsx-props-no-spreading
-        {...EMPTY_PLACEHOLDER_TRANSITION_PROPS}
-      >
-        <AnimatedPlaceholder type="emptyInbox" />
-        <AnimatedPlaceholderEmptyTextContainer>
-          <AnimatedPlaceholderEmptyTitle>
-            <Trans>Empty Inbox</Trans>
-          </AnimatedPlaceholderEmptyTitle>
-          <AnimatedPlaceholderEmptySubTitle>
-            <Trans>No email exchange has occurred with this record yet.</Trans>
-          </AnimatedPlaceholderEmptySubTitle>
-        </AnimatedPlaceholderEmptyTextContainer>
-      </AnimatedPlaceholderEmptyContainer>
+      <StyledContainer>
+        <StyledHeaderRow>
+          <div />
+          <ComposeEmailButton />
+        </StyledHeaderRow>
+        <AnimatedPlaceholderEmptyContainer
+          // oxlint-disable-next-line react/jsx-props-no-spreading
+          {...EMPTY_PLACEHOLDER_TRANSITION_PROPS}
+        >
+          <AnimatedPlaceholder type="emptyInbox" />
+          <AnimatedPlaceholderEmptyTextContainer>
+            <AnimatedPlaceholderEmptyTitle>
+              <Trans>Empty Inbox</Trans>
+            </AnimatedPlaceholderEmptyTitle>
+            <AnimatedPlaceholderEmptySubTitle>
+              <Trans>
+                No email exchange has occurred with this record yet.
+              </Trans>
+            </AnimatedPlaceholderEmptySubTitle>
+          </AnimatedPlaceholderEmptyTextContainer>
+        </AnimatedPlaceholderEmptyContainer>
+      </StyledContainer>
     );
   }
 
   return (
     <StyledContainer>
       <Section>
-        <StyledH1TitleWrapper>
-          <H1Title
-            title={
-              <>
-                <Trans>Inbox</Trans>{' '}
-                <StyledEmailCount>{totalNumberOfThreads}</StyledEmailCount>
-              </>
-            }
-            fontColor={H1TitleFontColor.Primary}
-          />
-        </StyledH1TitleWrapper>
+        <StyledHeaderRow>
+          <StyledH1TitleWrapper>
+            <H1Title
+              title={
+                <>
+                  <Trans>Inbox</Trans>{' '}
+                  <StyledEmailCount>{totalNumberOfThreads}</StyledEmailCount>
+                </>
+              }
+              fontColor={H1TitleFontColor.Primary}
+            />
+          </StyledH1TitleWrapper>
+          <ComposeEmailButton />
+        </StyledHeaderRow>
         {!firstQueryLoading && (
           <ActivityList>
             {timelineThreads?.map((thread: TimelineThread) => (

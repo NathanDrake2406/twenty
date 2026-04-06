@@ -1,17 +1,22 @@
+import { useQuery } from '@apollo/client/react';
 import { styled } from '@linaria/react';
+import { useMemo } from 'react';
 
 import { type EmailComposerState } from '@/activities/emails/hooks/useEmailComposerState';
 import { FormAdvancedTextFieldInput } from '@/object-record/record-field/ui/form-types/components/FormAdvancedTextFieldInput';
 import { FormMultiTextFieldInput } from '@/object-record/record-field/ui/form-types/components/FormMultiTextFieldInput';
 import { FormTextFieldInput } from '@/object-record/record-field/ui/form-types/components/FormTextFieldInput';
+import { GET_MY_CONNECTED_ACCOUNTS } from '@/settings/accounts/graphql/queries/getMyConnectedAccounts';
+import { Select } from '@/ui/input/components/Select';
 import { t } from '@lingui/core/macro';
+import { type SelectOption } from 'twenty-ui/input';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
 
 const StyledFieldsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${themeCssVariables.spacing[1]};
-  padding: ${themeCssVariables.spacing[3]} ${themeCssVariables.spacing[4]};
+  padding: ${themeCssVariables.spacing[3]} ${themeCssVariables.spacing[2]};
 `;
 
 const StyledToRow = styled.div`
@@ -41,8 +46,33 @@ type EmailComposerFieldsProps = {
 export const EmailComposerFields = ({
   composerState,
 }: EmailComposerFieldsProps) => {
+  const { data: accountsData } = useQuery<{
+    myConnectedAccounts: { id: string; handle: string }[];
+  }>(GET_MY_CONNECTED_ACCOUNTS);
+
+  const accountOptions = useMemo((): SelectOption<string>[] => {
+    return (
+      accountsData?.myConnectedAccounts?.map((account) => ({
+        label: account.handle,
+        value: account.id,
+      })) ?? []
+    );
+  }, [accountsData]);
+
+  const hasMultipleAccounts = accountOptions.length > 1;
+
   return (
     <StyledFieldsContainer>
+      {hasMultipleAccounts && (
+        <Select
+          dropdownId="email-composer-from-account"
+          label={t`From`}
+          fullWidth
+          value={composerState.connectedAccountId}
+          options={accountOptions}
+          onChange={(value) => composerState.setConnectedAccountId(value)}
+        />
+      )}
       <StyledToRow>
         <FormMultiTextFieldInput
           label={t`To`}

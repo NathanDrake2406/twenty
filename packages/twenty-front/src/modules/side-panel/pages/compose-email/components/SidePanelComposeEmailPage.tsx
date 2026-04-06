@@ -10,7 +10,7 @@ import { useAtomComponentStateValue } from '@/ui/utilities/state/jotai/hooks/use
 import { styled } from '@linaria/react';
 import { useCallback } from 'react';
 import { t } from '@lingui/core/macro';
-import { IconArrowBackUp } from 'twenty-ui/display';
+import { IconSend } from 'twenty-ui/display';
 import { Button } from 'twenty-ui/input';
 
 const StyledContainer = styled.div`
@@ -82,7 +82,7 @@ export const SidePanelComposeEmailPage = () => {
             variant="primary"
             accent="blue"
             title={t`Send`}
-            Icon={IconArrowBackUp}
+            Icon={IconSend}
             onClick={composerState.handleSend}
             disabled={!composerState.canSend}
           />,

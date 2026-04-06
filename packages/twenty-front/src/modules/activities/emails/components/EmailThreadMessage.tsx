@@ -8,8 +8,8 @@ import { EmailThreadMessageSender } from '@/activities/emails/components/EmailTh
 import { EmailThreadNotShared } from '@/activities/emails/components/EmailThreadNotShared';
 import { type EmailThreadMessageParticipant } from '@/activities/emails/types/EmailThreadMessageParticipant';
 import { FIELD_RESTRICTED_ADDITIONAL_PERMISSIONS_REQUIRED } from 'twenty-shared/constants';
-import { isDefined } from 'twenty-shared/utils';
 import { MessageParticipantRole } from 'twenty-shared/types';
+import { isDefined } from 'twenty-shared/utils';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
 import { MessageChannelVisibility } from '~/generated/graphql';
 
@@ -29,11 +29,11 @@ const StyledThreadMessageHeader = styled.div`
   flex-direction: column;
   justify-content: space-between;
   margin-bottom: ${themeCssVariables.spacing[2]};
-  padding: ${themeCssVariables.spacing[0]} ${themeCssVariables.spacing[6]};
+  padding: ${themeCssVariables.spacing[0]} ${themeCssVariables.spacing[2]};
 `;
 
 const StyledThreadMessageBody = styled.div`
-  padding: ${themeCssVariables.spacing[0]} ${themeCssVariables.spacing[6]};
+  padding: ${themeCssVariables.spacing[0]} ${themeCssVariables.spacing[2]};
 `;
 
 type EmailThreadMessageProps = {

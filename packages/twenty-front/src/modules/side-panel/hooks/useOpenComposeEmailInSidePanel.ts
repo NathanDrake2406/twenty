@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import { useStore } from 'jotai';
 import { SidePanelPages } from 'twenty-shared/types';
-import { IconArrowBackUp } from 'twenty-ui/display';
+import { type IconComponent, IconArrowBackUp, IconMail } from 'twenty-ui/display';
 import { v4 } from 'uuid';
 
 import { useSidePanelMenu } from '@/side-panel/hooks/useSidePanelMenu';
@@ -19,6 +19,8 @@ type OpenComposeEmailParams = {
   defaultTo?: string;
   defaultSubject?: string;
   defaultInReplyTo?: string;
+  pageTitle?: string;
+  pageIcon?: IconComponent;
 };
 
 export const useOpenComposeEmailInSidePanel = () => {
@@ -28,6 +30,8 @@ export const useOpenComposeEmailInSidePanel = () => {
   const openComposeEmailInSidePanel = useCallback(
     (params: OpenComposeEmailParams) => {
       const pageId = v4();
+
+      const isReply = !!params.defaultInReplyTo;
 
       store.set(
         composeEmailThreadIdComponentState.atomFamily({
@@ -66,8 +70,8 @@ export const useOpenComposeEmailInSidePanel = () => {
 
       navigateSidePanelMenu({
         page: SidePanelPages.ComposeEmail,
-        pageTitle: t`Reply`,
-        pageIcon: IconArrowBackUp,
+        pageTitle: params.pageTitle ?? (isReply ? t`Reply` : t`New Email`),
+        pageIcon: params.pageIcon ?? (isReply ? IconArrowBackUp : IconMail),
         pageId,
       });
     },

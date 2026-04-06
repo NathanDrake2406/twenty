@@ -11,12 +11,15 @@ type UseEmailComposerStateArgs = {
 };
 
 export const useEmailComposerState = ({
-  connectedAccountId,
+  connectedAccountId: initialConnectedAccountId,
   defaultTo = '',
   defaultSubject = '',
   defaultInReplyTo,
   onSent,
 }: UseEmailComposerStateArgs) => {
+  const [connectedAccountId, setConnectedAccountId] = useState(
+    initialConnectedAccountId,
+  );
   const [to, setTo] = useState(defaultTo);
   const [cc, setCc] = useState('');
   const [bcc, setBcc] = useState('');
@@ -26,10 +29,11 @@ export const useEmailComposerState = ({
 
   const { sendEmail, loading } = useSendEmail();
 
-  const canSend = to.trim().length > 0 && !loading;
+  const canSend =
+    to.trim().length > 0 && connectedAccountId.length > 0 && !loading;
 
   const handleSend = useCallback(async () => {
-    if (!to.trim()) {
+    if (!to.trim() || !connectedAccountId) {
       return;
     }
 
@@ -59,6 +63,8 @@ export const useEmailComposerState = ({
   ]);
 
   return {
+    connectedAccountId,
+    setConnectedAccountId,
     to,
     setTo,
     cc,
