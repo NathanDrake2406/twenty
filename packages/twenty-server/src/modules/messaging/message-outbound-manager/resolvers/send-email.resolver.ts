@@ -1,4 +1,10 @@
-import { Logger, UseFilters, UseGuards, UsePipes } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Logger,
+  UseFilters,
+  UseGuards,
+  UsePipes,
+} from '@nestjs/common';
 import { Args, Mutation } from '@nestjs/graphql';
 
 import { MetadataResolver } from 'src/engine/api/graphql/graphql-config/decorators/metadata-resolver.decorator';
@@ -6,13 +12,14 @@ import { AuthGraphqlApiExceptionFilter } from 'src/engine/core-modules/auth/filt
 import { ResolverValidationPipe } from 'src/engine/core-modules/graphql/pipes/resolver-validation.pipe';
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
 import { EmailComposerService } from 'src/engine/core-modules/tool/tools/email-tool/email-composer.service';
+import { AuthUserWorkspaceId } from 'src/engine/decorators/auth/auth-user-workspace-id.decorator';
 import { AuthWorkspace } from 'src/engine/decorators/auth/auth-workspace.decorator';
 import { NoPermissionGuard } from 'src/engine/guards/no-permission.guard';
 import { WorkspaceAuthGuard } from 'src/engine/guards/workspace-auth.guard';
+import { ConnectedAccountMetadataService } from 'src/engine/metadata-modules/connected-account/connected-account-metadata.service';
 import { SendEmailOutputDTO } from 'src/modules/messaging/message-outbound-manager/dtos/send-email-output.dto';
 import { SendEmailInput } from 'src/modules/messaging/message-outbound-manager/dtos/send-email.input';
-import { MessagingMessageOutboundService } from 'src/modules/messaging/message-outbound-manager/services/messaging-message-outbound.service';
-import { SentMessagePersistenceService } from 'src/modules/messaging/message-outbound-manager/services/sent-message-persistence.service';
+import { SendEmailService } from 'src/modules/messaging/message-outbound-manager/services/send-email.service';
 
 @MetadataResolver()
 @UsePipes(ResolverValidationPipe)
@@ -22,17 +29,24 @@ export class SendEmailResolver {
   private readonly logger = new Logger(SendEmailResolver.name);
 
   constructor(
+    private readonly connectedAccountMetadataService: ConnectedAccountMetadataService,
     private readonly emailComposerService: EmailComposerService,
-    private readonly messageOutboundService: MessagingMessageOutboundService,
-    private readonly sentMessagePersistenceService: SentMessagePersistenceService,
+    private readonly sendEmailService: SendEmailService,
   ) {}
 
   @Mutation(() => SendEmailOutputDTO)
   async sendEmail(
     @Args('input') input: SendEmailInput,
     @AuthWorkspace() workspace: WorkspaceEntity,
+    @AuthUserWorkspaceId() userWorkspaceId: string,
   ): Promise<SendEmailOutputDTO> {
     try {
+      await this.connectedAccountMetadataService.verifyOwnership({
+        id: input.connectedAccountId,
+        userWorkspaceId,
+        workspaceId: workspace.id,
+      });
+
       const result = await this.emailComposerService.composeEmail(
         {
           recipients: {
@@ -58,39 +72,20 @@ export class SendEmailResolver {
 
       const { data } = result;
 
-      const sendResult = await this.messageOutboundService.sendMessage(
-        {
-          to: data.recipients.to,
-          cc: data.recipients.cc.length > 0 ? data.recipients.cc : undefined,
-          bcc: data.recipients.bcc.length > 0 ? data.recipients.bcc : undefined,
-          subject: data.sanitizedSubject,
-          body: data.plainTextBody,
-          html: data.sanitizedHtmlBody,
-          attachments: data.attachments,
-          inReplyTo: data.inReplyTo,
-        },
-        data.connectedAccount,
-      );
+      const sendResult = await this.sendEmailService.sendComposedEmail(data);
 
-      try {
-        await this.sentMessagePersistenceService.persistSentMessage({
-          sendResult,
-          subject: data.sanitizedSubject,
-          body: data.plainTextBody,
-          recipients: data.recipients,
-          connectedAccount: data.connectedAccount,
-          messageChannelId: data.messageChannelId,
-          inReplyTo: data.inReplyTo,
-          workspaceId: workspace.id,
-        });
-      } catch (persistenceError) {
-        this.logger.warn(
-          `Failed to persist sent message (sync will recover): ${persistenceError}`,
-        );
-      }
+      await this.sendEmailService.persistSentMessage(
+        sendResult,
+        data,
+        workspace.id,
+      );
 
       return { success: true };
     } catch (error) {
+      if (error instanceof ForbiddenException) {
+        throw error;
+      }
+
       this.logger.error(`Failed to send email: ${error}`);
 
       return {

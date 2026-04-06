@@ -8,7 +8,6 @@ import { composeEmailDefaultToComponentState } from '@/side-panel/pages/compose-
 import { SidePanelFooter } from '@/ui/layout/side-panel/components/SidePanelFooter';
 import { useAtomComponentStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateValue';
 import { styled } from '@linaria/react';
-import { useCallback } from 'react';
 import { t } from '@lingui/core/macro';
 import { IconSend } from 'twenty-ui/display';
 import { Button } from 'twenty-ui/input';
@@ -42,20 +41,12 @@ export const SidePanelComposeEmailPage = () => {
 
   const { goBackFromSidePanel } = useSidePanelHistory();
 
-  const handleClose = useCallback(() => {
-    goBackFromSidePanel();
-  }, [goBackFromSidePanel]);
-
-  const handleSent = useCallback(() => {
-    goBackFromSidePanel();
-  }, [goBackFromSidePanel]);
-
   const composerState = useEmailComposerState({
     connectedAccountId: composeEmailConnectedAccountId ?? '',
     defaultTo: composeEmailDefaultTo ?? '',
     defaultSubject: composeEmailDefaultSubject ?? '',
     defaultInReplyTo: composeEmailDefaultInReplyTo ?? undefined,
-    onSent: handleSent,
+    onSent: goBackFromSidePanel,
   });
 
   if (!composeEmailConnectedAccountId) {
@@ -74,7 +65,7 @@ export const SidePanelComposeEmailPage = () => {
             size="small"
             variant="secondary"
             title={t`Cancel`}
-            onClick={handleClose}
+            onClick={goBackFromSidePanel}
           />,
           <Button
             key="send"

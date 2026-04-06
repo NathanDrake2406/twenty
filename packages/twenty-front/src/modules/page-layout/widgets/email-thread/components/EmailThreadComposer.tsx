@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo } from 'react';
 
 import { EmailComposerFields } from '@/activities/emails/components/EmailComposerFields';
 import { useEmailComposerState } from '@/activities/emails/hooks/useEmailComposerState';
-import { type ReplyContext } from '@/activities/emails/hooks/useReplyContext';
+import { type ReplyContextReady } from '@/activities/emails/hooks/useReplyContext';
 import { sidePanelWidgetFooterActionsState } from '@/ui/layout/side-panel/states/sidePanelWidgetFooterActionsState';
 import { type SidePanelFooterAction } from '@/ui/layout/side-panel/types/SidePanelFooterAction';
 import { useSetAtomState } from '@/ui/utilities/state/jotai/hooks/useSetAtomState';
@@ -28,7 +28,7 @@ const StyledReplyBar = styled.button`
 `;
 
 type EmailThreadComposerProps = {
-  replyContext: ReplyContext;
+  replyContext: ReplyContextReady;
   isInSidePanel: boolean;
   isComposerOpen: boolean;
   setIsComposerOpen: (open: boolean) => void;

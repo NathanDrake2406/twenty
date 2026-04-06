@@ -2,6 +2,9 @@ import { useApolloClient, useMutation } from '@apollo/client/react';
 import { useCallback } from 'react';
 
 import { SEND_EMAIL } from '@/activities/emails/graphql/mutations/sendEmail';
+import { getTimelineThreadsFromCompanyId } from '@/activities/emails/graphql/queries/getTimelineThreadsFromCompanyId';
+import { getTimelineThreadsFromOpportunityId } from '@/activities/emails/graphql/queries/getTimelineThreadsFromOpportunityId';
+import { getTimelineThreadsFromPersonId } from '@/activities/emails/graphql/queries/getTimelineThreadsFromPersonId';
 import { useSnackBar } from '@/ui/feedback/snack-bar-manager/hooks/useSnackBar';
 import { t } from '@lingui/core/macro';
 import {
@@ -51,7 +54,14 @@ export const useSendEmail = () => {
             message: t`Email sent successfully`,
           });
 
-          await apolloClient.refetchQueries({ include: 'active' });
+          await apolloClient.refetchQueries({
+            include: [
+              getTimelineThreadsFromCompanyId,
+              getTimelineThreadsFromPersonId,
+              getTimelineThreadsFromOpportunityId,
+              'FindManyMessages',
+            ],
+          });
 
           return true;
         }

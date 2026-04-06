@@ -4,14 +4,20 @@ import { useEmailThread } from '@/activities/emails/hooks/useEmailThread';
 import { type ConnectedAccountProvider } from 'twenty-shared/types';
 import { isDefined } from 'twenty-shared/utils';
 
-export type ReplyContext = {
+type ReplyContextLoading = {
+  loading: true;
+};
+
+export type ReplyContextReady = {
+  loading: false;
   to: string;
   subject: string;
   inReplyTo: string;
   connectedAccountId: string;
   connectedAccountProvider: ConnectedAccountProvider;
-  loading: boolean;
 };
+
+export type ReplyContext = ReplyContextLoading | ReplyContextReady;
 
 export const useReplyContext = (
   threadId: string | null,
@@ -30,14 +36,7 @@ export const useReplyContext = (
       !isDefined(connectedAccountProvider)
     ) {
       if (messageChannelLoading || threadLoading) {
-        return {
-          to: '',
-          subject: '',
-          inReplyTo: '',
-          connectedAccountId: '',
-          connectedAccountProvider: '' as unknown as ConnectedAccountProvider,
-          loading: true,
-        };
+        return { loading: true };
       }
 
       return null;
@@ -57,12 +56,12 @@ export const useReplyContext = (
       : `Re: ${rawSubject}`;
 
     return {
+      loading: false,
       to: senderHandle,
       subject,
       inReplyTo: lastMessage.headerMessageId ?? '',
       connectedAccountId,
       connectedAccountProvider,
-      loading: messageChannelLoading || threadLoading,
     };
   }, [
     messages,
