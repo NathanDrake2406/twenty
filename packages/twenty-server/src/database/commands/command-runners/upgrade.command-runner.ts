@@ -7,6 +7,7 @@ import { assertUnreachable, isDefined } from 'twenty-shared/utils';
 import { MigrationInterface, Repository } from 'typeorm';
 
 import { ActiveOrSuspendedWorkspaceCommandRunner } from 'src/database/commands/command-runners/active-or-suspended-workspace.command-runner';
+import { SlowCoreMigrationCommandRunner } from 'src/database/commands/command-runners/slow-core-migration.command-runner';
 import {
   type WorkspaceIteratorContext,
   WorkspaceIteratorService,
@@ -33,6 +34,9 @@ export type VersionCommands = (
 )[];
 export type AllCommands = Record<UpgradeCommandVersion, VersionCommands>;
 
+export type SlowCommands = SlowCoreMigrationCommandRunner[];
+export type AllSlowCommands = Record<UpgradeCommandVersion, SlowCommands>;
+
 export type UpgradeCommandOptions = {
   workspaceId?: Set<string>;
   startFromWorkspaceId?: string;
@@ -45,7 +49,8 @@ type VersionContext = {
   fromWorkspaceVersion: SemVer;
   currentAppVersion: SemVer;
   currentVersionMajorMinor: UpgradeCommandVersion;
-  instanceCommands: MigrationInterface[];
+  fastInstanceCommands: MigrationInterface[];
+  slowInstanceCommands: SlowCommands;
   workspaceCommands: VersionCommands;
 };
 
@@ -53,6 +58,7 @@ export abstract class UpgradeCommandRunner extends CommandRunner {
   protected logger: CommandLogger;
 
   public abstract allCommands: AllCommands;
+  public abstract allSlowCommands: AllSlowCommands;
 
   constructor(
     @InjectRepository(WorkspaceEntity)
@@ -152,7 +158,8 @@ export abstract class UpgradeCommandRunner extends CommandRunner {
             'Initialized upgrade context with:',
             `- currentVersion (migrating to): ${versionContext.currentAppVersion}`,
             `- fromWorkspaceVersion: ${versionContext.fromWorkspaceVersion}`,
-            `- ${versionContext.instanceCommands.length} instance commands (from registry)`,
+            `- ${versionContext.fastInstanceCommands.length} fast instance commands (from registry)`,
+            `- ${versionContext.slowInstanceCommands.length} slow instance commands`,
             `- ${versionContext.workspaceCommands.length} workspace commands`,
           ].join('\n   '),
         ),
@@ -186,8 +193,8 @@ Please roll back to that version and run the upgrade command again.`,
         );
       }
 
-      for (const instanceCommand of versionContext.instanceCommands) {
-        const migrationName = instanceCommand.constructor.name;
+      for (const fastCommand of versionContext.fastInstanceCommands) {
+        const migrationName = fastCommand.constructor.name;
         const result =
           await this.coreMigrationRunnerService.runSingleMigration(
             migrationName,
@@ -196,14 +203,14 @@ Please roll back to that version and run the upgrade command again.`,
         if (result.status === 'fail') {
           if (result.code === 'already-executed') {
             this.logger.warn(
-              `Core migration ${migrationName} already executed, skipping`,
+              `Fast core migration ${migrationName} already executed, skipping`,
             );
 
             continue;
           }
 
           this.logger.error(
-            `Core migration ${migrationName} failed with code: ${result.code}`,
+            `Fast core migration ${migrationName} failed with code: ${result.code}`,
           );
 
           if (isDefined(result.error)) {
@@ -215,13 +222,17 @@ Please roll back to that version and run the upgrade command again.`,
           }
 
           throw new Error(
-            `Core migration ${migrationName} failed: ${result.code}`,
+            `Fast core migration ${migrationName} failed: ${result.code}`,
           );
         }
 
         this.logger.log(
-          `Core migration ${migrationName} executed successfully`,
+          `Fast core migration ${migrationName} executed successfully`,
         );
+      }
+
+      for (const slowCommand of versionContext.slowInstanceCommands) {
+        await slowCommand.run([], {});
       }
 
       const iteratorReport = await this.workspaceIteratorService.iterate({
@@ -272,17 +283,21 @@ Please roll back to that version and run the upgrade command again.`,
     const fromWorkspaceVersion =
       this.coreEngineVersionService.getPreviousVersion();
 
-    const instanceCommands =
-      this.versionedMigrationRegistryService.getInstanceCommandsForVersion(
+    const fastInstanceCommands =
+      this.versionedMigrationRegistryService.getFastInstanceCommandsForVersion(
         currentVersionMajorMinor,
       );
+
+    const slowInstanceCommands =
+      this.allSlowCommands[currentVersionMajorMinor] ?? [];
 
     return {
       fromWorkspaceVersion,
       currentAppVersion,
       currentVersionMajorMinor,
       workspaceCommands,
-      instanceCommands,
+      fastInstanceCommands,
+      slowInstanceCommands,
     };
   }
 

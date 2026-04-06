@@ -5,6 +5,7 @@ import { type Repository } from 'typeorm';
 
 import {
   type AllCommands,
+  type AllSlowCommands,
   UpgradeCommandRunner,
   type VersionCommands,
 } from 'src/database/commands/command-runners/upgrade.command-runner';
@@ -44,6 +45,7 @@ import { DropWorkspaceMessagingFksCommand } from 'src/database/commands/upgrade-
 })
 export class UpgradeCommand extends UpgradeCommandRunner {
   override allCommands: AllCommands;
+  override allSlowCommands: AllSlowCommands;
 
   constructor(
     @InjectRepository(WorkspaceEntity)
@@ -126,6 +128,12 @@ export class UpgradeCommand extends UpgradeCommandRunner {
       '1.19.0': [],
       '1.20.0': commands_1200,
       '1.21.0': commands_1210,
+    };
+
+    this.allSlowCommands = {
+      '1.19.0': [],
+      '1.20.0': [],
+      '1.21.0': [],
     };
   }
 }

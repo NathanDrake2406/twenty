@@ -177,4 +177,29 @@ describe('CoreMigrationGeneratorService', () => {
 
     expect(result).toMatchSnapshot();
   });
+
+  it('should generate a slow migration template with TODO stubs', async () => {
+    const service = await buildService();
+
+    const result = service.generateSlowMigrationTemplate({
+      migrationName: 'make-column-not-nullable',
+      version: '1.21.0',
+      timestamp: FIXED_TIMESTAMP,
+    });
+
+    expect(result).toMatchSnapshot();
+  });
+
+  it('should generate a slow command template referencing the migration class', async () => {
+    const service = await buildService();
+
+    const result = service.generateSlowCommandTemplate({
+      migrationName: 'make-column-not-nullable',
+      version: '1.21.0',
+      timestamp: FIXED_TIMESTAMP,
+      migrationClassName: 'MakeColumnNotNullableV12101775000000000',
+    });
+
+    expect(result).toMatchSnapshot();
+  });
 });

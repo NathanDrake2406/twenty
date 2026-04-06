@@ -45,6 +45,15 @@ export class CoreMigrationRunnerService {
     }
   }
 
+  async isMigrationPending(migrationName: string): Promise<boolean> {
+    const migrationExecutor = new MigrationExecutor(this.dataSource);
+    const pendingMigrations = await migrationExecutor.getPendingMigrations();
+
+    return pendingMigrations.some(
+      (migration) => migration.name === migrationName,
+    );
+  }
+
   async runSingleMigration(
     migrationName: string,
   ): Promise<RunSingleMigrationResult> {

@@ -40,6 +40,22 @@ class MigrationD1769000000000 implements MigrationInterface {
   async down(): Promise<void> {}
 }
 
+@RegisteredCoreMigration('1.21.0', { type: 'slow' })
+class SlowMigrationE1773000000000 implements MigrationInterface {
+  name = 'SlowMigrationE1773000000000';
+
+  async up(): Promise<void> {}
+  async down(): Promise<void> {}
+}
+
+@RegisteredCoreMigration('1.21.0', { type: 'slow' })
+class SlowMigrationF1774000000000 implements MigrationInterface {
+  name = 'SlowMigrationF1774000000000';
+
+  async up(): Promise<void> {}
+  async down(): Promise<void> {}
+}
+
 class UndecoratedMigration1768000000000 implements MigrationInterface {
   name = 'UndecoratedMigration1768000000000';
 
@@ -68,7 +84,7 @@ const buildRegistryService = async (
 };
 
 describe('VersionedMigrationRegistryService', () => {
-  it('should group migrations by version', async () => {
+  it('should group fast migrations by version', async () => {
     const service = await buildRegistryService([
       new MigrationD1769000000000(),
       new MigrationA1770000000000(),
@@ -76,8 +92,8 @@ describe('VersionedMigrationRegistryService', () => {
       new MigrationC1772000000000(),
     ]);
 
-    const v120 = service.getInstanceCommandsForVersion('1.20.0');
-    const v121 = service.getInstanceCommandsForVersion('1.21.0');
+    const v120 = service.getFastInstanceCommandsForVersion('1.20.0');
+    const v121 = service.getFastInstanceCommandsForVersion('1.21.0');
 
     expect(v120.map((m) => m.constructor.name)).toStrictEqual([
       'MigrationD1769000000000',
@@ -98,7 +114,7 @@ describe('VersionedMigrationRegistryService', () => {
     ]);
 
     const names = service
-      .getInstanceCommandsForVersion('1.21.0')
+      .getFastInstanceCommandsForVersion('1.21.0')
       .map((m) => m.constructor.name);
 
     expect(names).toStrictEqual([
@@ -114,25 +130,93 @@ describe('VersionedMigrationRegistryService', () => {
       new MigrationA1770000000000(),
     ]);
 
-    const v121 = service.getInstanceCommandsForVersion('1.21.0');
+    const v121Fast = service.getFastInstanceCommandsForVersion('1.21.0');
 
-    expect(v121).toHaveLength(1);
-    expect(v121[0].constructor.name).toBe('MigrationA1770000000000');
+    expect(v121Fast).toHaveLength(1);
+    expect(v121Fast[0].constructor.name).toBe('MigrationA1770000000000');
   });
 
   it('should return empty array for version with no migrations', async () => {
     const service = await buildRegistryService([]);
 
-    expect(service.getInstanceCommandsForVersion('1.19.0')).toStrictEqual([]);
-    expect(service.getInstanceCommandsForVersion('1.20.0')).toStrictEqual([]);
-    expect(service.getInstanceCommandsForVersion('1.21.0')).toStrictEqual([]);
+    expect(
+      service.getFastInstanceCommandsForVersion('1.19.0'),
+    ).toStrictEqual([]);
+    expect(
+      service.getFastInstanceCommandsForVersion('1.20.0'),
+    ).toStrictEqual([]);
+    expect(
+      service.getFastInstanceCommandsForVersion('1.21.0'),
+    ).toStrictEqual([]);
+    expect(
+      service.getSlowInstanceCommandsForVersion('1.21.0'),
+    ).toStrictEqual([]);
   });
 
   it('should return empty array for unsupported version', async () => {
     const service = await buildRegistryService([]);
 
     expect(
-      service.getInstanceCommandsForVersion('99.0.0' as unknown as '1.21.0'),
+      service.getFastInstanceCommandsForVersion(
+        '99.0.0' as unknown as '1.21.0',
+      ),
     ).toStrictEqual([]);
+    expect(
+      service.getSlowInstanceCommandsForVersion(
+        '99.0.0' as unknown as '1.21.0',
+      ),
+    ).toStrictEqual([]);
+  });
+
+  it('should separate slow migrations into slow bucket', async () => {
+    const service = await buildRegistryService([
+      new MigrationA1770000000000(),
+      new SlowMigrationE1773000000000(),
+      new SlowMigrationF1774000000000(),
+    ]);
+
+    const fast = service.getFastInstanceCommandsForVersion('1.21.0');
+    const slow = service.getSlowInstanceCommandsForVersion('1.21.0');
+
+    expect(fast.map((m) => m.constructor.name)).toStrictEqual([
+      'MigrationA1770000000000',
+    ]);
+
+    expect(slow.map((m) => m.constructor.name)).toStrictEqual([
+      'SlowMigrationE1773000000000',
+      'SlowMigrationF1774000000000',
+    ]);
+  });
+
+  it('should handle mixed fast and slow migrations across versions', async () => {
+    const service = await buildRegistryService([
+      new MigrationD1769000000000(),
+      new MigrationA1770000000000(),
+      new SlowMigrationE1773000000000(),
+    ]);
+
+    expect(
+      service
+        .getFastInstanceCommandsForVersion('1.20.0')
+        .map((m) => m.constructor.name),
+    ).toStrictEqual(['MigrationD1769000000000']);
+
+    expect(
+      service
+        .getSlowInstanceCommandsForVersion('1.20.0')
+        .map((m) => m.constructor.name),
+    ).toStrictEqual([]);
+
+    expect(
+      service
+        .getFastInstanceCommandsForVersion('1.21.0')
+        .map((m) => m.constructor.name),
+    ).toStrictEqual(['MigrationA1770000000000']);
+
+    expect(
+      service
+        .getSlowInstanceCommandsForVersion('1.21.0')
+        .map((m) => m.constructor.name),
+    ).toStrictEqual(['SlowMigrationE1773000000000']);
   });
 });

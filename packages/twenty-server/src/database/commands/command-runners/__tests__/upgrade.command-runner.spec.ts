@@ -15,7 +15,9 @@ import {
   UpgradeCommandOptions,
   UpgradeCommandRunner,
   type AllCommands,
+  type AllSlowCommands,
 } from 'src/database/commands/command-runners/upgrade.command-runner';
+import { SlowCoreMigrationCommandRunner } from 'src/database/commands/command-runners/slow-core-migration.command-runner';
 import { WorkspaceIteratorService } from 'src/database/commands/command-runners/workspace-iterator.service';
 import { CoreMigrationRunnerService } from 'src/database/commands/core-migration/services/core-migration-runner.service';
 import { RegisteredCoreMigrationService } from 'src/database/commands/core-migration/services/registered-core-migration-registry.service';
@@ -40,6 +42,10 @@ class BasicUpgradeCommandRunner extends UpgradeCommandRunner {
   allCommands = Object.fromEntries(
     UPGRADE_COMMAND_SUPPORTED_VERSIONS.map((version) => [version, []]),
   ) as unknown as AllCommands;
+
+  allSlowCommands = Object.fromEntries(
+    UPGRADE_COMMAND_SUPPORTED_VERSIONS.map((version) => [version, []]),
+  ) as unknown as AllSlowCommands;
 }
 
 type CommandRunnerValues = typeof BasicUpgradeCommandRunner;
@@ -91,7 +97,8 @@ const buildUpgradeCommandModule = async ({
     : {
         provide: RegisteredCoreMigrationService,
         useValue: {
-          getInstanceCommandsForVersion: jest.fn().mockReturnValue([]),
+          getFastInstanceCommandsForVersion: jest.fn().mockReturnValue([]),
+          getSlowInstanceCommandsForVersion: jest.fn().mockReturnValue([]),
         },
       };
 
@@ -161,6 +168,7 @@ const buildUpgradeCommandModule = async ({
           runSingleMigration: jest
             .fn()
             .mockResolvedValue({ status: 'success' }),
+          isMigrationPending: jest.fn().mockResolvedValue(true),
         },
       },
       registryProvider,
@@ -346,7 +354,7 @@ describe('UpgradeCommandRunner', () => {
     );
   });
 
-  it('should only run instance commands for the current version', async () => {
+  it('should only run fast instance commands for the current version', async () => {
     @RegisteredCoreMigration(CURRENT_VERSION)
     class AddIndexToUsers1770000000000 implements MigrationInterface {
       async up(_queryRunner: QueryRunner) {}
@@ -395,6 +403,69 @@ describe('UpgradeCommandRunner', () => {
       2,
       'AddColumnToAccounts1771000000000',
     );
+  });
+
+  it('should run slow commands after fast migrations and before workspace commands', async () => {
+    const executionOrder: string[] = [];
+
+    @RegisteredCoreMigration(CURRENT_VERSION)
+    class FastMigration1770000000000 implements MigrationInterface {
+      async up(_queryRunner: QueryRunner) {}
+      async down(_queryRunner: QueryRunner) {}
+    }
+
+    class TestSlowCommand extends SlowCoreMigrationCommandRunner {
+      async runDataMigration(): Promise<void> {
+        executionOrder.push('slow-data-migration');
+      }
+    }
+
+    const module = await buildModuleAndSetupSpies({
+      migrations: [new FastMigration1770000000000()],
+    });
+
+    const migrationRunnerService = module.get(CoreMigrationRunnerService);
+
+    (migrationRunnerService.runSingleMigration as jest.Mock).mockImplementation(
+      async (name: string) => {
+        executionOrder.push(`runSingleMigration:${name}`);
+
+        return { status: 'success' };
+      },
+    );
+
+    (
+      migrationRunnerService.isMigrationPending as jest.Mock
+    )?.mockResolvedValue?.(true);
+
+    const slowCommand = new TestSlowCommand(
+      migrationRunnerService,
+      'SlowMigration1773000000000',
+    );
+
+    jest.spyOn(slowCommand['logger'], 'log').mockImplementation();
+    jest.spyOn(slowCommand['logger'], 'warn').mockImplementation();
+
+    upgradeCommandRunner.allSlowCommands[CURRENT_VERSION] = [slowCommand];
+
+    const iteratorService = module.get(WorkspaceIteratorService);
+
+    (iteratorService.iterate as jest.Mock).mockImplementation(
+      async (args: { callback: (context: unknown) => Promise<void> }) => {
+        executionOrder.push('workspace-iterator');
+
+        return { success: [], fail: [] };
+      },
+    );
+
+    await upgradeCommandRunner.run([], {});
+
+    expect(executionOrder).toStrictEqual([
+      'runSingleMigration:FastMigration1770000000000',
+      'slow-data-migration',
+      'runSingleMigration:SlowMigration1773000000000',
+      'workspace-iterator',
+    ]);
   });
 
   describe('Workspace upgrade should fail', () => {
