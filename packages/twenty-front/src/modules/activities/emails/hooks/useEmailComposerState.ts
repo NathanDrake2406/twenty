@@ -37,11 +37,15 @@ export const useEmailComposerState = ({
       return;
     }
 
+    const trimmedTo = to.trim();
+    const trimmedCc = cc.trim();
+    const trimmedBcc = bcc.trim();
+
     const success = await sendEmail({
       connectedAccountId,
-      to,
-      cc: cc || undefined,
-      bcc: bcc || undefined,
+      to: trimmedTo,
+      cc: trimmedCc || undefined,
+      bcc: trimmedBcc || undefined,
       subject,
       body,
       inReplyTo: defaultInReplyTo,
@@ -84,5 +88,3 @@ export const useEmailComposerState = ({
     defaultSubject,
   };
 };
-
-export type EmailComposerState = ReturnType<typeof useEmailComposerState>;

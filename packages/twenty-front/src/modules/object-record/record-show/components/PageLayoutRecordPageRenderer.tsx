@@ -124,6 +124,7 @@ export const PageLayoutRecordPageRenderer = ({
                       accent={action.isPrimaryCTA ? 'blue' : 'default'}
                       title={action.label}
                       Icon={action.Icon}
+                      hotkeys={action.hotkeys}
                       onClick={action.onClick}
                       disabled={action.disabled}
                     />

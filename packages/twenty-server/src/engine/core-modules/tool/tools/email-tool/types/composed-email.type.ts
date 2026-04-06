@@ -11,4 +11,5 @@ export type ComposedEmail = {
   connectedAccount: ConnectedAccountEntity;
   messageChannelId: string;
   inReplyTo?: string;
+  threadExternalId?: string;
 };

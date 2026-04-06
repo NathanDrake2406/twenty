@@ -1,23 +1,13 @@
 import { useMemo } from 'react';
 
 import { useEmailThread } from '@/activities/emails/hooks/useEmailThread';
-import { type ConnectedAccountProvider } from 'twenty-shared/types';
+import {
+  type ReplyContext,
+  type ReplyContextReady,
+} from '@/activities/emails/types/ReplyContext';
 import { isDefined } from 'twenty-shared/utils';
 
-type ReplyContextLoading = {
-  loading: true;
-};
-
-export type ReplyContextReady = {
-  loading: false;
-  to: string;
-  subject: string;
-  inReplyTo: string;
-  connectedAccountId: string;
-  connectedAccountProvider: ConnectedAccountProvider;
-};
-
-export type ReplyContext = ReplyContextLoading | ReplyContextReady;
+export type { ReplyContext, ReplyContextReady };
 
 export const useReplyContext = (
   threadId: string | null,

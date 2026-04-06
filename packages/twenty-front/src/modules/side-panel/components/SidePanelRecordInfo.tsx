@@ -18,15 +18,22 @@ import { styled } from '@linaria/react';
 import { useAtomFamilySelectorValue } from '@/ui/utilities/state/jotai/hooks/useAtomFamilySelectorValue';
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
 import { AppPath } from 'twenty-shared/types';
+import { getAppPath } from 'twenty-shared/utils';
 import { Avatar } from 'twenty-ui/display';
+import { UndecoratedLink } from 'twenty-ui/navigation';
 import { FieldMetadataType } from '~/generated-metadata/graphql';
-import { useNavigateApp } from '~/hooks/useNavigateApp';
 import { dateLocaleState } from '~/localization/states/dateLocaleState';
+
 import { beautifyPastDateRelativeToNow } from '~/utils/date-utils';
 import { SidePanelPageInfoLayout } from './SidePanelPageInfoLayout';
 
 const StyledClickableTitle = styled.div`
   cursor: pointer;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 `;
 
 export const SidePanelRecordInfo = ({
@@ -92,16 +99,10 @@ export const SidePanelRecordInfo = ({
     objectNameSingular,
   });
 
-  const navigate = useNavigateApp();
-
-  const handleTitleClick = () => {
-    if (isTitleReadOnly) {
-      navigate(AppPath.RecordShowPage, {
-        objectNameSingular,
-        objectRecordId,
-      });
-    }
-  };
+  const recordShowPagePath = getAppPath(AppPath.RecordShowPage, {
+    objectNameSingular,
+    objectRecordId,
+  });
 
   const fieldDefinition = {
     type: labelIdentifierFieldMetadataItem?.type ?? FieldMetadataType.TEXT,
@@ -149,8 +150,10 @@ export const SidePanelRecordInfo = ({
       }
       title={
         isTitleReadOnly ? (
-          <StyledClickableTitle onClick={handleTitleClick}>
-            {titleContent}
+          <StyledClickableTitle>
+            <UndecoratedLink to={recordShowPagePath}>
+              {titleContent}
+            </UndecoratedLink>
           </StyledClickableTitle>
         ) : (
           titleContent

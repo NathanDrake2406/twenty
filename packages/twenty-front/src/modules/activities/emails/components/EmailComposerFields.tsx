@@ -1,8 +1,7 @@
 import { useQuery } from '@apollo/client/react';
 import { styled } from '@linaria/react';
-import { useMemo } from 'react';
 
-import { type EmailComposerState } from '@/activities/emails/hooks/useEmailComposerState';
+import { type EmailComposerState } from '@/activities/emails/types/EmailComposerState';
 import { FormAdvancedTextFieldInput } from '@/object-record/record-field/ui/form-types/components/FormAdvancedTextFieldInput';
 import { FormMultiTextFieldInput } from '@/object-record/record-field/ui/form-types/components/FormMultiTextFieldInput';
 import { FormTextFieldInput } from '@/object-record/record-field/ui/form-types/components/FormTextFieldInput';
@@ -50,14 +49,11 @@ export const EmailComposerFields = ({
     myConnectedAccounts: { id: string; handle: string }[];
   }>(GET_MY_CONNECTED_ACCOUNTS);
 
-  const accountOptions = useMemo((): SelectOption<string>[] => {
-    return (
-      accountsData?.myConnectedAccounts?.map((account) => ({
-        label: account.handle,
-        value: account.id,
-      })) ?? []
-    );
-  }, [accountsData]);
+  const accountOptions: SelectOption<string>[] =
+    accountsData?.myConnectedAccounts?.map((account) => ({
+      label: account.handle,
+      value: account.id,
+    })) ?? [];
 
   const hasMultipleAccounts = accountOptions.length > 1;
 

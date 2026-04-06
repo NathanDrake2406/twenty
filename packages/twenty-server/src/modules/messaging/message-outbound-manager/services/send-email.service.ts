@@ -25,6 +25,7 @@ export class SendEmailService {
         html: data.sanitizedHtmlBody,
         attachments: data.attachments,
         inReplyTo: data.inReplyTo,
+        threadExternalId: data.threadExternalId,
       },
       data.connectedAccount,
     );

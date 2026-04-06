@@ -60,6 +60,8 @@ export const useSendEmail = () => {
               getTimelineThreadsFromPersonId,
               getTimelineThreadsFromOpportunityId,
               'FindManyMessages',
+              'FindManyMessageParticipants',
+              'FindManyMessageChannelMessageAssociations',
             ],
           });
 

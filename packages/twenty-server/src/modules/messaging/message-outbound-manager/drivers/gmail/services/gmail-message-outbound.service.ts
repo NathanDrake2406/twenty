@@ -31,6 +31,9 @@ export class GmailMessageOutboundService implements MessageOutboundDriver {
       userId: 'me',
       requestBody: {
         raw: encodedMessage,
+        ...(sendMessageInput.threadExternalId
+          ? { threadId: sendMessageInput.threadExternalId }
+          : {}),
       },
     });
 

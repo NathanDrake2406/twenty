@@ -1,16 +1,21 @@
+import { useCallback } from 'react';
+
 import { EmailComposerFields } from '@/activities/emails/components/EmailComposerFields';
 import { useEmailComposerState } from '@/activities/emails/hooks/useEmailComposerState';
+import { SIDE_PANEL_FOCUS_ID } from '@/side-panel/constants/SidePanelFocusId';
 import { useSidePanelHistory } from '@/side-panel/hooks/useSidePanelHistory';
 import { composeEmailConnectedAccountIdComponentState } from '@/side-panel/pages/compose-email/states/composeEmailConnectedAccountIdComponentState';
 import { composeEmailDefaultInReplyToComponentState } from '@/side-panel/pages/compose-email/states/composeEmailDefaultInReplyToComponentState';
 import { composeEmailDefaultSubjectComponentState } from '@/side-panel/pages/compose-email/states/composeEmailDefaultSubjectComponentState';
 import { composeEmailDefaultToComponentState } from '@/side-panel/pages/compose-email/states/composeEmailDefaultToComponentState';
 import { SidePanelFooter } from '@/ui/layout/side-panel/components/SidePanelFooter';
+import { useHotkeysOnFocusedElement } from '@/ui/utilities/hotkey/hooks/useHotkeysOnFocusedElement';
 import { useAtomComponentStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateValue';
 import { styled } from '@linaria/react';
 import { t } from '@lingui/core/macro';
 import { IconSend } from 'twenty-ui/display';
 import { Button } from 'twenty-ui/input';
+import { getOsControlSymbol } from 'twenty-ui/utilities';
 
 const StyledContainer = styled.div`
   display: flex;
@@ -49,6 +54,19 @@ export const SidePanelComposeEmailPage = () => {
     onSent: goBackFromSidePanel,
   });
 
+  const handleSendHotkey = useCallback(() => {
+    if (composerState.canSend) {
+      composerState.handleSend();
+    }
+  }, [composerState.canSend, composerState.handleSend]);
+
+  useHotkeysOnFocusedElement({
+    keys: ['ctrl+Enter,meta+Enter'],
+    callback: handleSendHotkey,
+    focusId: SIDE_PANEL_FOCUS_ID,
+    dependencies: [handleSendHotkey],
+  });
+
   if (!composeEmailConnectedAccountId) {
     return null;
   }
@@ -74,6 +92,7 @@ export const SidePanelComposeEmailPage = () => {
             accent="blue"
             title={t`Send`}
             Icon={IconSend}
+            hotkeys={[getOsControlSymbol(), '⏎']}
             onClick={composerState.handleSend}
             disabled={!composerState.canSend}
           />,

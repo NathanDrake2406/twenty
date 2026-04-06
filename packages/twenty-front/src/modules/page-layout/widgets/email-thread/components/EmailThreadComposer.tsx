@@ -4,12 +4,15 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { EmailComposerFields } from '@/activities/emails/components/EmailComposerFields';
 import { useEmailComposerState } from '@/activities/emails/hooks/useEmailComposerState';
 import { type ReplyContextReady } from '@/activities/emails/hooks/useReplyContext';
+import { SIDE_PANEL_FOCUS_ID } from '@/side-panel/constants/SidePanelFocusId';
 import { sidePanelWidgetFooterActionsState } from '@/ui/layout/side-panel/states/sidePanelWidgetFooterActionsState';
 import { type SidePanelFooterAction } from '@/ui/layout/side-panel/types/SidePanelFooterAction';
+import { useHotkeysOnFocusedElement } from '@/ui/utilities/hotkey/hooks/useHotkeysOnFocusedElement';
 import { useSetAtomState } from '@/ui/utilities/state/jotai/hooks/useSetAtomState';
 import { t } from '@lingui/core/macro';
 import { IconArrowBackUp, IconSend, IconX } from 'twenty-ui/display';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
+import { getOsControlSymbol } from 'twenty-ui/utilities';
 
 const StyledReplyBar = styled.button`
   align-items: center;
@@ -82,6 +85,7 @@ export const EmailThreadComposer = ({
         label: t`Send`,
         Icon: IconSend,
         isPrimaryCTA: true,
+        hotkeys: [getOsControlSymbol(), '⏎'],
         onClick: composerState.handleSend,
         disabled: !composerState.canSend,
       },
@@ -102,6 +106,19 @@ export const EmailThreadComposer = ({
 
     return () => setSidePanelWidgetFooterActions([]);
   }, [isInSidePanel, footerActions, setSidePanelWidgetFooterActions]);
+
+  const handleSendHotkey = useCallback(() => {
+    if (isComposerOpen && composerState.canSend) {
+      composerState.handleSend();
+    }
+  }, [isComposerOpen, composerState.canSend, composerState.handleSend]);
+
+  useHotkeysOnFocusedElement({
+    keys: ['ctrl+Enter,meta+Enter'],
+    callback: handleSendHotkey,
+    focusId: SIDE_PANEL_FOCUS_ID,
+    dependencies: [handleSendHotkey],
+  });
 
   if (!isComposerOpen) {
     if (isInSidePanel) {

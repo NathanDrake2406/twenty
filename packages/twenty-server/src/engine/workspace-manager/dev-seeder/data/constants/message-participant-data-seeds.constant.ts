@@ -143,7 +143,7 @@ const CREATE_WORKSPACE_MEMBER_PARTICIPANT = (
     case WORKSPACE_MEMBER_DATA_SEED_IDS.TIM:
       return {
         workspaceMemberId: WORKSPACE_MEMBER_ID,
-        personId: personIds[0] || personIds[0],
+        personId: personIds[0],
         displayName: 'Tim Apple',
         handle: 'tim@apple.dev',
       };
@@ -164,7 +164,7 @@ const CREATE_WORKSPACE_MEMBER_PARTICIPANT = (
     default:
       return {
         workspaceMemberId: WORKSPACE_MEMBER_ID,
-        personId: personIds[0] || personIds[0],
+        personId: personIds[0],
         displayName: 'Workspace Member',
         handle: 'member@apple.dev',
       };

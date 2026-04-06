@@ -56,6 +56,11 @@ const StyledEmailCount = styled.span`
   color: ${themeCssVariables.font.color.light};
 `;
 
+const StyledComposeButtonRow = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 export const EmailsCard = () => {
   const targetRecord = useTargetRecord();
 
@@ -97,10 +102,9 @@ export const EmailsCard = () => {
   if (!firstQueryLoading && !timelineThreads?.length) {
     return (
       <StyledContainer>
-        <StyledHeaderRow>
-          <div />
+        <StyledComposeButtonRow>
           <ComposeEmailButton />
-        </StyledHeaderRow>
+        </StyledComposeButtonRow>
         <AnimatedPlaceholderEmptyContainer
           // oxlint-disable-next-line react/jsx-props-no-spreading
           {...EMPTY_PLACEHOLDER_TRANSITION_PROPS}

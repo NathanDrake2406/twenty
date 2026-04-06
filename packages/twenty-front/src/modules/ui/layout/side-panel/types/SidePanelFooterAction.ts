@@ -8,4 +8,5 @@ export type SidePanelFooterAction = {
   isPinned?: boolean;
   onClick: () => void;
   disabled?: boolean;
+  hotkeys?: string[];
 };
