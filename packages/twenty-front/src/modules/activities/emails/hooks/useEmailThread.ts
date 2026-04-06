@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import { type ConnectedAccount } from '@/accounts/types/ConnectedAccount';
 import { type MessageChannel } from '@/accounts/types/MessageChannel';
 import { fetchAllThreadMessagesOperationSignatureFactory } from '@/activities/emails/graphql/operation-signatures/factories/fetchAllThreadMessagesOperationSignatureFactory';
 import { type EmailThread } from '@/activities/emails/types/EmailThread';
@@ -135,13 +136,26 @@ export const useEmailThread = (threadId: string | null) => {
       recordGqlFields: {
         id: true,
         handle: true,
-        connectedAccount: {
-          id: true,
-          provider: true,
-          connectionParameters: true,
-        },
+        connectedAccountId: true,
       },
       skip: !lastMessageChannelId,
+    });
+
+  const connectedAccountId =
+    messageChannelData.length > 0
+      ? messageChannelData[0].connectedAccountId
+      : null;
+
+  const { record: connectedAccount, loading: connectedAccountLoading } =
+    useFindOneRecord<ConnectedAccount>({
+      objectNameSingular: CoreObjectNameSingular.ConnectedAccount,
+      objectRecordId: connectedAccountId ?? '',
+      recordGqlFields: {
+        id: true,
+        provider: true,
+        connectionParameters: true,
+      },
+      skip: !connectedAccountId,
     });
 
   const messageThreadExternalId =
@@ -172,10 +186,6 @@ export const useEmailThread = (threadId: string | null) => {
     })
     .filter(isDefined);
 
-  const connectedAccount =
-    messageChannelData.length > 0
-      ? messageChannelData[0]?.connectedAccount
-      : null;
   const connectedAccountProvider = connectedAccount?.provider ?? null;
   const connectedAccountConnectionParameters =
     connectedAccount?.connectionParameters;
@@ -188,7 +198,7 @@ export const useEmailThread = (threadId: string | null) => {
     connectedAccountProvider,
     connectedAccountConnectionParameters,
     threadLoading: messagesLoading,
-    messageChannelLoading,
+    messageChannelLoading: messageChannelLoading || connectedAccountLoading,
     lastMessageExternalId,
     fetchMoreMessages,
   };

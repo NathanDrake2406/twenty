@@ -7,7 +7,8 @@ import { useMyCalendarChannels } from '@/settings/accounts/hooks/useMyCalendarCh
 import { TabList } from '@/ui/layout/tab-list/components/TabList';
 import { activeTabIdComponentState } from '@/ui/layout/tab-list/states/activeTabIdComponentState';
 import { useAtomComponentStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateValue';
-import React from 'react';
+import React, { useMemo } from 'react';
+import { CalendarChannelSyncStage } from 'twenty-shared/types';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
 
 const StyledCalenderContainer = styled.div`
@@ -20,7 +21,16 @@ export const SettingsAccountsCalendarChannelsContainer = () => {
     SETTINGS_ACCOUNT_CALENDAR_CHANNELS_TAB_LIST_COMPONENT_ID,
   );
 
-  const { channels: calendarChannels } = useMyCalendarChannels();
+  const { channels: allCalendarChannels } = useMyCalendarChannels();
+
+  const calendarChannels = useMemo(
+    () =>
+      allCalendarChannels.filter(
+        (channel) =>
+          channel.syncStage !== CalendarChannelSyncStage.PENDING_CONFIGURATION,
+      ),
+    [allCalendarChannels],
+  );
 
   const tabs = [
     ...calendarChannels.map((calendarChannel) => ({
