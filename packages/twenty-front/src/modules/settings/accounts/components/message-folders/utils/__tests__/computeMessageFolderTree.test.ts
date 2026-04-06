@@ -8,6 +8,7 @@ describe('computeMessageFolderTree', () => {
     parentFolderId: string | null = null,
     externalId: string | null = null,
   ): MessageFolder => ({
+    __typename: 'MessageFolder',
     id,
     name,
     parentFolderId,

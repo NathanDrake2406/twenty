@@ -15,6 +15,7 @@ describe('computeFolderIdsForSyncToggle', () => {
     externalId?: string | null;
     isSynced?: boolean;
   }): MessageFolder => ({
+    __typename: 'MessageFolder',
     id,
     name,
     parentFolderId,
