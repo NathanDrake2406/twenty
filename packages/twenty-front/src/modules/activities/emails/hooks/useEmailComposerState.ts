@@ -1,0 +1,82 @@
+import { useCallback, useState } from 'react';
+
+import { useSendEmail } from '@/activities/emails/hooks/useSendEmail';
+
+type UseEmailComposerStateArgs = {
+  connectedAccountId: string;
+  defaultTo?: string;
+  defaultSubject?: string;
+  defaultInReplyTo?: string;
+  onSent?: () => void;
+};
+
+export const useEmailComposerState = ({
+  connectedAccountId,
+  defaultTo = '',
+  defaultSubject = '',
+  defaultInReplyTo,
+  onSent,
+}: UseEmailComposerStateArgs) => {
+  const [to, setTo] = useState(defaultTo);
+  const [cc, setCc] = useState('');
+  const [bcc, setBcc] = useState('');
+  const [subject, setSubject] = useState(defaultSubject);
+  const [body, setBody] = useState('');
+  const [showCcBcc, setShowCcBcc] = useState(false);
+
+  const { sendEmail, loading } = useSendEmail();
+
+  const canSend = to.trim().length > 0 && !loading;
+
+  const handleSend = useCallback(async () => {
+    if (!to.trim()) {
+      return;
+    }
+
+    const success = await sendEmail({
+      connectedAccountId,
+      to,
+      cc: cc || undefined,
+      bcc: bcc || undefined,
+      subject,
+      body,
+      inReplyTo: defaultInReplyTo,
+    });
+
+    if (success) {
+      onSent?.();
+    }
+  }, [
+    connectedAccountId,
+    to,
+    cc,
+    bcc,
+    subject,
+    body,
+    defaultInReplyTo,
+    sendEmail,
+    onSent,
+  ]);
+
+  return {
+    to,
+    setTo,
+    cc,
+    setCc,
+    bcc,
+    setBcc,
+    subject,
+    setSubject,
+    body,
+    setBody,
+    showCcBcc,
+    setShowCcBcc,
+    handleSend,
+    loading,
+    canSend,
+    defaultTo,
+    defaultSubject,
+  };
+};
+
+export type EmailComposerState = ReturnType<typeof useEmailComposerState>;

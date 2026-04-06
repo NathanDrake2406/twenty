@@ -67,6 +67,12 @@ export const useEmailThread = (threadId: string | null) => {
   }, [fetchMoreRecords, messagesLoading, hasNextPage]);
 
   useEffect(() => {
+    if (!messagesLoading && !hasNextPage) {
+      setIsMessagesFetchComplete(true);
+    }
+  }, [messagesLoading, hasNextPage]);
+
+  useEffect(() => {
     if (messages.length > 0 && isMessagesFetchComplete) {
       const lastMessage = messages[messages.length - 1];
 
@@ -176,6 +182,7 @@ export const useEmailThread = (threadId: string | null) => {
     messageChannelData.length > 0
       ? messageChannelData[0]?.connectedAccount
       : null;
+  const connectedAccountId = connectedAccount?.id ?? null;
   const connectedAccountProvider = connectedAccount?.provider ?? null;
   const connectedAccountConnectionParameters =
     connectedAccount?.connectionParameters;
@@ -184,6 +191,7 @@ export const useEmailThread = (threadId: string | null) => {
     thread,
     messages: messagesWithSender,
     messageThreadExternalId,
+    connectedAccountId,
     connectedAccountHandle,
     connectedAccountProvider,
     connectedAccountConnectionParameters,
