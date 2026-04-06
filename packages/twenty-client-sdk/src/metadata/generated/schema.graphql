@@ -2763,6 +2763,20 @@ type DuplicatedDashboard {
   updatedAt: String!
 }
 
+type ConnectedAccountDTO {
+  id: UUID!
+  handle: String!
+  provider: String!
+  lastCredentialsRefreshedAt: DateTime
+  authFailedAt: DateTime
+  handleAliases: [String!]
+  scopes: [String!]
+  lastSignedInAt: DateTime
+  userWorkspaceId: UUID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type SendEmailOutput {
   success: Boolean!
   error: String
@@ -2934,20 +2948,6 @@ enum CalendarChannelContactAutoCreationPolicy {
   AS_PARTICIPANT
   AS_ORGANIZER
   NONE
-}
-
-type ConnectedAccountDTO {
-  id: UUID!
-  handle: String!
-  provider: String!
-  lastCredentialsRefreshedAt: DateTime
-  authFailedAt: DateTime
-  handleAliases: [String!]
-  scopes: [String!]
-  lastSignedInAt: DateTime
-  userWorkspaceId: UUID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
 }
 
 type MessageChannel {

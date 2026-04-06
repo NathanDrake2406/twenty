@@ -67,10 +67,10 @@ export default {
         286,
         296,
         297,
-        326,
         327,
         328,
         329,
+        330,
         332,
         333,
         334,
@@ -5457,6 +5457,44 @@ export default {
                 1
             ]
         },
+        "ConnectedAccountDTO": {
+            "id": [
+                3
+            ],
+            "handle": [
+                1
+            ],
+            "provider": [
+                1
+            ],
+            "lastCredentialsRefreshedAt": [
+                4
+            ],
+            "authFailedAt": [
+                4
+            ],
+            "handleAliases": [
+                1
+            ],
+            "scopes": [
+                1
+            ],
+            "lastSignedInAt": [
+                4
+            ],
+            "userWorkspaceId": [
+                3
+            ],
+            "createdAt": [
+                4
+            ],
+            "updatedAt": [
+                4
+            ],
+            "__typename": [
+                1
+            ]
+        },
         "SendEmailOutput": {
             "success": [
                 6
@@ -5507,13 +5545,13 @@ export default {
         },
         "EventLogQueryResult": {
             "records": [
-                310
+                311
             ],
             "totalCount": [
                 21
             ],
             "pageInfo": [
-                311
+                312
             ],
             "__typename": [
                 1
@@ -5640,7 +5678,7 @@ export default {
         },
         "AISystemPromptPreview": {
             "sections": [
-                316
+                317
             ],
             "estimatedTokenCount": [
                 21
@@ -5687,7 +5725,7 @@ export default {
         },
         "AgentChatThreadEdge": {
             "node": [
-                314
+                315
             ],
             "cursor": [
                 40
@@ -5701,7 +5739,7 @@ export default {
                 235
             ],
             "edges": [
-                321
+                322
             ],
             "__typename": [
                 1
@@ -5738,10 +5776,10 @@ export default {
                 3
             ],
             "evaluations": [
-                323
+                324
             ],
             "messages": [
-                315
+                316
             ],
             "createdAt": [
                 4
@@ -5758,19 +5796,19 @@ export default {
                 1
             ],
             "syncStatus": [
-                326
-            ],
-            "syncStage": [
                 327
             ],
-            "visibility": [
+            "syncStage": [
                 328
+            ],
+            "visibility": [
+                329
             ],
             "isContactAutoCreationEnabled": [
                 6
             ],
             "contactAutoCreationPolicy": [
-                329
+                330
             ],
             "isSyncEnabled": [
                 6
@@ -5801,44 +5839,6 @@ export default {
         "CalendarChannelSyncStage": {},
         "CalendarChannelVisibility": {},
         "CalendarChannelContactAutoCreationPolicy": {},
-        "ConnectedAccountDTO": {
-            "id": [
-                3
-            ],
-            "handle": [
-                1
-            ],
-            "provider": [
-                1
-            ],
-            "lastCredentialsRefreshedAt": [
-                4
-            ],
-            "authFailedAt": [
-                4
-            ],
-            "handleAliases": [
-                1
-            ],
-            "scopes": [
-                1
-            ],
-            "lastSignedInAt": [
-                4
-            ],
-            "userWorkspaceId": [
-                3
-            ],
-            "createdAt": [
-                4
-            ],
-            "updatedAt": [
-                4
-            ],
-            "__typename": [
-                1
-            ]
-        },
         "MessageChannel": {
             "id": [
                 3
@@ -6472,13 +6472,13 @@ export default {
                 }
             ],
             "myConnectedAccounts": [
-                330
+                309
             ],
             "connectedAccounts": [
-                330
+                309
             ],
             "myCalendarChannels": [
-                325,
+                326,
                 {
                     "connectedAccountId": [
                         3
@@ -6501,7 +6501,7 @@ export default {
                 345
             ],
             "chatThread": [
-                314,
+                315,
                 {
                     "id": [
                         3,
@@ -6510,7 +6510,7 @@ export default {
                 }
             ],
             "chatMessages": [
-                315,
+                316,
                 {
                     "threadId": [
                         3,
@@ -6519,7 +6519,7 @@ export default {
                 }
             ],
             "chatStreamCatchupChunks": [
-                318,
+                319,
                 {
                     "threadId": [
                         3,
@@ -6528,13 +6528,13 @@ export default {
                 }
             ],
             "getAISystemPromptPreview": [
-                317
+                318
             ],
             "skills": [
-                313
+                314
             ],
             "skill": [
-                313,
+                314,
                 {
                     "id": [
                         3,
@@ -6543,7 +6543,7 @@ export default {
                 }
             ],
             "chatThreads": [
-                322,
+                323,
                 {
                     "paging": [
                         39,
@@ -6560,7 +6560,7 @@ export default {
                 }
             ],
             "agentTurns": [
-                324,
+                325,
                 {
                     "agentId": [
                         3,
@@ -6569,7 +6569,7 @@ export default {
                 }
             ],
             "eventLogs": [
-                312,
+                313,
                 {
                     "input": [
                         359,
@@ -8161,7 +8161,7 @@ export default {
                 }
             ],
             "deleteConnectedAccount": [
-                330,
+                309,
                 {
                     "id": [
                         3,
@@ -8170,7 +8170,7 @@ export default {
                 }
             ],
             "updateCalendarChannel": [
-                325,
+                326,
                 {
                     "input": [
                         461,
@@ -8206,10 +8206,10 @@ export default {
                 }
             ],
             "createChatThread": [
-                314
+                315
             ],
             "sendChatMessage": [
-                319,
+                320,
                 {
                     "threadId": [
                         3,
@@ -8250,7 +8250,7 @@ export default {
                 }
             ],
             "createSkill": [
-                313,
+                314,
                 {
                     "input": [
                         466,
@@ -8259,7 +8259,7 @@ export default {
                 }
             ],
             "updateSkill": [
-                313,
+                314,
                 {
                     "input": [
                         467,
@@ -8268,7 +8268,7 @@ export default {
                 }
             ],
             "deleteSkill": [
-                313,
+                314,
                 {
                     "id": [
                         3,
@@ -8277,7 +8277,7 @@ export default {
                 }
             ],
             "activateSkill": [
-                313,
+                314,
                 {
                     "id": [
                         3,
@@ -8286,7 +8286,7 @@ export default {
                 }
             ],
             "deactivateSkill": [
-                313,
+                314,
                 {
                     "id": [
                         3,
@@ -8295,7 +8295,7 @@ export default {
                 }
             ],
             "evaluateAgentTurn": [
-                323,
+                324,
                 {
                     "turnId": [
                         3,
@@ -8304,7 +8304,7 @@ export default {
                 }
             ],
             "runEvaluationInput": [
-                324,
+                325,
                 {
                     "agentId": [
                         3,
@@ -8812,7 +8812,7 @@ export default {
                 }
             ],
             "sendEmail": [
-                309,
+                310,
                 {
                     "input": [
                         481,
@@ -11040,13 +11040,13 @@ export default {
         },
         "UpdateCalendarChannelInputUpdates": {
             "visibility": [
-                328
+                329
             ],
             "isContactAutoCreationEnabled": [
                 6
             ],
             "contactAutoCreationPolicy": [
-                329
+                330
             ],
             "isSyncEnabled": [
                 6
@@ -11523,7 +11523,7 @@ export default {
                 }
             ],
             "onAgentChatEvent": [
-                320,
+                321,
                 {
                     "threadId": [
                         3,
