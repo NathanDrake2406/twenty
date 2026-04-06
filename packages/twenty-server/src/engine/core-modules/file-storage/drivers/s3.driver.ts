@@ -443,7 +443,11 @@ export class S3Driver implements StorageDriver {
   private async emptyS3Directory(folderPath: string) {
     const listedObjects = await this.fetchS3FolderContents(folderPath);
 
-    if (!listedObjects.Contents || listedObjects.Contents.length === 0) return;
+    if (
+      !isDefined(listedObjects.Contents) ||
+      listedObjects.Contents.length === 0
+    )
+      return;
 
     const deleteParams = {
       Bucket: this.bucketName,
