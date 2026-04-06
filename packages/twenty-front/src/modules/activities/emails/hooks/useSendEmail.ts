@@ -1,5 +1,4 @@
-import { useApolloClient } from '@apollo/client/react';
-import { useMutation } from '@apollo/client/react';
+import { useApolloClient, useMutation } from '@apollo/client/react';
 import { useCallback } from 'react';
 
 import { SEND_EMAIL } from '@/activities/emails/graphql/mutations/sendEmail';

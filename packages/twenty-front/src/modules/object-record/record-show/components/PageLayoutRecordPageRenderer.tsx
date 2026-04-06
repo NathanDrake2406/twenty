@@ -58,11 +58,11 @@ export const PageLayoutRecordPageRenderer = ({
     targetObjectNameSingular: targetRecordIdentifier.targetObjectNameSingular,
   });
 
-  const widgetFooterActions = useAtomStateValue(
+  const sidePanelWidgetFooterActions = useAtomStateValue(
     sidePanelWidgetFooterActionsState,
   );
 
-  const pinnedWidgetActions = widgetFooterActions.filter(
+  const pinnedWidgetActions = sidePanelWidgetFooterActions.filter(
     (action) => action.isPinned !== false,
   );
 

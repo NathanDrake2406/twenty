@@ -25,8 +25,11 @@ export class MicrosoftMessageOutboundService implements MessageOutboundDriver {
         connectedAccount,
       );
 
-    const { id: messageId, internetMessageId, conversationId } =
-      await this.createDraftMessage(microsoftClient, sendMessageInput);
+    const {
+      id: messageId,
+      internetMessageId,
+      conversationId,
+    } = await this.createDraftMessage(microsoftClient, sendMessageInput);
 
     await microsoftClient.api(`/me/messages/${messageId}/send`).post({});
 

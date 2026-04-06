@@ -2,7 +2,11 @@ import { useCallback } from 'react';
 
 import { useStore } from 'jotai';
 import { SidePanelPages } from 'twenty-shared/types';
-import { type IconComponent, IconArrowBackUp, IconMail } from 'twenty-ui/display';
+import {
+  type IconComponent,
+  IconArrowBackUp,
+  IconMail,
+} from 'twenty-ui/display';
 import { v4 } from 'uuid';
 
 import { useSidePanelMenu } from '@/side-panel/hooks/useSidePanelMenu';

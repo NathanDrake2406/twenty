@@ -35,71 +35,67 @@ export class SentMessagePersistenceService {
   async persistSentMessage(input: PersistSentMessageInput): Promise<void> {
     const authContext = buildSystemAuthContext(input.workspaceId);
 
-    await this.globalWorkspaceOrmManager.executeInWorkspaceContext(
-      async () => {
-        const messageRepository =
-          await this.globalWorkspaceOrmManager.getRepository<MessageWorkspaceEntity>(
-            input.workspaceId,
-            'message',
-          );
-
-        const messageThreadRepository =
-          await this.globalWorkspaceOrmManager.getRepository<MessageThreadWorkspaceEntity>(
-            input.workspaceId,
-            'messageThread',
-          );
-
-        const messageParticipantRepository =
-          await this.globalWorkspaceOrmManager.getRepository<MessageParticipantWorkspaceEntity>(
-            input.workspaceId,
-            'messageParticipant',
-          );
-
-        const associationRepository =
-          await this.globalWorkspaceOrmManager.getRepository<MessageChannelMessageAssociationWorkspaceEntity>(
-            input.workspaceId,
-            'messageChannelMessageAssociation',
-          );
-
-        const messageThreadId = await this.findOrCreateThread({
-          messageRepository,
-          messageThreadRepository,
-          inReplyTo: input.inReplyTo,
-          subject: input.subject,
-        });
-
-        const messageId = v4();
-
-        await messageRepository.insert({
-          id: messageId,
-          headerMessageId: input.sendResult.headerMessageId,
-          subject: input.subject,
-          text: input.body,
-          receivedAt: new Date(),
-          messageThreadId,
-        });
-
-        const participants = this.buildParticipants(
-          messageId,
-          input.connectedAccount.handle ?? '',
-          input.recipients,
+    await this.globalWorkspaceOrmManager.executeInWorkspaceContext(async () => {
+      const messageRepository =
+        await this.globalWorkspaceOrmManager.getRepository<MessageWorkspaceEntity>(
+          input.workspaceId,
+          'message',
         );
 
-        if (participants.length > 0) {
-          await messageParticipantRepository.insert(participants);
-        }
+      const messageThreadRepository =
+        await this.globalWorkspaceOrmManager.getRepository<MessageThreadWorkspaceEntity>(
+          input.workspaceId,
+          'messageThread',
+        );
 
-        await associationRepository.insert({
-          messageChannelId: input.messageChannelId,
-          messageId,
-          messageExternalId: input.sendResult.messageExternalId ?? null,
-          messageThreadExternalId:
-            input.sendResult.threadExternalId ?? null,
-          direction: MessageDirection.OUTGOING,
-        });
-      },
-      authContext,
-    );
+      const messageParticipantRepository =
+        await this.globalWorkspaceOrmManager.getRepository<MessageParticipantWorkspaceEntity>(
+          input.workspaceId,
+          'messageParticipant',
+        );
+
+      const associationRepository =
+        await this.globalWorkspaceOrmManager.getRepository<MessageChannelMessageAssociationWorkspaceEntity>(
+          input.workspaceId,
+          'messageChannelMessageAssociation',
+        );
+
+      const messageThreadId = await this.findOrCreateThread({
+        messageRepository,
+        messageThreadRepository,
+        inReplyTo: input.inReplyTo,
+        subject: input.subject,
+      });
+
+      const messageId = v4();
+
+      await messageRepository.insert({
+        id: messageId,
+        headerMessageId: input.sendResult.headerMessageId,
+        subject: input.subject,
+        text: input.body,
+        receivedAt: new Date(),
+        messageThreadId,
+      });
+
+      const participants = this.buildParticipants(
+        messageId,
+        input.connectedAccount.handle ?? '',
+        input.recipients,
+      );
+
+      if (participants.length > 0) {
+        await messageParticipantRepository.insert(participants);
+      }
+
+      await associationRepository.insert({
+        messageChannelId: input.messageChannelId,
+        messageId,
+        messageExternalId: input.sendResult.messageExternalId ?? null,
+        messageThreadExternalId: input.sendResult.threadExternalId ?? null,
+        direction: MessageDirection.OUTGOING,
+      });
+    }, authContext);
   }
 
   private async findOrCreateThread({
@@ -109,14 +105,10 @@ export class SentMessagePersistenceService {
     subject,
   }: {
     messageRepository: Awaited<
-      ReturnType<
-        GlobalWorkspaceOrmManager['getRepository']<MessageWorkspaceEntity>
-      >
+      ReturnType<GlobalWorkspaceOrmManager['getRepository']>
     >;
     messageThreadRepository: Awaited<
-      ReturnType<
-        GlobalWorkspaceOrmManager['getRepository']<MessageThreadWorkspaceEntity>
-      >
+      ReturnType<GlobalWorkspaceOrmManager['getRepository']>
     >;
     inReplyTo?: string;
     subject: string;

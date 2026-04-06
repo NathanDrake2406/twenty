@@ -18,7 +18,6 @@ import { SidePanelMergeRecordPage } from '@/side-panel/pages/record-page/compone
 import { SidePanelRecordPage } from '@/side-panel/pages/record-page/components/SidePanelRecordPage';
 import { SidePanelUpdateMultipleRecords } from '@/side-panel/pages/record-page/components/SidePanelUpdateMultipleRecords';
 import { SidePanelEditRichTextPage } from '@/side-panel/pages/rich-text-page/components/SidePanelEditRichTextPage';
-import { SidePanelRootPage } from '@/side-panel/pages/root/components/SidePanelRootPage';
 import { SidePanelSearchRecordsPage } from '@/side-panel/pages/search/components/SidePanelSearchRecordsPage';
 import { SidePanelWorkflowCreateStep } from '@/side-panel/pages/workflow/step/create/components/SidePanelWorkflowCreateStep';
 import { SidePanelWorkflowEditStep } from '@/side-panel/pages/workflow/step/edit/components/SidePanelWorkflowEditStep';

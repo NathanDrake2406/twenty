@@ -24,11 +24,11 @@ export const RecordPageSidePanelCommandMenuDropdown = () => {
 
   const { closeDropdown } = useCloseDropdown();
 
-  const widgetFooterActions = useAtomStateValue(
+  const sidePanelWidgetFooterActions = useAtomStateValue(
     sidePanelWidgetFooterActionsState,
   );
 
-  const dropdownWidgetActions = widgetFooterActions.filter(
+  const dropdownWidgetActions = sidePanelWidgetFooterActions.filter(
     (action) => action.isPinned === false,
   );
 
@@ -58,9 +58,8 @@ export const RecordPageSidePanelCommandMenuDropdown = () => {
           }}
         />
       ))}
-      {dropdownWidgetActions.length > 0 && recordSelectionActions.length > 0 && (
-        <HorizontalSeparator noMargin />
-      )}
+      {dropdownWidgetActions.length > 0 &&
+        recordSelectionActions.length > 0 && <HorizontalSeparator noMargin />}
       {recordSelectionActions.map((action) => (
         <CommandMenuItemComponent action={action} key={action.key} />
       ))}
