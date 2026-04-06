@@ -1,8 +1,5 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-import { RegisteredInstanceMigration } from 'src/database/typeorm/core/decorators/registered-instance-migration.decorator';
-
-@RegisteredInstanceMigration('1.21.0')
 export class AddIsActiveToOverridableEntities1774966727625
   implements MigrationInterface
 {
