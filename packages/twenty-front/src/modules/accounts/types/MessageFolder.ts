@@ -8,5 +8,5 @@ export type MessageFolder = {
   messageChannelId: string;
   createdAt: string;
   updatedAt: string;
-  __typename: 'MessageFolder'
+  __typename: 'MessageFolder';
 };

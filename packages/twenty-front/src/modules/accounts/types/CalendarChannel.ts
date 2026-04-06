@@ -18,5 +18,5 @@ export type CalendarChannel = {
   connectedAccountId: string;
   createdAt: string;
   updatedAt: string;
-  __typename: 'CalendarChannel'
+  __typename: 'CalendarChannel';
 };
