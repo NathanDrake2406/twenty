@@ -8,7 +8,7 @@ import { cssVariables } from '@/theme/css-variables';
 import { css } from '@linaria/core';
 import { styled } from '@linaria/react';
 import type { Metadata } from 'next';
-import { Aleo, Azeret_Mono, Host_Grotesk } from 'next/font/google';
+import { Aleo, Azeret_Mono, Host_Grotesk, VT323 } from 'next/font/google';
 import '../../../twenty-ui/dist/theme-light.css';
 
 const hostGrotesk = Host_Grotesk({
@@ -29,6 +29,13 @@ const azeretMono = Azeret_Mono({
   subsets: ['latin'],
   weight: ['300', '500'],
   variable: '--font-mono',
+  display: 'swap',
+});
+
+const vt323 = VT323({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-retro',
   display: 'swap',
 });
 
@@ -77,7 +84,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${cssVariables} ${hostGrotesk.variable} ${aleo.variable} ${azeretMono.variable}`}
+        className={`${cssVariables} ${hostGrotesk.variable} ${aleo.variable} ${azeretMono.variable} ${vt323.variable}`}
       >
         <GlbWarmCache />
         <StyledMain>{children}</StyledMain>
