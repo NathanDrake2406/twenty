@@ -7,6 +7,7 @@ import { ResolverValidationPipe } from 'src/engine/core-modules/graphql/pipes/re
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
 import { EmailComposerService } from 'src/engine/core-modules/tool/tools/email-tool/email-composer.service';
 import { AuthWorkspace } from 'src/engine/decorators/auth/auth-workspace.decorator';
+import { NoPermissionGuard } from 'src/engine/guards/no-permission.guard';
 import { WorkspaceAuthGuard } from 'src/engine/guards/workspace-auth.guard';
 import { SendEmailOutputDTO } from 'src/modules/messaging/message-outbound-manager/dtos/send-email-output.dto';
 import { SendEmailInput } from 'src/modules/messaging/message-outbound-manager/dtos/send-email.input';
@@ -15,7 +16,7 @@ import { MessagingMessageOutboundService } from 'src/modules/messaging/message-o
 @MetadataResolver()
 @UsePipes(ResolverValidationPipe)
 @UseFilters(AuthGraphqlApiExceptionFilter)
-@UseGuards(WorkspaceAuthGuard)
+@UseGuards(WorkspaceAuthGuard, NoPermissionGuard)
 export class SendEmailResolver {
   private readonly logger = new Logger(SendEmailResolver.name);
 
@@ -58,10 +59,8 @@ export class SendEmailResolver {
       await this.messageOutboundService.sendMessage(
         {
           to: data.recipients.to,
-          cc:
-            data.recipients.cc.length > 0 ? data.recipients.cc : undefined,
-          bcc:
-            data.recipients.bcc.length > 0 ? data.recipients.bcc : undefined,
+          cc: data.recipients.cc.length > 0 ? data.recipients.cc : undefined,
+          bcc: data.recipients.bcc.length > 0 ? data.recipients.bcc : undefined,
           subject: data.sanitizedSubject,
           body: data.plainTextBody,
           html: data.sanitizedHtmlBody,

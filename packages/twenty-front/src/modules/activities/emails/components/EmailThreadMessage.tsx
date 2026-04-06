@@ -13,8 +13,11 @@ import { MessageParticipantRole } from 'twenty-shared/types';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
 import { MessageChannelVisibility } from '~/generated/graphql';
 
-const StyledThreadMessage = styled.div`
-  border-bottom: 1px solid ${themeCssVariables.border.color.light};
+const StyledThreadMessage = styled.div<{ hideBottomBorder?: boolean }>`
+  border-bottom: ${({ hideBottomBorder }) =>
+    hideBottomBorder
+      ? 'none'
+      : `1px solid ${themeCssVariables.border.color.light}`};
   display: flex;
   flex-direction: column;
   padding: ${themeCssVariables.spacing[4]} ${themeCssVariables.spacing[0]};
@@ -39,6 +42,7 @@ type EmailThreadMessageProps = {
   sender: EmailThreadMessageParticipant;
   participants: EmailThreadMessageParticipant[];
   isExpanded?: boolean;
+  hideBottomBorder?: boolean;
 };
 
 export const EmailThreadMessage = ({
@@ -47,6 +51,7 @@ export const EmailThreadMessage = ({
   sender,
   participants,
   isExpanded = false,
+  hideBottomBorder = false,
 }: EmailThreadMessageProps) => {
   const [isOpen, setIsOpen] = useState(isExpanded);
 
@@ -63,6 +68,7 @@ export const EmailThreadMessage = ({
 
   return (
     <StyledThreadMessage
+      hideBottomBorder={hideBottomBorder}
       onClick={() => !isOpen && setIsOpen(true)}
       style={{ cursor: isOpen || isRestricted ? 'auto' : 'pointer' }}
     >

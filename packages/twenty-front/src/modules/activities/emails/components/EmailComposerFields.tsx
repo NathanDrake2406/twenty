@@ -51,9 +51,7 @@ export const EmailComposerFields = ({
           placeholder={t`Recipients`}
         />
         {!composerState.showCcBcc && (
-          <StyledCcBccToggle
-            onClick={() => composerState.setShowCcBcc(true)}
-          >
+          <StyledCcBccToggle onClick={() => composerState.setShowCcBcc(true)}>
             {t`Cc/Bcc`}
           </StyledCcBccToggle>
         )}

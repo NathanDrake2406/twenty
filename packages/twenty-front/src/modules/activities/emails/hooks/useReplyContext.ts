@@ -35,8 +35,7 @@ export const useReplyContext = (
           subject: '',
           inReplyTo: '',
           connectedAccountId: '',
-          connectedAccountProvider:
-            '' as unknown as ConnectedAccountProvider,
+          connectedAccountProvider: '' as unknown as ConnectedAccountProvider,
           loading: true,
         };
       }

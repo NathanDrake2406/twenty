@@ -27,16 +27,16 @@ const StyledContent = styled.div`
 `;
 
 export const SidePanelComposeEmailPage = () => {
-  const connectedAccountId = useAtomComponentStateValue(
+  const composeEmailConnectedAccountId = useAtomComponentStateValue(
     composeEmailConnectedAccountIdComponentState,
   );
-  const defaultTo = useAtomComponentStateValue(
+  const composeEmailDefaultTo = useAtomComponentStateValue(
     composeEmailDefaultToComponentState,
   );
-  const defaultSubject = useAtomComponentStateValue(
+  const composeEmailDefaultSubject = useAtomComponentStateValue(
     composeEmailDefaultSubjectComponentState,
   );
-  const defaultInReplyTo = useAtomComponentStateValue(
+  const composeEmailDefaultInReplyTo = useAtomComponentStateValue(
     composeEmailDefaultInReplyToComponentState,
   );
 
@@ -51,14 +51,14 @@ export const SidePanelComposeEmailPage = () => {
   }, [goBackFromSidePanel]);
 
   const composerState = useEmailComposerState({
-    connectedAccountId: connectedAccountId ?? '',
-    defaultTo: defaultTo ?? '',
-    defaultSubject: defaultSubject ?? '',
-    defaultInReplyTo: defaultInReplyTo ?? undefined,
+    connectedAccountId: composeEmailConnectedAccountId ?? '',
+    defaultTo: composeEmailDefaultTo ?? '',
+    defaultSubject: composeEmailDefaultSubject ?? '',
+    defaultInReplyTo: composeEmailDefaultInReplyTo ?? undefined,
     onSent: handleSent,
   });
 
-  if (!connectedAccountId) {
+  if (!composeEmailConnectedAccountId) {
     return null;
   }
 

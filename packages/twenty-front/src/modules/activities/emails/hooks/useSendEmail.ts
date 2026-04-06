@@ -53,8 +53,7 @@ export const useSendEmail = () => {
         }
 
         enqueueErrorSnackBar({
-          message:
-            result.data?.sendEmail.error ?? t`Failed to send email`,
+          message: result.data?.sendEmail.error ?? t`Failed to send email`,
         });
 
         return false;
