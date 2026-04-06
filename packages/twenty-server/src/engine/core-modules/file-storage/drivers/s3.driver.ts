@@ -452,7 +452,7 @@ export class S3Driver implements StorageDriver {
     const deleteParams = {
       Bucket: this.bucketName,
       Delete: {
-        Objects: listedObjects.Contents?.map(({ Key }) => {
+        Objects: listedObjects.Contents.map(({ Key }) => {
           return { Key };
         }),
       },
