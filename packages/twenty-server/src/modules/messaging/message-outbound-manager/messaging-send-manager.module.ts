@@ -10,6 +10,7 @@ import { GmailMessageOutboundService } from 'src/modules/messaging/message-outbo
 import { ImapSmtpMessageOutboundService } from 'src/modules/messaging/message-outbound-manager/drivers/imap/services/imap-smtp-message-outbound.service';
 import { MicrosoftMessageOutboundService } from 'src/modules/messaging/message-outbound-manager/drivers/microsoft/services/microsoft-message-outbound.service';
 import { MessagingMessageOutboundService } from 'src/modules/messaging/message-outbound-manager/services/messaging-message-outbound.service';
+import { SentMessagePersistenceService } from 'src/modules/messaging/message-outbound-manager/services/sent-message-persistence.service';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { MessagingMessageOutboundService } from 'src/modules/messaging/message-o
     MicrosoftMessageOutboundService,
     ImapSmtpMessageOutboundService,
     MessagingMessageOutboundService,
+    SentMessagePersistenceService,
   ],
-  exports: [MessagingMessageOutboundService],
+  exports: [MessagingMessageOutboundService, SentMessagePersistenceService],
 })
 export class MessagingSendManagerModule {}

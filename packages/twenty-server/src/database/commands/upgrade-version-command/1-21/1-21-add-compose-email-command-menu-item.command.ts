@@ -15,8 +15,7 @@ const COMPOSE_EMAIL_UNIVERSAL_IDENTIFIER =
 
 @Command({
   name: 'upgrade:1-21:add-compose-email-command-menu-item',
-  description:
-    'Add the Compose Email command menu item to existing workspaces',
+  description: 'Add the Compose Email command menu item to existing workspaces',
 })
 export class AddComposeEmailCommandMenuItemCommand extends ActiveOrSuspendedWorkspaceCommandRunner {
   constructor(

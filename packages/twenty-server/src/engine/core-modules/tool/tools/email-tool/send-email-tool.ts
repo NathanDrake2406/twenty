@@ -10,6 +10,8 @@ import { type ToolOutput } from 'src/engine/core-modules/tool/types/tool-output.
 import { type ToolExecutionContext } from 'src/engine/core-modules/tool/types/tool-execution-context.type';
 import { type Tool } from 'src/engine/core-modules/tool/types/tool.type';
 import { MessagingMessageOutboundService } from 'src/modules/messaging/message-outbound-manager/services/messaging-message-outbound.service';
+import { SentMessagePersistenceService } from 'src/modules/messaging/message-outbound-manager/services/sent-message-persistence.service';
+import { type SendMessageResult } from 'src/modules/messaging/message-outbound-manager/types/send-message-result.type';
 
 @Injectable()
 export class SendEmailTool implements Tool {
@@ -22,6 +24,7 @@ export class SendEmailTool implements Tool {
   constructor(
     private readonly emailComposerService: EmailComposerService,
     private readonly messageOutboundService: MessagingMessageOutboundService,
+    private readonly sentMessagePersistenceService: SentMessagePersistenceService,
   ) {}
 
   async execute(
@@ -40,7 +43,24 @@ export class SendEmailTool implements Tool {
 
       const { data } = result;
 
-      await this.sendEmail(data);
+      const sendResult = await this.sendEmail(data);
+
+      try {
+        await this.sentMessagePersistenceService.persistSentMessage({
+          sendResult,
+          subject: data.sanitizedSubject,
+          body: data.plainTextBody,
+          recipients: data.recipients,
+          connectedAccount: data.connectedAccount,
+          messageChannelId: data.messageChannelId,
+          inReplyTo: data.inReplyTo,
+          workspaceId: context.workspaceId,
+        });
+      } catch (persistenceError) {
+        this.logger.warn(
+          `Failed to persist sent message (sync will recover): ${persistenceError}`,
+        );
+      }
 
       this.logger.log(
         `Email sent successfully to ${data.toRecipientsDisplay}${data.attachments.length > 0 ? ` with ${data.attachments.length} attachments` : ''}`,
@@ -87,8 +107,8 @@ export class SendEmailTool implements Tool {
     }
   }
 
-  private async sendEmail(data: ComposedEmail): Promise<void> {
-    await this.messageOutboundService.sendMessage(
+  private async sendEmail(data: ComposedEmail): Promise<SendMessageResult> {
+    return this.messageOutboundService.sendMessage(
       {
         to: data.recipients.to,
         cc: data.recipients.cc.length > 0 ? data.recipients.cc : undefined,

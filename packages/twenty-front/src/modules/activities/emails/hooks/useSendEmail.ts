@@ -1,3 +1,4 @@
+import { useApolloClient } from '@apollo/client/react';
 import { useMutation } from '@apollo/client/react';
 import { useCallback } from 'react';
 
@@ -20,6 +21,8 @@ type SendEmailParams = {
 };
 
 export const useSendEmail = () => {
+  const apolloClient = useApolloClient();
+
   const [sendEmailMutation, { loading }] = useMutation<
     SendEmailMutation,
     SendEmailMutationVariables
@@ -49,6 +52,8 @@ export const useSendEmail = () => {
             message: t`Email sent successfully`,
           });
 
+          await apolloClient.refetchQueries({ include: 'active' });
+
           return true;
         }
 
@@ -65,7 +70,12 @@ export const useSendEmail = () => {
         return false;
       }
     },
-    [sendEmailMutation, enqueueSuccessSnackBar, enqueueErrorSnackBar],
+    [
+      sendEmailMutation,
+      enqueueSuccessSnackBar,
+      enqueueErrorSnackBar,
+      apolloClient,
+    ],
   );
 
   return { sendEmail, loading };

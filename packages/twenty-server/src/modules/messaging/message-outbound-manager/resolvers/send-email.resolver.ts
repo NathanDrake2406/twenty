@@ -12,6 +12,7 @@ import { WorkspaceAuthGuard } from 'src/engine/guards/workspace-auth.guard';
 import { SendEmailOutputDTO } from 'src/modules/messaging/message-outbound-manager/dtos/send-email-output.dto';
 import { SendEmailInput } from 'src/modules/messaging/message-outbound-manager/dtos/send-email.input';
 import { MessagingMessageOutboundService } from 'src/modules/messaging/message-outbound-manager/services/messaging-message-outbound.service';
+import { SentMessagePersistenceService } from 'src/modules/messaging/message-outbound-manager/services/sent-message-persistence.service';
 
 @MetadataResolver()
 @UsePipes(ResolverValidationPipe)
@@ -23,6 +24,7 @@ export class SendEmailResolver {
   constructor(
     private readonly emailComposerService: EmailComposerService,
     private readonly messageOutboundService: MessagingMessageOutboundService,
+    private readonly sentMessagePersistenceService: SentMessagePersistenceService,
   ) {}
 
   @Mutation(() => SendEmailOutputDTO)
@@ -56,7 +58,7 @@ export class SendEmailResolver {
 
       const { data } = result;
 
-      await this.messageOutboundService.sendMessage(
+      const sendResult = await this.messageOutboundService.sendMessage(
         {
           to: data.recipients.to,
           cc: data.recipients.cc.length > 0 ? data.recipients.cc : undefined,
@@ -69,6 +71,23 @@ export class SendEmailResolver {
         },
         data.connectedAccount,
       );
+
+      try {
+        await this.sentMessagePersistenceService.persistSentMessage({
+          sendResult,
+          subject: data.sanitizedSubject,
+          body: data.plainTextBody,
+          recipients: data.recipients,
+          connectedAccount: data.connectedAccount,
+          messageChannelId: data.messageChannelId,
+          inReplyTo: data.inReplyTo,
+          workspaceId: workspace.id,
+        });
+      } catch (persistenceError) {
+        this.logger.warn(
+          `Failed to persist sent message (sync will recover): ${persistenceError}`,
+        );
+      }
 
       return { success: true };
     } catch (error) {

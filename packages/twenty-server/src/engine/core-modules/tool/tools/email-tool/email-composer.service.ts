@@ -311,6 +311,7 @@ export class EmailComposerService {
         sanitizedHtmlBody,
         attachments,
         connectedAccount: connectedAccountWithFreshTokens,
+        messageChannelId: messageChannel.id,
         inReplyTo,
       },
     };
