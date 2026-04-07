@@ -1,4 +1,9 @@
-import { Body, Heading, LazyEmbed, LinkButton } from '@/design-system/components';
+import {
+  Body,
+  Heading,
+  LazyEmbed,
+  LinkButton,
+} from '@/design-system/components';
 import { CheckIcon } from '@/icons/informative/Check';
 import type { PlanCardType } from '@/sections/Plans/types';
 import { theme } from '@/theme';
@@ -19,19 +24,8 @@ const StyledCard = styled.div`
   padding-right: ${theme.spacing(4)};
   padding-top: ${theme.spacing(4)};
   row-gap: ${theme.spacing(4)};
-  transition:
-    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   z-index: 1;
-
-  &:hover {
-    border-color: ${theme.colors.highlight[100]};
-    transform: translateY(-12px) scale(1.02);
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.12);
-    z-index: 10;
-  }
 `;
 
 const CardHeader = styled.div`
@@ -111,12 +105,7 @@ export function Card({ card, highlighted = false, maxBullets }: CardProps) {
     <StyledCard style={{ gridRow: `span ${totalRows}` }}>
       <CardHeader>
         <CardHeaderInfo>
-          <Heading
-            as="h3"
-            segments={card.heading}
-            size="md"
-            weight="light"
-          />
+          <Heading as="h3" segments={card.heading} size="md" weight="light" />
           <PriceLine>
             <Heading
               as="h4"
@@ -124,11 +113,7 @@ export function Card({ card, highlighted = false, maxBullets }: CardProps) {
               size="sm"
               weight="regular"
             />
-            <Body
-              as="span"
-              body={card.price.body}
-              size="sm"
-            />
+            <Body as="span" body={card.price.body} size="sm" />
           </PriceLine>
         </CardHeaderInfo>
         <CardIllustration

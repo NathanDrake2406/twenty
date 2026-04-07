@@ -1,12 +1,12 @@
 'use client';
 
-import { styled } from '@linaria/react';
-import { useRef } from 'react';
 import { Eyebrow, Heading } from '@/design-system/components';
 import { HelpedSceneScrollLayoutEffect } from '@/sections/Helped/effect-components/HelpedSceneScrollLayoutEffect';
 import type { HelpedDataType } from '@/sections/Helped/types/HelpedData';
 import { CARD_WIDTH_DESKTOP } from '@/sections/Helped/utils/helped-scene-layout';
 import { theme } from '@/theme';
+import { styled } from '@linaria/react';
+import { useRef } from 'react';
 import { Card } from '../Card/Card';
 
 const SCROLL_HEIGHT_VH = 420;
@@ -39,16 +39,6 @@ const HeadlineBlock = styled.div`
   text-align: center;
   width: 100%;
   z-index: 1;
-
-  span {
-    transition: opacity 0.4s ease;
-  }
-
-  h1:has(span:hover) span:not(:hover),
-  h2:has(span:hover) span:not(:hover),
-  h3:has(span:hover) span:not(:hover) {
-    opacity: 0.2;
-  }
 `;
 
 const CardsLayer = styled.div`

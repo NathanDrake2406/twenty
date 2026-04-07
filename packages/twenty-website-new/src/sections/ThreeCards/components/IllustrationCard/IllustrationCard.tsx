@@ -1,4 +1,9 @@
-import { Body, Heading, IconButton, LazyEmbed } from '@/design-system/components';
+import {
+  Body,
+  Heading,
+  IconButton,
+  LazyEmbed,
+} from '@/design-system/components';
 import { ArrowRightIcon } from '@/icons';
 import type { ThreeCardsIllustrationCardType } from '@/sections/ThreeCards/types';
 import { theme } from '@/theme';
@@ -19,22 +24,6 @@ const IllustrationCardContainer = styled.div`
   min-width: 0;
   min-height: 0;
   height: 100%;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-
-  span {
-    transition: opacity 0.4s ease;
-  }
-
-  h1:has(span:hover) span:not(:hover),
-  h2:has(span:hover) span:not(:hover),
-  h3:has(span:hover) span:not(:hover) {
-    opacity: 0.2;
-  }
-
-  &:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
-  }
 `;
 
 const CardRule = styled.div`
