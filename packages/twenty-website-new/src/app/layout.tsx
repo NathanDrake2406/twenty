@@ -9,7 +9,6 @@ import { css } from '@linaria/core';
 import { styled } from '@linaria/react';
 import type { Metadata } from 'next';
 import { Aleo, Azeret_Mono, Host_Grotesk } from 'next/font/google';
-import '../../../twenty-ui/dist/theme-light.css';
 
 const hostGrotesk = Host_Grotesk({
   subsets: ['latin'],
