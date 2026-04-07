@@ -16,7 +16,6 @@ import { LinkButton } from '@/design-system/components';
 import { Pages } from '@/enums/pages';
 import { fetchCommunityStats } from '@/lib/community/fetch-community-stats';
 import { mergeSocialLinkLabels } from '@/lib/community/merge-social-link-labels';
-import { ScrollReveal } from '@/motion/ScrollReveal';
 import { Editorial } from '@/sections/Editorial/components';
 import { Hero } from '@/sections/Hero/components';
 import { Marquee } from '@/sections/Marquee/components';
@@ -52,114 +51,96 @@ export default async function WhyTwentyPage() {
         <Menu.Cta scheme="secondary" />
       </Menu.Root>
 
-      <ScrollReveal>
-        <Hero.Root backgroundColor={theme.colors.secondary.background[100]}>
-          <Hero.Heading
-            page={Pages.WhyTwenty}
-            segments={HERO_DATA.heading}
-            size="xl"
-          />
-          <Hero.Body page={Pages.WhyTwenty} body={HERO_DATA.body} />
-          <Hero.WhyTwentyVisual
-            image={HERO_DATA.image}
-            illustration={HERO_DATA.illustration}
-          />
-        </Hero.Root>
-      </ScrollReveal>
-
-      <ScrollReveal>
-        <Editorial.Root
-          backgroundColor={theme.colors.secondary.background[100]}
-          color={theme.colors.secondary.text[100]}
-          mutedColor={theme.colors.secondary.text[60]}
-        >
-          <Editorial.Intro>
-            <Editorial.Eyebrow
-              colorScheme="secondary"
-              eyebrow={EDITORIAL_ONE.eyebrow!}
-            />
-            <Editorial.Heading segments={EDITORIAL_ONE.heading!} />
-          </Editorial.Intro>
-          <Editorial.Body body={EDITORIAL_ONE.body} layout="two-column" />
-        </Editorial.Root>
-      </ScrollReveal>
-
-      <ScrollReveal>
-        <Quote.Root backgroundColor={theme.colors.secondary.background[100]}>
-          <Quote.Visual illustration={QUOTE_DATA.illustration} />
-          <Quote.Heading segments={QUOTE_DATA.heading} />
-        </Quote.Root>
-      </ScrollReveal>
-
-      <ScrollReveal>
-        <Editorial.Root
-          backgroundColor={theme.colors.secondary.background[100]}
-          color={theme.colors.secondary.text[100]}
-          mutedColor={theme.colors.secondary.text[60]}
-        >
-          <Editorial.Body body={EDITORIAL_TWO.body} layout="centered" />
-        </Editorial.Root>
-      </ScrollReveal>
-
-      <ScrollReveal>
-        <Marquee.Root
-          backgroundColor={theme.colors.secondary.background[100]}
-          color={theme.colors.secondary.text[100]}
-          heading={MARQUEE_DATA.heading}
+      <Hero.Root backgroundColor={theme.colors.secondary.background[100]}>
+        <Hero.Heading
+          page={Pages.WhyTwenty}
+          segments={HERO_DATA.heading}
+          size="xl"
         />
-      </ScrollReveal>
+        <Hero.Body page={Pages.WhyTwenty} body={HERO_DATA.body} />
+        <Hero.WhyTwentyVisual
+          image={HERO_DATA.image}
+          illustration={HERO_DATA.illustration}
+        />
+      </Hero.Root>
 
-      <ScrollReveal>
-        <Editorial.Root
-          backgroundColor={theme.colors.secondary.background[100]}
-          color={theme.colors.secondary.text[100]}
-          mutedColor={theme.colors.secondary.text[60]}
-        >
-          <Editorial.Intro>
-            <Editorial.Eyebrow
-              colorScheme="secondary"
-              eyebrow={EDITORIAL_THREE.eyebrow!}
-            />
-            <Editorial.Heading segments={EDITORIAL_THREE.heading!} />
-          </Editorial.Intro>
-          <Editorial.Body body={EDITORIAL_THREE.body} layout="indented" />
-        </Editorial.Root>
-      </ScrollReveal>
+      <Editorial.Root
+        backgroundColor={theme.colors.secondary.background[100]}
+        color={theme.colors.secondary.text[100]}
+        mutedColor={theme.colors.secondary.text[60]}
+      >
+        <Editorial.Intro>
+          <Editorial.Eyebrow
+            colorScheme="secondary"
+            eyebrow={EDITORIAL_ONE.eyebrow!}
+          />
+          <Editorial.Heading segments={EDITORIAL_ONE.heading!} />
+        </Editorial.Intro>
+        <Editorial.Body body={EDITORIAL_ONE.body} layout="two-column" />
+      </Editorial.Root>
 
-      <ScrollReveal>
-        <Statement.Root
-          backgroundColor={theme.colors.secondary.background[100]}
-          color={theme.colors.secondary.text[100]}
-        >
-          <Statement.Heading segments={STATEMENT_ONE.heading} />
-        </Statement.Root>
-      </ScrollReveal>
+      <Quote.Root backgroundColor={theme.colors.secondary.background[100]}>
+        <Quote.Visual illustration={QUOTE_DATA.illustration} />
+        <Quote.Heading segments={QUOTE_DATA.heading} />
+      </Quote.Root>
 
-      <ScrollReveal>
-        <Statement.Root
-          backgroundColor={theme.colors.primary.background[100]}
-          color={theme.colors.primary.text[100]}
-        >
-          <Statement.Heading segments={STATEMENT_TWO.heading} />
-        </Statement.Root>
-      </ScrollReveal>
+      <Editorial.Root
+        backgroundColor={theme.colors.secondary.background[100]}
+        color={theme.colors.secondary.text[100]}
+        mutedColor={theme.colors.secondary.text[60]}
+      >
+        <Editorial.Body body={EDITORIAL_TWO.body} layout="centered" />
+      </Editorial.Root>
 
-      <ScrollReveal>
-        <Editorial.Root
-          backgroundColor={theme.colors.primary.background[100]}
-          color={theme.colors.primary.text[100]}
-          mutedColor={theme.colors.primary.text[60]}
-        >
-          <Editorial.Intro>
-            <Editorial.Eyebrow
-              colorScheme="primary"
-              eyebrow={EDITORIAL_FOUR.eyebrow!}
-            />
-            <Editorial.Heading segments={EDITORIAL_FOUR.heading!} />
-          </Editorial.Intro>
-          <Editorial.Body body={EDITORIAL_FOUR.body} layout="two-column" />
-        </Editorial.Root>
-      </ScrollReveal>
+      <Marquee.Root
+        backgroundColor={theme.colors.secondary.background[100]}
+        color={theme.colors.secondary.text[100]}
+        heading={MARQUEE_DATA.heading}
+      />
+
+      <Editorial.Root
+        backgroundColor={theme.colors.secondary.background[100]}
+        color={theme.colors.secondary.text[100]}
+        mutedColor={theme.colors.secondary.text[60]}
+      >
+        <Editorial.Intro>
+          <Editorial.Eyebrow
+            colorScheme="secondary"
+            eyebrow={EDITORIAL_THREE.eyebrow!}
+          />
+          <Editorial.Heading segments={EDITORIAL_THREE.heading!} />
+        </Editorial.Intro>
+        <Editorial.Body body={EDITORIAL_THREE.body} layout="indented" />
+      </Editorial.Root>
+
+      <Statement.Root
+        backgroundColor={theme.colors.secondary.background[100]}
+        color={theme.colors.secondary.text[100]}
+      >
+        <Statement.Heading segments={STATEMENT_ONE.heading} />
+      </Statement.Root>
+
+      <Statement.Root
+        backgroundColor={theme.colors.primary.background[100]}
+        color={theme.colors.primary.text[100]}
+      >
+        <Statement.Heading segments={STATEMENT_TWO.heading} />
+      </Statement.Root>
+
+      <Editorial.Root
+        backgroundColor={theme.colors.primary.background[100]}
+        color={theme.colors.primary.text[100]}
+        mutedColor={theme.colors.primary.text[60]}
+      >
+        <Editorial.Intro>
+          <Editorial.Eyebrow
+            colorScheme="primary"
+            eyebrow={EDITORIAL_FOUR.eyebrow!}
+          />
+          <Editorial.Heading segments={EDITORIAL_FOUR.heading!} />
+        </Editorial.Intro>
+        <Editorial.Body body={EDITORIAL_FOUR.body} layout="two-column" />
+      </Editorial.Root>
 
       <WhyTwentyStepper.Flow
         body={STEPPER_DATA.body}
@@ -167,26 +148,24 @@ export default async function WhyTwentyPage() {
         illustration={STEPPER_DATA.illustration}
       />
 
-      <ScrollReveal>
-        <Signoff.Root
-          backgroundColor={theme.colors.primary.text[10]}
-          color={theme.colors.secondary.text[100]}
-          variant="shaped"
-          shapeFillColor={theme.colors.secondary.background[100]}
-        >
-          <Signoff.Heading segments={SIGNOFF_DATA.heading} />
-          <Signoff.Body body={SIGNOFF_DATA.body} />
-          <Signoff.Cta>
-            <LinkButton
-              color="primary"
-              href="https://app.twenty.com/welcome"
-              label="Get started"
-              type="anchor"
-              variant="contained"
-            />
-          </Signoff.Cta>
-        </Signoff.Root>
-      </ScrollReveal>
+      <Signoff.Root
+        backgroundColor={theme.colors.primary.text[10]}
+        color={theme.colors.secondary.text[100]}
+        variant="shaped"
+        shapeFillColor={theme.colors.secondary.background[100]}
+      >
+        <Signoff.Heading segments={SIGNOFF_DATA.heading} />
+        <Signoff.Body body={SIGNOFF_DATA.body} />
+        <Signoff.Cta>
+          <LinkButton
+            color="primary"
+            href="https://app.twenty.com/welcome"
+            label="Get started"
+            type="anchor"
+            variant="contained"
+          />
+        </Signoff.Cta>
+      </Signoff.Root>
     </>
   );
 }
