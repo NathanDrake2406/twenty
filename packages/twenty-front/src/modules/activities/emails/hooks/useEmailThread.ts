@@ -1,7 +1,6 @@
 import { useQuery } from '@apollo/client/react';
 import { useCallback, useEffect, useState } from 'react';
 
-import { type MessageChannel } from '@/accounts/types/MessageChannel';
 import { fetchAllThreadMessagesOperationSignatureFactory } from '@/activities/emails/graphql/operation-signatures/factories/fetchAllThreadMessagesOperationSignatureFactory';
 import { type EmailThread } from '@/activities/emails/types/EmailThread';
 import { type EmailThreadMessage } from '@/activities/emails/types/EmailThreadMessage';
@@ -22,9 +21,6 @@ import { isDefined } from 'twenty-shared/utils';
 export const useEmailThread = (threadId: string | null) => {
   const { upsertRecordsInStore } = useUpsertRecordsInStore();
   const [lastMessageId, setLastMessageId] = useState<string | null>(null);
-  const [lastMessageChannelId, setLastMessageChannelId] = useState<
-    string | null
-  >(null);
   const [isMessagesFetchComplete, setIsMessagesFetchComplete] = useState(false);
 
   const { record: thread } = useFindOneRecord<EmailThread>({
@@ -127,34 +123,6 @@ export const useEmailThread = (threadId: string | null) => {
       skip: !lastMessageId || !isMessagesFetchComplete,
     });
 
-  useEffect(() => {
-    if (messageChannelMessageAssociationData.length > 0) {
-      setLastMessageChannelId(
-        messageChannelMessageAssociationData[0].messageChannelId,
-      );
-    }
-  }, [messageChannelMessageAssociationData]);
-
-  const { records: messageChannelData, loading: messageChannelLoading } =
-    useFindManyRecords<MessageChannel>({
-      filter: {
-        id: {
-          eq: lastMessageChannelId ?? '',
-        },
-      },
-      objectNameSingular: CoreObjectNameSingular.MessageChannel,
-      recordGqlFields: {
-        id: true,
-        handle: true,
-        connectedAccount: {
-          id: true,
-          provider: true,
-          connectionParameters: true,
-        },
-      },
-      skip: !lastMessageChannelId,
-    });
-
   const messageThreadExternalId =
     messageChannelMessageAssociationData.length > 0
       ? messageChannelMessageAssociationData[0].messageThreadExternalId
@@ -163,8 +131,6 @@ export const useEmailThread = (threadId: string | null) => {
     messageChannelMessageAssociationData.length > 0
       ? messageChannelMessageAssociationData[0].messageExternalId
       : null;
-  const connectedAccountHandle =
-    messageChannelData.length > 0 ? messageChannelData[0].handle : null;
 
   const messagesWithSender: EmailThreadMessageWithSender[] = messages
     .map((message) => {
@@ -183,54 +149,24 @@ export const useEmailThread = (threadId: string | null) => {
     })
     .filter(isDefined);
 
-  // messageChannel may live in the core schema (not the workspace schema),
-  // so the workspace-level query above can return empty for real accounts.
-  // Fall back to matching against myConnectedAccounts from the core schema.
-  const { data: myConnectedAccountsData } = useQuery<{
-    myConnectedAccounts: {
-      id: string;
-      handle: string;
-      provider: ConnectedAccountProvider;
-    }[];
-  }>(GET_MY_CONNECTED_ACCOUNTS);
+  // connectedAccount and messageChannel live in the core schema,
+  // so we resolve the account from the core myConnectedAccounts query
+  // rather than the workspace-level messageChannel records.
+  const { data: myConnectedAccountsData, loading: messageChannelLoading } =
+    useQuery<{
+      myConnectedAccounts: {
+        id: string;
+        handle: string;
+        provider: ConnectedAccountProvider;
+      }[];
+    }>(GET_MY_CONNECTED_ACCOUNTS);
 
-  const workspaceConnectedAccount =
-    messageChannelData.length > 0
-      ? messageChannelData[0]?.connectedAccount
-      : null;
-
-  // When the workspace messageChannel query succeeds, use it directly.
-  // Otherwise, match the message channel handle against core connected accounts.
-  const resolvedConnectedAccount = (() => {
-    if (isDefined(workspaceConnectedAccount)) {
-      return workspaceConnectedAccount;
-    }
-
-    if (!connectedAccountHandle && myConnectedAccountsData) {
-      // No handle from workspace messageChannel — try matching sender handles
-      const allSenderHandles = messageSenders.map((s) => s.handle);
-      const matchedAccount = myConnectedAccountsData.myConnectedAccounts.find(
-        (account) => allSenderHandles.includes(account.handle),
-      );
-
-      if (matchedAccount) {
-        return matchedAccount;
-      }
-    }
-
-    if (connectedAccountHandle && myConnectedAccountsData) {
-      return myConnectedAccountsData.myConnectedAccounts.find(
-        (account) => account.handle === connectedAccountHandle,
-      );
-    }
-
-    return null;
-  })();
+  const resolvedConnectedAccount =
+    myConnectedAccountsData?.myConnectedAccounts[0] ?? null;
 
   const connectedAccountId = resolvedConnectedAccount?.id ?? null;
+  const connectedAccountHandle = resolvedConnectedAccount?.handle ?? null;
   const connectedAccountProvider = resolvedConnectedAccount?.provider ?? null;
-  const connectedAccountConnectionParameters =
-    workspaceConnectedAccount?.connectionParameters;
 
   return {
     thread,
@@ -239,7 +175,6 @@ export const useEmailThread = (threadId: string | null) => {
     connectedAccountId,
     connectedAccountHandle,
     connectedAccountProvider,
-    connectedAccountConnectionParameters,
     threadLoading: messagesLoading,
     messageChannelLoading,
     lastMessageExternalId,
