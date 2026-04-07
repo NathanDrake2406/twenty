@@ -159,21 +159,27 @@ export class CommonMergeManyQueryRunnerService extends CommonBaseQueryRunnerServ
     const recordsToMerge = fetchedRecords;
 
     if (args.dryRun && args.selectedFieldsResult.relations) {
-      await this.processNestedRelationsHelper.processNestedRelations({
-        flatObjectMetadataMaps: context.flatObjectMetadataMaps,
-        flatFieldMetadataMaps: context.flatFieldMetadataMaps,
-        parentObjectMetadataItem: context.flatObjectMetadata,
-        parentObjectRecords: recordsToMerge,
-        relations: args.selectedFieldsResult.relations as Record<
-          string,
-          FindOptionsRelations<ObjectLiteral>
-        >,
-        limit: QUERY_MAX_RECORDS_FROM_RELATION,
-        authContext: context.authContext,
-        workspaceDataSource: context.workspaceDataSource,
-        rolePermissionConfig: context.rolePermissionConfig,
-        selectedFields: args.selectedFieldsResult.select,
-      });
+      try {
+        await this.processNestedRelationsHelper.processNestedRelations({
+          flatObjectMetadataMaps: context.flatObjectMetadataMaps,
+          flatFieldMetadataMaps: context.flatFieldMetadataMaps,
+          parentObjectMetadataItem: context.flatObjectMetadata,
+          parentObjectRecords: recordsToMerge,
+          relations: args.selectedFieldsResult.relations as Record<
+            string,
+            FindOptionsRelations<ObjectLiteral>
+          >,
+          limit: QUERY_MAX_RECORDS_FROM_RELATION,
+          authContext: context.authContext,
+          workspaceDataSource: context.workspaceDataSource,
+          rolePermissionConfig: context.rolePermissionConfig,
+          selectedFields: args.selectedFieldsResult.select,
+        });
+      } catch (error) {
+        this.logger.warn(
+          `Failed to load nested relations for dry-run merge preview: ${error instanceof Error ? error.message : String(error)}`,
+        );
+      }
     }
 
     return recordsToMerge;
