@@ -86,6 +86,7 @@ export const useSendEmail = () => {
       sendEmailMutation,
       enqueueSuccessSnackBar,
       enqueueErrorSnackBar,
+      apolloCoreClient,
     ],
   );
 
