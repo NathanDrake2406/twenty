@@ -85,10 +85,9 @@ export const useMergeManyRecords = <
             conflictPriorityIndex: mergeSettings.conflictPriorityIndex,
             dryRun: preview,
           },
-          // Prevent cache updates during dry run to avoid overwriting original record data
+          // no-cache prevents dry-run data from overwriting live records in Apollo cache
           ...(preview && {
             fetchPolicy: 'no-cache',
-            errorPolicy: 'ignore',
           }),
           refetchQueries: [
             getOperationName(findOneRecordQuery) ?? '',

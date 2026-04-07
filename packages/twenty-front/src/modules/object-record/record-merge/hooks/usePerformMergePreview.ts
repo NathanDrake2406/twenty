@@ -1,3 +1,4 @@
+import { extractErrorMessage } from '@/ai/utils/extractErrorMessage';
 import { getRecordFromRecordNode } from '@/object-record/cache/utils/getRecordFromRecordNode';
 import { useMergeManyRecords } from '@/object-record/hooks/useMergeManyRecords';
 import { useMergeRecordsSelectedRecords } from '@/object-record/record-merge/hooks/useMergeRecordsSelectedRecords';
@@ -19,6 +20,7 @@ export const usePerformMergePreview = ({
     useState<ObjectRecord | null>(null);
   const [isGeneratingPreview, setIsGeneratingPreview] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [previewError, setPreviewError] = useState<string | null>(null);
 
   const mergeSettings = useAtomStateValue(mergeSettingsState);
   const isMergeInProgress = useAtomStateValue(isMergeInProgressState);
@@ -43,6 +45,7 @@ export const usePerformMergePreview = ({
       }
 
       setIsGeneratingPreview(true);
+      setPreviewError(null);
       try {
         const previewRecord = await mergeManyRecords({
           recordIds: selectedRecords.map((record) => record.id),
@@ -60,8 +63,9 @@ export const usePerformMergePreview = ({
 
         setMergePreviewRecord(transformPreviewRecord);
         upsertRecordsInStore({ partialRecords: [transformPreviewRecord] });
-      } catch {
+      } catch (error) {
         setMergePreviewRecord(null);
+        setPreviewError(extractErrorMessage(error));
       } finally {
         setIsGeneratingPreview(false);
         setIsInitialized(true);
@@ -83,6 +87,7 @@ export const usePerformMergePreview = ({
 
   return {
     mergePreviewRecord,
-    isGeneratingPreview: isGeneratingPreview,
+    isGeneratingPreview,
+    previewError,
   };
 };
